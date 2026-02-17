@@ -14,12 +14,61 @@ export default function ProductDetail() {
   const product = products.find((p) => p.id === productId) || products[0];
 
   const isP24F = product.id === 1;
+  const isOnBoardComputer = product.id === 2;
   const displayTitle = isP24F ? "Nucular controller P24F" : product.title;
-  const displayCode = isP24F ? "NUCP24F" : product.title.toUpperCase();
+  const displayCode = isP24F ? "NUCP24F" : isOnBoardComputer ? "NUCD" : product.title.toUpperCase();
   const displayPrice = isP24F ? "$610.00" : product.price;
 
+  const controllerSpecs = [
+    { label: "Maximum power", value: "27 kW" },
+    { label: "Nominal power", value: "10 kW" },
+    { label: "Voltage range", value: "30–90V" },
+    { label: "Phase current, max", value: "500A" },
+    { label: "Battery current, max", value: "350A" },
+    { label: "Supply out", value: "12V 3A" },
+    { label: "Operating temperature range", value: "−30ºC to 80ºC" },
+  ];
+
+  const onBoardSpecs = [
+    { label: "LCD size", value: "2.9\"" },
+    { label: "FSTN", value: "monochrome" },
+    { label: "Screen resolution", value: "240x128 px" },
+    { label: "RGB-button backlight", value: "yes" },
+    { label: "MicroSD slot", value: "yes" },
+    { label: "USB-charger", value: "5.2V 2A" },
+    { label: "Password protection", value: "yes" },
+    { label: "Language", value: "English" },
+    { label: "Class", value: "IP54" },
+  ];
+
+  const specs = isOnBoardComputer ? onBoardSpecs : controllerSpecs;
+
+  const controllerKitItems = [
+    "Controller P24F with compound potting and the latest firmware",
+    "Covers for battery and phase wires with screws",
+    "Screws for M6 terminals of phase wires",
+    "CAN-wire JWPF-PHD 120 cm (47.2 inch) for connection to the On-board computer",
+  ];
+
+  const onBoardKitItems = [
+    "On-board computer with the latest firmware in English",
+    "Pins for crimping",
+  ];
+
+  const kitItems = isOnBoardComputer ? onBoardKitItems : controllerKitItems;
+
+  const recommendedControllers = products.filter((p) =>
+    [1, 4, 5].includes(p.id)
+  );
+
   const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D"];
-  const images = ["/мото2.png", "/miniature11.png", "/miniature12.png", "/miniature13.png"];
+
+  const images = isP24F
+    ? ["/мото2.png", "/miniature11.png", "/miniature12.png", "/miniature13.png"]
+    : product.image
+    ? [product.image]
+    : ["/мото2.png"];
+
   const [mainImage, setMainImage] = useState<string>(images[0]);
 
   return (
@@ -52,28 +101,32 @@ export default function ProductDetail() {
             </div>
 
             <div className="product-info">
-              <div className="product-variant-tabs">
-                <button className="product-variant-tab active">P24F</button>
-                <button className="product-variant-tab">12F</button>
-                <button className="product-variant-tab">6F</button>
-              </div>
+              {isP24F && (
+                <div className="product-variant-tabs">
+                  <button className="product-variant-tab active">P24F</button>
+                  <button className="product-variant-tab">12F</button>
+                  <button className="product-variant-tab">6F</button>
+                </div>
+              )}
 
               <h1 className="product-title">{displayTitle}</h1>
               <p className="product-code">{displayCode}</p>
               <p className="product-price">{displayPrice}</p>
 
-              <div className="product-color-section">
-                <span className="product-color-label">Color — Black</span>
-                <div className="product-color-dots">
-                  {colorOptions.map((color) => (
-                    <button
-                      key={color}
-                      className="product-color-dot"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
+              {!isOnBoardComputer && (
+                <div className="product-color-section">
+                  <span className="product-color-label">Color — Black</span>
+                  <div className="product-color-dots">
+                    {colorOptions.map((color) => (
+                      <button
+                        key={color}
+                        className="product-color-dot"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="product-actions">
                 <button
@@ -131,48 +184,21 @@ export default function ProductDetail() {
           <div className="product-overview-section">
             <h2 className="product-overview-title">Overview</h2>
             <p className="product-overview-text">
-              A powerful ARM microprocessor provides precise and smooth control
-              of the BLDC motor. The controller settings are widely configured —
-              you can set parameters, power strokes of the gas throttle, fully
-              customized to your needs. The controller achieves an efficiency of
-              98% due to the powerful MOS transistors and special PWM
-              algorithms. Compact size allows you to install it in any suitable
-              place on vehicles with different dimensions — from scooters to
-              ATVs or golf carts.
+              {isOnBoardComputer
+                ? "The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the charging state of the devices via USB."
+                : "A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, fully customized to your needs. The controller achieves an efficiency of 98% due to the powerful MOS transistors and special PWM algorithms. Compact size allows you to install it in any suitable place on vehicles with different dimensions — from scooters to ATVs or golf carts."}
             </p>
           </div>
 
           <div className="product-specs-section">
             <h2 className="product-specs-title">Specifications</h2>
             <div className="product-specs-list">
-              <div className="product-specs-row">
-                <span className="product-specs-label">Maximum power</span>
-                <span className="product-specs-value">27 kW</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Nominal power</span>
-                <span className="product-specs-value">10 kW</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Voltage range</span>
-                <span className="product-specs-value">30–90V</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Phase current, max</span>
-                <span className="product-specs-value">500A</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Battery current, max</span>
-                <span className="product-specs-value">350A</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Supply out</span>
-                <span className="product-specs-value">12V 3A</span>
-              </div>
-              <div className="product-specs-row">
-                <span className="product-specs-label">Operating temperature range</span>
-                <span className="product-specs-value">−30ºC to 80ºC</span>
-              </div>
+              {specs.map((row) => (
+                <div key={row.label} className="product-specs-row">
+                  <span className="product-specs-label">{row.label}</span>
+                  <span className="product-specs-value">{row.value}</span>
+                </div>
+              ))}
             </div>
             <button className="product-specs-compare">Compare all controllers</button>
           </div>
@@ -180,27 +206,18 @@ export default function ProductDetail() {
           <div className="product-kit-section">
             <h2 className="product-kit-title">In the kit</h2>
             <div className="product-kit-grid">
-              <div className="product-kit-card">
-                <div className="product-kit-card-title">
-                  Controller P24F with compound potting and the latest firmware
+              {kitItems.map((item) => (
+                <div key={item} className="product-kit-card">
+                  <div className="product-kit-card-title">{item}</div>
                 </div>
-              </div>
-              <div className="product-kit-card">
-                <div className="product-kit-card-title">
-                  Covers for battery and phase wires with screws
-                </div>
-              </div>
-              <div className="product-kit-card">
-                <div className="product-kit-card-title">
-                  Screws for M6 terminals of phase wires
-                </div>
-              </div>
-              <div className="product-kit-card">
-                <div className="product-kit-card-title">
-                  CAN-wire JWPF-PHD 120 cm (47.2 inch) for connection to the On-board computer
-                </div>
-              </div>
+              ))}
             </div>
+            {isOnBoardComputer && (
+              <div className="product-kit-note">
+                <span>If you don’t have a crimping tool need to order </span>
+                <a href="#">Crimped wires for the Display</a>
+              </div>
+            )}
           </div>
 
           <div className="product-docs-section">
@@ -217,15 +234,52 @@ export default function ProductDetail() {
           </div>
 
           <div className="product-add-section">
-            <h2 className="product-add-title">Add it to the controller</h2>
-            <CardBase className="product-add-card" height={490}>
-              <div className="product-add-image">
-                <img className="card-image" src="/miniature15.png" alt="On-board computer" />
+            <h2 className="product-add-title">
+              {isOnBoardComputer ? "Recommended products" : "Add it to the controller"}
+            </h2>
+            {isOnBoardComputer ? (
+              <div className="product-add-grid">
+                {recommendedControllers.map((item) => (
+                  <CardBase key={item.id} className="product-add-card" height={420}>
+                    <div className="product-add-image">
+                      {item.image ? (
+                        <img className="card-image" src={item.image} alt={item.title} />
+                      ) : (
+                        <div className="product-add-image-placeholder">
+                          <svg
+                            width="81"
+                            height="90"
+                            viewBox="0 0 81 90"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z"
+                              fill="#E9E9E9"
+                            />
+                            <path
+                              d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z"
+                              fill="#E9E9E9"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div className="product-add-name">{item.title}</div>
+                    <div className="product-add-price">{item.price}</div>
+                  </CardBase>
+                ))}
               </div>
-              <div className="product-add-name">On-board computer</div>
-              <div className="product-add-price">$110.00</div>
-              <button className="product-add-cta">Add to cart</button>
-            </CardBase>
+            ) : (
+              <CardBase className="product-add-card" height={490}>
+                <div className="product-add-image">
+                  <img className="card-image" src="/miniature15.png" alt="On-board computer" />
+                </div>
+                <div className="product-add-name">On-board computer</div>
+                <div className="product-add-price">$110.00</div>
+                <button className="product-add-cta">Add to cart</button>
+              </CardBase>
+            )}
           </div>
 
           <div className="product-reviews-section">

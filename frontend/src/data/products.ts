@@ -134,22 +134,22 @@ export const products: Product[] = [
   {
     id: 18,
     category: 'Apparel',
-    title: 'T-shirt',
-    price: '$25.00',
+    title: 'Baseball cap',
+    price: '$20.00',
     image: '/cover8.png'
   },
   {
     id: 19,
     category: 'Apparel',
-    title: 'Hoodie',
-    price: '$50.00',
+    title: 'Pen',
+    price: '$5.00',
     image: '/cover9.png'
   },
   {
     id: 20,
     category: 'Apparel',
-    title: 'Cap',
-    price: '$15.00',
+    title: 'T-shirt',
+    price: '$16.00',
     image: '/cover10.png'
   }
 ];

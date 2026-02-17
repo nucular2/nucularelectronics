@@ -15,8 +15,25 @@ export default function ProductDetail() {
 
   const isP24F = product.id === 1;
   const isOnBoardComputer = product.id === 2;
+  const isULight = product.id === 3;
+  const isAdapter = product.id === 6;
+  const isKitSurRon = product.id === 15;
+  const isBaseballCap = product.id === 18;
+
   const displayTitle = isP24F ? "Nucular controller P24F" : product.title;
-  const displayCode = isP24F ? "NUCP24F" : isOnBoardComputer ? "NUCD" : product.title.toUpperCase();
+  const displayCode = isP24F
+    ? "NUCP24F"
+    : isOnBoardComputer
+    ? "NUCD"
+    : isULight
+    ? "uLight controller"
+    : isAdapter
+    ? "NUCSURAD"
+    : isKitSurRon
+    ? "NUCP24FSUR"
+    : isBaseballCap
+    ? "7459066"
+    : product.title.toUpperCase();
   const displayPrice = isP24F ? "$610.00" : product.price;
 
   const controllerSpecs = [
@@ -40,8 +57,49 @@ export default function ProductDetail() {
     { label: "Language", value: "English" },
     { label: "Class", value: "IP54" },
   ];
+  const uLightSpecs = [
+    { label: "Size", value: "55x30x13 mm" },
+    { label: "Weight", value: "25 g" },
+    { label: "Input", value: "10–15V" },
+    { label: "The current of one channel", value: "3A, 6 outputs" },
+    { label: "Total current", value: "~10A" },
+    { label: "Digital inputs", value: "6" },
+    { label: "Thermosensor inputs", value: "2" },
+    { label: "Digital outputs", value: "2" },
+    { label: "CAN bus connectors", value: "3" },
+  ];
 
-  const specs = isOnBoardComputer ? onBoardSpecs : controllerSpecs;
+  const adapterSpecs = [
+    { label: "Size", value: "250 mm" },
+    { label: "Weight", value: "25 g" },
+  ];
+
+  const baseballCapSpecs = [
+    { label: "Color", value: "Black" },
+    { label: "Size", value: "Free" },
+  ];
+
+  const uLightOverviewText =
+    "Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of the controller via CAN bus without using the display.";
+
+  const adapterOverviewText =
+    "ABS plastic adapter for installing the Controller P24F on the Sur-Ron Light Bee. In the kit: plastic ABS adapter with mounts, mounting screw kit, phase wires extensions with heat shrink and bolts for connection.";
+
+  const kitSurRonOverviewText =
+    "Plug & Ride Kit for Sur-Ron Light Bee. Up to 30% more power оn standard 60V battery and up to 300% on 72V battery. Сonnection to the standard wiring instead of the factory controller. All systems (kickstand, fall sensor, throttle, and key) will work. Headlights, brake light, and turn signals on road versions also will work. You can use \"Eco/Sport\" switch to set it up two different power modes. But the speedometer on this switch will not work, this function will be performed on our On-board computer.";
+
+  const baseballCapOverviewText =
+    "The ultrasoft design is flexible and abrasion resistant, while the inner sweatband includes quilted padding for extra comfort and moisture wicking. The visor is fully made from recycled plastic bottles. 100% Cotton.";
+
+  const specs = isOnBoardComputer
+    ? onBoardSpecs
+    : isULight
+    ? uLightSpecs
+    : isAdapter
+    ? adapterSpecs
+    : isBaseballCap
+    ? baseballCapSpecs
+    : controllerSpecs;
 
   const controllerKitItems = [
     "Controller P24F with compound potting and the latest firmware",
@@ -54,12 +112,39 @@ export default function ProductDetail() {
     "On-board computer with the latest firmware in English",
     "Pins for crimping",
   ];
+  const uLightKitItems = [
+    "uLight controller with the latest firmware",
+    "PHD 2.0 4P connector",
+  ];
 
-  const kitItems = isOnBoardComputer ? onBoardKitItems : controllerKitItems;
+  const adapterKitItems = [
+    "Plastic ABS adapter with mounts",
+    "Mounting screw kit",
+    "Phase wires extensions with heat shrink and bolts for connection",
+  ];
+
+  const kitSurRonKitItems = [
+    "Nucular controller P24F with the latest firmware for Sur-Ron",
+    "On-board computer with a mount for fork stem",
+    "Plastic adapter for mounting",
+  ];
+
+  const kitItems = isOnBoardComputer
+    ? onBoardKitItems
+    : isULight
+    ? uLightKitItems
+    : isAdapter
+    ? adapterKitItems
+    : isKitSurRon
+    ? kitSurRonKitItems
+    : controllerKitItems;
 
   const recommendedControllers = products.filter((p) =>
     [1, 4, 5].includes(p.id)
   );
+
+  const compatibleControllers = products.filter((p) => [1, 4].includes(p.id));
+  const apparelProducts = products.filter((p) => p.category === "Apparel");
 
   const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D"];
 
@@ -109,11 +194,27 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              <h1 className="product-title">{displayTitle}</h1>
+              <h1 className="product-title">
+                {isAdapter ? (
+                  <>
+                    Adapter for Sur-Ron
+                    <br />
+                    Light Bee
+                  </>
+                ) : isKitSurRon ? (
+                  <>
+                    Kit for Sur-Ron Light
+                    <br />
+                    Bee
+                  </>
+                ) : (
+                  displayTitle
+                )}
+              </h1>
               <p className="product-code">{displayCode}</p>
               <p className="product-price">{displayPrice}</p>
 
-              {!isOnBoardComputer && (
+              {!isOnBoardComputer && !isULight && !isAdapter && !isBaseballCap && (
                 <div className="product-color-section">
                   <span className="product-color-label">Color — Black</span>
                   <div className="product-color-dots">
@@ -129,15 +230,29 @@ export default function ProductDetail() {
               )}
 
               <div className="product-actions">
-                <button
-                  className="product-primary-button"
-                  onClick={() => addToCart(product)}
-                >
-                  Add to cart
-                </button>
-                <button className="product-secondary-button">
-                  Learn more
-                </button>
+                {isBaseballCap ? (
+                  <button
+                    className="product-primary-button"
+                    onClick={() => {
+                      addToCart(product);
+                      navigate("/cart");
+                    }}
+                  >
+                    Go to cart
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="product-primary-button"
+                      onClick={() => addToCart(product)}
+                    >
+                      Add to cart
+                    </button>
+                    <button className="product-secondary-button">
+                      Learn more
+                    </button>
+                  </>
+                )}
               </div>
 
               <div className="product-benefits">
@@ -186,6 +301,14 @@ export default function ProductDetail() {
             <p className="product-overview-text">
               {isOnBoardComputer
                 ? "The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the charging state of the devices via USB."
+                : isULight
+                ? uLightOverviewText
+                : isAdapter
+                ? adapterOverviewText
+                : isKitSurRon
+                ? kitSurRonOverviewText
+                : isBaseballCap
+                ? baseballCapOverviewText
                 : "A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, fully customized to your needs. The controller achieves an efficiency of 98% due to the powerful MOS transistors and special PWM algorithms. Compact size allows you to install it in any suitable place on vehicles with different dimensions — from scooters to ATVs or golf carts."}
             </p>
           </div>
@@ -203,49 +326,42 @@ export default function ProductDetail() {
             <button className="product-specs-compare">Compare all controllers</button>
           </div>
 
-          <div className="product-kit-section">
-            <h2 className="product-kit-title">In the kit</h2>
-            <div className="product-kit-grid">
-              {kitItems.map((item) => (
-                <div key={item} className="product-kit-card">
-                  <div className="product-kit-card-title">{item}</div>
+          {!isBaseballCap && (
+            <div className="product-kit-section">
+              <h2 className="product-kit-title">In the kit</h2>
+              <div className="product-kit-grid">
+                {kitItems.map((item) => (
+                  <div key={item} className="product-kit-card">
+                    <div className="product-kit-card-title">{item}</div>
+                  </div>
+                ))}
+              </div>
+              {isOnBoardComputer && (
+                <div className="product-kit-note">
+                  <span>If you don’t have a crimping tool need to order </span>
+                  <a href="#">Crimped wires for the Display</a>
                 </div>
-              ))}
+              )}
             </div>
-            {isOnBoardComputer && (
-              <div className="product-kit-note">
-                <span>If you don’t have a crimping tool need to order </span>
-                <a href="#">Crimped wires for the Display</a>
-              </div>
-            )}
-          </div>
+          )}
 
-          <div className="product-docs-section">
-            <h2 className="product-docs-title">Documentation</h2>
-            <div className="product-docs-row">
-              <div className="product-docs-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M10.0813 8.08932C9.8442 7.95698 9.55329 7.95837 9.31753 8.09298C9.08177 8.22759 8.93673 8.4751 8.93673 8.74281V15.2982C8.93673 15.5659 9.08177 15.8134 9.31753 15.9481C9.55329 16.0827 9.8442 16.0841 10.0813 15.9517L15.9533 12.674C16.1928 12.5404 16.3406 12.2908 16.3406 12.0205C16.3406 11.7502 16.1928 11.5007 15.9533 11.367L10.0813 8.08932ZM14.0253 12.0205L10.4686 14.0059V10.0352L14.0253 12.0205Z" fill="#F36F25"/>
-                  <path fillRule="evenodd" clipRule="evenodd" d="M11.919 20.4999L11.9999 20.5L12.081 20.4999C12.1335 20.4998 12.2105 20.4995 12.3089 20.4991C12.5058 20.4982 12.7887 20.4964 13.1335 20.4928C13.8227 20.4855 14.761 20.471 15.7553 20.442C16.7484 20.4131 17.8036 20.3694 18.725 20.3035C19.6249 20.2391 20.4619 20.1495 20.9804 20.0134L20.9911 20.0105C21.6015 19.841 22.1556 19.5164 22.5973 19.0694C23.039 18.6225 23.3527 18.069 23.5067 17.465C23.5109 17.4487 23.5145 17.4323 23.5175 17.4158C23.8445 15.6356 24.0058 13.83 23.9994 12.0211C24.0109 10.1847 23.8496 8.35126 23.5175 6.54403C23.5145 6.52755 23.5109 6.51118 23.5067 6.49494C23.3527 5.89089 23.039 5.33744 22.5973 4.89048C22.1556 4.44353 21.6015 4.1189 20.9911 3.94938C20.9822 3.94691 20.9732 3.9446 20.9642 3.94245C20.4518 3.81963 19.6203 3.73811 18.7201 3.67927C17.8002 3.61913 16.746 3.57934 15.7534 3.5529C14.7596 3.52644 13.8218 3.51322 13.1327 3.50661C12.7881 3.50331 12.5054 3.50166 12.3086 3.50083C12.2102 3.50042 12.1333 3.50021 12.0809 3.5001L11.9999 3.5L11.919 3.50011C11.8665 3.50023 11.7895 3.50046 11.6911 3.50091C11.4942 3.50182 11.2113 3.50363 10.8665 3.50725C10.1773 3.51448 9.239 3.52897 8.24467 3.55797C7.25155 3.58693 6.19635 3.63055 5.27503 3.69651C4.37513 3.76094 3.53806 3.85042 3.01954 3.98653L3.00894 3.98948C2.3985 4.15899 1.84444 4.48362 1.40273 4.93058C0.961023 5.37754 0.647306 5.93099 0.493269 6.53504C0.489125 6.55129 0.485535 6.56767 0.482507 6.58415C0.152979 8.37769 -0.00833983 10.1971 0.000572185 12.0195C-0.0109093 13.8557 0.150422 15.689 0.482512 17.4961C0.486999 17.5205 0.492715 17.5447 0.499638 17.5685C0.669458 18.1538 0.990202 18.6862 1.43088 19.1143C1.87156 19.5424 2.41728 19.8517 3.01531 20.0123L3.01956 20.0134C3.53808 20.1495 4.37513 20.2391 5.27503 20.3035C6.19635 20.3694 7.25155 20.4131 8.24467 20.442C9.239 20.471 10.1773 20.4855 10.8665 20.4928C11.2113 20.4964 11.4942 20.4982 11.6911 20.4991C11.7895 20.4995 11.8665 20.4998 11.919 20.4999ZM11.9224 5.00365L12 5.00354L12.0778 5.00364L12.302 5.00435C12.4964 5.00517 12.7763 5.00681 13.1178 5.01008C13.801 5.01663 14.7295 5.02973 15.7118 5.05589C16.6952 5.08207 17.7269 5.12121 18.6184 5.17948C19.5184 5.23832 20.2177 5.31353 20.5873 5.39985C20.9331 5.49832 21.2469 5.68353 21.4977 5.93733C21.7462 6.18879 21.9243 6.49885 22.0148 6.83743C22.3271 8.54611 22.4787 10.2794 22.4676 12.0153L22.4676 12.0227C22.4738 13.7326 22.3223 15.4395 22.0148 17.1225C21.9243 17.4611 21.7462 17.7711 21.4977 18.0226C21.245 18.2783 20.9283 18.4644 20.5793 18.5623C20.218 18.6562 19.5205 18.739 18.6135 18.8039C17.7234 18.8677 16.6928 18.9105 15.7098 18.9392C14.7281 18.9678 13.8001 18.9821 13.1171 18.9893C12.7757 18.9929 12.496 18.9947 12.3017 18.9956C12.2046 18.996 12.1289 18.9962 12.0776 18.9964L12 18.9965L11.9224 18.9964C11.8711 18.9962 11.7954 18.996 11.6983 18.9956C11.504 18.9947 11.2243 18.9929 10.8829 18.9893C10.1999 18.9821 9.2719 18.9678 8.29016 18.9392C7.3072 18.9105 6.27655 18.8677 5.38647 18.8039C4.47675 18.7388 3.77781 18.6557 3.41745 18.5615C3.07438 18.4689 2.76133 18.2913 2.50843 18.0456C2.26336 17.8076 2.08278 17.5134 1.98283 17.1899C1.67211 15.4853 1.52138 13.7564 1.53246 12.0248L1.53241 12.0163C1.52374 10.2934 1.67529 8.57335 1.98517 6.87751C2.07572 6.53894 2.25378 6.22888 2.50227 5.97743C2.75501 5.72169 3.07171 5.53559 3.42066 5.43771C3.78196 5.34385 4.47945 5.261 5.38647 5.19607C6.27655 5.13234 7.3072 5.08951 8.29016 5.06084C9.2719 5.03221 10.1999 5.01787 10.8829 5.0107C11.2243 5.00712 11.504 5.00532 11.6983 5.00443C11.7954 5.00398 11.8711 5.00376 11.9224 5.00365Z" fill="#F36F25"/>
-                </svg>
-              </div>
-              <div className="product-docs-text">See the documentation</div>
-            </div>
-          </div>
-
-          <div className="product-add-section">
-            <h2 className="product-add-title">
-              {isOnBoardComputer ? "Recommended products" : "Add it to the controller"}
-            </h2>
-            {isOnBoardComputer ? (
-              <div className="product-add-grid">
-                {recommendedControllers.map((item) => (
-                  <CardBase key={item.id} className="product-add-card" height={420}>
-                    <div className="product-add-image">
+          {isAdapter && (
+            <div className="product-compat-section">
+              <h2 className="product-compat-title">Compatibility</h2>
+              <div className="product-compat-grid">
+                {compatibleControllers.map((item) => (
+                  <CardBase
+                    key={item.id}
+                    className="product-compat-card"
+                    width={246}
+                    height={230}
+                    onClick={() => navigate(`/product/${item.id}`)}
+                  >
+                    <div className="product-compat-image">
                       {item.image ? (
                         <img className="card-image" src={item.image} alt={item.title} />
                       ) : (
-                        <div className="product-add-image-placeholder">
+                        <div className="product-compat-placeholder">
                           <svg
                             width="81"
                             height="90"
@@ -265,64 +381,208 @@ export default function ProductDetail() {
                         </div>
                       )}
                     </div>
-                    <div className="product-add-name">{item.title}</div>
-                    <div className="product-add-price">{item.price}</div>
+                    <div className="product-compat-name">{item.title}</div>
                   </CardBase>
                 ))}
               </div>
-            ) : (
-              <CardBase className="product-add-card" height={490}>
-                <div className="product-add-image">
-                  <img className="card-image" src="/miniature15.png" alt="On-board computer" />
-                </div>
-                <div className="product-add-name">On-board computer</div>
-                <div className="product-add-price">$110.00</div>
-                <button className="product-add-cta">Add to cart</button>
-              </CardBase>
-            )}
-          </div>
-
-          <div className="product-reviews-section">
-            <h2 className="product-reviews-title">Reviews</h2>
-            <div className="product-reviews-list">
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, …
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
-                  <span>USA, Alex Smith</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  Lighting control: controller turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of…
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
-                  <span>Germany, Max Stoun</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, …
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
-                  <span>Norway, Anna Orlova</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the …
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
-                  <span>France, Robert Jonson</span>
-                </div>
-              </CardBase>
             </div>
-          </div>
+          )}
+
+          {!isAdapter && !isBaseballCap && (
+            <div className="product-docs-section">
+              <h2 className="product-docs-title">Documentation</h2>
+              <div className="product-docs-row">
+                <div className={`product-docs-icon${isULight ? " product-docs-icon-ulight" : ""}`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M10.0813 8.08932C9.8442 7.95698 9.55329 7.95837 9.31753 8.09298C9.08177 8.22759 8.93673 8.4751 8.93673 8.74281V15.2982C8.93673 15.5659 9.08177 15.8134 9.31753 15.9481C9.55329 16.0827 9.8442 16.0841 10.0813 15.9517L15.9533 12.674C16.1928 12.5404 16.3406 12.2908 16.3406 12.0205C16.3406 11.7502 16.1928 11.5007 15.9533 11.367L10.0813 8.08932ZM14.0253 12.0205L10.4686 14.0059V10.0352L14.0253 12.0205Z" fill="#F36F25"/>
+                    <path fillRule="evenodd" clipRule="evenodd" d="M11.919 20.4999L11.9999 20.5L12.081 20.4999C12.1335 20.4998 12.2105 20.4995 12.3089 20.4991C12.5058 20.4982 12.7887 20.4964 13.1335 20.4928C13.8227 20.4855 14.761 20.471 15.7553 20.442C16.7484 20.4131 17.8036 20.3694 18.725 20.3035C19.6249 20.2391 20.4619 20.1495 20.9804 20.0134L20.9911 20.0105C21.6015 19.841 22.1556 19.5164 22.5973 19.0694C23.039 18.6225 23.3527 18.069 23.5067 17.465C23.5109 17.4487 23.5145 17.4323 23.5175 17.4158C23.8445 15.6356 24.0058 13.83 23.9994 12.0211C24.0109 10.1847 23.8496 8.35126 23.5175 6.54403C23.5145 6.52755 23.5109 6.51118 23.5067 6.49494C23.3527 5.89089 23.039 5.33744 22.5973 4.89048C22.1556 4.44353 21.6015 4.1189 20.9911 3.94938C20.9822 3.94691 20.9732 3.9446 20.9642 3.94245C20.4518 3.81963 19.6203 3.73811 18.7201 3.67927C17.8002 3.61913 16.746 3.57934 15.7534 3.5529C14.7596 3.52644 13.8218 3.51322 13.1327 3.50661C12.7881 3.50331 12.5054 3.50166 12.3086 3.50083C12.2102 3.50042 12.1333 3.50021 12.0809 3.5001L11.9999 3.5L11.919 3.50011C11.8665 3.50023 11.7895 3.50046 11.6911 3.50091C11.4942 3.50182 11.2113 3.50363 10.8665 3.50725C10.1773 3.51448 9.239 3.52897 8.24467 3.55797C7.25155 3.58693 6.19635 3.63055 5.27503 3.69651C4.37513 3.76094 3.53806 3.85042 3.01954 3.98653L3.00894 3.98948C2.3985 4.15899 1.84444 4.48362 1.40273 4.93058C0.961023 5.37754 0.647306 5.93099 0.493269 6.53504C0.489125 6.55129 0.485535 6.56767 0.482507 6.58415C0.152979 8.37769 -0.00833983 10.1971 0.000572185 12.0195C-0.0109093 13.8557 0.150422 15.689 0.482512 17.4961C0.486999 17.5205 0.492715 17.5447 0.499638 17.5685C0.669458 18.1538 0.990202 18.6862 1.43088 19.1143C1.87156 19.5424 2.41728 19.8517 3.01531 20.0123L3.01956 20.0134C3.53808 20.1495 4.37513 20.2391 5.27503 20.3035C6.19635 20.3694 7.25155 20.4131 8.24467 20.442C9.239 20.471 10.1773 20.4855 10.8665 20.4928C11.2113 20.4964 11.4942 20.4982 11.6911 20.4991C11.7895 20.4995 11.8665 20.4998 11.919 20.4999ZM11.9224 5.00365L12 5.00354L12.0778 5.00364L12.302 5.00435C12.4964 5.00517 12.7763 5.00681 13.1178 5.01008C13.801 5.01663 14.7295 5.02973 15.7118 5.05589C16.6952 5.08207 17.7269 5.12121 18.6184 5.17948C19.5184 5.23832 20.2177 5.31353 20.5873 5.39985C20.9331 5.49832 21.2469 5.68353 21.4977 5.93733C21.7462 6.18879 21.9243 6.49885 22.0148 6.83743C22.3271 8.54611 22.4787 10.2794 22.4676 12.0153L22.4676 12.0227C22.4738 13.7326 22.3223 15.4395 22.0148 17.1225C21.9243 17.4611 21.7462 17.7711 21.4977 18.0226C21.245 18.2783 20.9283 18.4644 20.5793 18.5623C20.218 18.6562 19.5205 18.739 18.6135 18.8039C17.7234 18.8677 16.6928 18.9105 15.7098 18.9392C14.7281 18.9678 13.8001 18.9821 13.1171 18.9893C12.7757 18.9929 12.496 18.9947 12.3017 18.9956C12.2046 18.996 12.1289 18.9962 12.0776 18.9964L12 18.9965L11.9224 18.9964C11.8711 18.9962 11.7954 18.996 11.6983 18.9956C11.504 18.9947 11.2243 18.9929 10.8829 18.9893C10.1999 18.9821 9.2719 18.9678 8.29016 18.9392C7.3072 18.9105 6.27655 18.8677 5.38647 18.8039C4.47675 18.7388 3.77781 18.6557 3.41745 18.5615C3.07438 18.4689 2.76133 18.2913 2.50843 18.0456C2.26336 17.8076 2.08278 17.5134 1.98283 17.1899C1.67211 15.4853 1.52138 13.7564 1.53246 12.0248L1.53241 12.0163C1.52374 10.2934 1.67529 8.57335 1.98517 6.87751C2.07572 6.53894 2.25378 6.22888 2.50227 5.97743C2.75501 5.72169 3.07171 5.53559 3.42066 5.43771C3.78196 5.34385 4.47945 5.261 5.38647 5.19607C6.27655 5.13234 7.3072 5.08951 8.29016 5.06084C9.2719 5.03221 10.1999 5.01787 10.8829 5.0107C11.2243 5.00712 11.504 5.00532 11.6983 5.00443C11.7954 5.00398 11.8711 5.00376 11.9224 5.00365Z" fill="#F36F25"/>
+                  </svg>
+                  {(isULight || isKitSurRon) && (
+                    <svg
+                      width="18"
+                      height="22"
+                      viewBox="0 0 18 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.88571 11.2558C4.45967 11.2558 4.11429 11.5994 4.11429 12.0233C4.11429 12.4471 4.45967 12.7907 4.88571 12.7907H13.1143C13.5403 12.7907 13.8857 12.4471 13.8857 12.0233C13.8857 11.5994 13.5403 11.2558 13.1143 11.2558H4.88571Z"
+                        fill="#F36F25"
+                      />
+                      <path
+                        d="M4.11429 16.1163C4.11429 15.6924 4.45967 15.3488 4.88571 15.3488H13.1143C13.5403 15.3488 13.8857 15.6924 13.8857 16.1163C13.8857 16.5401 13.5403 16.8837 13.1143 16.8837H4.88571C4.45967 16.8837 4.11429 16.5401 4.11429 16.1163Z"
+                        fill="#F36F25"
+                      />
+                      <path
+                        d="M4.88571 7.16279C4.45967 7.16279 4.11429 7.50639 4.11429 7.93023C4.11429 8.35408 4.45967 8.69767 4.88571 8.69767H6.94286C7.36891 8.69767 7.71429 8.35408 7.71429 7.93023C7.71429 7.50639 7.36891 7.16279 6.94286 7.16279H4.88571Z"
+                        fill="#F36F25"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M0.828469 0.824188C1.35893 0.296469 2.07839 0 2.82857 0H11.0571C11.2617 0 11.458 0.0808553 11.6026 0.224779L17.7741 6.36431L17.7823 6.37263C17.917 6.5108 18 6.69925 18 6.90698V19.186C18 19.9324 17.702 20.6481 17.1715 21.1758C16.6411 21.7035 15.9216 22 15.1714 22H2.82857C2.07839 22 1.35893 21.7035 0.828469 21.1758C0.298009 20.6481 0 19.9324 0 19.186V2.81395C0 2.06765 0.298009 1.35191 0.828469 0.824188ZM2.82857 1.53488H10.2857V6.90698C10.2857 7.33082 10.6311 7.67442 11.0571 7.67442H16.4571V19.186C16.4571 19.5253 16.3217 19.8506 16.0806 20.0905C15.8394 20.3304 15.5124 20.4651 15.1714 20.4651H2.82857C2.48758 20.4651 2.16055 20.3304 1.91943 20.0905C1.67832 19.8506 1.54286 19.5253 1.54286 19.186V2.81395C1.54286 2.47472 1.67832 2.14939 1.91943 1.90951C2.16055 1.66964 2.48758 1.53488 2.82857 1.53488ZM11.8286 2.62021L15.3662 6.13953H11.8286V2.62021Z"
+                        fill="#F36F25"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <div className="product-docs-text">See the documentation</div>
+              </div>
+            </div>
+          )}
+
+          {(isAdapter || isKitSurRon || isBaseballCap) && (
+            <div className="product-apparel-section">
+              <h2 className="product-apparel-title">Apparel</h2>
+              <div className="product-apparel-row">
+                {apparelProducts.concat(apparelProducts[0]).map((item, index) => (
+                  <CardBase
+                    key={`${item.id}-${index}`}
+                    className="product-apparel-card"
+                    width={380}
+                    height={490}
+                    onClick={() => navigate(`/product/${item.id}`)}
+                  >
+                    <div className="product-apparel-image">
+                      {item.image ? (
+                        <img className="card-image" src={item.image} alt={item.title} />
+                      ) : (
+                        <div className="product-apparel-placeholder">
+                          <svg
+                            width="81"
+                            height="90"
+                            viewBox="0 0 81 90"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z"
+                              fill="#E9E9E9"
+                            />
+                            <path
+                              d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z"
+                              fill="#E9E9E9"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div className="product-apparel-name">{item.title}</div>
+                    <div className="product-apparel-price">{item.price}</div>
+                    <button
+                      className="product-apparel-cta"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        addToCart(item);
+                      }}
+                    >
+                      Add to cart
+                    </button>
+                  </CardBase>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!isAdapter && !isKitSurRon && !isBaseballCap && (
+            <div className="product-add-section">
+              <h2 className="product-add-title">
+                {isOnBoardComputer ? "Recommended products" : "Add it to the controller"}
+              </h2>
+              {isOnBoardComputer ? (
+                <div className="product-add-grid">
+                  {recommendedControllers.map((item) => (
+                    <CardBase
+                      key={item.id}
+                      className="product-add-card"
+                      height={420}
+                      onClick={() => navigate(`/product/${item.id}`)}
+                    >
+                      <div className="product-add-image">
+                        {item.image ? (
+                          <img className="card-image" src={item.image} alt={item.title} />
+                        ) : (
+                          <div className="product-add-image-placeholder">
+                            <svg
+                              width="81"
+                              height="90"
+                              viewBox="0 0 81 90"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z"
+                                fill="#E9E9E9"
+                              />
+                              <path
+                                d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z"
+                                fill="#E9E9E9"
+                              />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+                      <div className="product-add-name">{item.title}</div>
+                      <div className="product-add-price">{item.price}</div>
+                    </CardBase>
+                  ))}
+                </div>
+              ) : (
+                <CardBase className="product-add-card" height={490}>
+                  <div className="product-add-image">
+                    <img className="card-image" src="/miniature15.png" alt="On-board computer" />
+                  </div>
+                  <div className="product-add-name">On-board computer</div>
+                  <div className="product-add-price">$110.00</div>
+                  <button className="product-add-cta">Add to cart</button>
+                </CardBase>
+              )}
+            </div>
+          )}
+
+          {!isBaseballCap && (
+            <div className="product-reviews-section">
+              <h2 className="product-reviews-title">Reviews</h2>
+              <div className="product-reviews-list">
+                <CardBase className="product-review-card" height={218}>
+                  <div className="product-review-text">
+                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                  </div>
+                  <div className="product-review-meta">
+                    <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
+                    <span>USA, Alex Smith</span>
+                  </div>
+                </CardBase>
+                <CardBase className="product-review-card" height={218}>
+                  <div className="product-review-text">
+                    Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
+                  </div>
+                  <div className="product-review-meta">
+                    <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
+                    <span>Germany, Max Stoun</span>
+                  </div>
+                </CardBase>
+                <CardBase className="product-review-card" height={218}>
+                  <div className="product-review-text">
+                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                  </div>
+                  <div className="product-review-meta">
+                    <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
+                    <span>Norway, Anna Orlova</span>
+                  </div>
+                </CardBase>
+                <CardBase className="product-review-card" height={218}>
+                  <div className="product-review-text">
+                    The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
+                  </div>
+                  <div className="product-review-meta">
+                    <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
+                    <span>France, Robert Jonson</span>
+                  </div>
+                </CardBase>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

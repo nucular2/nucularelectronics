@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
@@ -6,6 +7,7 @@ import { useCart } from '../context/CartContext';
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   const tabs = [
     'Components',
@@ -38,7 +40,11 @@ export default function Shop() {
 
           <div className="shop-grid">
             {filteredProducts.map(product => (
-              <div key={product.id} className="shop-card">
+              <div 
+                key={product.id} 
+                className="shop-card"
+                onClick={() => navigate(`/product/${product.id}`)}
+              >
                 <div className={`shop-card-image-container ${!product.image ? 'placeholder' : ''}`}>
                   {product.image ? (
                     <img src={product.image} alt={product.title} className="shop-card-image" />
@@ -54,7 +60,10 @@ export default function Shop() {
                 {!product.isPreorder && (
                   <button 
                     className="card-button buy-button"
-                    onClick={() => addToCart(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
                   >
                     Add to cart
                   </button>

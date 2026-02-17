@@ -1949,7 +1949,7 @@ img {
 .shop-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 24px;
 }
 
 .shop-card {

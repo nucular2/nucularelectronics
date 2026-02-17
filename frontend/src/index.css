@@ -64,7 +64,7 @@ body {
 
 .main-header.dropdown-open {
   background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: none;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -810,7 +810,7 @@ body {
 /* Header state when dropdown is open */
 .main-header.dropdown-open {
   background-color: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: none;
 }
 
 .main-header.dropdown-open .nav-link,

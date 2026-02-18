@@ -14,6 +14,7 @@ import ControllerSettings from './pages/ControllerSettings';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import News from './pages/News';
+import NewsDetailProtection from './pages/NewsDetailProtection';
 import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/protection-of-controllers" element={<NewsDetailProtection />} />
           <Route path="/support" element={<Support />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/settings/controller" element={<ControllerSettings />} />

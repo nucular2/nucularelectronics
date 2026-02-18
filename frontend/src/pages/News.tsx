@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 export default function News() {
   return (
@@ -10,13 +11,13 @@ export default function News() {
 
           <div className="news-grid">
             <article className="news-card">
-              <div className="news-image-wrapper">
+              <Link to="/news/protection-of-controllers" className="news-image-wrapper">
                 <img
                   src="/new1.png"
                   alt="Protection of controllers"
                   className="news-image"
                 />
-              </div>
+              </Link>
               <div className="news-meta">June 20, 2022</div>
               <h2 className="news-card-title">Protection of controllers</h2>
               <p className="news-card-text">

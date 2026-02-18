@@ -12,6 +12,7 @@ import Support from './pages/Support';
 import Settings from './pages/Settings';
 import ControllerSettings from './pages/ControllerSettings';
 import Contact from './pages/Contact';
+import Partners from './pages/Partners';
 import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/settings/controller" element={<ControllerSettings />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/partners" element={<Partners />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

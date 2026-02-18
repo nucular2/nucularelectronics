@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const goPartners = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/partners');
+  };
+
   return (
     <footer className="main-footer">
       <div className="footer-content">
@@ -11,8 +19,8 @@ export default function Footer() {
               <ul className="footer-links">
                 <li><a href="#">News</a></li>
                 <li><a href="#">Reviews</a></li>
-                <li><a href="#">Dealers</a></li>
-                <li><a href="#">Contact us</a></li>
+                <li><a href="#" onClick={goPartners}>Dealers</a></li>
+                <li><a href="#" onClick={goPartners}>Contact us</a></li>
               </ul>
             </div>
             <div className="footer-column">
@@ -34,9 +42,9 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">For partners</h4>
               <ul className="footer-links">
-                <li><a href="#">Become a dealer</a></li>
-                <li><a href="#">For Influencers</a></li>
-                <li><a href="#">For OEMs</a></li>
+                <li><a href="#" onClick={goPartners}>Become a dealer</a></li>
+                <li><a href="#" onClick={goPartners}>For Influencers</a></li>
+                <li><a href="#" onClick={goPartners}>For OEMs</a></li>
               </ul>
             </div>
           </div>

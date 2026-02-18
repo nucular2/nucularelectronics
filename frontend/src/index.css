@@ -3428,6 +3428,121 @@ img {
 .partners-list--bulleted li {
   margin-bottom: 8px;
 }
+.news-layout {
+  max-width: 1200px;
+  margin: 120px auto 160px;
+  padding: 0 40px;
+}
+
+.news-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 120%;
+  color: #222222;
+  margin-bottom: 32px;
+  margin-left: -20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 584px);
+  gap: 12px;
+  justify-content: center;
+}
+
+.news-card {
+  width: 584px;
+}
+
+.news-image-wrapper {
+  width: 584px;
+  height: 384px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.news-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.news-image-wrapper:hover .news-image {
+  transform: scale(1.06);
+}
+.news-grid-small {
+  display: grid;
+  grid-template-columns: repeat(3, 380px);
+  gap: 24px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.news-card--small {
+  width: 380px;
+}
+
+.news-image-wrapper--small {
+  width: 380px;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.news-card--small .news-card-text {
+  max-width: 380px;
+  min-height: 72px;
+}
+.news-show-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 72px;
+  margin-bottom: 72px;
+}
+.news-show-more-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #f36f25;
+  text-decoration: none;
+}
+.news-show-more-link:hover {
+  color: #d85e1d;
+}
+
+.news-meta {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #999999;
+  margin-bottom: 4px;
+}
+
+.news-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 140%;
+  color: #222222;
+  margin-bottom: 8px;
+}
+
+.news-card-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #555555;
+  max-width: 580px;
+  min-height: 83px;
+}
 .product-add-price {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;

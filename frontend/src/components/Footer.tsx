@@ -9,6 +9,11 @@ export default function Footer() {
     navigate('/partners');
   };
 
+  const goNews = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/news');
+  };
+
   return (
     <footer className="main-footer">
       <div className="footer-content">
@@ -17,7 +22,7 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">Company</h4>
               <ul className="footer-links">
-                <li><a href="#">News</a></li>
+                <li><a href="#" onClick={goNews}>News</a></li>
                 <li><a href="#">Reviews</a></li>
                 <li><a href="#" onClick={goPartners}>Dealers</a></li>
                 <li><a href="#" onClick={goPartners}>Contact us</a></li>

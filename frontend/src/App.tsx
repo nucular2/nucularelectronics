@@ -9,6 +9,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import UpdatePassword from './pages/UpdatePassword';
 import Profile from './pages/Profile';
 import Support from './pages/Support';
+import Settings from './pages/Settings';
+import ControllerSettings from './pages/ControllerSettings';
 import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/controller" element={<ControllerSettings />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

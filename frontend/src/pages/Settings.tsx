@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { products } from "../data/products";
 
-export default function Support() {
+export default function Settings() {
   const [query, setQuery] = useState("");
+  const [activeCard, setActiveCard] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const results = useMemo(() => {
@@ -49,8 +50,19 @@ export default function Support() {
       <Header variant="white" />
       <div className="support-page">
         <div className="support-container">
+          <div className="support-breadcrumb">
+            <button
+              type="button"
+              className="support-breadcrumb-link"
+              onClick={() => navigate("/support")}
+            >
+              Support
+            </button>
+            <span className="support-breadcrumb-separator">/</span>
+            <span className="support-breadcrumb-current">Settings</span>
+          </div>
           <div className="support-inner">
-            <h1 className="support-title">Support</h1>
+            <h1 className="support-title">Settings</h1>
             <form className="support-search-row" onSubmit={handleSubmit}>
               <div className="support-search-input">
                 <svg
@@ -114,45 +126,72 @@ export default function Support() {
               </div>
             )}
 
-            <div className="support-topics">
+            <div className="settings-grid">
               <div
-                className="support-topic support-topic-link"
-                onClick={() => navigate("/settings")}
+                className={`settings-card${activeCard === "controller" ? " settings-card-active" : ""}`}
+                onClick={() => {
+                  setActiveCard("controller");
+                  navigate("/settings/controller");
+                }}
               >
-                <div className="support-topic-icon">
-                  <img src="/шестиренка.png" alt="Settings" width={24} height={24} />
+                <div className="settings-card-title">Controller</div>
+                <div className="settings-card-text">
+                  Description of settings and connection diagrams for 6F, 12F, and 24F controllers.
                 </div>
-                <span>Settings</span>
               </div>
-              <div className="support-topic">
-                <div className="support-topic-icon">
-                  <img src="/update.png" alt="Firmware update" width={24} height={24} />
+              <div
+                className={`settings-card${activeCard === "onboard" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("onboard")}
+              >
+                <div className="settings-card-title">On-board computer</div>
+                <div className="settings-card-text">
+                  Description of settings and connection diagram of the On-board computer.
                 </div>
-                <span>Firmware update</span>
               </div>
-              <div className="support-topic">
-                <div className="support-topic-icon">
-                  <img src="/diagrams.png" alt="Connection diagrams" width={24} height={24} />
+              <div
+                className={`settings-card${activeCard === "ulight" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("ulight")}
+              >
+                <div className="settings-card-title">uLight</div>
+                <div className="settings-card-text">
+                  Description of settings and connection diagram of the uLight controller.
                 </div>
-                <span>Connection diagrams</span>
               </div>
-              <div className="support-topic">
-                <div className="support-topic-icon">
-                  <img src="/Malfunctions.png" alt="Malfunctions" width={24} height={24} />
+              <div
+                className={`settings-card${activeCard === "fan" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("fan")}
+              >
+                <div className="settings-card-title">Fan and light control</div>
+                <div className="settings-card-text">
+                  Description of settings and connection diagram for the stoplight and fans.
                 </div>
-                <span>Malfunctions</span>
               </div>
-              <div className="support-topic">
-                <div className="support-topic-icon">
-                  <img src="/feedback.png" alt="Feedback" width={24} height={24} />
+              <div
+                className={`settings-card${activeCard === "configs" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("configs")}
+              >
+                <div className="settings-card-title">Configuration files</div>
+                <div className="settings-card-text">
+                  Examples of ready-made configurations for different types of electric motors.
                 </div>
-                <span>Feedback</span>
               </div>
-              <div className="support-topic">
-                <div className="support-topic-icon">
-                  <img src="/github.png" alt="For developers" width={24} height={24} />
+              <div
+                className={`settings-card${activeCard === "motors" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("motors")}
+              >
+                <div className="settings-card-title">Motors information</div>
+                <div className="settings-card-text">
+                  Data on the number of pole pairs on different brands of electric motors.
                 </div>
-                <span>For developers</span>
+              </div>
+              <div
+                className={`settings-card${activeCard === "examples" ? " settings-card-active" : ""}`}
+                onClick={() => setActiveCard("examples")}
+              >
+                <div className="settings-card-title">Examples of settings</div>
+                <div className="settings-card-text">
+                  Descriptions of the settings for the various functions.
+                </div>
               </div>
             </div>
 

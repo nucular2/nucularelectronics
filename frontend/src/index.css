@@ -2274,6 +2274,33 @@ img {
   margin: 0 auto;
 }
 
+.support-breadcrumb {
+  margin: 8px 0 24px;
+  margin-left: -140px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.support-breadcrumb-link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: #222222;
+}
+
+.support-breadcrumb-separator {
+  color: #b0b0b0;
+}
+
+.support-breadcrumb-current {
+  color: #b0b0b0;
+}
+
 .support-title {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
@@ -2464,6 +2491,231 @@ img {
   flex-shrink: 0;
 }
 
+.settings-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+  row-gap: 16px;
+  width: 780px;
+}
+
+.settings-card {
+  width: 380px;
+  height: 140px;
+  border-radius: 20px;
+  padding: 32px;
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+   border: 1px solid transparent;
+   cursor: pointer;
+   transition: border-color 0.15s ease;
+}
+
+.settings-card-active {
+  border-color: #dcdcdc;
+}
+
+.settings-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  color: #222222;
+}
+
+.settings-card-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #555555;
+}
+
+.controller-layout {
+  margin-top: 56px;
+  display: flex;
+}
+
+.controller-list {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: -140px;
+}
+
+.controller-list-item {
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  color: #222222;
+  cursor: pointer;
+  white-space: nowrap; /* все пункты в одну строку по умолчанию */
+}
+
+/* Только четвертая кнопка (Diagnostics of controller malfunctions) в две строки */
+.controller-list-item:nth-of-type(4) {
+  display: block;
+  width: 180px;
+  white-space: normal; /* разрешаем перенос только этому пункту и гарантируем две строки */
+}
+
+.controller-list-item-active {
+  color: #f36f25;
+}
+
+.controller-content-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.controller-content {
+  max-width: 720px;
+  margin-left: 170px;
+}
+
+.controller-page-toc {
+  padding-top: 0;
+  min-width: 180px;
+  margin-left: 110px;
+}
+
+.controller-page-toc-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 140%;
+  color: #777777;
+  margin-bottom: 16px;
+}
+
+.controller-page-toc-item {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 160%;
+  color: #777777;
+  white-space: nowrap;
+}
+
+.controller-page-toc-item + .controller-page-toc-item {
+  margin-top: 8px;
+}
+
+.controller-content-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 120%;
+  color: #222222;
+  margin-bottom: 20px;
+}
+
+.controller-content-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #222222;
+  margin-bottom: 32px;
+}
+
+.controller-content-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: #555555;
+}
+
+/* .controller-intro-text removed */
+
+.controller-section-title {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  color: #222222;
+}
+
+.controller-section-list {
+  margin: 0;
+  padding-left: 0;
+  list-style-position: inside;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: #555555;
+}
+
+.controller-section-list li {
+  list-style: none;
+}
+
+.controller-section-list li::before {
+  content: "•";
+  display: inline-block;
+  width: 1em;
+  margin-left: 0;
+  color: #000000;
+}
+
+.controller-section-subtitle {
+  margin-top: 48px;
+  margin-bottom: 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #222222;
+}
+
+.controller-content-text + .controller-content-text {
+  margin-top: 16px;
+}
+
+.controller-warning {
+  margin-top: 40px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  width: 680px;
+  height: 100px;
+  background: #ffebdf;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.controller-warning-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.controller-warning-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  color: #222222;
+}
+
+.controller-photo {
+  margin-top: 48px;
+  display: block;
+}
+
 .support-topic {
   display: flex;
   align-items: center;
@@ -2473,6 +2725,10 @@ img {
   font-weight: 700;
   font-size: 20px;
   color: #222222;
+}
+
+.support-topic-link {
+  cursor: pointer;
 }
 
 .support-topic-icon {

@@ -191,6 +191,21 @@ export default function ControllerSettings() {
                   {activeSection === "fan" && (
                     <>
                       <div className="controller-content-title">Fan and Light Control</div>
+                      <div className="controller-content-text">
+                        It is possible to connect stoplight or fan to controller port P1/P2. Configuration
+                        described in{" "}
+                        <span className="controller-content-link">
+                          Controller setup
+                        </span>
+                        . Please note that controller outputs are open-drain 5V max, 220R resistor on the line.
+                        Don&apos;t use controller logic ground for loads more than 0.5A, use power ground
+                        instead. System (CAN) cable uses power ground.
+                      </div>
+                      <div className="controller-content-text" style={{ marginTop: 24 }}>
+                        You can connect small power light directly to controller with this scheme, 1khz
+                        operation is enough:
+                      </div>
+                      <img src="/photo2.png" alt="" className="controller-photo" />
                     </>
                   )}
                   {activeSection === "examples" && (
@@ -211,11 +226,13 @@ export default function ControllerSettings() {
                     </>
                   )}
                 </div>
-                <div className="controller-page-toc">
-                  <div className="controller-page-toc-title">On this page</div>
-                  <div className="controller-page-toc-item">Controller (v.0.8.13)</div>
-                  <div className="controller-page-toc-item">Connecting multiple controllers</div>
-                </div>
+                {activeSection === "setup" && (
+                  <div className="controller-page-toc">
+                    <div className="controller-page-toc-title">On this page</div>
+                    <div className="controller-page-toc-item">Controller (v.0.8.13)</div>
+                    <div className="controller-page-toc-item">Connecting multiple controllers</div>
+                  </div>
+                )}
               </div>
             </div>
         </div>

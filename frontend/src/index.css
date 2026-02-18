@@ -2579,8 +2579,8 @@ img {
 }
 
 .controller-content {
-  max-width: 720px;
-  margin-left: 170px;
+  max-width: 820px;
+  margin-left: 60px;
 }
 
 .controller-page-toc {
@@ -2635,6 +2635,10 @@ img {
   font-size: 16px;
   line-height: 160%;
   color: #555555;
+}
+
+.controller-content-link {
+  color: #f36f25;
 }
 
 /* .controller-intro-text removed */
@@ -2712,8 +2716,10 @@ img {
 }
 
 .controller-photo {
-  margin-top: 48px;
+  margin-top: 40px;
   display: block;
+  width: 100%;
+  max-width: 520px;
 }
 
 .support-topic {

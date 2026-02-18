@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
@@ -12,6 +12,16 @@ type ControllerSection =
 export default function ControllerSettings() {
   const [activeSection, setActiveSection] = useState<ControllerSection>("setup");
   const navigate = useNavigate();
+  const setupImageRef = useRef<HTMLImageElement | null>(null);
+
+  const handleGoToSetupImage = () => {
+    setActiveSection("setup");
+    setTimeout(() => {
+      if (setupImageRef.current) {
+        setupImageRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 0);
+  };
 
   return (
     <>
@@ -185,7 +195,12 @@ export default function ControllerSettings() {
                           capacitors with a resistor or an ordinary light bulb.
                         </div>
                       </div>
-                      <img src="/photo.png" alt="" className="controller-photo" />
+                      <img
+                        src="/photo.png"
+                        alt=""
+                        className="controller-photo"
+                        ref={setupImageRef}
+                      />
                     </>
                   )}
                   {activeSection === "fan" && (
@@ -194,7 +209,7 @@ export default function ControllerSettings() {
                       <div className="controller-content-text">
                         It is possible to connect stoplight or fan to controller port P1/P2. Configuration
                         described in{" "}
-                        <span className="controller-content-link">
+                        <span className="controller-content-link" onClick={handleGoToSetupImage}>
                           Controller setup
                         </span>
                         . Please note that controller outputs are open-drain 5V max, 220R resistor on the line.

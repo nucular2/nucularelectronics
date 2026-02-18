@@ -546,3 +546,7 @@
 .checkout-btn:hover {
   opacity: 0.9;
 }
+
+:root {
+  --bg-color: #FFFFFF;
+}

@@ -38,6 +38,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     navigate('/shop');
   };
 
+  const handleSupportClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/support');
+  };
+
   const handleCartClick = () => {
     navigate('/cart');
   };
@@ -72,7 +77,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           </svg>
         </a>
         <a href="#" className="nav-link" onClick={handleShopClick}>Shop</a>
-        <a href="#" className="nav-link">Support</a>
+        <a href="#" className="nav-link" onClick={handleSupportClick}>Support</a>
         <a href="#" className="nav-link">Firmware</a>
         <a href="#" className="nav-link">News</a>
         <a href="#" className="nav-link">Contact us</a>

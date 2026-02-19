@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Header({ variant = 'transparent' }: { variant?: 'transparent' | 'white' }) {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { items } = useCart();
   const { user } = useAuth();
@@ -70,6 +71,19 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     }
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleMobileNavClick = (path: string) => {
+    navigate(path);
+    closeMobileMenu();
+  };
+
   return (
     <header className={`main-header ${isWhite ? 'dropdown-open' : ''}`}>
       <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
@@ -84,6 +98,12 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           <path className="logo-path" d="M165.295 14.117C164.176 14.7627 163.243 15.6568 162.497 16.7993V13.3333H156.118V33.3333H162.497V23.7681C162.497 22.0544 162.895 20.8623 163.691 20.1917C164.487 19.4963 165.681 19.1485 167.272 19.1485H168.889V13.1111C167.521 13.1111 166.414 13.4464 165.295 14.117Z" fill={logoColor} />
         </svg>
       </div>
+      {/* Mobile Menu Toggle */}
+      <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <nav className="main-nav">
         <a href="#" className="nav-link" onClick={toggleProducts}>
           Products 
@@ -135,6 +155,16 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           </div>
         </div>
       )}
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+        <nav className="mobile-menu-nav">
+          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/shop'); }}>Shop</a>
+          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/support'); }}>Support</a>
+          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/settings/controller'); }}>Firmware</a>
+          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/news'); }}>News</a>
+          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/contact'); }}>Contact us</a>
+        </nav>
+      </div>
     </header>
   );
 }

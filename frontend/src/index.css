@@ -3547,7 +3547,7 @@ img {
 }
 .news-detail {
   max-width: 780px;
-  margin: 140px auto 160px;
+  margin: 140px auto 0;
   padding: 0 40px;
 }
 .news-detail-breadcrumb {
@@ -3555,18 +3555,17 @@ img {
   align-items: center;
   gap: 8px;
   margin: 8px 0 24px;
+  margin-left: -260px;
   color: #b0b0b0;
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
 }
 .news-detail-back {
   color: #222222;
-}
-.news-detail-separator {
-  color: #b0b0b0;
-}
-.news-detail-current {
-  color: #b0b0b0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
 }
 .news-detail-title {
   font-family: 'Poppins', sans-serif;
@@ -3585,7 +3584,7 @@ img {
   margin-bottom: 16px;
 }
 .news-detail-image {
-  width: 780px;
+  width: 100%;
   height: 444px;
   border-radius: 20px;
   overflow: hidden;
@@ -3647,13 +3646,12 @@ img {
 }
 .news-detail-images-grid {
   display: grid;
-  grid-template-columns: repeat(2, 360px);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  justify-content: center;
 }
 .news-detail-images-grid img {
-  width: 360px;
-  height: 260px;
+  width: 100%;
+  height: 280px;
   border-radius: 20px;
   object-fit: cover;
   display: block;
@@ -3663,7 +3661,7 @@ img {
   transform: scale(1.05);
 }
 .news-detail-note {
-  margin-top: 24px;
+  margin-top: 40px;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -3677,6 +3675,20 @@ img {
   font-size: 14px;
   line-height: 160%;
   color: #555555;
+}
+.news-detail-latest {
+  max-width: 1200px;
+  margin: 96px auto 96px;
+  padding: 0 40px;
+}
+.news-detail-latest-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #222222;
+  margin-bottom: 32px;
+  margin-left: -20px;
 }
 .product-add-price {
   font-family: 'Poppins', sans-serif;

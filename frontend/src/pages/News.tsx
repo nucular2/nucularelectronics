@@ -27,13 +27,13 @@ export default function News() {
             </article>
 
             <article className="news-card">
-              <div className="news-image-wrapper">
+              <Link to="/news/price-increase" className="news-image-wrapper">
                 <img
                   src="/new2.png"
                   alt="Price increase"
                   className="news-image"
                 />
-              </div>
+              </Link>
               <div className="news-meta">June 5, 2022</div>
               <h2 className="news-card-title">Price increase</h2>
               <p className="news-card-text">
@@ -60,13 +60,16 @@ export default function News() {
             </article>
 
             <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
+              <Link
+                to="/news/brief-news-for-the-year"
+                className="news-image-wrapper news-image-wrapper--small"
+              >
                 <img
                   src="/new4.png"
                   alt="Brief news for the year"
                   className="news-image"
                 />
-              </div>
+              </Link>
               <div className="news-meta">May 20, 2022</div>
               <h2 className="news-card-title">Brief news for the year</h2>
               <p className="news-card-text">

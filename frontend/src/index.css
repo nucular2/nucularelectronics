@@ -549,7 +549,7 @@ body,
 /* Page Content Wrapper (White Background) */
 .page-content-white {
   background-color: #fff;
-  padding-bottom: 140px;
+  padding-bottom: 32px;
   width: 100%;
 }
 
@@ -3550,6 +3550,9 @@ img {
   margin: 140px auto 0;
   padding: 0 40px;
 }
+.news-detail-after-banner {
+  margin: 96px auto 96px;
+}
 .news-detail-breadcrumb {
   display: flex;
   align-items: center;
@@ -3660,6 +3663,33 @@ img {
 .news-detail-images-grid img:hover {
   transform: scale(1.05);
 }
+.news-detail-casing-grid {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  justify-content: center;
+}
+.news-detail-casing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.news-detail-casing-image {
+  width: 100%;
+  height: 380px;
+  border-radius: 20px;
+  object-fit: cover;
+  display: block;
+}
+.news-detail-casing-caption {
+  margin-top: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #b0b0b0;
+}
 .news-detail-note {
   margin-top: 40px;
   font-family: 'Poppins', sans-serif;
@@ -3667,6 +3697,9 @@ img {
   font-size: 14px;
   line-height: 160%;
   color: #555555;
+}
+.news-detail-accent {
+  color: #f36f25;
 }
 .news-detail-sign {
   margin-top: 16px;
@@ -3678,7 +3711,7 @@ img {
 }
 .news-detail-latest {
   max-width: 1200px;
-  margin: 96px auto 96px;
+  margin: 96px auto 48px;
   padding: 0 40px;
 }
 .news-detail-latest-title {
@@ -3689,6 +3722,29 @@ img {
   color: #222222;
   margin-bottom: 32px;
   margin-left: -20px;
+}
+.news-detail-banner {
+  width: 100%;
+  background: #101010;
+  padding: 72px 0;
+  margin-top: 80px;
+}
+.news-detail-banner-inner {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.news-detail-banner-text {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #ffffff;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.news-detail-banner-accent {
+  color: #f36f25;
 }
 .product-add-price {
   font-family: 'Poppins', sans-serif;

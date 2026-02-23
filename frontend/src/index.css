@@ -1196,6 +1196,73 @@ body,
   background: #d85e1d;
 }
 
+.cart-container-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-empty {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.cart-empty-illustration {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.cart-empty-illustration img {
+  max-width: 100%;
+  height: auto;
+}
+
+.cart-empty-title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #222;
+}
+
+.cart-empty-text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #555;
+  max-width: 320px;
+}
+
+.cart-empty-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 0 24px;
+  width: 125px;
+  height: 44px;
+  background: #F36F25;
+  color: #fff;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.cart-empty-button:hover {
+  background: #d85e1d;
+}
+
 /* Empty Cart State */
 .cart-container.empty {
   display: flex;
@@ -4484,14 +4551,13 @@ img {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   z-index: 1000;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
   padding: 80px 20px 40px;
   overflow-y: auto;
+  display: none;
 }
 
 .mobile-menu.open {
-  transform: translateX(0);
+  display: block;
 }
 
 .mobile-menu-nav {
@@ -4595,6 +4661,50 @@ img {
 }
 
 @media (max-width: 768px) {
+  .footer-content {
+    padding: 32px 20px 24px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .footer-top-right {
+    order: 1;
+  }
+
+  .footer-columns {
+    order: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 40px;
+    row-gap: 24px;
+  }
+
+  .footer-middle {
+    justify-content: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom-links .copyright {
+    margin-left: 0;
+    width: 100%;
+  }
+
   .product-container {
     padding: 20px;
   }

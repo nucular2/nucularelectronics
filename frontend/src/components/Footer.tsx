@@ -18,6 +18,19 @@ export default function Footer() {
     <footer className="main-footer">
       <div className="footer-content">
         <div className="footer-top">
+          <div className="footer-top-right">
+            <div className="language-selector">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="globe-icon">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 12H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 2A15.3 15.3 0 0 1 16 12C16 16.2 14.5 20.3 12 22A15.3 15.3 0 0 1 8 12C8 7.8 9.5 3.7 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>English</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chevron-icon">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
           <div className="footer-columns">
             <div className="footer-column">
               <h4 className="footer-title">Company</h4>
@@ -51,20 +64,6 @@ export default function Footer() {
                 <li><a href="#" onClick={goPartners}>For Influencers</a></li>
                 <li><a href="#" onClick={goPartners}>For OEMs</a></li>
               </ul>
-            </div>
-          </div>
-          
-          <div className="footer-top-right">
-            <div className="language-selector">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="globe-icon">
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 12H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 2A15.3 15.3 0 0 1 16 12C16 16.2 14.5 20.3 12 22A15.3 15.3 0 0 1 8 12C8 7.8 9.5 3.7 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span>English</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chevron-icon">
-                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </div>
           </div>
         </div>
@@ -112,9 +111,10 @@ export default function Footer() {
            </svg>
         </div>
         <div className="footer-bottom-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <span className="copyright">© 2024 Nucular. All rights reserved.</span>
+          <a href="#">Careers</a>
+          <a href="#">Terms and Conditions</a>
+          <a href="#">Privacy policy</a>
+          <span className="copyright">© 2025 Nucular Limited. All Rights Reserved.</span>
         </div>
       </div>
       </div>

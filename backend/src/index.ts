@@ -8,6 +8,8 @@ import { createServer } from "https";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { Registry, collectDefaultMetrics, Counter, Gauge } from "prom-client";
+import { stripe, verifyWebhook } from "./services/stripe";
+import { supabase } from "./lib/supabase";
 
 const logger = pino();
 
@@ -20,7 +22,13 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json({ limit: "1mb" }));
+app.use((req, res, next) => {
+  if (req.path === "/api/stripe/webhook") {
+    next();
+  } else {
+    express.json({ limit: "1mb" })(req, res, next);
+  }
+});
 app.use(
   rateLimit({
     windowMs: 60 * 1000,
@@ -68,14 +76,107 @@ app.get("/api/products/inventory", async (_req: Request, res: Response) => {
   res.status(501).json({ message: "not implemented" });
 });
 
+app.post("/api/checkout/session", async (req: Request, res: Response) => {
+  httpRequests.inc();
+  const { orderId } = req.body as { orderId?: string };
+
+  if (!orderId) {
+    return res.status(400).json({ message: "orderId is required" });
+  }
+
+  const { data: order, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("id", orderId)
+    .single();
+
+  if (error || !order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  const amountNumber = Number(order.total_amount);
+  const amount = Math.round(amountNumber * 100);
+
+  if (!Number.isFinite(amountNumber) || amount <= 0) {
+    return res.status(400).json({ message: "Invalid order amount" });
+  }
+
+  try {
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Nucular shop order",
+            },
+            unit_amount: amount,
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: `${frontendUrl}/orders?payment=success`,
+      cancel_url: `${frontendUrl}/cart?payment=canceled`,
+      metadata: {
+        order_id: order.id,
+        user_id: order.user_id,
+      },
+    });
+
+    return res.json({ id: session.id, url: session.url });
+  } catch (err) {
+    logger.error({ err }, "failed to create checkout session");
+    return res.status(500).json({ message: "Failed to create checkout session" });
+  }
+});
+
 app.post("/api/orders/create", csrfProtection, async (_req: Request, res: Response) => {
   httpRequests.inc();
   res.status(501).json({ message: "not implemented" });
 });
 
-app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), (_req: Request, res: Response) => {
-  res.status(501).json({ message: "not implemented" });
-});
+app.post(
+  "/api/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  async (req: Request, res: Response) => {
+    const sig = req.headers["stripe-signature"];
+
+    if (!sig || typeof sig !== "string") {
+      return res.status(400).send("Missing Stripe signature");
+    }
+
+    let event;
+
+    try {
+      event = verifyWebhook(req.body as Buffer, sig);
+    } catch (err) {
+      logger.error({ err }, "invalid Stripe webhook signature");
+      return res.status(400).send("Webhook Error");
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object as any;
+      const orderId = session.metadata?.order_id as string | undefined;
+
+      if (orderId) {
+        try {
+          await supabase
+            .from("orders")
+            .update({ status: "Paid" })
+            .eq("id", orderId);
+        } catch (err) {
+          logger.error({ err, orderId }, "failed to update order status to Paid");
+        }
+      }
+    }
+
+    res.json({ received: true });
+  }
+);
 
 const port = Number(process.env.PORT || 4000);
 const useHttps = process.env.HTTPS === "true";

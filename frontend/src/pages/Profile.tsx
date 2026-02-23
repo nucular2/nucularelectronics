@@ -44,6 +44,16 @@ export default function Profile() {
             </div>
           </div>
 
+          <div className="profile-section" style={{ marginBottom: '24px' }}>
+            <button
+              className="auth-button"
+              style={{ maxWidth: '260px', marginBottom: '8px' }}
+              onClick={() => navigate('/orders')}
+            >
+              View order history
+            </button>
+          </div>
+
           <button className="auth-button" onClick={handleSignOut} style={{ maxWidth: '200px' }}>
             Sign Out
           </button>

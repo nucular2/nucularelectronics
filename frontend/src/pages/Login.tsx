@@ -12,6 +12,9 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const params = new URLSearchParams(location.search);
+  const isJustRegistered = params.get('registered') === '1';
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -39,6 +42,14 @@ export default function Login() {
         <div className="auth-container">
           <h1 className="auth-title">Sign in to your account</h1>
           
+          {isJustRegistered && (
+            <div className="auth-success-toast">
+              <div className="toast-content">
+                Registration successful. Please check your email to confirm your account.
+              </div>
+            </div>
+          )}
+
           {error && <div className="auth-error">{error}</div>}
           
           <form onSubmit={handleLogin} className="auth-form">

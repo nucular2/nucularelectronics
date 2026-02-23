@@ -41,10 +41,7 @@ export default function Register() {
       setError(error.message);
       setLoading(false);
     } else {
-      // Depending on Supabase settings, email confirmation might be required.
-      // If auto-confirm is on, we can redirect to login or profile.
-      // For now, let's redirect to login with a message or profile if session is established.
-      navigate('/login');
+      navigate('/login?registered=1');
     }
   };
 

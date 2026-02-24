@@ -18,7 +18,7 @@ export default function Cart() {
             <h1 className="cart-title">Cart</h1>
             <div className="cart-empty">
               <div className="cart-empty-illustration">
-                <img src="/сart.png" alt="Cart is empty" />
+                <img src="/cart.png" alt="Cart is empty" />
               </div>
               <h2 className="cart-empty-title">Cart is empty</h2>
               <p className="cart-empty-text">

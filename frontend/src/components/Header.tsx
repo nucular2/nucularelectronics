@@ -98,24 +98,6 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           <path className="logo-path" d="M165.295 14.117C164.176 14.7627 163.243 15.6568 162.497 16.7993V13.3333H156.118V33.3333H162.497V23.7681C162.497 22.0544 162.895 20.8623 163.691 20.1917C164.487 19.4963 165.681 19.1485 167.272 19.1485H168.889V13.1111C167.521 13.1111 166.414 13.4464 165.295 14.117Z" fill={logoColor} />
         </svg>
       </div>
-      {/* Mobile Menu Toggle */}
-      <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
-          <span></span>
-          <span></span>
-        </button>
-      <nav className="main-nav">
-        <a href="#" className="nav-link" onClick={toggleProducts}>
-          Products 
-          <svg className={`nav-arrow ${isProductsOpen ? 'open' : ''}`} width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path className="arrow-path" d="M1 1L5 5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </a>
-        <a href="#" className="nav-link" onClick={handleShopClick}>Shop</a>
-        <a href="#" className="nav-link" onClick={handleSupportClick}>Support</a>
-        <a href="#" className="nav-link" onClick={handleFirmwareClick}>Firmware</a>
-        <a href="#" className="nav-link" onClick={handleNewsClick}>News</a>
-        <a href="#" className="nav-link" onClick={handleContactClick}>Contact us</a>
-      </nav>
       <div className="header-actions">
         <div className="cart-icon-container" onClick={handleCartClick} style={{ cursor: 'pointer' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,6 +111,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
             <path fillRule="evenodd" clipRule="evenodd" d="M11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0ZM1.53488 11C1.53488 5.77256 5.77256 1.53488 11 1.53488C16.2274 1.53488 20.4651 5.77256 20.4651 11C20.4651 13.0499 19.8134 14.9477 18.706 16.4973C17.772 15.5377 16.5233 15 15.2225 15H6.77749C5.4767 15 4.22802 15.5377 3.29403 16.4973C2.18655 14.9477 1.53488 13.0499 1.53488 11ZM4.35955 17.7448C6.0681 19.4271 8.41283 20.4651 11 20.4651C13.5872 20.4651 15.9319 19.4271 17.6404 17.7448C16.9978 17.0657 16.1286 16.6844 15.2225 16.6844H6.77749C5.87135 16.6844 5.00217 17.0657 4.35955 17.7448Z" fill={logoColor} />
           </svg>
         </div>
+        {/* Mobile Menu Toggle */}
+        <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+          <span></span>
+          <span></span>
+        </button>
       </div>
       {isProductsOpen && (
         <div className="dropdown-overlay open">

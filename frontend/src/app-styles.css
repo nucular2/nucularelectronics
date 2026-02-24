@@ -918,6 +918,19 @@
 }
 
 @media (max-width: 600px) {
+  .cart-container {
+    padding: 20px !important; /* Reset desktop padding */
+  }
+
+  .cart-layout {
+    gap: 32px;
+    align-items: stretch; /* Full width */
+  }
+
+  .cart-main {
+    width: 100%; /* Full width */
+  }
+
   .shop-grid {
     grid-template-columns: 1fr;
   }
@@ -927,9 +940,10 @@
   }
   
   .cart-item-main {
-    flex-direction: column;
+    flex-direction: row; /* Image and details side-by-side */
+    flex-wrap: wrap; /* Allow actions to wrap */
     align-items: flex-start;
-    gap: 16px;
+    gap: 0;
     height: auto;
   }
   
@@ -937,25 +951,80 @@
     width: 100%;
     height: auto;
     padding: 12px;
+    margin-top: 0;
   }
   
   .cart-item-image {
-    width: 100%;
-    height: 140px;
+    width: 80px !important;
+    height: 80px !important;
+    margin-right: 16px;
   }
   
   .cart-item-details {
-    width: 100%;
+    width: calc(100% - 96px); /* Remaining space */
+    padding-top: 0;
   }
   
   .cart-item-actions {
     width: 100%;
     justify-content: space-between;
-    margin-top: 12px;
+    margin-top: 16px;
+    gap: 0;
   }
   
   .cart-item-price {
-    text-align: left;
+    text-align: right;
+    margin-top: 0 !important;
+  }
+
+  .remove-btn {
+    margin-right: 0 !important;
+    margin-top: 8px !important;
+    text-align: right;
+  }
+
+  .cart-price-remove {
+    align-items: flex-end;
+  }
+
+  .cart-summary {
+    margin-top: 40px !important;
+    width: 100% !important;
+    padding: 24px 0 0 0 !important;
+    border-top: 1px solid #eee !important;
+  }
+
+  .cart-title {
+    font-size: 32px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .cart-summary-title {
+    font-size: 24px !important;
+    margin-left: 0 !important;
+    margin-bottom: 24px !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .cart-summary-row {
+    font-size: 14px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .cart-summary-row-total {
+    margin-top: 16px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .cart-summary-row-total .cart-summary-value {
+    font-size: 24px !important;
+    margin-top: 0 !important;
+  }
+
+  .cart-summary-label {
+    font-size: 14px !important;
+    color: #888 !important;
   }
   
   .orders-title {

@@ -5,10 +5,64 @@ import CardBase from "../components/cards/CardBase";
 import { products } from "../data/products";
 import { useCart } from "../context/CartContext";
 
+function CollapsibleSection({ 
+  title, 
+  children, 
+  className = "", 
+  titleClassName = "",
+  isOpen, 
+  onToggle 
+}: { 
+  title: string; 
+  children: React.ReactNode; 
+  className?: string; 
+  titleClassName?: string;
+  isOpen: boolean; 
+  onToggle: () => void; 
+}) {
+  return (
+    <div className={className}>
+      <div className="product-collapsible-header" onClick={onToggle}>
+        <h2 className={titleClassName}>{title}</h2>
+        <svg 
+          className={`chevron ${isOpen ? 'open' : ''}`} 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M6 9L12 15L18 9" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      <div className={`product-collapsible-content ${isOpen ? 'open' : ''}`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    overview: true,
+    specs: false,
+    kit: false,
+    reviews: false,
+    compat: false,
+    docs: false
+  });
+
+  const toggleSection = (section: string) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
 
   const productId = Number(id);
   const product = products.find((p) => p.id === productId) || products[0];
@@ -296,8 +350,13 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          <div className="product-overview-section">
-            <h2 className="product-overview-title">Overview</h2>
+          <CollapsibleSection
+            title="Overview"
+            className="product-overview-section"
+            titleClassName="product-overview-title"
+            isOpen={openSections.overview}
+            onToggle={() => toggleSection("overview")}
+          >
             <p className="product-overview-text">
               {isOnBoardComputer
                 ? "The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the charging state of the devices via USB."
@@ -311,10 +370,15 @@ export default function ProductDetail() {
                 ? baseballCapOverviewText
                 : "A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, fully customized to your needs. The controller achieves an efficiency of 98% due to the powerful MOS transistors and special PWM algorithms. Compact size allows you to install it in any suitable place on vehicles with different dimensions — from scooters to ATVs or golf carts."}
             </p>
-          </div>
+          </CollapsibleSection>
 
-          <div className="product-specs-section">
-            <h2 className="product-specs-title">Specifications</h2>
+          <CollapsibleSection
+            title="Specifications"
+            className="product-specs-section"
+            titleClassName="product-specs-title"
+            isOpen={openSections.specs}
+            onToggle={() => toggleSection("specs")}
+          >
             <div className="product-specs-list">
               {specs.map((row) => (
                 <div key={row.label} className="product-specs-row">
@@ -324,11 +388,16 @@ export default function ProductDetail() {
               ))}
             </div>
             <button className="product-specs-compare">Compare all controllers</button>
-          </div>
+          </CollapsibleSection>
 
           {!isBaseballCap && (
-            <div className="product-kit-section">
-              <h2 className="product-kit-title">In the kit</h2>
+            <CollapsibleSection
+              title="In the kit"
+              className="product-kit-section"
+              titleClassName="product-kit-title"
+              isOpen={openSections.kit}
+              onToggle={() => toggleSection("kit")}
+            >
               <div className="product-kit-grid">
                 {kitItems.map((item) => (
                   <div key={item} className="product-kit-card">
@@ -342,12 +411,17 @@ export default function ProductDetail() {
                   <a href="#">Crimped wires for the Display</a>
                 </div>
               )}
-            </div>
+            </CollapsibleSection>
           )}
 
           {isAdapter && (
-            <div className="product-compat-section">
-              <h2 className="product-compat-title">Compatibility</h2>
+            <CollapsibleSection
+              title="Compatibility"
+              className="product-compat-section"
+              titleClassName="product-compat-title"
+              isOpen={openSections.compat}
+              onToggle={() => toggleSection("compat")}
+            >
               <div className="product-compat-grid">
                 {compatibleControllers.map((item) => (
                   <CardBase
@@ -385,12 +459,17 @@ export default function ProductDetail() {
                   </CardBase>
                 ))}
               </div>
-            </div>
+            </CollapsibleSection>
           )}
 
           {!isAdapter && !isBaseballCap && (
-            <div className="product-docs-section">
-              <h2 className="product-docs-title">Documentation</h2>
+            <CollapsibleSection
+              title="Documentation"
+              className="product-docs-section"
+              titleClassName="product-docs-title"
+              isOpen={openSections.docs}
+              onToggle={() => toggleSection("docs")}
+            >
               <div className="product-docs-row">
                 <div className={`product-docs-icon${isULight ? " product-docs-icon-ulight" : ""}`}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -428,7 +507,7 @@ export default function ProductDetail() {
                 </div>
                 <div className="product-docs-text">See the documentation</div>
               </div>
-            </div>
+            </CollapsibleSection>
           )}
 
           {(isAdapter || isKitSurRon || isBaseballCap) && (
@@ -543,8 +622,13 @@ export default function ProductDetail() {
           )}
 
           {!isBaseballCap && (
-            <div className="product-reviews-section">
-              <h2 className="product-reviews-title">Reviews</h2>
+            <CollapsibleSection
+              title="Reviews"
+              className="product-reviews-section"
+              titleClassName="product-reviews-title"
+              isOpen={openSections.reviews}
+              onToggle={() => toggleSection("reviews")}
+            >
               <div className="product-reviews-list">
                 <CardBase className="product-review-card" height={218}>
                   <div className="product-review-text">
@@ -583,7 +667,7 @@ export default function ProductDetail() {
                   </div>
                 </CardBase>
               </div>
-            </div>
+            </CollapsibleSection>
           )}
         </div>
       </div>

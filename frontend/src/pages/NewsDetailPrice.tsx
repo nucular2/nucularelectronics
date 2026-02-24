@@ -61,11 +61,11 @@ export default function NewsDetailPrice() {
 
           <div className="news-grid-small">
             <article className="news-card news-card--small">
-              <div className="news-meta">June 5, 2022</div>
-              <h3 className="news-card-title">Price increase</h3>
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img src="/new7.png" alt="Price increase" className="news-image" />
               </div>
+              <div className="news-meta">June 5, 2022</div>
+              <h3 className="news-card-title">Price increase</h3>
               <p className="news-card-text">
                 Updating the cost of controllers. The sadness and grief news
                 about the reasons for the price ...
@@ -73,11 +73,11 @@ export default function NewsDetailPrice() {
             </article>
 
             <article className="news-card news-card--small">
-              <div className="news-meta">May 20, 2022</div>
-              <h3 className="news-card-title">Brief news for the year</h3>
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img src="/new4.png" alt="Brief news for the year" className="news-image" />
               </div>
+              <div className="news-meta">May 20, 2022</div>
+              <h3 className="news-card-title">Brief news for the year</h3>
               <p className="news-card-text">
                 The uLight controller, rules of sales and guarantees. New casing
                 for 24f, waiting time and a ...
@@ -85,11 +85,11 @@ export default function NewsDetailPrice() {
             </article>
 
             <article className="news-card news-card--small">
-              <div className="news-meta">May 15, 2022</div>
-              <h3 className="news-card-title">Protection of controllers</h3>
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img src="/new9.png" alt="Protection of controllers" className="news-image" />
               </div>
+              <div className="news-meta">May 15, 2022</div>
+              <h3 className="news-card-title">Protection of controllers</h3>
               <p className="news-card-text">
                 New circuit engineering and improved protection of controllers
                 from our users.

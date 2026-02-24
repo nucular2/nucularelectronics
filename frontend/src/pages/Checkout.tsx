@@ -136,6 +136,35 @@ export default function Checkout() {
       if (insertError) throw insertError;
       if (!data) throw new Error("Failed to create order.");
 
+      // Initiate Stripe Checkout Session
+      try {
+        const response = await fetch('http://localhost:4000/api/checkout/session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ orderId: data.id }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to initiate payment');
+        }
+
+        const { url } = await response.json();
+        if (url) {
+          clearCart();
+          window.location.href = url;
+          return;
+        }
+      } catch (paymentError) {
+        console.error('Payment initiation error:', paymentError);
+        // If payment fails to start, we still have the order created
+        // Navigate to order detail so user can try again later (if implemented)
+        clearCart();
+        navigate(`/orders/${data.id}`);
+        return;
+      }
+
       clearCart();
       navigate("/orders");
       

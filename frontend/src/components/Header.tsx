@@ -120,17 +120,37 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           </svg>
           {cartQuantity > 0 && <span className="cart-count">{cartQuantity}</span>}
         </div>
-        <div className="profile-icon-container" onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
+        <div className="profile-icon-container" onClick={handleProfileClick} style={{ cursor: 'pointer', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M6 9C6 6.23858 8.23858 4 11 4C13.7614 4 16 6.23858 16 9C16 11.7614 13.7614 14 11 14C8.23858 14 6 11.7614 6 9ZM11 5.57895C9.11061 5.57895 7.57895 7.1106 7.57895 9C7.57895 10.8894 9.11061 12.4211 11 12.4211C12.8894 12.4211 14.4211 10.8894 14.4211 9C14.4211 7.1106 12.8894 5.57895 11 5.57895Z" fill={logoColor} />
             <path fillRule="evenodd" clipRule="evenodd" d="M11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0ZM1.53488 11C1.53488 5.77256 5.77256 1.53488 11 1.53488C16.2274 1.53488 20.4651 5.77256 20.4651 11C20.4651 13.0499 19.8134 14.9477 18.706 16.4973C17.772 15.5377 16.5233 15 15.2225 15H6.77749C5.4767 15 4.22802 15.5377 3.29403 16.4973C2.18655 14.9477 1.53488 13.0499 1.53488 11ZM4.35955 17.7448C6.0681 19.4271 8.41283 20.4651 11 20.4651C13.5872 20.4651 15.9319 19.4271 17.6404 17.7448C16.9978 17.0657 16.1286 16.6844 15.2225 16.6844H6.77749C5.87135 16.6844 5.00217 17.0657 4.35955 17.7448Z" fill={logoColor} />
           </svg>
+          {user && user.user_metadata?.full_name && (
+             <span style={{ 
+               fontSize: '10px', 
+               marginTop: '4px', 
+               color: logoColor,
+               position: 'absolute',
+               top: '100%',
+               whiteSpace: 'nowrap',
+               fontWeight: 500
+             }}>
+                {user.user_metadata.full_name}
+             </span>
+          )}
         </div>
         {/* Mobile Menu Toggle */}
-        <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
-          <span></span>
-          <span></span>
-        </button>
+      <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+        {isMobileMenuOpen ? (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        ) : (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )}
+      </button>
       </div>
       {isProductsOpen && (
         <div className="dropdown-overlay open">

@@ -1458,26 +1458,8 @@ body,
   font-size: 14px;
 }
 
-.auth-success-toast {
-  background-color: #00C853;
-  color: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-}
+/* Auth styles moved to app-styles.css */
 
-.toast-close {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  margin-left: 12px;
-}
 
 /* Checkbox Styles */
 .checkbox-group {
@@ -4555,17 +4537,21 @@ img {
   width: 25px;
   height: 2px;
   background-color: currentColor;
-  margin: 8px 0;
+  margin: 6px 0;
   transition: 0.3s ease;
   transform-origin: center;
 }
 
 .mobile-menu-toggle.open span:nth-child(1) {
-  transform: translateY(5px) rotate(45deg);
+  transform: translateY(8px) rotate(45deg);
 }
 
 .mobile-menu-toggle.open span:nth-child(2) {
-  transform: translateY(-5px) rotate(-45deg);
+  opacity: 0;
+}
+
+.mobile-menu-toggle.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 .mobile-menu {
@@ -4628,18 +4614,53 @@ img {
 /* Additional Mobile Optimizations */
 @media (max-width: 768px) {
   /* Mobile Hero Section */
+  .hero {
+    align-items: flex-start !important;
+    padding-top: 50px; /* Reduced padding to move content up */
+    min-height: 100vh;
+    padding-bottom: 0;
+  }
+
   .hero::before {
+    content: "";
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 140%;
+    width: 100%;
     max-width: none;
-    height: 60vh;
-    background-position: center bottom;
-    background-size: contain;
+    height: 300px; /* Fixed height as requested */
+    top: auto;
+    bottom: 0;
+    background: url(/main.png) no-repeat center bottom;
+    background-size: auto 100%; /* Maintain aspect ratio based on height */
+    z-index: 0;
+  }
+
+  .main-header {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px; /* Slightly tighter header */
+    padding-bottom: 10px;
+  }
+
+  .logo-container svg {
+    width: 120px; /* Reduced from 130px to save space */
+    height: auto;
+    flex-shrink: 1; /* Allow logo to shrink if needed */
+  }
+
+  .hero-content {
+    padding: 0 20px;
+    text-align: center;
+    height: auto;
+    min-height: 80vh; /* Increase height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .hero-text-block {
-    margin-top: 120px;
+    margin-top: 0 !important;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -4650,13 +4671,15 @@ img {
   }
 
   .hero-title {
-    font-size: 42px;
+    font-size: 44px;
+    font-weight: 700;
     margin-bottom: 16px;
     color: #fff;
   }
 
   .hero-subtitle {
     font-size: 16px;
+    font-weight: 400;
     margin-bottom: 32px;
   }
 
@@ -4666,6 +4689,57 @@ img {
   .main-header:not(.dropdown-open) .profile-icon-container svg path {
     fill: white;
     color: white;
+  }
+
+  /* Force visibility of header icons */
+  .header-actions {
+    display: flex !important;
+    gap: 12px !important; /* Slightly smaller gap to fit small screens */
+    margin-left: auto !important; /* Ensure it pushes to the right */
+    margin-right: 0 !important;
+    align-items: center;
+    justify-content: flex-end !important; /* Align content to right */
+    flex-wrap: nowrap;
+    flex-shrink: 0; /* Prevent icons from shrinking */
+  }
+
+  .cart-icon-container,
+  .profile-icon-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-shrink: 0;
+  }
+
+  /* Force burger visibility on mobile */
+  .mobile-menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px; /* Slightly smaller touch target */
+    height: 44px;
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 3000; /* Ensure it's on top */
+    margin-left: 10px; /* Reduced margin */
+    color: white !important;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .mobile-menu-toggle svg {
+    width: 28px; /* Slightly larger icon */
+    height: 28px;
+  }
+  
+  .mobile-menu-toggle svg path {
+    stroke: currentColor;
+  }
+
+  .main-header.dropdown-open .mobile-menu-toggle {
+    color: #222 !important;
   }
 
   /* Mobile Grids */

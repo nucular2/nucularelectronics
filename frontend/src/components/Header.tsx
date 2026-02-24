@@ -100,10 +100,9 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
       </div>
       {/* Mobile Menu Toggle */}
       <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+          <span></span>
+          <span></span>
+        </button>
       <nav className="main-nav">
         <a href="#" className="nav-link" onClick={toggleProducts}>
           Products 

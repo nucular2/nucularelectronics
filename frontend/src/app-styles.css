@@ -1064,6 +1064,69 @@
     margin-bottom: 12px !important;
   }
   
+  /* Product Detail Mobile Styles */
+  .product-kit-card {
+    width: 374px !important;
+    height: 80px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+  }
+  
+  .product-kit-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .product-add-title {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-bottom: 24px !important;
+  }
+
+  .product-add-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .product-add-card {
+    width: 100% !important; /* Will be constrained by grid, effectively ~180px */
+    height: 312px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .product-reviews-list {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 16px !important;
+    padding-bottom: 16px !important; /* For scrollbar space */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .product-reviews-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-review-card {
+    min-width: 280px !important;
+    width: 280px !important;
+    height: 186px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+    flex: 0 0 auto !important;
+  }
+
+  
   .cart-item-main {
     flex-direction: row; /* Image and details side-by-side */
     flex-wrap: wrap; /* Allow actions to wrap */

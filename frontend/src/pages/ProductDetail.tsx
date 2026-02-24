@@ -528,14 +528,16 @@ export default function ProductDetail() {
                   ))}
                 </div>
               ) : (
-                <CardBase className="product-add-card" height={490}>
-                  <div className="product-add-image">
-                    <img className="card-image" src="/miniature15.png" alt="On-board computer" />
-                  </div>
-                  <div className="product-add-name">On-board computer</div>
-                  <div className="product-add-price">$110.00</div>
-                  <button className="product-add-cta">Add to cart</button>
-                </CardBase>
+                <div className="product-add-grid">
+                  <CardBase className="product-add-card" height={490}>
+                    <div className="product-add-image">
+                      <img className="card-image" src="/miniature15.png" alt="On-board computer" />
+                    </div>
+                    <div className="product-add-name">On-board computer</div>
+                    <div className="product-add-price">$110.00</div>
+                    <button className="product-add-cta">Add to cart</button>
+                  </CardBase>
+                </div>
               )}
             </div>
           )}

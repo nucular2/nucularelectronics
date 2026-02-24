@@ -1065,6 +1065,26 @@
   }
   
   /* Product Detail Mobile Styles */
+  .product-page {
+    padding-bottom: 60px !important;
+  }
+
+  .product-specs-compare {
+    width: 100% !important;
+    margin-top: 16px !important;
+    padding: 0 24px !important;
+    height: 54px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #F36F25 !important; /* Make it look like a primary button if needed, or keep current style */
+    color: #fff !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
   .product-kit-card {
     width: 374px !important;
     height: 80px !important;

@@ -158,6 +158,7 @@ export default function Checkout() {
           status: "New",
           customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
           customer_phone: fullPhone,
+          customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
           recipient_info: recipient,
           shipping_address: shipping,
           contacts: contacts,

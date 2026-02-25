@@ -171,8 +171,7 @@ export default function Checkout() {
 
       // Initiate Stripe Checkout Session
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-        const response = await fetch(`${apiUrl}/api/checkout/session`, {
+        const response = await fetch('/api/checkout-session', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

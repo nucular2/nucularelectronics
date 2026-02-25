@@ -145,10 +145,6 @@ export default function Checkout() {
     setError(null);
 
     try {
-      const country = countries.find(c => c.code === recipient.countryCode);
-      const dialCode = country ? country.dial_code : "";
-      const fullPhone = `${dialCode}${recipient.phone}`;
-
       const { data, error: insertError } = await supabase
         .from("orders")
         .insert({
@@ -157,8 +153,6 @@ export default function Checkout() {
           total_amount: totalPrice,
           status: "New",
           customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
-          customer_phone: fullPhone,
-          customer_email: recipient.email,
           recipient_info: recipient,
           shipping_address: shipping,
           contacts: contacts,

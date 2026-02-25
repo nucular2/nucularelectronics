@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -344,7 +344,7 @@ export default function Checkout() {
                     <span className="input-hint">Optional</span>
 
                     <div className="terms-checkbox">
-                      <div className="checkbox-container">
+                      <label className="checkbox-container">
                         <input
                           type="checkbox"
                           checked={contacts.termsAccepted}
@@ -352,9 +352,9 @@ export default function Checkout() {
                           id="terms"
                         />
                         <span className="checkmark"></span>
-                      </div>
-                      <label htmlFor="terms" style={{cursor: 'pointer'}}>
-                        By placing a order you agree to the <a href="/terms" className="terms-link">Terms and Conditions</a>
+                        <span className="checkbox-label" style={{ fontSize: '14px', color: '#666', userSelect: 'none' }}>
+                          By placing an order you agree to the <Link to="/terms" className="terms-link" onClick={(e) => e.stopPropagation()}>Terms and Conditions</Link>
+                        </span>
                       </label>
                     </div>
 

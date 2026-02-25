@@ -222,7 +222,7 @@ export default function Checkout() {
             </button>
           </div>
           
-          {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px'}}>{error}</div>}
+          {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px', margin: '0 auto 20px auto', textAlign: 'center'}}>{error}</div>}
 
           <div className="checkout-layout">
             <div className="checkout-stepper-col">

@@ -44,6 +44,13 @@ export const products: Product[] = [
     price: 'Preorder',
     isPreorder: true
   },
+  {
+    id: 999,
+    category: 'Components',
+    title: 'test',
+    price: '$1.00',
+    image: '/miniature.png'
+  },
   // Accessories
   {
     id: 6,

@@ -6,7 +6,6 @@ import { useCart } from '../context/CartContext';
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -20,11 +19,6 @@ export default function Shop() {
 
   const filteredProducts = products.filter(product => product.category === activeTab);
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-    setIsDropdownOpen(false);
-  };
-
   return (
     <>
       <Header variant="white" />
@@ -32,32 +26,16 @@ export default function Shop() {
         <div className="shop-container">
           <h1 className="shop-title">Shop</h1>
           
-          <div className="shop-tabs-container">
-            <div className="shop-tabs-mobile-header" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-              <span className="current-tab">{activeTab}</span>
-              <svg 
-                className={`chevron ${isDropdownOpen ? 'open' : ''}`} 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
+          <div className="shop-tabs">
+            {tabs.map(tab => (
+              <button 
+                key={tab} 
+                className={`shop-tab ${activeTab === tab ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab)}
               >
-                <path d="M6 9L12 15L18 9" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            
-            <div className={`shop-tabs ${isDropdownOpen ? 'open' : ''}`}>
-              {tabs.map(tab => (
-                <button 
-                  key={tab} 
-                  className={`shop-tab ${activeTab === tab ? 'active' : ''}`}
-                  onClick={() => handleTabClick(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
+                {tab}
+              </button>
+            ))}
           </div>
 
           <div className="shop-grid">

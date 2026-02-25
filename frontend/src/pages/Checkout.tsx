@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../lib/supabase";
+import { countries } from "../data/countries";
 
 // Types for our form data
 interface RecipientInfo {
@@ -219,10 +220,11 @@ export default function Checkout() {
                         onChange={handleRecipientChange}
                         className="country-select"
                       >
-                        <option value="US">🇺🇸 +1</option>
-                        <option value="RU">🇷🇺 +7</option>
-                        <option value="UK">🇬🇧 +44</option>
-                        <option value="EU">🇪🇺 +33</option>
+                        {countries.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.flag} {country.dial_code}
+                          </option>
+                        ))}
                       </select>
                       <input
                         name="phone"

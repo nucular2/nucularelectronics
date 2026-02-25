@@ -90,6 +90,31 @@ export default function Checkout() {
     setContacts(prev => ({ ...prev, termsAccepted: e.target.checked }));
   };
 
+  // Temporary function for quick testing
+  const fillTestValues = () => {
+    setRecipient({
+      firstName: "Test",
+      lastName: "User",
+      countryCode: "US",
+      phone: "+1234567890",
+      email: "test@example.com",
+    });
+    setShipping({
+      country: "Test Country",
+      zipCode: "12345",
+      city: "Test City",
+      street: "Test Street 1",
+      flat: "1",
+    });
+    setContacts({
+      telegram: "@test",
+      whatsapp: "+1234567890",
+      comment: "Test comment",
+      termsAccepted: true,
+    });
+    // setStep(3);
+  };
+
   // Navigation
   const goToStep2 = (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,6 +152,7 @@ export default function Checkout() {
           items: items,
           total_amount: totalPrice,
           status: "New",
+          customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
           recipient_info: recipient,
           shipping_address: shipping,
           contacts: contacts,
@@ -183,6 +209,12 @@ export default function Checkout() {
       <div className="checkout-page">
         <div className="checkout-container">
           <h1 className="checkout-title">Checkout</h1>
+          
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <button onClick={fillTestValues} style={{ padding: '8px 16px', background: '#eee', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>
+              ⚡️ Quick Fill (Test)
+            </button>
+          </div>
           
           {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px'}}>{error}</div>}
 
@@ -340,6 +372,7 @@ export default function Checkout() {
                       value={contacts.comment}
                       onChange={handleContactsChange}
                       className="checkout-input checkout-textarea"
+                      style={{ textAlign: 'center' }}
                     />
                     <span className="input-hint">Optional</span>
 

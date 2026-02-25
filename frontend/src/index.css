@@ -4066,8 +4066,101 @@ img {
   transition: opacity 0.2s;
 }
 
-/* Mobile Responsive Styles */
+/* --- MOBILE FIXES FOR PRODUCT DETAIL --- */
 @media (max-width: 768px) {
+  /* 1. Product Kit (In the kit) - Fix oversized divs and layout */
+  .product-kit-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    grid-template-columns: none !important;
+    gap: 16px !important;
+  }
+
+  .product-kit-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important; /* Allow height to fit content */
+    min-height: 80px !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+  }
+  
+  .product-kit-card-title {
+    font-size: 14px !important;
+    white-space: normal !important; /* Allow text wrap */
+  }
+
+  /* 2. Product Actions - Fix button layout (row instead of column if needed) */
+  .product-actions {
+    display: flex !important;
+    flex-direction: row !important; /* Force row layout */
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  
+  .product-actions button {
+    flex: 1 !important; /* Equal width buttons */
+    padding: 0 16px !important;
+    height: 48px !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 3. Product Add Grid (You might also like) - Fix scrolling */
+  .product-add-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 16px !important;
+    padding-bottom: 20px !important; /* Space for scrollbar */
+    scroll-snap-type: x mandatory !important;
+    width: 100% !important;
+    grid-template-columns: none !important;
+  }
+  
+  .product-add-card {
+    min-width: 280px !important; /* Fixed width for scrolling items */
+    width: 280px !important;
+    scroll-snap-align: start !important;
+    margin-right: 0 !important;
+  }
+
+  /* 4. Product Reviews - Fix text overflow */
+  .product-review-meta {
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* 5. Product Kit Note - Fix overflow */
+  .product-kit-note {
+    width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    height: auto !important;
+    padding: 12px !important;
+  }
+
+  /* 6. General Layout Adjustments */
+  .product-container {
+    padding: 0 20px !important;
+  }
+  
+  .product-main {
+    flex-direction: column !important;
+  }
+  
+  .product-gallery {
+    margin-bottom: 24px !important;
+  }
+  
+  .product-info {
+    padding-left: 0 !important;
+  }
+}
+
   /* Header Mobile Styles */
   .main-header {
     padding: 15px 20px;
@@ -5208,5 +5301,205 @@ img {
   
   .controller-page-toc {
     display: none; /* Hide TOC on mobile to simplify */
+  }
+}
+
+/* --- RESTORED 'BEAUTIFUL' STYLES (FROM TEMP FILE) --- */
+
+/* Product Kit (In the kit) */
+.product-kit-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+.product-kit-card {
+  width: 100% !important;
+  max-width: 374px !important;
+  height: 80px !important;
+  padding: 20px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #F6F6F6 !important;
+}
+
+.product-kit-note {
+  width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  margin-top: 16px !important;
+}
+
+/* Product Add (You might also like / Add to controller) */
+.product-add-grid {
+  display: flex !important;
+  overflow-x: auto !important;
+  gap: 16px !important;
+  padding-bottom: 20px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.product-add-card {
+  width: 380px !important;
+  height: 480px !important;
+  padding: 32px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
+  background: #F6F6F6 !important;
+  flex: 0 0 auto !important;
+  scroll-snap-align: start !important;
+}
+
+.product-add-title {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-bottom: 24px !important;
+}
+
+/* Product Actions */
+.product-actions {
+  display: flex !important;
+  gap: 16px !important;
+  align-items: center !important;
+  margin-top: 32px !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+}
+
+.product-actions button {
+  flex: 1 !important;
+}
+
+/* Product Reviews */
+.product-review-meta {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
+}
+
+/* Mobile Overrides (from temp file) */
+@media (max-width: 600px) {
+  .product-page {
+    padding-bottom: 60px !important;
+  }
+
+  .product-specs-compare {
+    width: 100% !important;
+    margin-top: 16px !important;
+    padding: 0 24px !important;
+    height: 54px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #F36F25 !important;
+    color: #fff !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Kit Section Mobile */
+  .product-kit-card {
+    width: 100% !important;
+    height: 80px !important;
+    padding: 16px !important;
+  }
+  
+  .product-kit-grid {
+    width: 100% !important;
+  }
+
+  /* Add/Like Section Mobile - 2 Column Grid */
+  .product-add-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    padding-bottom: 20px !important;
+    overflow-x: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  .product-add-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 312px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    flex: 0 0 auto !important;
+    scroll-snap-align: none !important;
+  }
+  
+  .product-add-title {
+    font-size: 20px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Product Actions Mobile - Single Line */
+  .product-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  
+  .product-primary-button,
+  .product-secondary-button {
+    font-size: 14px !important;
+    padding: 0 16px !important;
+    flex: 1 !important;
+  }
+
+  /* Reviews Mobile - Horizontal Scroll */
+  .product-reviews-list {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 16px !important;
+    padding-bottom: 16px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .product-reviews-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .product-review-card {
+    min-width: 280px !important;
+    width: 280px !important;
+    height: 186px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Apparel Section Mobile */
+  .product-apparel-card {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 380px !important;
+    padding: 20px !important;
+  }
+  
+  .product-apparel-image {
+    height: 240px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Ensure badges are full width */
+  .product-specs-compare {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }

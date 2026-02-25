@@ -64,6 +64,35 @@ export default function Checkout() {
     termsAccepted: false,
   });
 
+  // Load saved data from localStorage
+  useEffect(() => {
+    try {
+      const savedRecipient = localStorage.getItem('checkout_recipient');
+      if (savedRecipient) setRecipient(JSON.parse(savedRecipient));
+      
+      const savedShipping = localStorage.getItem('checkout_shipping');
+      if (savedShipping) setShipping(JSON.parse(savedShipping));
+
+      const savedContacts = localStorage.getItem('checkout_contacts');
+      if (savedContacts) setContacts(JSON.parse(savedContacts));
+    } catch (e) {
+      console.error("Failed to load checkout data", e);
+    }
+  }, []);
+
+  // Save data to localStorage
+  useEffect(() => {
+    localStorage.setItem('checkout_recipient', JSON.stringify(recipient));
+  }, [recipient]);
+
+  useEffect(() => {
+    localStorage.setItem('checkout_shipping', JSON.stringify(shipping));
+  }, [shipping]);
+
+  useEffect(() => {
+    localStorage.setItem('checkout_contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
   useEffect(() => {
     if (!user) {
       navigate("/login?redirect=/checkout");
@@ -145,6 +174,12 @@ export default function Checkout() {
     setError(null);
 
     try {
+      // Ensure session is valid before proceeding
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        throw new Error("Session expired. Please refresh the page or log in again.");
+      }
+
       const country = countries.find(c => c.code === recipient.countryCode);
       const dialCode = country ? country.dial_code : "";
       const fullPhone = `${dialCode}${recipient.phone}`;
@@ -186,6 +221,9 @@ export default function Checkout() {
         const { url } = await response.json();
         if (url) {
           clearCart();
+          localStorage.removeItem('checkout_recipient');
+          localStorage.removeItem('checkout_shipping');
+          localStorage.removeItem('checkout_contacts');
           window.location.href = url;
           return;
         }
@@ -194,11 +232,17 @@ export default function Checkout() {
         // If payment fails to start, we still have the order created
         // Navigate to order detail so user can try again later (if implemented)
         clearCart();
+        localStorage.removeItem('checkout_recipient');
+        localStorage.removeItem('checkout_shipping');
+        localStorage.removeItem('checkout_contacts');
         navigate(`/orders/${data.id}`);
         return;
       }
 
       clearCart();
+      localStorage.removeItem('checkout_recipient');
+      localStorage.removeItem('checkout_shipping');
+      localStorage.removeItem('checkout_contacts');
       navigate("/orders");
       
     } catch (err: any) {

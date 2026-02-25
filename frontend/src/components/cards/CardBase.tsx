@@ -9,15 +9,15 @@ type Props = {
 
 export default function CardBase({
   className,
-  width = 380,
+  width,
   height,
   onClick,
   children,
 }: PropsWithChildren<Props>) {
-  const style = {
-    width,
-    height,
-  } as React.CSSProperties;
+  const style: React.CSSProperties = {};
+  if (width !== undefined) style.width = width;
+  if (height !== undefined) style.height = height;
+
   return (
     <div
       className={`card-base${className ? ` ${className}` : ""}`}

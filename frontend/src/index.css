@@ -1972,6 +1972,9 @@ img {
 
 .shop-container {
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .shop-title {
@@ -2013,9 +2016,10 @@ img {
 }
 
 .shop-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  justify-items: center;
 }
 
 .shop-card {
@@ -2025,7 +2029,8 @@ img {
   display: flex;
   flex-direction: column;
   transition: transform 0.2s, border-color 0.2s;
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   height: 490px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.03);
   border: 1px solid transparent;

@@ -88,7 +88,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
 
   return (
     <header className={`main-header ${isWhite ? 'dropdown-open' : ''}`}>
-      <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+      <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer', marginLeft: '8px' }}>
         <svg width="169" height="40" viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path className="logo-path" d="M1.86502e-06 5.33333L0 26.6667H8.44444L8.44444 6.66667L20.4444 18.6914L20.4444 1.32106e-06L5.33334 0C2.38782 -2.57505e-07 2.12253e-06 2.38781 1.86502e-06 5.33333Z" fill={logoColor} />
           <path className="logo-path" d="M35.5556 34.6667V13.3333H27.1111V33.3333L15.1111 21.3087V40H30.2222C33.1677 40 35.5556 37.6122 35.5556 34.6667Z" fill={logoColor} />

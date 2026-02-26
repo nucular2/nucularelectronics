@@ -21,13 +21,10 @@ export default function UpdatePassword() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    // TEMPORARY: Allow viewing without login for design review
     if (!user) {
-      // If accessed directly without login, redirect to login
-      // But if it's a recovery flow (magic link), user might be logged in via that link
-      // For now, assume dashboard usage. 
-      // If recovery flow, the user is logged in automatically by the link.
-      // So checking !user is correct.
-      navigate('/login?redirect=/update-password');
+      // navigate('/login?redirect=/update-password');
+      console.log('Viewing UpdatePassword in design mode (not logged in)');
     }
   }, [user, navigate]);
 

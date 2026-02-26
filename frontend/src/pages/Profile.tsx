@@ -49,9 +49,11 @@ export default function Profile() {
   });
 
   useEffect(() => {
+    // TEMPORARY: Allow viewing profile without login for design review
     if (!user) {
-      navigate('/login?redirect=/profile');
-      return;
+      // navigate('/login?redirect=/profile');
+      // return;
+      console.log('Viewing profile in design mode (not logged in)');
     }
 
     fetchProfile();
@@ -60,6 +62,33 @@ export default function Profile() {
   const fetchProfile = async () => {
     try {
       setLoading(true);
+      
+      if (!user) {
+        // Mock data for design review
+        setProfile({
+          first_name: 'Dmitry',
+          last_name: 'User',
+          phone: '+7 900 123 45 67',
+          country: 'Russia',
+          city: 'Moscow',
+          street: 'Lenina st.',
+          flat: '42',
+          zip_code: '101000'
+        });
+        setNameForm({ first_name: 'Dmitry', last_name: 'User' });
+        setPhoneForm('+7 900 123 45 67');
+        setAddressForm({
+          country: 'Russia',
+          city: 'Moscow',
+          street: 'Lenina st.',
+          flat: '42',
+          zip_code: '101000'
+        });
+        setEmailForm('demo@example.com'); // Mock email
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -256,7 +285,7 @@ export default function Profile() {
                     <button className="user-info-save-btn" onClick={saveEmail}>Save</button>
                    </div>
                 ) : (
-                  <div className="user-info-value">{user?.email}</div>
+                  <div className="user-info-value">{user?.email || 'demo@example.com'}</div>
                 )}
               </div>
 

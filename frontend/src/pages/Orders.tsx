@@ -38,11 +38,40 @@ export default function Orders() {
   const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
 
   useEffect(() => {
+    // TEMPORARY: Allow viewing orders without login for design review
     if (!user) {
-      navigate("/login?redirect=/orders");
-      return;
+      // navigate("/login?redirect=/orders");
+      // return;
+      console.log('Viewing orders in design mode (not logged in)');
     }
     setLoading(true);
+    
+    if (!user) {
+        // Mock orders
+        setOrders([
+            {
+                id: '123456',
+                user_id: 'mock-user',
+                items: [{ name: 'Controller', quantity: 1, price: 100 }],
+                total_amount: 100,
+                status: 'Processing',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            },
+            {
+                id: '789012',
+                user_id: 'mock-user',
+                items: [{ name: 'Motor', quantity: 2, price: 200 }],
+                total_amount: 400,
+                status: 'Delivered',
+                created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+                updated_at: new Date().toISOString()
+            }
+        ] as any); // Type assertion to bypass strict shape check if needed
+        setLoading(false);
+        return;
+    }
+
     supabase
       .from("orders")
       .select("*")

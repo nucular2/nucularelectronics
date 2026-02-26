@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
+import './Shop.css';
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
@@ -74,28 +75,25 @@ export default function Shop() {
                     </svg>
                   )}
                 </div>
-                <h3 className="shop-card-title">
-                  {product.title === "Nucular controller P24F" ? (
-                    <>
-                      Nucular controller <br />
-                      P24F
-                    </>
-                  ) : (
-                    product.title
-                  )}
-                </h3>
-                <p className={`shop-card-price ${product.isPreorder ? 'preorder' : ''}`}>{product.price}</p>
+                <h3 className="shop-card-title">{product.title}</h3>
                 {!product.isPreorder && (
-                  <button 
-                    className="card-button buy-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(product);
-                    }}
-                  >
-                    Add to cart
-                  </button>
+                  <p className="shop-card-price">{product.price}</p>
                 )}
+                <div className="shop-card-footer">
+                  {product.isPreorder ? (
+                    <p className="shop-card-price preorder">{product.price}</p>
+                  ) : (
+                    <button 
+                      className="card-button buy-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product);
+                      }}
+                    >
+                      Add to cart
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>

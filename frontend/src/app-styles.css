@@ -290,35 +290,40 @@
 /* Orders List Styles */
 .orders-tabs {
   display: flex;
-  gap: 32px;
-  border-bottom: 1px solid #EAEAEA;
+  gap: 4px;
   margin-bottom: 32px;
+  background: #f6f6f6;
+  padding: 4px;
+  border-radius: 8px;
+  width: fit-content;
 }
 
 .orders-tab {
-  background: none;
+  width: 183px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  background: transparent;
   border: none;
-  padding: 0 0 16px 0;
   font-family: 'Inter', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   color: #999;
   cursor: pointer;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .orders-tab.active {
+  background: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
   color: #111;
   font-weight: 600;
 }
 
 .orders-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #111;
+  display: none;
 }
 
 .orders-list-header {

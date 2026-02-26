@@ -5683,3 +5683,44 @@ img {
     transform: scale(1) !important; /* Ensure no other transform interferes */
   }
 }
+
+/* Maximize Mobile Shop Card Width */
+@media (max-width: 768px) {
+  /* Reduce page padding */
+  .shop-page {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  /* Reduce grid gap */
+  .shop-grid {
+    gap: 8px !important;
+  }
+  
+  /* Ensure title doesn't wrap unnecessarily */
+  .shop-card-title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important; /* Slightly tighter tracking */
+    width: 100% !important;
+    white-space: nowrap !important; /* Force single line unless explicit <br> */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  /* Allow br to work despite white-space: nowrap */
+  .shop-card-title br {
+    display: block;
+    content: "";
+    margin-top: 0;
+  }
+  
+}
+
+/* Ensure Shop Card Title Wrap Behavior */
+@media (max-width: 768px) {
+  .shop-card-title {
+    white-space: normal !important; /* Allow wrapping */
+    letter-spacing: -0.01em !important; /* Slightly tighter to fit words */
+  }
+}

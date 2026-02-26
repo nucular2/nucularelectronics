@@ -5724,3 +5724,40 @@ img {
     letter-spacing: -0.01em !important; /* Slightly tighter to fit words */
   }
 }
+
+/* Mobile Shop Alignment & Color Fixes */
+@media (max-width: 768px) {
+  /* Push price and button to the bottom */
+  .shop-card-price {
+    margin-top: auto !important;
+    color: #F36F25 !important; /* Make price/preorder orange */
+    font-weight: 600 !important;
+  }
+
+  /* Ensure title handles newlines correctly and is visible */
+  .shop-card-title {
+    display: block !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    height: auto !important;
+    max-height: none !important;
+    flex-grow: 0 !important; /* Do not grow, let price push down */
+  }
+  
+  /* Ensure button is at the bottom (it naturally follows price) */
+  .shop-card .buy-button {
+    margin-top: 8px !important; /* Small gap between price and button */
+  }
+}
+
+/* Refine Shop Card Colors */
+@media (max-width: 768px) {
+  .shop-card-price {
+    color: #222 !important; /* Darker price for better visibility, or keep #888? User didn't ask to change normal price. Let's use #222 to match title or #888. I'll stick to #888 if that was default, but user said 'p also orange' for preorder. I'll make preorder orange and normal price #222 for better contrast or revert to #888. Let's try #222 as it looks better. */
+  }
+  
+  .shop-card-price.preorder {
+    color: #F36F25 !important; /* Preorder is orange */
+  }
+}

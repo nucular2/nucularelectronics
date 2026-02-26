@@ -5515,7 +5515,7 @@ img {
   .shop-tabs {
     margin-bottom: 24px;
     background: transparent;
-    border-bottom: 1px solid #E0E0E0;
+     
     padding: 0;
   }
   
@@ -5640,5 +5640,16 @@ img {
     text-align: left !important;
     display: block !important;
     cursor: pointer !important;
+  }
+}
+
+/* Mobile Menu Border Fix */
+@media (max-width: 768px) {
+  .shop-tabs {
+    border-bottom: none !important;
+  }
+  
+  .shop-tabs-mobile-header.open {
+    border-bottom: 1px solid #E0E0E0 !important;
   }
 }

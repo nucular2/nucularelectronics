@@ -29,7 +29,7 @@ export default function Shop() {
           
           <div className="shop-tabs">
             <div 
-              className="shop-tabs-mobile-header" 
+              className={`shop-tabs-mobile-header ${isMobileMenuOpen ? 'open' : ''}`} 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <span>{activeTab}</span>

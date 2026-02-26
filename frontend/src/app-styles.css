@@ -296,11 +296,12 @@
   background: #f6f6f6;
   padding: 4px;
   border-radius: 8px;
-  width: fit-content;
+  width: 374px; /* Fixed width to match cards */
+  box-sizing: border-box;
 }
 
 .orders-tab {
-  width: 183px;
+  width: 181px; /* (374 - 8 padding - 4 gap) / 2 = 181px */
   height: 36px;
   padding: 0 16px;
   border-radius: 4px;
@@ -335,11 +336,11 @@
 }
 
 .order-card {
-  width: 100%;
-  max-width: 374px; /* Per user request */
+  width: 374px; /* Exact width as requested */
+  max-width: 374px;
   height: auto;
   min-height: 168px; /* Per user request */
-  background: #F6F6F6; /* Based on common card style in project, user didn't specify bg but screenshot implies light card on white or vice versa. Usually F6F6F6 is card bg in this project. */
+  background: #F6F6F6;
   border-radius: 20px;
   padding: 20px;
   display: flex;

@@ -7,6 +7,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
   const navigate = useNavigate();
   const { items } = useCart();
   const { user } = useAuth();
@@ -175,12 +176,55 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
       )}
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-header">
+          <div className="mobile-menu-logo" onClick={() => { closeMobileMenu(); navigate('/'); }}>
+            <svg width="130" height="32" viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path className="logo-path" d="M1.86502e-06 5.33333L0 26.6667H8.44444L8.44444 6.66667L20.4444 18.6914L20.4444 1.32106e-06L5.33334 0C2.38782 -2.57505e-07 2.12253e-06 2.38781 1.86502e-06 5.33333Z" fill="#222" />
+              <path className="logo-path" d="M35.5556 34.6667V13.3333H27.1111V33.3333L15.1111 21.3087V40H30.2222C33.1677 40 35.5556 37.6122 35.5556 34.6667Z" fill="#222" />
+              <path className="logo-path" d="M123.935 33.3333V6.66668H117.556V33.3333H123.935Z" fill="#222" />
+              <path className="logo-path" d="M67.815 17.9183C66.9445 19.5326 66.5093 21.4202 66.5093 23.5809C66.5093 25.7417 66.9445 27.1848 67.815 28.7992C68.7104 30.4136 70.2205 31.7974 71.7874 32.6667C73.3791 33.5359 74.9158 33.8286 76.9553 33.8286C79.5419 33.8286 81.7182 33.1331 83.4841 31.7423C85.2499 30.3515 86.4065 28.4391 86.9536 26.0051H80.1637C79.5917 27.5946 78.4849 28.3894 76.8434 28.3894C75.6744 28.3894 74.7417 27.9423 74.0453 27.0482C73.3489 26.1293 73.0007 25.2698 73.0007 23.5809C73.0007 21.8921 73.3489 20.6006 74.0453 19.7065C74.7417 18.7875 75.6744 18.3281 76.8434 18.3281C78.4849 18.3281 79.5917 19.1228 80.1637 20.7124H86.9536C86.4065 18.2287 85.2499 16.3039 83.4841 14.9379C81.7431 13.5719 79.5668 12.8889 76.9553 12.8889C74.9158 12.8889 73.1002 13.3235 71.5084 14.1928C69.9415 15.0621 68.7104 16.3039 67.815 17.9183Z" fill="#222" />
+              <path className="logo-path" d="M62.0761 33.3333V13.324H55.6966V23.6971C55.6966 25.088 55.336 26.1684 54.6147 26.9383C53.8934 27.7082 52.911 28.0932 51.6674 28.0932C50.4487 28.0932 49.4787 27.7082 48.7575 26.9383C48.0362 26.1684 47.6756 25.088 47.6756 23.6971V13.324H41.3333V24.554C41.3333 26.367 41.6691 27.9442 42.3406 29.2853C43.0122 30.6265 43.9573 31.6572 45.176 32.3774C46.3947 33.0729 47.7999 33.4206 49.3917 33.4206C50.7347 33.4206 51.9535 33.1474 53.0478 32.601C54.167 32.0297 55.0499 31.2846 55.6966 30.3657V33.3333H62.0761Z" fill="#222" />
+              <path className="logo-path" d="M112.042 13.324V33.3333H105.662V30.3494C105.015 31.2683 104.132 32.0134 103.013 32.5846C101.919 33.131 100.7 33.4042 99.3571 33.4042C97.7653 33.4042 96.3601 33.0565 95.1414 32.3611C93.9227 31.6409 92.9776 30.6102 92.306 29.269C91.6345 27.9278 91.2987 26.3507 91.2987 24.5377V13.324H97.641V23.5556C97.641 24.9464 98.0016 26.152 98.7229 26.922C99.4442 27.6919 100.414 28.0768 101.633 28.0768C102.876 28.0768 103.859 27.6919 104.58 26.922C105.301 26.152 105.662 24.9464 105.662 23.5556V13.324H112.042Z" fill="#222" />
+              <path className="logo-path" fillRule="evenodd" clipRule="evenodd" d="M128.409 23.3168C128.409 21.1809 128.807 19.5326 129.603 17.9183C130.424 16.3039 131.53 15.0621 132.923 14.1928C134.316 13.3235 135.87 12.8889 137.587 12.8889C139.054 12.8889 140.335 13.1869 141.429 13.783C142.548 14.3791 143.407 15.0268 144.003 15.9954V13.3333H150.383V33.3333H144.003V30.4398C143.382 31.4084 142.511 32.283 141.392 32.879C140.298 33.4751 139.017 33.7732 137.549 33.7732C135.858 33.7732 134.316 33.3385 132.923 32.4692C131.53 31.5751 130.424 30.3209 129.603 28.7065C128.807 27.0673 128.409 25.4528 128.409 23.3168ZM144.003 23.3168C144.003 21.7273 143.556 20.7372 142.66 19.8182C141.79 18.8993 140.72 18.4398 139.452 18.4398C138.184 18.4398 137.102 18.8993 136.206 19.8182C135.336 20.7124 134.901 21.7273 134.901 23.3168C134.901 24.9064 135.336 25.9 136.206 26.8438C137.102 27.7628 138.184 28.2222 139.452 28.2222C140.72 28.2222 141.79 27.7628 142.66 26.8438C143.556 25.9249 144.003 24.9064 144.003 23.3168Z" fill="#222" />
+              <path className="logo-path" d="M165.295 14.117C164.176 14.7627 163.243 15.6568 162.497 16.7993V13.3333H156.118V33.3333H162.497V23.7681C162.497 22.0544 162.895 20.8623 163.691 20.1917C164.487 19.4963 165.681 19.1485 167.272 19.1485H168.889V13.1111C167.521 13.1111 166.414 13.4464 165.295 14.117Z" fill="#222" />
+            </svg>
+          </div>
+          <button className="mobile-menu-close" onClick={closeMobileMenu}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6L18 18" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
         <nav className="mobile-menu-nav">
+          <div className="mobile-products-container">
+            <button 
+              className={`mobile-products-toggle ${isMobileProductsOpen ? 'open' : ''}`}
+              onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+            >
+              <span className="mobile-menu-link">Products</span>
+              <svg 
+                className={`mobile-chevron ${isMobileProductsOpen ? 'open' : ''}`}
+                width="24" height="24" viewBox="0 0 24 24" fill="none"
+              >
+                <path d="M6 9L12 15L18 9" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
+              <div className="mobile-products-section-title">Components</div>
+              <a href="#" className="mobile-product-link">Controllers</a>
+              <a href="#" className="mobile-product-link">On-board computer</a>
+              <a href="#" className="mobile-product-link">uLight controller</a>
+              <a href="#" className="mobile-product-link">Motors</a>
+              <a href="#" className="mobile-product-link">Bluetooth module with App</a>
+              <a href="#" className="mobile-product-link soon">BMS (soon)</a>
+            </div>
+          </div>
+
           <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/shop'); }}>Shop</a>
           <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/support'); }}>Support</a>
           <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/settings/controller'); }}>Firmware</a>
           <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/news'); }}>News</a>
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/cart'); }}>Cart ({cartQuantity})</a>
           <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/contact'); }}>Contact us</a>
         </nav>
       </div>

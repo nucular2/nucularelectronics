@@ -4775,7 +4775,7 @@ img {
 .mobile-chevron {
   transition: transform 0.3s ease;
   position: relative;
-  top: -4px; /* Move chevron slightly up */
+  top: -8px; /* Move chevron further up */
 }
 
 .mobile-chevron.open {

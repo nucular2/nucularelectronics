@@ -158,7 +158,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <h4 className="dropdown-title">Components</h4>
               <a href="#" className="dropdown-link">Controllers</a>
               <a href="#" className="dropdown-link">On-board computer</a>
-              <a href="#" className="dropdown-link">uLight controller</a>
+              <a href="/ulight-controller" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigate('/ulight-controller'); setIsProductsOpen(false); }}>uLight controller</a>
               <a href="#" className="dropdown-link">Motors</a>
               <a href="#" className="dropdown-link">Bluetooth module with App</a>
               <a href="#" className="dropdown-link soon">BMS (soon)</a>
@@ -210,7 +210,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <div className="mobile-products-section-title">Components</div>
               <a href="#" className="mobile-product-link">Controllers</a>
               <a href="#" className="mobile-product-link">On-board computer</a>
-              <a href="#" className="mobile-product-link">uLight controller</a>
+              <a href="/ulight-controller" className="mobile-product-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/ulight-controller'); }}>uLight controller</a>
               <a href="#" className="mobile-product-link">Motors</a>
               <a href="#" className="mobile-product-link">Bluetooth module with App</a>
               <a href="#" className="mobile-product-link soon">BMS (soon)</a>

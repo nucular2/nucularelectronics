@@ -1,0 +1,214 @@
+.ulight-page {
+  background-color: #101010;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.ulight-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120px; /* Space for header */
+  padding-bottom: 60px;
+  text-align: center;
+}
+
+.ulight-content {
+  max-width: 800px;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ulight-title {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: #F46922;
+  text-align: center;
+}
+
+.ulight-subtitle {
+  font-size: 18px;
+  margin-bottom: 32px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.ulight-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 32px;
+  margin-bottom: 24px;
+  text-align: left;
+  width: fit-content;
+}
+
+.ulight-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #ccc;
+  justify-content: flex-start;
+}
+
+.ulight-image-container {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ulight-hero-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transform: translateX(-10px);
+}
+
+.ulight-info-title.ulight-integration-title {
+  margin-top: 60px;
+  color: #222;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 120%;
+  text-align: center;
+}
+
+.ulight-integration-img-container {
+  margin-top: 40px;
+}
+
+.ulight-integration-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transform: translateX(-20px);
+}
+
+.ulight-content-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ulight-promo3-2-container {
+  margin-top: 0;
+}
+
+.ulight-promo3-3-container,
+.ulight-promo3-4-container {
+  margin-top: 80px;
+}
+
+.ulight-info-section {
+  background-color: white;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.ulight-connect-text {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 120%;
+  color: #222;
+  text-align: left;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.ulight-content-box-container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  display: flex;
+  justify-content: center;
+}
+
+.ulight-content-box-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ulight-info-title {
+  color: #f36f25;
+  font-family: var(--font-family);
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 120%;
+  text-align: center;
+  margin: 0;
+}
+
+.ulight-buy-plate {
+  width: 414px;
+  max-width: 100%;
+  height: 187px;
+  padding: 32px 20px;
+  background-color: #101010;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 80px auto 0;
+  box-sizing: border-box;
+}
+
+.ulight-buy-title {
+  color: white;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.ulight-buy-price {
+  color: white;
+  font-family: var(--font-family);
+  font-size: 18px;
+  margin: 0 0 24px 0;
+}
+
+.ulight-buy-button {
+  width: 100%;
+  height: 48px;
+  background-color: #f36f25;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ulight-buy-button:hover {
+  background-color: #e05e14;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .ulight-info-title {
+    font-size: 24px;
+    padding: 0 10px;
+  }
+
+  .ulight-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}

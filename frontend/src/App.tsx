@@ -23,6 +23,7 @@ import { AuthProvider } from './context/AuthContext';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
+import ULightController from './pages/ULightController';
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/ulight-controller" element={<ULightController />} />
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

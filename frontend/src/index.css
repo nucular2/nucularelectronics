@@ -5445,8 +5445,16 @@ img {
   /* Kit Section Mobile */
   .product-kit-card {
     width: 100% !important;
-    height: 80px !important;
+    height: auto !important;
     padding: 16px !important;
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  
+  .product-kit-quantity {
+    margin-top: 4px !important;
   }
   
   .product-kit-grid {
@@ -5454,11 +5462,16 @@ img {
   }
 
   /* Add/Like Section Mobile - 2 Column Grid */
+  .product-add-section {
+    margin-top: 40px !important;
+    margin-bottom: 0 !important;
+  }
+
   .product-add-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
-    padding-bottom: 20px !important;
+    padding-bottom: 0 !important;
     overflow-x: visible !important;
     scroll-snap-type: none !important;
   }
@@ -5474,8 +5487,17 @@ img {
   }
   
   .product-add-title {
-    font-size: 20px !important;
+    font-size: 24px !important;
     margin-bottom: 16px !important;
+  }
+  
+  .product-reviews-title {
+    font-size: 24px !important;
+  }
+  
+  .product-help-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   /* Product Actions Mobile - Single Line */

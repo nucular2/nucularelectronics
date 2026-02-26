@@ -2298,7 +2298,7 @@ img {
   align-items: flex-start;
   text-align: left;
   gap: 8px;
-  margin-bottom: 72px;
+  margin-bottom: 0;
   margin-left: 0;
   margin-right: auto;
 }
@@ -5401,18 +5401,45 @@ img {
 
   .product-specs-compare {
     width: 100% !important;
-    margin-top: 16px !important;
+    max-width: 374px !important;
+    margin-top: 24px !important;
     padding: 0 24px !important;
-    height: 54px !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    background: #F36F25 !important;
-    color: #fff !important;
-    border: none !important;
+    height: 44px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    color: #f36f25 !important;
+    border: 1px solid #f36f25 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    cursor: pointer !important;
+  }
+
+  .product-specs-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    padding: 12px 0 !important;
+  }
+
+  .product-specs-label {
+    font-size: 14px !important;
+    color: #777 !important;
+  }
+
+  .product-specs-value {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #222 !important;
+  }
+
+  .product-specs-title,
+  .product-kit-title {
+    padding-left: 0 !important; /* Ensure no extra padding inside the container */
   }
 
   /* Kit Section Mobile */
@@ -5503,11 +5530,7 @@ img {
     margin-bottom: 16px !important;
   }
 
-  /* Ensure badges are full width */
-  .product-specs-compare {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
+
 }
 
 /* Consolidated Mobile Shop Overrides */

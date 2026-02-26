@@ -4721,9 +4721,9 @@ img {
   align-items: flex-start !important; /* Force align items to the left */
   text-align: left !important; /* Force text alignment */
   width: 100%;
-  padding: 20px 0;
-  padding-left: 0 !important; /* Force no left padding */
+  padding: 20px 20px !important; /* Add padding back to container */
   margin-left: 0 !important; /* Force no left margin */
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 .mobile-menu-link {
@@ -4734,7 +4734,7 @@ img {
   color: #222;
   text-decoration: none;
   padding: 0;
-  padding-left: 0 !important; /* Force no left padding */
+  margin: 0 !important;
   border-bottom: none;
   text-align: left !important; /* Ensure text is left-aligned */
   width: 100%; /* Full width for clickable area */
@@ -4758,8 +4758,7 @@ img {
   background: none;
   border: none;
   padding: 0;
-  padding-left: 0 !important; /* Force no left padding */
-  margin-left: 0 !important;
+  margin: 0 !important;
   cursor: pointer;
   font-family: var(--font-family);
   font-weight: 600;
@@ -4786,6 +4785,7 @@ img {
   align-items: flex-start !important;
   text-align: left !important;
   padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .mobile-products-list.open {
@@ -4802,6 +4802,7 @@ img {
   letter-spacing: 0.5px;
   text-align: left !important;
   padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .mobile-product-link {
@@ -4814,6 +4815,7 @@ img {
   transition: color 0.2s;
   text-align: left !important;
   padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .mobile-product-link:hover {

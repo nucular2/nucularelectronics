@@ -358,8 +358,8 @@ export default function ProductDetail() {
               <div className="product-kit-grid">
                 {kitItems.map((item) => (
                   <div key={item.title} className="product-kit-card">
-                    <div className="product-kit-quantity">{item.quantity}</div>
                     <div className="product-kit-card-title">{item.title}</div>
+                    <div className="product-kit-quantity">{item.quantity}</div>
                   </div>
                 ))}
               </div>

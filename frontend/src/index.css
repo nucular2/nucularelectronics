@@ -5438,8 +5438,11 @@ img {
   }
 
   .product-specs-title,
-  .product-kit-title {
-    padding-left: 0 !important; /* Ensure no extra padding inside the container */
+  .product-kit-title,
+  .product-overview-title,
+  .product-docs-title,
+  .product-reviews-title {
+    padding-left: 20px !important;
   }
 
   /* Kit Section Mobile */
@@ -5508,6 +5511,15 @@ img {
   .product-overview-text {
     margin-bottom: 0 !important;
     padding-bottom: 8px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  
+  .product-specs-list,
+  .product-kit-grid,
+  .product-docs-list {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
   
   .product-overview-section,
@@ -5556,6 +5568,8 @@ img {
     overflow-x: auto !important;
     gap: 16px !important;
     padding-bottom: 16px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -5567,10 +5581,17 @@ img {
   .product-review-card {
     min-width: 280px !important;
     width: 280px !important;
-    height: 186px !important;
+    height: auto !important;
+    min-height: 186px !important;
     padding: 20px !important;
     border-radius: 20px !important;
     flex: 0 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .product-review-meta {
+    margin-top: auto !important;
   }
 
   /* Apparel Section Mobile */

@@ -4695,7 +4695,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .mobile-menu-logo {
@@ -4720,7 +4720,7 @@ img {
   gap: 24px;
   align-items: flex-start; /* Align items to the left */
   width: 100%;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .mobile-menu-link {

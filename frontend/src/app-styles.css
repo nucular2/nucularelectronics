@@ -435,13 +435,17 @@
 .status-processing,
 .status-paid,
 .status-shipped,
-.status-delivered,
 .status-default {
   border: 1px solid #474747;
   color: #111;
 }
 
 /* Specific Status Styles */
+.status-delivered {
+  border: 1px solid #27AE60;
+  color: #27AE60;
+}
+
 .status-awaiting-payment {
   border: 1px solid #F36F25;
   color: #F36F25;

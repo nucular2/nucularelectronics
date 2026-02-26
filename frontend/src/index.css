@@ -5400,8 +5400,8 @@ img {
   }
 
   .product-specs-compare {
-    width: 100% !important;
-    max-width: 374px !important;
+    width: 374px !important;
+    max-width: 100% !important;
     margin-top: 24px !important;
     padding: 0 24px !important;
     height: 44px !important;

@@ -5669,3 +5669,17 @@ img {
     border-color: transparent !important;
   }
 }
+
+/* Mobile Shop Tweaks: Active Tab Color & Placeholder Size */
+@media (max-width: 768px) {
+  .shop-tab.active {
+    color: #B0B0B0 !important;
+  }
+  
+  /* Target the SVG placeholder inside shop cards */
+  .shop-card-image-container svg {
+    width: 27px !important;  /* 81px / 3 */
+    height: 30px !important; /* 90px / 3 */
+    transform: scale(1) !important; /* Ensure no other transform interferes */
+  }
+}

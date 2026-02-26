@@ -5498,6 +5498,30 @@ img {
   .product-help-section {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    margin-top: 24px !important;
+  }
+
+  .product-help-link {
+    margin-bottom: 0 !important;
+  }
+  
+  .product-overview-text {
+    margin-bottom: 0 !important;
+    padding-bottom: 8px !important;
+  }
+  
+  .product-overview-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .product-reviews-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .product-reviews-title {
+    margin-top: 0 !important;
   }
 
   /* Product Actions Mobile - Single Line */

@@ -4724,6 +4724,7 @@ img {
   padding: 20px 20px !important; /* Add padding back to container */
   margin-left: 0 !important; /* Force no left margin */
   box-sizing: border-box; /* Ensure padding is included in width */
+  padding-left: 20px !important;
 }
 
 .mobile-menu-link {
@@ -4740,6 +4741,8 @@ img {
   width: 100%; /* Full width for clickable area */
   display: block;
   transition: color 0.3s ease;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
 }
 
 .mobile-menu-link:hover {
@@ -4766,6 +4769,7 @@ img {
   line-height: 140%;
   color: #222;
   text-align: left !important;
+  padding-left: 0 !important;
 }
 
 .mobile-chevron {

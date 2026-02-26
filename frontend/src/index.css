@@ -4721,6 +4721,8 @@ img {
   align-items: flex-start; /* Align items to the left */
   width: 100%;
   padding: 20px 0;
+  padding-left: 0 !important; /* Force no left padding */
+  margin-left: 0 !important; /* Force no left margin */
 }
 
 .mobile-menu-link {
@@ -4731,6 +4733,7 @@ img {
   color: #222;
   text-decoration: none;
   padding: 0;
+  padding-left: 0 !important; /* Force no left padding */
   border-bottom: none;
   text-align: left; /* Ensure text is left-aligned */
   width: 100%; /* Full width for clickable area */
@@ -4754,6 +4757,8 @@ img {
   background: none;
   border: none;
   padding: 0;
+  padding-left: 0 !important; /* Force no left padding */
+  margin-left: 0 !important;
   cursor: pointer;
   font-family: var(--font-family);
   font-weight: 600;
@@ -4818,6 +4823,7 @@ img {
 
   .mobile-menu {
     display: block !important;
+    max-width: 100%; /* Ensure full width on mobile/tablet */
   }
 }
 /* Removed stray block */

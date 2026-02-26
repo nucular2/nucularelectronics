@@ -5510,12 +5510,138 @@ img {
   }
 }
 
-/* Mobile Shop Page Overrides */
+/* Consolidated Mobile Shop Overrides */
 @media (max-width: 768px) {
+  /* Page Layout */
+  .shop-page {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  /* Shop Grid - 2 Columns */
+  .shop-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* Card Base */
+  .shop-card {
+    width: 100% !important;
+    height: 313px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    background: #f6f6f6 !important; /* Light gray background */
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .shop-card:hover,
+  .shop-card:focus-within {
+    box-shadow: none !important;
+    transform: none !important;
+    border-color: transparent !important;
+  }
+
+  /* Image Container */
+  .shop-card-image-container {
+    height: 141px !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .shop-card-image {
+    width: 141px !important;
+    height: 141px !important;
+    object-fit: contain !important;
+    mix-blend-mode: darken !important;
+  }
+  
+  /* Placeholder SVG */
+  .shop-card-image-container svg {
+    width: 27px !important;
+    height: 30px !important;
+    transform: scale(1) !important;
+  }
+
+  /* Title - Left aligned, Bold */
+  .shop-card-title {
+    font-family: var(--font-family) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 140% !important;
+    color: #222 !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    text-align: left !important;
+    white-space: normal !important; /* Allow wrapping */
+    overflow: visible !important;
+    text-overflow: clip !important;
+    height: auto !important;
+    max-height: none !important;
+    flex-grow: 0 !important;
+    letter-spacing: -0.01em !important;
+  }
+  
+  /* Ensure br works */
+  .shop-card-title br {
+    display: block;
+    content: "";
+    margin-top: 0;
+  }
+
+  /* Price - Pushed to bottom */
+  .shop-card-price {
+    font-family: var(--font-family) !important;
+    font-size: 14px !important;
+    color: #888 !important; /* Gray for normal price */
+    margin-bottom: 0 !important;
+    margin-top: auto !important; /* Pushes price to bottom */
+    font-weight: 400 !important;
+    text-align: left !important;
+  }
+  
+  .shop-card-price.preorder {
+    color: #F36F25 !important; /* Orange for Preorder */
+    font-weight: 600 !important;
+  }
+
+  /* Buy Button - Below price */
+  .shop-card .buy-button {
+    font-family: var(--font-family) !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 140% !important;
+    color: #f36f25 !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 8px !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: left !important;
+    display: block !important;
+    cursor: pointer !important;
+  }
+
+  /* Tabs/Menu */
   .shop-tabs {
     margin-bottom: 24px;
     background: transparent;
-     
+    border-bottom: none !important;
     padding: 0;
   }
   
@@ -5529,6 +5655,10 @@ img {
     font-weight: 600;
     font-size: 16px;
     color: #222;
+  }
+  
+  .shop-tabs-mobile-header.open {
+    border-bottom: 1px solid #E0E0E0 !important;
   }
   
   .shop-tabs-chevron {
@@ -5563,201 +5693,8 @@ img {
   }
   
   .shop-tab.active {
-    color: #F36F25;
+    color: #B0B0B0 !important;
     font-weight: 600;
   }
-  
-  /* Shop Grid Mobile - 2 Columns */
-  .shop-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    padding: 0 !important;
-    width: 100% !important;
-  }
-  
-  .shop-card {
-    width: 100% !important;
-    height: 313px !important;
-    padding: 20px !important;
-    border-radius: 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    background: #f6f6f6 !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
-  }
-  
-  .shop-card-image-container {
-    height: 141px !important;
-    width: 100% !important;
-    margin-bottom: 16px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-  }
-  
-  .shop-card-image {
-    width: 141px !important;
-    height: 141px !important;
-    object-fit: contain !important;
-    mix-blend-mode: darken !important;
-  }
-  
-  .shop-card-title {
-    font-family: var(--font-family) !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 140% !important;
-    color: #222 !important;
-    margin-top: 0 !important;
-    margin-bottom: 8px !important;
-    text-align: left !important;
-    white-space: normal !important;
-  }
-  
-  .shop-card-price {
-    font-family: var(--font-family) !important;
-    font-size: 14px !important;
-    color: #888 !important; /* Assuming default color or similar */
-    margin-bottom: auto !important;
-  }
-  
-  .shop-card .buy-button {
-    font-family: var(--font-family) !important;
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    line-height: 140% !important;
-    color: #f36f25 !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin-top: auto !important;
-    width: auto !important;
-    height: auto !important;
-    text-align: left !important;
-    display: block !important;
-    cursor: pointer !important;
-  }
 }
 
-/* Mobile Menu Border Fix */
-@media (max-width: 768px) {
-  .shop-tabs {
-    border-bottom: none !important;
-  }
-  
-  .shop-tabs-mobile-header.open {
-    border-bottom: 1px solid #E0E0E0 !important;
-  }
-}
-
-/* Mobile Shop Card: Remove Animation and Shadow */
-@media (max-width: 768px) {
-  .shop-card {
-    box-shadow: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-  
-  .shop-card:hover,
-  .shop-card:focus-within {
-    box-shadow: none !important;
-    transform: none !important;
-    border-color: transparent !important;
-  }
-}
-
-/* Mobile Shop Tweaks: Active Tab Color & Placeholder Size */
-@media (max-width: 768px) {
-  .shop-tab.active {
-    color: #B0B0B0 !important;
-  }
-  
-  /* Target the SVG placeholder inside shop cards */
-  .shop-card-image-container svg {
-    width: 27px !important;  /* 81px / 3 */
-    height: 30px !important; /* 90px / 3 */
-    transform: scale(1) !important; /* Ensure no other transform interferes */
-  }
-}
-
-/* Maximize Mobile Shop Card Width */
-@media (max-width: 768px) {
-  /* Reduce page padding */
-  .shop-page {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-  
-  /* Reduce grid gap */
-  .shop-grid {
-    gap: 8px !important;
-  }
-  
-  /* Ensure title doesn't wrap unnecessarily */
-  .shop-card-title {
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.3px !important; /* Slightly tighter tracking */
-    width: 100% !important;
-    white-space: nowrap !important; /* Force single line unless explicit <br> */
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  
-  /* Allow br to work despite white-space: nowrap */
-  .shop-card-title br {
-    display: block;
-    content: "";
-    margin-top: 0;
-  }
-  
-}
-
-/* Ensure Shop Card Title Wrap Behavior */
-@media (max-width: 768px) {
-  .shop-card-title {
-    white-space: normal !important; /* Allow wrapping */
-    letter-spacing: -0.01em !important; /* Slightly tighter to fit words */
-  }
-}
-
-/* Mobile Shop Alignment & Color Fixes */
-@media (max-width: 768px) {
-  /* Push price and button to the bottom */
-  .shop-card-price {
-    margin-top: auto !important;
-    color: #F36F25 !important; /* Make price/preorder orange */
-    font-weight: 600 !important;
-  }
-
-  /* Ensure title handles newlines correctly and is visible */
-  .shop-card-title {
-    display: block !important;
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    height: auto !important;
-    max-height: none !important;
-    flex-grow: 0 !important; /* Do not grow, let price push down */
-  }
-  
-  /* Ensure button is at the bottom (it naturally follows price) */
-  .shop-card .buy-button {
-    margin-top: 8px !important; /* Small gap between price and button */
-  }
-}
-
-/* Refine Shop Card Colors */
-@media (max-width: 768px) {
-  .shop-card-price {
-    color: #222 !important; /* Darker price for better visibility, or keep #888? User didn't ask to change normal price. Let's use #222 to match title or #888. I'll stick to #888 if that was default, but user said 'p also orange' for preorder. I'll make preorder orange and normal price #222 for better contrast or revert to #888. Let's try #222 as it looks better. */
-  }
-  
-  .shop-card-price.preorder {
-    color: #F36F25 !important; /* Preorder is orange */
-  }
-}

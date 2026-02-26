@@ -187,36 +187,41 @@ export default function Orders() {
                 </div>
               ) : (
                 <div className="orders-list">
-                  <div className="orders-list-header">
-                    <div className="col-id">Order ID</div>
-                    <div className="col-date">Order date</div>
-                    <div className="col-status">Status</div>
-                    <div className="col-amount">Order amount</div>
-                    <div className="col-actions"></div>
-                  </div>
                   {filteredOrders.map((order) => (
                     <div 
                       key={order.id} 
-                      className="orders-list-row" 
+                      className="order-card" 
                       onClick={() => navigate(`/orders/${order.id}`)}
                       style={{ cursor: "pointer" }}
                     >
-                      <div className="col-id">#{order.id.slice(0, 8)}</div>
-                      <div className="col-date">{formatDate(order.created_at)}</div>
-                      <div className="col-status">
+                      <div className="order-card-header">
                         <span className={`status-badge ${getStatusStyle(order.status)}`}>
                           {order.status}
                         </span>
-                      </div>
-                      <div className="col-amount">${order.total_amount.toFixed(2)}</div>
-                      <div className="col-actions">
-                        <button className="action-btn">
+                        <button className="order-menu-btn">
                           <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="2" cy="2" r="2" fill="#111"/>
                             <circle cx="2" cy="8" r="2" fill="#111"/>
                             <circle cx="2" cy="14" r="2" fill="#111"/>
                           </svg>
                         </button>
+                      </div>
+                      
+                      <div className="order-card-date">
+                        {formatDate(order.created_at)}
+                      </div>
+                      
+                      <div className="order-card-divider"></div>
+                      
+                      <div className="order-card-details">
+                        <div className="order-detail-item">
+                          <span className="order-detail-label">Order ID</span>
+                          <span className="order-detail-value">{order.id.slice(0, 8)}</span>
+                        </div>
+                        <div className="order-detail-item right">
+                          <span className="order-detail-label">Order amount</span>
+                          <span className="order-detail-value bold">${order.total_amount.toFixed(2)}</span>
+                        </div>
                       </div>
                     </div>
                   ))}

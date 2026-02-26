@@ -187,13 +187,14 @@
   min-height: calc(100vh - 400px);
   padding-bottom: 80px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .orders-container {
   width: 100%;
-  max-width: 1280px; /* Match standard max-width */
+  max-width: 100%; /* Changed to allow full width alignment control */
   padding: 0 40px;
+  margin: 0;
 }
 
 .orders-layout {

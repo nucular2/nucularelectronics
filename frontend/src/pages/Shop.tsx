@@ -74,7 +74,16 @@ export default function Shop() {
                     </svg>
                   )}
                 </div>
-                <h3 className="shop-card-title">{product.title}</h3>
+                <h3 className="shop-card-title">
+                  {product.title === "Nucular controller P24F" ? (
+                    <>
+                      Nucular controller <br />
+                      P24F
+                    </>
+                  ) : (
+                    product.title
+                  )}
+                </h3>
                 <p className={`shop-card-price ${product.isPreorder ? 'preorder' : ''}`}>{product.price}</p>
                 {!product.isPreorder && (
                   <button 

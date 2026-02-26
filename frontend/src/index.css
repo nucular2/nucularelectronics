@@ -5653,3 +5653,19 @@ img {
     border-bottom: 1px solid #E0E0E0 !important;
   }
 }
+
+/* Mobile Shop Card: Remove Animation and Shadow */
+@media (max-width: 768px) {
+  .shop-card {
+    box-shadow: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .shop-card:hover,
+  .shop-card:focus-within {
+    box-shadow: none !important;
+    transform: none !important;
+    border-color: transparent !important;
+  }
+}

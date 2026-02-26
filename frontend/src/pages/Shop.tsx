@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -27,15 +28,33 @@ export default function Shop() {
           <h1 className="shop-title">Shop</h1>
           
           <div className="shop-tabs">
-            {tabs.map(tab => (
-              <button 
-                key={tab} 
-                className={`shop-tab ${activeTab === tab ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab)}
+            <div 
+              className="shop-tabs-mobile-header" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <span>{activeTab}</span>
+              <svg 
+                className={`shop-tabs-chevron ${isMobileMenuOpen ? 'open' : ''}`} 
+                width="24" height="24" viewBox="0 0 24 24" fill="none"
               >
-                {tab}
-              </button>
-            ))}
+                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            
+            <div className={`shop-tabs-list ${isMobileMenuOpen ? 'open' : ''}`}>
+              {tabs.map(tab => (
+                <button 
+                  key={tab} 
+                  className={`shop-tab ${activeTab === tab ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="shop-grid">

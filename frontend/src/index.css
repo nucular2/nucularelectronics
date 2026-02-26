@@ -4679,7 +4679,7 @@ img {
   height: 100vh;
   background: #fff;
   z-index: 1000;
-  padding: 100px 40px;
+  padding: 100px 20px; /* Reduced side padding for better alignment */
   overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -4695,6 +4695,8 @@ img {
   display: flex;
   flex-direction: column;
   gap: 0;
+  align-items: flex-start; /* Align items to the left */
+  width: 100%;
 }
 
 .mobile-menu-link {
@@ -4705,6 +4707,9 @@ img {
   padding: 16px 0;
   border-bottom: 1px solid #f0f0f0;
   transition: color 0.3s ease;
+  text-align: left; /* Ensure text is left-aligned */
+  width: 100%; /* Full width for clickable area */
+  display: block;
 }
 
 .mobile-menu-link:last-child {

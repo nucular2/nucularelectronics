@@ -4695,7 +4695,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 20px 20px; /* Add horizontal padding */
 }
 
 .mobile-menu-logo {
@@ -4790,7 +4790,7 @@ img {
   padding-bottom: 8px;
   align-items: flex-start !important;
   text-align: left !important;
-  padding-left: 0 !important;
+  padding-left: 16px !important; /* Indent list items */
   margin-left: 0 !important;
 }
 

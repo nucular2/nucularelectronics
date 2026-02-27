@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from "../components/Header";
+import CardBase from "../components/cards/CardBase";
 import './ULightController.css';
 
 const TurnSignalIcon = () => (
@@ -150,11 +151,61 @@ export default function ULightController() {
               className="ulight-content-box-img"
             />
           </div>
-          
+
           <div className="ulight-buy-plate">
             <h3 className="ulight-buy-title">uLight controller</h3>
             <p className="ulight-buy-price">$55.00</p>
             <button className="ulight-buy-button">Buy</button>
+          </div>
+
+          <div className="ulight-reviews-section">
+            <div className="ulight-reviews-header">
+              <h2 className="ulight-reviews-title">Reviews</h2>
+              <a href="#" className="reviews-link">
+                All reviews
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+            <div className="product-reviews-list">
+              <CardBase className="product-review-card" height={218}>
+                <div className="product-review-text">
+                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                </div>
+                <div className="product-review-meta">
+                  <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
+                  <span>USA, Alex Smith</span>
+                </div>
+              </CardBase>
+              <CardBase className="product-review-card" height={218}>
+                <div className="product-review-text">
+                  Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
+                </div>
+                <div className="product-review-meta">
+                  <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
+                  <span>Germany, Max Stoun</span>
+                </div>
+              </CardBase>
+              <CardBase className="product-review-card" height={218}>
+                <div className="product-review-text">
+                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                </div>
+                <div className="product-review-meta">
+                  <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
+                  <span>Norway, Anna Orlova</span>
+                </div>
+              </CardBase>
+              <CardBase className="product-review-card" height={218}>
+                <div className="product-review-text">
+                  The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
+                </div>
+                <div className="product-review-meta">
+                  <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
+                  <span>France, Robert Jonson</span>
+                </div>
+              </CardBase>
+            </div>
           </div>
         </div>
       </section>

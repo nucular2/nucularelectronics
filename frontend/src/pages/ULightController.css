@@ -69,7 +69,7 @@
   max-width: 100%;
   height: auto;
   display: block;
-  transform: translateX(-10px);
+  transform: translateX(-20px);
 }
 
 .ulight-info-title.ulight-integration-title {
@@ -90,13 +90,14 @@
   max-width: 100%;
   height: auto;
   display: block;
-  transform: translateX(-20px);
+  transform: translateX(-30px);
 }
 
 .ulight-content-img {
   max-width: 100%;
   height: auto;
   display: block;
+  transform: translateX(-20px);
 }
 
 .ulight-promo3-2-container {
@@ -152,17 +153,18 @@
 }
 
 .ulight-buy-plate {
-  width: 414px;
-  max-width: 100%;
-  height: 187px;
-  padding: 32px 20px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  height: auto;
+  padding: 40px 20px;
   background-color: #101010;
-  border-radius: 20px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 80px auto 0;
+  margin-top: 80px;
   box-sizing: border-box;
 }
 
@@ -170,8 +172,8 @@
   color: white;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 24px;
-  margin: 0 0 8px 0;
+  font-size: 32px;
+  margin: 0 0 16px 0;
   line-height: 1.2;
 }
 
@@ -179,25 +181,57 @@
   color: white;
   font-family: var(--font-family);
   font-size: 18px;
-  margin: 0 0 24px 0;
+  margin: 0 0 32px 0;
 }
 
 .ulight-buy-button {
   width: 100%;
-  height: 48px;
+  max-width: 600px;
+  height: 56px;
   background-color: #f36f25;
   color: white;
   border: none;
   border-radius: 12px;
   font-family: var(--font-family);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .ulight-buy-button:hover {
   background-color: #e05e14;
+}
+
+/* Reviews Section */
+.ulight-reviews-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 80px 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ulight-reviews-header {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+}
+
+.ulight-reviews-title {
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  color: #101010;
+  margin: 0;
 }
 
 /* Mobile responsiveness */
@@ -210,5 +244,11 @@
   .ulight-features-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+  }
+
+  /* Reset global negative margins for reviews list as this section is already full-width */
+  .ulight-reviews-section .product-reviews-list {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }

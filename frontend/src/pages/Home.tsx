@@ -5,13 +5,10 @@ export default function Home() {
     <>
       <Header />
       <section className="hero">
+        <div className="hero-image-container">
+          <img src="/first.png" alt="Nucular electronics" className="hero-main-image" />
+        </div>
         <div className="hero-content">
-          <div className="hero-text-block">
-            <h1 className="hero-title">Nucular<br />electronics</h1>
-            <p className="hero-subtitle">
-              The hardware platform for designing light electric vehicles (LEVs), such as electric bikes, motorbikes, scooters and karting.
-            </p>
-          </div>
           <a href="#components" className="see-components-link">
             See the components 
             <svg className="arrow-down-long" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

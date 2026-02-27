@@ -7,6 +7,7 @@ interface CollapsibleSectionProps {
   titleClassName?: string;
   isOpen: boolean;
   onToggle: () => void;
+  headerContent?: React.ReactNode;
 }
 
 export default function CollapsibleSection({ 
@@ -15,12 +16,16 @@ export default function CollapsibleSection({
   className = "", 
   titleClassName = "",
   isOpen, 
-  onToggle 
+  onToggle,
+  headerContent
 }: CollapsibleSectionProps) {
   return (
     <div className={className}>
       <div className="product-collapsible-header" onClick={onToggle}>
-        <h2 className={titleClassName}>{title}</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
+          <h2 className={titleClassName}>{title}</h2>
+          {headerContent}
+        </div>
         <svg 
           className={`chevron ${isOpen ? 'open' : ''}`} 
           width="24" 

@@ -36,7 +36,7 @@ export default function Footer() {
               <h4 className="footer-title">Company</h4>
               <ul className="footer-links">
                 <li><a href="#" onClick={goNews}>News</a></li>
-                <li><a href="#">Reviews</a></li>
+                <li><a href="#">All reviews</a></li>
                 <li><a href="#" onClick={goPartners}>Dealers</a></li>
                 <li><a href="#" onClick={goPartners}>Contact us</a></li>
               </ul>

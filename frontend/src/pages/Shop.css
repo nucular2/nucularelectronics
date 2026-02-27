@@ -1,4 +1,3 @@
-/* Mobile Shop Page Overrides */
 @media (max-width: 768px) {
   /* Page Layout */
   .shop-page {
@@ -197,10 +196,5 @@
     color: #555;
     border: none;
     background: transparent;
-  }
-  
-  .shop-tab.active {
-    color: #B0B0B0 !important;
-    font-weight: 600;
   }
 }

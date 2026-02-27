@@ -37,15 +37,21 @@ body,
   background-color: #101010;
 }
 
-.hero::before {
-  content: "";
+/* .hero::before removed as requested */
+.hero-image-container {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  width: 1650px;
-  height: 590px;
-  background: url(/moto1.png) no-repeat left bottom / contain;
-  z-index: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Changed to 0 so it is behind text but visible if z-index logic is right */
+}
+
+.hero-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Header Styles */
@@ -169,34 +175,37 @@ body,
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center; /* Vertically center content */
 }
 
 .hero-text-block {
-  margin-top: 266px;
-  max-width: 600px;
+  /* Positioned to the right */
   margin-left: auto;
   margin-right: 0;
-  text-align: right;
+  max-width: 600px;
+  text-align: center; /* Text centered within the block */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-title {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 56px;
+  font-size: 64px; /* Increased size */
   line-height: 110%;
   margin-bottom: 24px;
+  color: #fff;
 }
 
 .hero-subtitle {
   font-family: var(--font-family);
-  font-weight: 300; /* Thinner weight */
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 18px;
   line-height: 150%;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 40px;
   max-width: 480px;
-  margin-left: auto;
-  margin-right: 0;
 }
 
 .hero-buttons {
@@ -306,8 +315,9 @@ body,
   transition: opacity 0.2s;
   position: absolute;
   bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: auto;
+  right: 100px; /* Align to the right with standard padding */
+  transform: none;
 }
 
 .see-components-link:hover {
@@ -3347,19 +3357,30 @@ img {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #222222;
+  line-height: 1.5;
+  color: #111;
+  margin-bottom: 24px;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-review-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   margin-top: auto;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 140%;
-  color: #b0b0b0;
+  color: #111;
+}
+
+.product-review-meta span {
+  font-weight: 600;
+  color: #111;
 }
 
 .product-review-flag {
@@ -3887,6 +3908,29 @@ img {
   color: #888;
 }
 
+/* Reviews Link */
+.reviews-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #f36f25;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: var(--font-family);
+}
+
+.reviews-link:hover {
+  opacity: 0.8;
+}
+
+.reviews-link-collapsible {
+  margin-left: auto;
+  margin-right: 16px;
+}
+
 .shop-card .card-button.buy-button {
   padding: 0;
   border-radius: 0;
@@ -4083,6 +4127,23 @@ img {
 }
 
 /* --- MOBILE FIXES FOR PRODUCT DETAIL --- */
+/* Reviews Link */
+.reviews-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  color: #f36f25;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.reviews-link:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 768px) {
   /* 1. Product Kit (In the kit) - Fix oversized divs and layout */
   .product-kit-grid {
@@ -5739,22 +5800,29 @@ img {
   .product-reviews-list {
     display: flex !important;
     overflow-x: auto !important;
-    gap: 16px !important;
+    gap: 20px !important;
     padding-bottom: 16px !important;
-    padding-left: 20px !important; /* Standard padding */
+    padding-left: 20px !important;
     padding-right: 20px !important;
     margin-left: -20px !important;
     margin-right: -20px !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-  }
-  
-  .product-reviews-list .product-review-card:first-child {
-    margin-left: 60px !important; /* Extra indent on mobile */
+    scroll-snap-type: x mandatory !important;
   }
   
   .product-reviews-list::-webkit-scrollbar {
     display: none;
+  }
+
+  .product-reviews-list .product-review-card:first-child {
+    margin-left: 0 !important;
+  }
+
+  .product-review-card {
+    width: 85vw !important;
+    min-width: 85vw !important;
+    scroll-snap-align: center !important;
   }
   
   /* Global moved */

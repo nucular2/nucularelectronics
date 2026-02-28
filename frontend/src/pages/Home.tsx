@@ -119,50 +119,38 @@ export default function Home() {
 
         {/* BMS Section */}
         <section className="bms-section">
-          <h2 className="bms-main-title">Battery Management System</h2>
-          <p className="bms-main-description">
-            BMS for monitor and regulate the charging and discharge of batteries.
-          </p>
-          <div className="bms-grid">
-            {/* Card 1: BMS 16S */}
-            <div className="bms-card">
-              <div className="bms-card-image-container">
-                 <svg className="bms-card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
-                  <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
-                </svg>
-              </div>
-              <h3 className="bms-card-title">BMS 16S</h3>
-              <p className="bms-card-description">For compact e-scooters batteries.</p>
-              <div className="bms-card-actions">
-                <button className="card-button preorder-button">Preorder</button>
-                <span className="status-text bms-status">In development</span>
+          <div className="bms-banner">
+            <div className="bms-content-left">
+              <h2 className="bms-title">Battery Management System</h2>
+              <p className="bms-description">
+                BMS for monitor and regulate the charging and discharge of batteries.
+              </p>
+              <div className="bms-actions">
+                <button className="card-button preorder-button-orange">Preorder</button>
+                <span className="status-text in-dev">In development</span>
               </div>
             </div>
-
-            {/* Card 2: BMS 24S */}
-            <div className="bms-card">
-              <div className="bms-card-image-container">
-                 <svg className="bms-card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
-                  <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
-                </svg>
-              </div>
-              <h3 className="bms-card-title">BMS 24S</h3>
-              <p className="bms-card-description">For powerful batteries.</p>
-              <div className="bms-card-actions">
-                <button className="card-button preorder-button">Preorder</button>
-                <span className="status-text bms-status">In development</span>
-              </div>
+            <div className="bms-content-right">
+               <div className="bms-placeholder">
+                  <svg width="60" height="60" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
+                    <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
+                  </svg>
+               </div>
             </div>
           </div>
         </section>
 
-        {/* uLight Controller Section */}
-        <div className="ulight-section">
+        {/* uLight Section */}
+        <section className="ulight-section">
+          <div className="ulight-image-container">
+            <img src="/promo3.png" alt="uLight controller" className="ulight-image" />
+          </div>
           <div className="ulight-content">
-            <h3 className="ulight-title">uLight controller</h3>
-            <p className="ulight-description">Designed to connect and control lightning equipment.</p>
+            <h2 className="ulight-title">uLight controller</h2>
+            <p className="ulight-description">
+              Designed to connect and control lightning equipment.
+            </p>
             <div className="ulight-actions">
               <button className="card-button buy-button">Buy</button>
               <a href="#" className="card-link">
@@ -173,10 +161,55 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="ulight-image-container">
-            <img src="/4экран.png" alt="uLight controller" className="ulight-image" />
+        </section>
+
+        {/* CAN-bus Info */}
+        <section className="canbus-info">
+          <p className="canbus-text">
+            All devices are connected by <strong>CAN-bus</strong>.
+          </p>
+          <p className="canbus-text">
+            Components can be used separately with devices from other
+            <br />
+            manufacturers using our open <strong>LEVCAN protocol</strong>.
+          </p>
+        </section>
+
+        {/* OEM Section */}
+        <section className="oem-section">
+          <h2 className="oem-title">OEM</h2>
+          <div className="oem-image-container">
+            <img src="/compan.png" alt="OEM solutions" className="oem-main-image" />
           </div>
-        </div>
+          <button className="oem-button">For OEM</button>
+        </section>
+
+        {/* Promo Plates Section (Accessories & Spare parts) */}
+        <section className="promo-plates-section">
+          <img src="/2pla.png" alt="Accessories and Spare parts" className="promo-plates-image" />
+        </section>
+
+        {/* Advantages Section */}
+        <section className="advantages-section">
+          <img src="/advantages.png" alt="Our advantages" className="advantages-image" />
+        </section>
+
+        {/* Complete Solutions Section */}
+        <section className="complete-solutions-section">
+          <h2 className="complete-solutions-title">Complete solutions</h2>
+          <p className="complete-solutions-description">
+            Plug and Ride kits so as not to bother with diagrams, custom wiring harnesses, connectors and soldering.
+          </p>
+          <div className="complete-solutions-grid">
+            <img src="/kit1.png" alt="Kit 1" className="complete-solutions-image" />
+            <img src="/kit2.png" alt="Kit 2" className="complete-solutions-image" />
+            <img src="/kit3.png" alt="Kit 3" className="complete-solutions-image" />
+            <img src="/kit4.png" alt="Kit 4" className="complete-solutions-image" />
+            <img src="/kit5.png" alt="Kit 5" className="complete-solutions-image" />
+            <img src="/kit6.png" alt="Kit 6" className="complete-solutions-image" />
+          </div>
+        </section>
+
       </div>
     </>
   );

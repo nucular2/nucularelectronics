@@ -813,7 +813,7 @@ body,
 }
 
 .advantages-image {
-  max-width: 100%;
+  max-width: 90%;
   height: auto;
 }
 
@@ -883,9 +883,10 @@ body,
   width: 100%;
   z-index: 2;
   position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
+  top: 40px; /* Move to top */
+  left: 40px; /* Move to left */
+  right: auto;
+  bottom: auto;
 }
 
 .solution-title {
@@ -908,7 +909,7 @@ body,
 .solution-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align left */
   gap: 24px;
 }
 

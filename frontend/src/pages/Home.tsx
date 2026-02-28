@@ -87,9 +87,6 @@ export default function Home() {
           <div className="accessories-grid">
             {/* Card 1: On-board computer */}
             <div className="accessory-card">
-              <div className="accessory-image-container">
-                <img src="/3экран.png" alt="On-board computer" className="accessory-image" />
-              </div>
               <h3 className="accessory-title">On-board computer</h3>
               <p className="accessory-description">For displaying basic parameters,<br />setting devices and power modes.</p>
               <div className="accessory-actions">
@@ -101,17 +98,20 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
+              <div className="accessory-image-container">
+                <img src="/3экран.png" alt="On-board computer" className="accessory-image" />
+              </div>
             </div>
 
             {/* Card 2: Bluetooth module */}
             <div className="accessory-card">
-              <div className="accessory-image-container">
-                <img src="/3(2)экран.png" alt="Bluetooth module" className="accessory-image" />
-              </div>
               <h3 className="accessory-title">Bluetooth module<br />with App</h3>
               <p className="accessory-description">Change all settings through your smartphone<br />instead an On-board computer.</p>
               <div className="accessory-actions">
                 <button className="card-button buy-button">Buy</button>
+              </div>
+              <div className="accessory-image-container">
+                <img src="/3(2)экран.png" alt="Bluetooth module" className="accessory-image" />
               </div>
             </div>
           </div>

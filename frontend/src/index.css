@@ -555,10 +555,12 @@ body,
   background: #f6f6f6;
   border-radius: 20px;
   width: 570px; /* (1180 - 40) / 2 approx, fitting 2 in a row */
-  height: 444px;
+  height: 520px;
   padding: 32px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Subtle shadow */
   transition: transform 0.2s;
 }
@@ -589,7 +591,7 @@ body,
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .accessory-image-container {
@@ -597,7 +599,8 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-top: 24px;
+  margin-bottom: 0;
   overflow: hidden;
 }
 

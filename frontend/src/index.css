@@ -868,10 +868,11 @@ body,
 .complete-solution-card {
   background-color: #101010;
   border-radius: 20px;
-  padding: 40px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end; /* Push content to bottom */
   text-align: center;
   overflow: hidden;
   position: relative;
@@ -881,7 +882,10 @@ body,
 .solution-content {
   width: 100%;
   z-index: 2;
-  margin-bottom: 24px;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
 }
 
 .solution-title {
@@ -926,12 +930,12 @@ body,
 
 .complete-solutions-image {
   width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover; /* Cover the entire card */
   z-index: 1;
-  /* Remove default border radius if it was set globally or in previous class */
-  border-radius: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .ulight-image-container {

@@ -204,8 +204,6 @@ export default function Home() {
             {/* Kit 1 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Apollo RFN</h3>
-                <p className="solution-description">Up to 12kW on stock battery.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">
@@ -222,8 +220,6 @@ export default function Home() {
             {/* Kit 2 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Sur-Ron Light Bee</h3>
-                <p className="solution-description">Ultimate power upgrade kit.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">
@@ -240,8 +236,6 @@ export default function Home() {
             {/* Kit 3 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Talaria Sting</h3>
-                <p className="solution-description">Performance controller kit.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">
@@ -258,8 +252,6 @@ export default function Home() {
             {/* Kit 4 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Segway X260</h3>
-                <p className="solution-description">Boost your ride instantly.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">
@@ -276,8 +268,6 @@ export default function Home() {
             {/* Kit 5 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Drill One</h3>
-                <p className="solution-description">Maximum torque and speed.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">
@@ -294,8 +284,6 @@ export default function Home() {
             {/* Kit 6 */}
             <div className="complete-solution-card">
               <div className="solution-content">
-                <h3 className="solution-title">For Custom Builds</h3>
-                <p className="solution-description">Universal mounting solution.</p>
                 <div className="solution-actions">
                   <button className="card-button buy-button">Buy</button>
                   <a href="#" className="card-link solution-link">

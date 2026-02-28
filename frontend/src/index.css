@@ -883,8 +883,8 @@ body,
   width: 100%;
   z-index: 2;
   position: absolute;
-  top: 40px; /* Move to top */
-  left: 40px; /* Move to left */
+  top: 60px; /* Move slightly lower */
+  left: 40px;
   right: auto;
   bottom: auto;
 }

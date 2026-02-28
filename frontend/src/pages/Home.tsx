@@ -201,12 +201,113 @@ export default function Home() {
             Plug and Ride kits so as not to bother with diagrams, custom wiring harnesses, connectors and soldering.
           </p>
           <div className="complete-solutions-grid">
-            <img src="/kit1.png" alt="Kit 1" className="complete-solutions-image" />
-            <img src="/kit2.png" alt="Kit 2" className="complete-solutions-image" />
-            <img src="/kit3.png" alt="Kit 3" className="complete-solutions-image" />
-            <img src="/kit4.png" alt="Kit 4" className="complete-solutions-image" />
-            <img src="/kit5.png" alt="Kit 5" className="complete-solutions-image" />
-            <img src="/kit6.png" alt="Kit 6" className="complete-solutions-image" />
+            {/* Kit 1 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Apollo RFN</h3>
+                <p className="solution-description">Up to 12kW on stock battery.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit1.png" alt="For Apollo RFN" className="complete-solutions-image" />
+            </div>
+
+            {/* Kit 2 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Sur-Ron Light Bee</h3>
+                <p className="solution-description">Ultimate power upgrade kit.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit2.png" alt="For Sur-Ron Light Bee" className="complete-solutions-image" />
+            </div>
+
+            {/* Kit 3 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Talaria Sting</h3>
+                <p className="solution-description">Performance controller kit.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit3.png" alt="For Talaria Sting" className="complete-solutions-image" />
+            </div>
+
+            {/* Kit 4 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Segway X260</h3>
+                <p className="solution-description">Boost your ride instantly.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit4.png" alt="For Segway X260" className="complete-solutions-image" />
+            </div>
+
+            {/* Kit 5 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Drill One</h3>
+                <p className="solution-description">Maximum torque and speed.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit5.png" alt="For Drill One" className="complete-solutions-image" />
+            </div>
+
+            {/* Kit 6 */}
+            <div className="complete-solution-card">
+              <div className="solution-content">
+                <h3 className="solution-title">For Custom Builds</h3>
+                <p className="solution-description">Universal mounting solution.</p>
+                <div className="solution-actions">
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link solution-link">
+                    Learn more
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <img src="/kit6.png" alt="For Custom Builds" className="complete-solutions-image" />
+            </div>
           </div>
         </section>
 

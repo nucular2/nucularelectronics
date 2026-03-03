@@ -25,18 +25,21 @@ export default function Shop() {
     <>
       <Header variant="white" />
       <div className="shop-page">
-        <div className="shop-container">
+        <div className={`shop-container ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
           <h1 className="shop-title">Shop</h1>
           
           <div className="shop-tabs">
-            <div 
-              className={`shop-tabs-mobile-header ${isMobileMenuOpen ? 'open' : ''}`} 
+            <div
+              className={`shop-tabs-mobile-header ${isMobileMenuOpen ? 'open' : ''}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <span>{activeTab}</span>
-              <svg 
-                className={`shop-tabs-chevron ${isMobileMenuOpen ? 'open' : ''}`} 
-                width="24" height="24" viewBox="0 0 24 24" fill="none"
+              <span className="current-tab">{activeTab}</span>
+              <svg
+                className={`shop-tabs-chevron ${isMobileMenuOpen ? 'open' : ''}`}
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
               >
                 <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>

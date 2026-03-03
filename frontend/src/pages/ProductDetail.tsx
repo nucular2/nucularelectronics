@@ -5,6 +5,7 @@ import CardBase from "../components/cards/CardBase";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { products } from "../data/products";
 import { useCart } from "../context/CartContext";
+import "./ProductDetail.css";
 
 
 export default function ProductDetail() {

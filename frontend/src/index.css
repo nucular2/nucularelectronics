@@ -886,53 +886,67 @@ body,
 /* Dropdown Menu Styles */
 .dropdown-overlay {
   position: absolute;
-  top: 100%; /* Position right below the header */
+  top: 100%;
   left: 0;
   width: 100%;
   background-color: #fff;
   padding: 40px 0 60px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: 90;
   border-top: 1px solid rgba(0,0,0,0.05);
+  height: 50vh;
 }
 
-.dropdown-overlay.visible {
+.dropdown-overlay.open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
 .dropdown-content {
-  max-width: 1180px;
+  max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 100px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  padding: 0 40px;
+  gap: 0;
 }
 
 .dropdown-column {
+  padding: 0 32px;
+  border-right: 1px solid #eee;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdown-column:first-child {
+  padding-left: 0;
+}
+
+.dropdown-column:last-child {
+  border-right: none;
+  padding-right: 0;
 }
 
 .dropdown-title {
   font-family: var(--font-family);
-  font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
+  font-size: 16px;
   color: #999;
   margin-bottom: 24px;
-  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .dropdown-link {
   font-family: var(--font-family);
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 18px;
   color: #222;
   text-decoration: none;
   margin-bottom: 16px;

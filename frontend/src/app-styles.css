@@ -1473,6 +1473,15 @@
     height: 54px !important;
   }
 
+  .quantity-arrow {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    margin-left: auto !important;
+  }
+
   /* Price/Remove - Right side of actions */
   .cart-price-remove {
     display: flex !important;
@@ -1516,6 +1525,26 @@
     font-size: 12px !important;
     font-weight: 400 !important;
     margin-left: 8px !important;
+  }
+
+  .preorder-badge {
+    margin: 12px 0 0 0 !important;
+    font-size: 14px !important;
+    color: #111 !important;
+    background: #FFE9DE !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    width: 374px !important;
+    height: 43px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+
+  .preorder-badge span {
+    white-space: nowrap !important;
   }
 
   /* Cart Title */
@@ -1589,6 +1618,7 @@
     height: 54px !important; /* Taller button for mobile */
     margin: 0 !important;
     font-size: 16px !important;
+    border-radius: 12px !important;
   }
 }
 

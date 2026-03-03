@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { products } from "../data/products";
+import "./ControllerSettings.css";
 
 export default function Support() {
   const [query, setQuery] = useState("");

@@ -1084,8 +1084,12 @@ body,
 /* Responsive styles */
 @media (max-width: 768px) {
   .main-header {
-    padding-left: 40px;
+    padding-left: 20px;
     padding-right: 40px;
+  }
+
+  .logo-container {
+    margin-left: 0 !important;
   }
   
   .main-nav {

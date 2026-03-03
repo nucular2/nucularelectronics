@@ -6,7 +6,8 @@ export default function Home() {
       <Header />
       <section className="hero">
         <div className="hero-image-container">
-          <img src="/first.png" alt="Nucular electronics" className="hero-main-image" />
+          <img src="/first.png" alt="Nucular electronics" className="hero-main-image hero-main-image-desktop" />
+          <img src="/firstmob.png" alt="Nucular electronics" className="hero-main-image hero-main-image-mobile" />
         </div>
         <div className="hero-content">
           <a href="#components" className="see-components-link">
@@ -17,12 +18,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-      <div className="scroll-up-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
-      
       <div className="page-content-white">
         <section className="controllers-section">
           <h2 className="controllers-title">Controllers</h2>

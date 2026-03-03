@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -8,6 +8,8 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
   const { items } = useCart();
   const { user } = useAuth();
@@ -21,6 +23,26 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (mobileMenuRef.current?.contains(target)) {
+        return;
+      }
+      if (mobileToggleRef.current?.contains(target)) {
+        return;
+      }
+      closeMobileMenu();
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [isMobileMenuOpen]);
 
   const isWhite = isProductsOpen || variant === 'white' || isScrolled;
   const logoColor = isWhite ? "#222" : "white";
@@ -139,7 +161,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           )}
         </div>
         {/* Mobile Menu Toggle */}
-      <button className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+      <button
+        className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
+        onClick={toggleMobileMenu}
+        ref={mobileToggleRef}
+      >
         {isMobileMenuOpen ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -176,9 +202,16 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         </div>
       )}
       {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-menu-header">
-          <div className="mobile-menu-logo" onClick={() => { closeMobileMenu(); navigate('/'); }}>
+      {isMobileMenuOpen && (
+        <div className="mobile-menu-backdrop" onClick={closeMobileMenu} onPointerDown={closeMobileMenu}>
+          <div
+            className="mobile-menu"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+            ref={mobileMenuRef}
+          >
+            <div className="mobile-menu-header">
+              <div className="mobile-menu-logo" onClick={() => { closeMobileMenu(); navigate('/'); }}>
             <svg width="130" height="32" viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path className="logo-path" d="M1.86502e-06 5.33333L0 26.6667H8.44444L8.44444 6.66667L20.4444 18.6914L20.4444 1.32106e-06L5.33334 0C2.38782 -2.57505e-07 2.12253e-06 2.38781 1.86502e-06 5.33333Z" fill="#222" />
               <path className="logo-path" d="M35.5556 34.6667V13.3333H27.1111V33.3333L15.1111 21.3087V40H30.2222C33.1677 40 35.5556 37.6122 35.5556 34.6667Z" fill="#222" />
@@ -189,41 +222,48 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <path className="logo-path" fillRule="evenodd" clipRule="evenodd" d="M128.409 23.3168C128.409 21.1809 128.807 19.5326 129.603 17.9183C130.424 16.3039 131.53 15.0621 132.923 14.1928C134.316 13.3235 135.87 12.8889 137.587 12.8889C139.054 12.8889 140.335 13.1869 141.429 13.783C142.548 14.3791 143.407 15.0268 144.003 15.9954V13.3333H150.383V33.3333H144.003V30.4398C143.382 31.4084 142.511 32.283 141.392 32.879C140.298 33.4751 139.017 33.7732 137.549 33.7732C135.858 33.7732 134.316 33.3385 132.923 32.4692C131.53 31.5751 130.424 30.3209 129.603 28.7065C128.807 27.0673 128.409 25.4528 128.409 23.3168ZM144.003 23.3168C144.003 21.7273 143.556 20.7372 142.66 19.8182C141.79 18.8993 140.72 18.4398 139.452 18.4398C138.184 18.4398 137.102 18.8993 136.206 19.8182C135.336 20.7124 134.901 21.7273 134.901 23.3168C134.901 24.9064 135.336 25.9 136.206 26.8438C137.102 27.7628 138.184 28.2222 139.452 28.2222C140.72 28.2222 141.79 27.7628 142.66 26.8438C143.556 25.9249 144.003 24.9064 144.003 23.3168Z" fill="#222" />
               <path className="logo-path" d="M165.295 14.117C164.176 14.7627 163.243 15.6568 162.497 16.7993V13.3333H156.118V33.3333H162.497V23.7681C162.497 22.0544 162.895 20.8623 163.691 20.1917C164.487 19.4963 165.681 19.1485 167.272 19.1485H168.889V13.1111C167.521 13.1111 166.414 13.4464 165.295 14.117Z" fill="#222" />
             </svg>
+              </div>
+              <button className="mobile-menu-close" onClick={closeMobileMenu} aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18M6 6L18 18" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <nav className="mobile-menu-nav">
+              <div className="mobile-products-container">
+                <button 
+                  className={`mobile-products-toggle ${isMobileProductsOpen ? 'open' : ''}`}
+                  onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                >
+                  <span className="mobile-menu-link">Products</span>
+                  <svg 
+                    className={`mobile-chevron ${isMobileProductsOpen ? 'open' : ''}`}
+                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  >
+                    <path d="M6 9L12 15L18 9" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+                <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
+                  <div className="mobile-products-section-title">Components</div>
+                  <a href="#" className="mobile-product-link">Controllers</a>
+                  <a href="#" className="mobile-product-link">On-board computer</a>
+                  <a href="/ulight-controller" className="mobile-product-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/ulight-controller'); }}>uLight controller</a>
+                  <a href="#" className="mobile-product-link">Motors</a>
+                  <a href="#" className="mobile-product-link">Bluetooth module with App</a>
+                  <a href="#" className="mobile-product-link soon">BMS (soon)</a>
+                </div>
+              </div>
+
+              <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/shop'); }}>Shop</a>
+              <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/support'); }}>Support</a>
+              <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/settings/controller'); }}>Firmware</a>
+              <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/news'); }}>News</a>
+              <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/contact'); }}>Contact us</a>
+            </nav>
           </div>
         </div>
-
-        <nav className="mobile-menu-nav">
-          <div className="mobile-products-container">
-            <button 
-              className={`mobile-products-toggle ${isMobileProductsOpen ? 'open' : ''}`}
-              onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-            >
-              <span className="mobile-menu-link">Products</span>
-              <svg 
-                className={`mobile-chevron ${isMobileProductsOpen ? 'open' : ''}`}
-                width="24" height="24" viewBox="0 0 24 24" fill="none"
-              >
-                <path d="M6 9L12 15L18 9" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
-              <div className="mobile-products-section-title">Components</div>
-              <a href="#" className="mobile-product-link">Controllers</a>
-              <a href="#" className="mobile-product-link">On-board computer</a>
-              <a href="/ulight-controller" className="mobile-product-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/ulight-controller'); }}>uLight controller</a>
-              <a href="#" className="mobile-product-link">Motors</a>
-              <a href="#" className="mobile-product-link">Bluetooth module with App</a>
-              <a href="#" className="mobile-product-link soon">BMS (soon)</a>
-            </div>
-          </div>
-
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/shop'); }}>Shop</a>
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/support'); }}>Support</a>
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/settings/controller'); }}>Firmware</a>
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/news'); }}>News</a>
-          <a href="#" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/contact'); }}>Contact us</a>
-        </nav>
-      </div>
+      )}
     </header>
   );
 }

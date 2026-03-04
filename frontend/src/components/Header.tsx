@@ -222,7 +222,17 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           <div className="dropdown-content">
             <div className="dropdown-column">
               <h4 className="dropdown-title">Components</h4>
-              <a href="#" className="dropdown-link">Controllers</a>
+              <a
+                href="/controller"
+                className="dropdown-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/controller');
+                  setIsProductsOpen(false);
+                }}
+              >
+                Controllers
+              </a>
               <a
                 href="/on-board-computer"
                 className="dropdown-link"
@@ -296,7 +306,16 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
                 </button>
                 <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
                   <div className="mobile-products-section-title">Components</div>
-                  <a href="#" className="mobile-product-link">Controllers</a>
+                  <a
+                    href="/controller"
+                    className="mobile-product-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMobileNavClick('/controller');
+                    }}
+                  >
+                    Controllers
+                  </a>
                   <a
                     href="/on-board-computer"
                     className="mobile-product-link"

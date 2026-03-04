@@ -75,7 +75,14 @@ export default function Home() {
 
   const cardLinkStyle = isMobile ? { marginTop: "8px" } : undefined;
 
-  const cardActionsStyle = isMobile ? { marginTop: "12px" } : undefined;
+  const cardActionsStyle = isMobile
+    ? {
+        marginTop: "12px",
+        justifyContent: "flex-start",
+        gap: "12px",
+        width: "100%",
+      }
+    : undefined;
 
   return (
     <div className={isMobile ? "home-mobile" : undefined}>
@@ -135,9 +142,12 @@ export default function Home() {
               <div style={cardTextBlockStyle}>
                 <h3 className="card-title">Nucular controller 12F HE</h3>
                 <p className="card-power">12 kW</p>
-                <div className="card-actions" style={cardActionsStyle}>
+                <div className="card-actions preorder-actions" style={cardActionsStyle}>
                   <button className="card-button preorder-button">Preorder</button>
                   <span className="status-text">In development</span>
+                  <a href="#" className="card-link">
+                    Learn more
+                  </a>
                 </div>
               </div>
             </div>
@@ -153,9 +163,12 @@ export default function Home() {
               <div style={cardTextBlockStyle}>
                 <h3 className="card-title">Nucular controller 6F HE</h3>
                 <p className="card-power">4 kW</p>
-                <div className="card-actions" style={cardActionsStyle}>
+                <div className="card-actions preorder-actions" style={cardActionsStyle}>
                   <button className="card-button preorder-button">Preorder</button>
                   <span className="status-text">In development</span>
+                  <a href="#" className="card-link">
+                    Learn more
+                  </a>
                 </div>
               </div>
             </div>
@@ -221,45 +234,37 @@ export default function Home() {
 
         {/* uLight Section */}
         <section className="ulight-section">
-          <div className="ulight-image-container">
-            <img src="/promo3.png" alt="uLight controller" className="ulight-image" />
-          </div>
-          <div className="ulight-content">
-            <h2 className="ulight-title">uLight controller</h2>
-            <p className="ulight-description">
-              Designed to connect and control lightning equipment.
-            </p>
-            <div className="ulight-actions">
-              <button className="card-button buy-button">Buy</button>
-              <a href="#" className="card-link">
-                Learn more
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
-                </svg>
-              </a>
+          <div className="ulight-card">
+            <div className="ulight-image-container">
+              <img src="/main3.png" alt="uLight controller" className="ulight-image" />
+            </div>
+            <div className="ulight-content">
+              <h2 className="ulight-title">uLight controller</h2>
+              <p className="ulight-description">
+                Designed to connect and control lightning equipment.
+              </p>
+              <div className="ulight-actions">
+                <button className="card-button buy-button">Buy</button>
+                <a href="#" className="card-link">
+                  Learn more
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
         {/* CAN-bus Info */}
         <section className="canbus-info">
-          <p className="canbus-text">
-            All devices are connected by <strong>CAN-bus</strong>.
-          </p>
-          <p className="canbus-text">
-            Components can be used separately with devices from other
-            <br />
-            manufacturers using our open <strong>LEVCAN protocol</strong>.
-          </p>
         </section>
 
         {/* OEM Section */}
         <section className="oem-section">
-          <h2 className="oem-title">OEM</h2>
           <div className="oem-image-container">
             <img src="/mob2.png" alt="OEM solutions" className="oem-main-image" />
           </div>
-          <button className="oem-button">For OEM</button>
         </section>
 
         {/* Promo Plates Section (Accessories & Spare parts) */}
@@ -269,7 +274,14 @@ export default function Home() {
 
         {/* Advantages Section */}
         <section className="advantages-section">
-          <img src="/advantages.png" alt="Our advantages" className="advantages-image" />
+          <h2 className="advantages-title">Our advantages</h2>
+          <p className="advantages-description">
+            We work hard every day to make you happier and your e-bike more powerful and faster.
+          </p>
+          <div className="advantages-scroll">
+            <img src="/сontent3png.png" alt="Our advantages" className="advantages-scroll-image" />
+            <img src="/сontent3png.png" alt="Our advantages" className="advantages-scroll-image" />
+          </div>
         </section>
 
         {/* Complete Solutions Section */}
@@ -374,6 +386,74 @@ export default function Home() {
               </div>
               <img src="/kit6.png" alt="For Custom Builds" className="complete-solutions-image" />
             </div>
+          </div>
+        </section>
+
+        <section className="news-section">
+          <div className="section-header">
+            <h2 className="section-title">News</h2>
+            <a href="#" className="section-link">
+              All news
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
+          <div className="news-carousel">
+            <article className="news-card news-card--small">
+              <div className="news-image-wrapper news-image-wrapper--small">
+                <img src="/new1.png" alt="Protection of controllers" className="news-image" />
+              </div>
+              <div className="news-meta">June 20, 2022</div>
+              <h2 className="news-card-title">Protection of controllers</h2>
+              <p className="news-card-text">
+                New circuit engineering and improved protection of controllers from our users.
+              </p>
+            </article>
+            <article className="news-card news-card--small">
+              <div className="news-image-wrapper news-image-wrapper--small">
+                <img src="/new2.png" alt="Price increase" className="news-image" />
+              </div>
+              <div className="news-meta">June 5, 2022</div>
+              <h2 className="news-card-title">Price increase</h2>
+              <p className="news-card-text">
+                Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="reviews-section">
+          <div className="section-header">
+            <h2 className="section-title">Reviews</h2>
+            <a href="#" className="section-link">
+              All reviews
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
+          <div className="reviews-grid">
+            <article className="review-card">
+              <h3 className="review-title">Nucular controller P24F</h3>
+              <p className="review-text">
+                A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+              </p>
+              <div className="review-author">
+                <img src="/flag1.png" alt="USA" className="review-flag" />
+                <span className="author-name">USA, Alex Smith</span>
+              </div>
+            </article>
+            <article className="review-card">
+              <h3 className="review-title">uLight controller</h3>
+              <p className="review-text">
+                Lighting control signals, brake light and LED strip. Easy connection and necessary ...
+              </p>
+              <div className="review-author">
+                <img src="/flag2.png" alt="Germany" className="review-flag" />
+                <span className="author-name">Germany, Anna Muller</span>
+              </div>
+            </article>
           </div>
         </section>
 

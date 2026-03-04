@@ -8,13 +8,18 @@ import { useCart } from "../context/CartContext";
 import "./ProductDetail.css";
 
 
-export default function ProductDetail() {
+type ProductDetailProps = {
+  productId?: number;
+  imagesOverride?: string[];
+};
+
+export default function ProductDetail({ productId, imagesOverride }: ProductDetailProps) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
-  const productId = Number(id);
-  const product = products.find((p) => p.id === productId) || products[0];
+  const resolvedProductId = productId ?? Number(id);
+  const product = products.find((p) => p.id === resolvedProductId) || products[0];
 
   const isP24F = product.id === 1;
   const isOnBoardComputer = product.id === 2;
@@ -151,7 +156,9 @@ export default function ProductDetail() {
 
   const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D"];
 
-  const images = isP24F
+  const images = imagesOverride
+    ? imagesOverride
+    : isP24F
     ? ["/мото2.png", "/miniature11.png", "/miniature12.png", "/miniature13.png"]
     : product.image
     ? [product.image]

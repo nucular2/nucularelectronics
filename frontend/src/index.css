@@ -89,6 +89,66 @@ body,
   display: none;
 }
 
+.onboard-section {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.onboard-section-last {
+  padding-bottom: 80px;
+}
+
+.onboard-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: block;
+}
+
+.onboard-image-full {
+  max-width: 100%;
+}
+
+.onboard-panel {
+  padding: 32px 20px;
+  width: 414px;
+  height: 187px;
+  background: #101010;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.onboard-panel-title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.onboard-panel-price {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.onboard-panel-button {
+  margin-top: 16px;
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  background: #F36F25;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* Header Styles */
 .main-header {
   position: fixed;
@@ -116,7 +176,7 @@ body,
 .main-header.scrolled,
 .main-header.white-bg,
 .main-header.dropdown-open {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #fff;
   backdrop-filter: blur(10px);
 }
 
@@ -609,6 +669,8 @@ body.is-mobile .cart-count {
 
 .bms-content-left {
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bms-title {
@@ -651,6 +713,8 @@ body.is-mobile .cart-count {
   align-items: center;
   justify-content: center;
   opacity: 0.2;
+  align-self: flex-end;
+  margin-left: auto;
 }
 
 /* uLight Section */
@@ -661,6 +725,13 @@ body.is-mobile .cart-count {
   align-items: center;
   gap: 60px;
   padding: 0 40px;
+}
+
+.ulight-card {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
 }
 
 .ulight-content {
@@ -742,6 +813,68 @@ body.is-mobile .cart-count {
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+.advantages-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 120%;
+  color: #222;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.advantages-description {
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%;
+  color: #666;
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 20px;
+}
+
+.advantages-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 20px 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.advantages-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.advantages-scroll-image {
+  width: 240px;
+  height: 240px;
+  border-radius: 20px;
+  flex: 0 0 auto;
+  display: block;
+  object-fit: contain;
+}
+
+.news-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 20px 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.news-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.news-carousel .news-card {
+  min-width: 260px;
+  width: 260px;
+  flex: 0 0 auto;
 }
 
 /* Complete Solutions Section */
@@ -912,6 +1045,11 @@ body.is-mobile .cart-count {
   margin-bottom: 24px;
 }
 
+body.is-mobile .canbus-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .canbus-text strong {
   font-weight: 700;
 }
@@ -995,8 +1133,8 @@ body.is-mobile .cart-count {
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2000;
   display: flex;
   justify-content: flex-end;
 }
@@ -1011,6 +1149,31 @@ body.is-mobile .cart-count {
   flex-direction: column;
   gap: 20px;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+body.is-mobile .mobile-menu {
+  background: #fff !important;
+  opacity: 1;
+}
+
+body.is-mobile .reviews-grid {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 0 20px 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-mobile .reviews-grid::-webkit-scrollbar {
+  display: none;
+}
+
+body.is-mobile .review-card {
+  flex: 0 0 280px;
+  width: 280px;
+  max-width: 280px;
 }
 
 .mobile-menu-header {
@@ -1467,6 +1630,12 @@ body.is-mobile .card-actions {
   align-items: flex-start;
 }
 
+body.is-mobile .preorder-actions {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
 body.is-mobile .card-link {
   display: inline-flex;
   align-items: center;
@@ -1651,6 +1820,90 @@ body.is-mobile .ulight-section {
   flex-direction: column;
   gap: 24px;
   padding: 0 20px;
+  align-items: center;
+}
+
+body.is-mobile .ulight-card {
+  width: 374px;
+  min-height: 391px;
+  height: auto;
+  padding: 32px;
+  border-radius: 20px;
+  background: #f6f6f6;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+body.is-mobile .ulight-title {
+  color: #000;
+}
+
+body.is-mobile .ulight-image-container {
+  width: 100%;
+  height: auto;
+}
+
+body.is-mobile .ulight-content {
+  width: 100%;
+}
+
+body.is-mobile .complete-solutions-grid {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 0 20px 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-mobile .complete-solutions-grid::-webkit-scrollbar {
+  display: none;
+}
+
+body.is-mobile .complete-solution-card {
+  flex: 0 0 280px !important;
+  width: 280px !important;
+  max-width: 280px !important;
+  height: 320px !important;
+  padding: 20px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box;
+}
+
+body.is-mobile .complete-solution-card .solution-content {
+  left: 20px;
+  right: 20px;
+  top: 120px;
+}
+
+body.is-mobile .complete-solutions-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  right: -10%;
+  left: auto;
+}
+
+body.is-mobile .reviews-grid {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 0 20px 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-mobile .reviews-grid::-webkit-scrollbar {
+  display: none;
+}
+
+body.is-mobile .review-card {
+  flex: 0 0 280px;
+  width: 280px;
+  max-width: 280px;
 }
 
 /* Electric Watersports Styles */

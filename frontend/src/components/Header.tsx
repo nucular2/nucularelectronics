@@ -223,7 +223,17 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
             <div className="dropdown-column">
               <h4 className="dropdown-title">Components</h4>
               <a href="#" className="dropdown-link">Controllers</a>
-              <a href="#" className="dropdown-link">On-board computer</a>
+              <a
+                href="/on-board-computer"
+                className="dropdown-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/on-board-computer');
+                  setIsProductsOpen(false);
+                }}
+              >
+                On-board computer
+              </a>
               <a href="/ulight-controller" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigate('/ulight-controller'); setIsProductsOpen(false); }}>uLight controller</a>
               <a href="#" className="dropdown-link">Motors</a>
               <a href="#" className="dropdown-link">Bluetooth module with App</a>
@@ -287,11 +297,28 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
                 <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
                   <div className="mobile-products-section-title">Components</div>
                   <a href="#" className="mobile-product-link">Controllers</a>
-                  <a href="#" className="mobile-product-link">On-board computer</a>
+                  <a
+                    href="/on-board-computer"
+                    className="mobile-product-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMobileNavClick('/on-board-computer');
+                    }}
+                  >
+                    On-board computer
+                  </a>
                   <a href="/ulight-controller" className="mobile-product-link" onClick={(e) => { e.preventDefault(); handleMobileNavClick('/ulight-controller'); }}>uLight controller</a>
                   <a href="#" className="mobile-product-link">Motors</a>
                   <a href="#" className="mobile-product-link">Bluetooth module with App</a>
                   <a href="#" className="mobile-product-link soon">BMS (soon)</a>
+                  <div className="mobile-products-section-title">Complete solutions</div>
+                  <a href="#" className="mobile-product-link">For Sur-Ron Light Bee</a>
+                  <a href="#" className="mobile-product-link">For Talaria Sting MX3 | MX4</a>
+                  <a href="#" className="mobile-product-link">For Talaria XXX</a>
+                  <a href="#" className="mobile-product-link">For Arctic Leopard EXT 650</a>
+                  <a href="#" className="mobile-product-link">For dual-motor scooters</a>
+                  <div className="mobile-products-section-title">E-go karts solutions</div>
+                  <a href="#" className="mobile-product-link">Ready made go-kart</a>
                 </div>
               </div>
 

@@ -1,77 +1,162 @@
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const updateMatch = () => setIsMobile(mediaQuery.matches);
+    updateMatch();
+    mediaQuery.addEventListener("change", updateMatch);
+    return () => mediaQuery.removeEventListener("change", updateMatch);
+  }, []);
+
+  const controllersSectionStyle = isMobile
+    ? { overflowX: "auto" as const }
+    : undefined;
+
+  const controllersGridStyle = isMobile
+    ? {
+        display: "flex",
+        flexWrap: "nowrap" as const,
+        gap: "16px",
+        overflowX: "auto" as const,
+        overflowY: "hidden" as const,
+        padding: "0 16px 12px",
+        scrollSnapType: "x mandatory",
+        WebkitOverflowScrolling: "touch" as const,
+        width: "max-content",
+      }
+    : undefined;
+
+  const controllerCardStyle = isMobile
+    ? {
+        flex: "0 0 280px",
+        width: "280px",
+        maxWidth: "280px",
+        height: "373px",
+        padding: "20px",
+        borderRadius: "20px",
+        scrollSnapAlign: "start",
+        display: "flex",
+        flexDirection: "column" as const,
+        alignItems: "flex-start",
+        textAlign: "left" as const,
+      }
+    : undefined;
+
+  const cardImageContainerStyle = isMobile
+    ? {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        height: "200px",
+        marginBottom: "16px",
+        paddingRight: "0",
+        width: "100%",
+      }
+    : undefined;
+
+  const cardTextBlockStyle = isMobile
+    ? {
+        marginTop: "auto",
+        width: "100%",
+      }
+    : undefined;
+
+  const cardImageStyle = isMobile
+    ? {
+        width: "220px",
+        height: "220px",
+        objectFit: "contain" as const,
+      }
+    : undefined;
+
+  const cardLinkStyle = isMobile ? { marginTop: "8px" } : undefined;
+
+  const cardActionsStyle = isMobile ? { marginTop: "12px" } : undefined;
+
   return (
-    <>
+    <div className={isMobile ? "home-mobile" : undefined}>
       <Header />
       <section className="hero">
         <div className="hero-image-container">
-          <img src="/first.png" alt="Nucular electronics" className="hero-main-image hero-main-image-desktop" />
-          <img src="/firstmob.png" alt="Nucular electronics" className="hero-main-image hero-main-image-mobile" />
+          <img
+            src={isMobile ? "/firstmob.png?v=2" : "/first.png"}
+            alt="Nucular electronics"
+            className="hero-main-image"
+            style={isMobile ? { objectFit: "contain" } : undefined}
+          />
         </div>
-        <div className="hero-content">
-          <a href="#components" className="see-components-link">
-            See the components 
-            <svg className="arrow-down-long" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 1V11M6 11L1 6M6 11L11 6" stroke="#C45F2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
-        </div>
+        {!isMobile && (
+          <div className="hero-content">
+            <a href="#components" className="see-components-link">
+              See the components 
+              <svg className="arrow-down-long" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1V11M6 11L1 6M6 11L11 6" stroke="#C45F2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        )}
       </section>
       <div className="page-content-white">
-        <section className="controllers-section">
+        <section className="controllers-section" style={controllersSectionStyle}>
           <h2 className="controllers-title">Controllers</h2>
           <p className="controllers-description">
             For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
           </p>
-          <div className="controllers-grid">
+          <div className="controllers-grid" style={controllersGridStyle}>
             {/* Card 1 */}
-            <div className="controller-card">
-              <div className="card-image-container">
-                <img src="/мото2.png" alt="Nucular controller P24F" className="card-image" />
+            <div className="controller-card" style={controllerCardStyle}>
+              <div className="card-image-container" style={cardImageContainerStyle}>
+                <img src="/мото2.png?v=200" alt="Nucular controller P24F" className="card-image" width="220" height="220" style={cardImageStyle} />
               </div>
-              <h3 className="card-title">Nucular controller P24F</h3>
-              <p className="card-power">27 kW</p>
-              <div className="card-actions">
-                <button className="card-button buy-button">Buy</button>
-                <a href="#" className="card-link">
-                  Learn more
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
-                  </svg>
-                </a>
+              <div style={cardTextBlockStyle}>
+                <h3 className="card-title">Nucular controller P24F</h3>
+                <p className="card-power">27 kW</p>
+                <div className="card-actions" style={cardActionsStyle}>
+                  <button className="card-button buy-button">Buy</button>
+                  <a href="#" className="card-link" style={cardLinkStyle}>
+                    Learn more
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="controller-card">
-              <div className="card-image-container">
-                <svg className="card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="controller-card" style={controllerCardStyle}>
+              <div className="card-image-container" style={cardImageContainerStyle}>
+                <svg className="card-image" width="130" height="130" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg" style={cardImageStyle}>
                   <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
                   <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
                 </svg>
               </div>
-              <h3 className="card-title">Nucular controller 12F HE</h3>
-              <p className="card-power">12 kW</p>
-              <div className="card-actions">
-                <button className="card-button preorder-button">Preorder</button>
-                <span className="status-text">In development</span>
+              <div style={cardTextBlockStyle}>
+                <h3 className="card-title">Nucular controller 12F HE</h3>
+                <p className="card-power">12 kW</p>
+                <div className="card-actions" style={cardActionsStyle}>
+                  <button className="card-button preorder-button">Preorder</button>
+                  <span className="status-text">In development</span>
+                </div>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="controller-card">
-              <div className="card-image-container">
-                 <svg className="card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="controller-card" style={controllerCardStyle}>
+              <div className="card-image-container" style={cardImageContainerStyle}>
+                 <svg className="card-image" width="130" height="130" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg" style={cardImageStyle}>
                   <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
                   <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
                 </svg>
               </div>
-              <h3 className="card-title">Nucular controller 6F HE</h3>
-              <p className="card-power">4 kW</p>
-              <div className="card-actions">
-                <button className="card-button preorder-button">Preorder</button>
-                <span className="status-text">In development</span>
+              <div style={cardTextBlockStyle}>
+                <h3 className="card-title">Nucular controller 6F HE</h3>
+                <p className="card-power">4 kW</p>
+                <div className="card-actions" style={cardActionsStyle}>
+                  <button className="card-button preorder-button">Preorder</button>
+                  <span className="status-text">In development</span>
+                </div>
               </div>
             </div>
           </div>
@@ -116,6 +201,12 @@ export default function Home() {
         <section className="bms-section">
           <div className="bms-banner">
             <div className="bms-content-left">
+              <div className="bms-placeholder">
+                <svg width="60" height="60" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
+                  <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
+                </svg>
+              </div>
               <h2 className="bms-title">Battery Management System</h2>
               <p className="bms-description">
                 BMS for monitor and regulate the charging and discharge of batteries.
@@ -124,14 +215,6 @@ export default function Home() {
                 <button className="card-button preorder-button-orange">Preorder</button>
                 <span className="status-text in-dev">In development</span>
               </div>
-            </div>
-            <div className="bms-content-right">
-               <div className="bms-placeholder">
-                  <svg width="60" height="60" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
-                    <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
-                  </svg>
-               </div>
             </div>
           </div>
         </section>
@@ -174,14 +257,14 @@ export default function Home() {
         <section className="oem-section">
           <h2 className="oem-title">OEM</h2>
           <div className="oem-image-container">
-            <img src="/compan.png" alt="OEM solutions" className="oem-main-image" />
+            <img src="/mob2.png" alt="OEM solutions" className="oem-main-image" />
           </div>
           <button className="oem-button">For OEM</button>
         </section>
 
         {/* Promo Plates Section (Accessories & Spare parts) */}
         <section className="promo-plates-section">
-          <img src="/2pla.png" alt="Accessories and Spare parts" className="promo-plates-image" />
+          <img src="/parts.png" alt="Accessories and Spare parts" className="promo-plates-image" />
         </section>
 
         {/* Advantages Section */}
@@ -295,6 +378,6 @@ export default function Home() {
         </section>
 
       </div>
-    </>
+    </div>
   );
 }

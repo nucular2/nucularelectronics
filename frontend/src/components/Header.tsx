@@ -8,6 +8,12 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+    return window.matchMedia('(max-width: 900px)').matches;
+  });
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
@@ -22,6 +28,14 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+    const updateMatch = () => setIsMobile(mediaQuery.matches);
+    updateMatch();
+    mediaQuery.addEventListener('change', updateMatch);
+    return () => mediaQuery.removeEventListener('change', updateMatch);
   }, []);
 
   useEffect(() => {
@@ -108,10 +122,35 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     closeMobileMenu();
   };
 
+  const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
+  const isCompact = isMobile || isMobileViewport;
+
+  const headerStyle = isCompact
+    ? {
+        padding: '12px 16px',
+        width: '100%',
+        maxWidth: 'none',
+        height: '48px',
+        margin: '0',
+        boxSizing: 'border-box' as const,
+        backgroundColor: isWhite ? '#fff' : '#111',
+      }
+    : undefined;
+
+  const logoWrapStyle = isCompact ? { cursor: 'pointer', marginLeft: '0' } : { cursor: 'pointer', marginLeft: '8px' };
+  const logoSize = isCompact ? { width: 140, height: 32 } : { width: 169, height: 40 };
+  const iconSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };
+  const profileSize = isCompact ? { width: 22, height: 22 } : { width: 22, height: 22 };
+  const menuSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };
+  const headerActionsStyle = isCompact
+    ? { marginLeft: 'auto', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }
+    : undefined;
+  const mobileMenuButtonStyle = isCompact ? { width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : undefined;
+
   return (
-    <header className={`main-header ${isWhite ? 'dropdown-open' : ''}`}>
-      <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer', marginLeft: '8px' }}>
-        <svg width="169" height="40" viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <header className={`main-header ${isWhite ? 'dropdown-open' : ''}`} style={headerStyle}>
+      <div className="logo-container" onClick={handleLogoClick} style={logoWrapStyle}>
+        <svg width={logoSize.width} height={logoSize.height} viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path className="logo-path" d="M1.86502e-06 5.33333L0 26.6667H8.44444L8.44444 6.66667L20.4444 18.6914L20.4444 1.32106e-06L5.33334 0C2.38782 -2.57505e-07 2.12253e-06 2.38781 1.86502e-06 5.33333Z" fill={logoColor} />
           <path className="logo-path" d="M35.5556 34.6667V13.3333H27.1111V33.3333L15.1111 21.3087V40H30.2222C33.1677 40 35.5556 37.6122 35.5556 34.6667Z" fill={logoColor} />
           <path className="logo-path" d="M123.935 33.3333V6.66668H117.556V33.3333H123.935Z" fill={logoColor} />
@@ -137,19 +176,19 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         <a href="/contact" className="nav-link" onClick={handleContactClick}>Contact us</a>
       </nav>
 
-      <div className="header-actions">
+      <div className="header-actions" style={headerActionsStyle}>
         <div className="cart-icon-container" onClick={handleCartClick} style={{ cursor: 'pointer' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width={iconSize.width} height={iconSize.height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M7.05595 7.13953V5.86047C7.05595 3.1761 9.26953 1 12.0001 1C14.7307 1 16.9443 3.1761 16.9443 5.86047V7.13953H19.2287C20.713 7.13953 21.9511 8.25504 22.0802 9.70876L22.9889 19.9413C23.135 21.5857 21.8165 23 20.1374 23H3.86263C2.18352 23 0.865028 21.5857 1.01106 19.9413L1.91977 9.70876C2.04886 8.25504 3.28696 7.13953 4.77134 7.13953H7.05595ZM8.61727 5.86047C8.61727 4.0238 10.1318 2.53488 12.0001 2.53488C13.8684 2.53488 15.383 4.0238 15.383 5.86047V7.13953H8.61727V5.86047ZM7.05595 8.67442V10.9767C7.05595 11.4006 7.40546 11.7442 7.83661 11.7442C8.26776 11.7442 8.61727 11.4006 8.61727 10.9767V8.67442H15.383V10.9767C15.383 11.4006 15.7325 11.7442 16.1636 11.7442C16.5948 11.7442 16.9443 11.4006 16.9443 10.9767V8.67442H19.2287C19.9034 8.67442 20.4662 9.18147 20.5248 9.84225L21.4335 20.0748C21.4999 20.8223 20.9006 21.4651 20.1374 21.4651H3.86263C3.0994 21.4651 2.50008 20.8223 2.56646 20.0748L3.47517 9.84225C3.53385 9.18147 4.09662 8.67442 4.77134 8.67442H7.05595Z" fill={logoColor} />
           </svg>
           {cartQuantity > 0 && <span className="cart-count">{cartQuantity}</span>}
         </div>
-        <div className="profile-icon-container" onClick={handleProfileClick} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className="profile-icon-container" onClick={handleProfileClick} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: isCompact ? '6px' : '8px' }}>
+          <svg width={profileSize.width} height={profileSize.height} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M6 9C6 6.23858 8.23858 4 11 4C13.7614 4 16 6.23858 16 9C16 11.7614 13.7614 14 11 14C8.23858 14 6 11.7614 6 9ZM11 5.57895C9.11061 5.57895 7.57895 7.1106 7.57895 9C7.57895 10.8894 9.11061 12.4211 11 12.4211C12.8894 12.4211 14.4211 10.8894 14.4211 9C14.4211 7.1106 12.8894 5.57895 11 5.57895Z" fill={logoColor} />
             <path fillRule="evenodd" clipRule="evenodd" d="M11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0ZM1.53488 11C1.53488 5.77256 5.77256 1.53488 11 1.53488C16.2274 1.53488 20.4651 5.77256 20.4651 11C20.4651 13.0499 19.8134 14.9477 18.706 16.4973C17.772 15.5377 16.5233 15 15.2225 15H6.77749C5.4767 15 4.22802 15.5377 3.29403 16.4973C2.18655 14.9477 1.53488 13.0499 1.53488 11ZM4.35955 17.7448C6.0681 19.4271 8.41283 20.4651 11 20.4651C13.5872 20.4651 15.9319 19.4271 17.6404 17.7448C16.9978 17.0657 16.1286 16.6844 15.2225 16.6844H6.77749C5.87135 16.6844 5.00217 17.0657 4.35955 17.7448Z" fill={logoColor} />
           </svg>
-          {user && user.user_metadata?.full_name && (
+          {!isCompact && user && user.user_metadata?.full_name && (
              <span style={{ 
                fontSize: '14px', 
                color: logoColor,
@@ -165,14 +204,15 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
         onClick={toggleMobileMenu}
         ref={mobileToggleRef}
+        style={mobileMenuButtonStyle}
       >
         {isMobileMenuOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width={menuSize.width} height={menuSize.height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg width={menuSize.width} height={menuSize.height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 8H21M3 16H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         )}
       </button>

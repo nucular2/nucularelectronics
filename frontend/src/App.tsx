@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -26,6 +27,26 @@ import OrderDetail from './pages/OrderDetail';
 import ULightController from './pages/ULightController';
 
 export default function App() {
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+    const apply = (matches: boolean) => {
+      document.body.classList.toggle('is-mobile', matches);
+      document.documentElement.classList.toggle('is-mobile', matches);
+    };
+    apply(mediaQuery.matches);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+    const updateMatch = () => {
+      document.body.classList.toggle('is-mobile', mediaQuery.matches);
+      document.documentElement.classList.toggle('is-mobile', mediaQuery.matches);
+    };
+    updateMatch();
+    mediaQuery.addEventListener('change', updateMatch);
+    return () => mediaQuery.removeEventListener('change', updateMatch);
+  }, []);
+
   return (
     <AuthProvider>
       <CartProvider>

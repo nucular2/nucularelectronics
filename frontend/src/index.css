@@ -64,6 +64,10 @@ body,
   background-color: transparent;
 }
 
+.home-mobile .hero {
+  background-color: #111;
+}
+
 /* .hero::before removed as requested */
 .hero-image-container {
   position: absolute;
@@ -103,6 +107,10 @@ body,
   align-items: center;
   z-index: 100;
   transition: background-color 0.3s ease;
+}
+
+.home-mobile .main-header {
+  background-color: #111;
 }
 
 .main-header.scrolled,
@@ -208,6 +216,11 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+body.is-mobile .cart-count {
+  top: 0;
+  right: 0;
 }
 
 .cart-badge {
@@ -1106,6 +1119,14 @@ body,
 @media (max-width: 768px) {
   .hero {
     min-height: 100svh;
+    background-color: #111;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .hero-image-container img {
@@ -1124,6 +1145,7 @@ body,
 
   .hero-main-image-mobile {
     display: block;
+    object-fit: contain;
   }
 
   .hero-content {
@@ -1133,11 +1155,16 @@ body,
   .see-components-link {
     font-size: 12px;
     opacity: 0.9;
+    display: none;
   }
 
   .main-header {
-    padding-left: 20px;
-    padding-right: 40px;
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 100%;
+    height: 68px;
+    box-sizing: border-box;
+    background-color: #111;
   }
 
   .logo-container {
@@ -1209,6 +1236,421 @@ body,
     max-width: 570px;
     height: 400px;
   }
+}
+
+body.is-mobile {
+  overflow-x: hidden;
+}
+
+body.is-mobile #root {
+  overflow-x: hidden;
+}
+
+body.is-mobile .hero {
+  min-height: 100svh;
+  background-color: #111;
+}
+
+body.is-mobile .hero-image-container img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+body.is-mobile .hero-main-image {
+  object-position: center top;
+  object-fit: contain;
+}
+
+body.is-mobile .main-header {
+  padding: 12px 16px;
+  width: 100%;
+  max-width: none;
+  height: 48px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #111;
+}
+
+body.is-mobile .logo-container svg {
+  width: 60px;
+  height: 14px;
+}
+
+body.is-mobile .header-actions {
+  gap: 14px;
+}
+
+body.is-mobile .cart-icon-container svg,
+body.is-mobile .profile-icon-container svg,
+body.is-mobile .mobile-menu-toggle svg {
+  width: 22px;
+  height: 22px;
+}
+
+body.is-mobile .cart-icon-container,
+body.is-mobile .profile-icon-container,
+body.is-mobile .mobile-menu-toggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .main-header {
+    padding: 12px 16px;
+    width: 100%;
+    max-width: none;
+    height: 48px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .logo-container svg {
+    width: 60px;
+    height: 14px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .cart-icon-container svg,
+  .profile-icon-container svg,
+  .mobile-menu-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .main-nav {
+    display: none;
+  }
+}
+
+body.is-mobile .logo-container {
+  margin-left: 0 !important;
+}
+
+body.is-mobile .see-components-link {
+  display: none;
+}
+
+body.is-mobile .page-content-white {
+  padding-top: 60px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+body.is-mobile .controllers-grid,
+body.is-mobile .accessories-grid,
+body.is-mobile .complete-solutions-grid,
+body.is-mobile .watersports-grid,
+body.is-mobile .news-grid,
+body.is-mobile .reviews-grid {
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+body.is-mobile .controllers-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+  padding: 0 16px 12px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+  width: max-content;
+  grid-template-columns: none !important;
+}
+
+body.is-mobile .controllers-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+body.is-mobile .controllers-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+}
+
+body.is-mobile .controllers-section {
+  overflow-x: auto;
+  scroll-padding-left: 16px;
+  width: 100%;
+}
+
+body.is-mobile .card-image-container {
+  background: transparent;
+  height: 140px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+body.is-mobile .card-image {
+  background: transparent;
+  mix-blend-mode: multiply;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+body.is-mobile .card-image-container svg {
+  display: block;
+  margin: 0 auto;
+}
+
+body.is-mobile .card-actions {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 260px;
+  height: 44px;
+  margin-top: auto;
+}
+
+body.is-mobile .card-button.buy-button {
+  width: 140px;
+  height: 44px;
+}
+
+body.is-mobile .card-button.preorder-button {
+  width: 110px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 8px;
+  background-color: #F36F25;
+  color: #fff;
+}
+
+body.is-mobile .status-text {
+  font-size: 14px;
+  line-height: 44px;
+}
+
+body.is-mobile .controller-card {
+  flex: 0 0 280px;
+  width: 280px;
+  height: 330px;
+  padding: 20px;
+  border-radius: 20px;
+  scroll-snap-align: start;
+  align-items: flex-start;
+  text-align: left;
+  max-width: 280px;
+}
+
+body.is-mobile .controllers-title {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+body.is-mobile .controllers-description {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+body.is-mobile .card-title {
+  font-weight: 700;
+  font-size: 16px;
+  text-align: left;
+}
+
+body.is-mobile .card-power {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+body.is-mobile .card-actions {
+  margin-top: 0;
+  align-items: flex-start;
+}
+
+body.is-mobile .card-link {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+body.is-mobile .card-image-container svg {
+  margin: 0 auto;
+}
+
+body.is-mobile .card-image-container img {
+  margin: 0 auto;
+}
+
+body.is-mobile .accessories-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-mobile .accessory-card {
+  flex: 0 0 auto;
+  width: 374px;
+  height: 359px;
+  padding: 32px 32px 0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+body.is-mobile .card-button {
+  border-radius: 8px;
+}
+
+body.is-mobile .promo-grid {
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+body.is-mobile .promo-card,
+body.is-mobile .controller-card,
+body.is-mobile .accessory-card,
+body.is-mobile .complete-solution-card,
+body.is-mobile .news-card,
+body.is-mobile .news-card--small,
+body.is-mobile .review-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+body.is-mobile .controllers-grid {
+  overflow-x: scroll !important;
+  padding-bottom: 12px;
+}
+
+body.is-mobile .controllers-grid .controller-card {
+  width: 280px !important;
+  max-width: 280px !important;
+  height: 360px;
+  padding: 20px;
+  border-radius: 20px;
+  flex: 0 0 280px !important;
+  text-align: left;
+  align-items: flex-start;
+}
+
+body.is-mobile .controllers-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+  gap: 16px !important;
+  padding: 0 16px 12px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-mobile .card-image-container {
+  height: 160px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+body.is-mobile .auth-link.forgot-password {
+  color: #F36F25;
+}
+
+body.is-mobile .auth-page {
+  padding: 96px 20px 40px;
+  background: #fff;
+  min-height: 100vh;
+}
+
+body.is-mobile .auth-container {
+  width: 100%;
+  max-width: 374px;
+  margin: 0 auto;
+}
+
+body.is-mobile .auth-title {
+  font-size: 24px;
+  line-height: 120%;
+  margin-bottom: 16px;
+  color: #111;
+  text-align: left;
+}
+
+body.is-mobile .auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.is-mobile .auth-input {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  padding: 0 16px;
+  background: #f6f6f6;
+  font-size: 14px;
+  color: #111;
+}
+
+body.is-mobile .password-group {
+  position: relative;
+}
+
+body.is-mobile .password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.is-mobile .auth-button {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  background: #F36F25;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+body.is-mobile .auth-footer {
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+body.is-mobile .news-grid-small {
+  grid-template-columns: 1fr;
+}
+
+body.is-mobile .news-image-wrapper--small {
+  width: 100%;
+  height: auto;
+}
+
+body.is-mobile .bms-banner {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 24px;
+  min-height: auto;
+}
+
+body.is-mobile .ulight-section {
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 20px;
 }
 
 /* Electric Watersports Styles */
@@ -1980,6 +2422,35 @@ body,
 
 .footer-bottom-links a:hover {
   color: #f36f25;
+}
+
+@media (max-width: 900px) {
+  .controllers-section {
+    overflow-x: auto !important;
+    max-width: none !important;
+  }
+
+  .controllers-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 16px !important;
+    padding: 0 16px 12px !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    width: max-content !important;
+    min-width: 100% !important;
+  }
+
+  .controller-card {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    max-width: 280px !important;
+    height: 320px !important;
+    display: flex !important;
+  }
 }
 
 .copyright {

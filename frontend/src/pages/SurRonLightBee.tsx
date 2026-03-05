@@ -46,10 +46,18 @@ export default function SurRonLightBee() {
       <section className="surron-hero">
         {activeTab === 'overview' ? (
           <>
-            <div className="surron-full-width-container">
+            <div className="surron-full-width-container desktop-only">
               <img 
                 src="/content-box60.png" 
                 alt="Kit for Sur-Ron Light Bee" 
+                className="surron-full-width-image"
+              />
+            </div>
+
+            <div className="surron-full-width-container mobile-only">
+              <img 
+                src="/content-box62.png" 
+                alt="Kit for Sur-Ron Light Bee Mobile" 
                 className="surron-full-width-image"
               />
             </div>

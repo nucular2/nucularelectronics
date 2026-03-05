@@ -8,12 +8,15 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // Forced desktop for editing
+  /*
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === 'undefined') {
       return false;
     }
     return window.matchMedia('(max-width: 900px)').matches;
   });
+  */
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
@@ -31,11 +34,13 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   }, []);
 
   useEffect(() => {
+    /*
     const mediaQuery = window.matchMedia('(max-width: 900px)');
     const updateMatch = () => setIsMobile(mediaQuery.matches);
     updateMatch();
     mediaQuery.addEventListener('change', updateMatch);
     return () => mediaQuery.removeEventListener('change', updateMatch);
+    */
   }, []);
 
   useEffect(() => {
@@ -122,7 +127,8 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     closeMobileMenu();
   };
 
-  const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
+  const isMobileViewport = false; // Forced desktop
+  // const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
   const isCompact = isMobile || isMobileViewport;
 
   const headerStyle = isCompact

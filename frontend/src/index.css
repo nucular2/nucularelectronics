@@ -56,6 +56,32 @@ body,
   background-color: #ffffff !important;
 }
 
+.onboard-desktop-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.onboard-desktop-full-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.onboard-desktop-hero {
+  position: absolute;
+  top: 140px;
+  right: 240px;
+  z-index: 10;
+}
+
+.onboard-desktop-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
 /* Первый экран */
 .hero {
   position: relative;
@@ -309,6 +335,10 @@ body,
 
 .controller-hero-actions.static-actions .controller-hero-tab.active {
   color: #F36F25;
+}
+
+.promo-text-columns.promo-text-columns-3 {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 /* Promo Features Styles */

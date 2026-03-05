@@ -1,0 +1,158 @@
+commit 7e5356d7db347c40b6fe20b7b610cb56b4d6f37c
+Author: Anna Volkova <annavolkova@Annas-MacBook-Air.local>
+Date:   Sat Feb 28 14:00:38 2026 +0500
+
+    Move solution buttons even lower (top: 120px)
+
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index 18aef1f..17c0109 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -883,7 +883,7 @@ body,
+   width: 100%;
+   z-index: 2;
+   position: absolute;
+-  top: 90px; /* Move even lower */
++  top: 120px; /* Move even lower */
+   left: 40px;
+   right: auto;
+   bottom: auto;
+
+commit 63fc5c7acad623cd05dd7946c592de925cd49c3a
+Author: Anna Volkova <annavolkova@Annas-MacBook-Air.local>
+Date:   Sat Feb 28 13:58:15 2026 +0500
+
+    Move solution buttons even lower (top: 90px)
+
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index 864d17a..18aef1f 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -883,7 +883,7 @@ body,
+   width: 100%;
+   z-index: 2;
+   position: absolute;
+-  top: 60px; /* Move slightly lower */
++  top: 90px; /* Move even lower */
+   left: 40px;
+   right: auto;
+   bottom: auto;
+
+commit 4cbb8f8a09e8ec768b56ac7216b12a1b27a9a73a
+Author: Anna Volkova <annavolkova@Annas-MacBook-Air.local>
+Date:   Sat Feb 28 13:57:14 2026 +0500
+
+    Move solution buttons slightly lower (top: 60px)
+
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index 49d00f3..864d17a 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -883,8 +883,8 @@ body,
+   width: 100%;
+   z-index: 2;
+   position: absolute;
+-  top: 40px; /* Move to top */
+-  left: 40px; /* Move to left */
++  top: 60px; /* Move slightly lower */
++  left: 40px;
+   right: auto;
+   bottom: auto;
+ }
+
+commit 7caa81afb4d763f50d480dfdc6555bdf6f639163
+Author: Anna Volkova <annavolkova@Annas-MacBook-Air.local>
+Date:   Sat Feb 28 13:56:09 2026 +0500
+
+    Decrease advantages image size, reposition solution buttons to top-left
+
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index 3635f95..49d00f3 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -813,7 +813,7 @@ body,
+ }
+ 
+ .advantages-image {
+-  max-width: 100%;
++  max-width: 90%;
+   height: auto;
+ }
+ 
+@@ -883,9 +883,10 @@ body,
+   width: 100%;
+   z-index: 2;
+   position: absolute;
+-  bottom: 40px;
+-  left: 0;
+-  right: 0;
++  top: 40px; /* Move to top */
++  left: 40px; /* Move to left */
++  right: auto;
++  bottom: auto;
+ }
+ 
+ .solution-title {
+@@ -908,7 +909,7 @@ body,
+ .solution-actions {
+   display: flex;
+   align-items: center;
+-  justify-content: center;
++  justify-content: flex-start; /* Align left */
+   gap: 24px;
+ }
+ 
+
+commit 3f01477da0514df595dec272e0e50f6b7a0865ab
+Author: Anna Volkova <annavolkova@Annas-MacBook-Air.local>
+Date:   Sat Feb 28 13:53:17 2026 +0500
+
+    Refactor Complete Solutions: Remove text, maximize image, overlay buttons
+
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index b5f450b..3635f95 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -868,10 +868,11 @@ body,
+ .complete-solution-card {
+   background-color: #101010;
+   border-radius: 20px;
+-  padding: 40px;
++  padding: 0;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
++  justify-content: flex-end; /* Push content to bottom */
+   text-align: center;
+   overflow: hidden;
+   position: relative;
+@@ -881,7 +882,10 @@ body,
+ .solution-content {
+   width: 100%;
+   z-index: 2;
+-  margin-bottom: 24px;
++  position: absolute;
++  bottom: 40px;
++  left: 0;
++  right: 0;
+ }
+ 
+ .solution-title {
+@@ -926,12 +930,12 @@ body,
+ 
+ .complete-solutions-image {
+   width: 100%;
+-  height: auto;
+-  max-height: 300px;
+-  object-fit: contain;
++  height: 100%;
++  object-fit: cover; /* Cover the entire card */
+   z-index: 1;
+-  /* Remove default border radius if it was set globally or in previous class */
+-  border-radius: 0;
++  position: absolute;
++  top: 0;
++  left: 0;
+ }
+ 
+ .ulight-image-container {

@@ -1,64 +1,184 @@
+import { useState } from "react";
 import Header from "../components/Header";
 
 export default function OnBoardComputer() {
+  const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
+  const [activePromo, setActivePromo] = useState<'winter' | 'theft' | 'splash'>('winter');
+
   return (
     <div className="onboard-page">
       <Header variant="white" />
-      <section className="hero">
-        <div className="hero-image-container">
-          <img
-            src="/first2png.png"
-            alt="On-board computer"
-            className="hero-main-image"
-          />
-        </div>
-      </section>
-      <section className="onboard-section">
-        <img src="/2promo.png" alt="On-board computer promo" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box4.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box5.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box6.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box7.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box8.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box9.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box10.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box11.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section onboard-section-last">
-        <img src="/content-box12.png" alt="On-board computer details" className="onboard-image onboard-image-full" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box13.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box14.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box15.png" alt="On-board computer details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <div className="onboard-panel">
-          <div className="onboard-panel-title">On-board computer</div>
-          <div className="onboard-panel-price">$110.00</div>
-          <button className="onboard-panel-button">Buy</button>
-        </div>
-      </section>
+      
+      {/* Mobile Version */}
+      <div className="mobile-only">
+        <section className="hero">
+          <div className="hero-image-container">
+            <img
+              src="/first2png.png"
+              alt="On-board computer"
+              className="hero-main-image"
+            />
+          </div>
+        </section>
+        <section className="onboard-section">
+          <img src="/2promo.png" alt="On-board computer promo" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box4.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box5.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box6.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box7.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box8.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box9.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box10.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box11.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section onboard-section-last">
+          <img src="/content-box12.png" alt="On-board computer details" className="onboard-image onboard-image-full" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box13.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box14.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box15.png" alt="On-board computer details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <div className="onboard-panel">
+            <div className="onboard-panel-title">On-board computer</div>
+            <div className="onboard-panel-price">$110.00</div>
+            <button className="onboard-panel-button">Buy</button>
+          </div>
+        </section>
+      </div>
+
+      {/* Desktop Version */}
+      <div className="desktop-only">
+        <section className="onboard-desktop-hero">
+          <div className="onboard-desktop-actions">
+            <button 
+              type="button" 
+              className={`controller-hero-tab ${activeTab === 'overview' ? 'active' : ''}`}
+              onClick={() => setActiveTab('overview')}
+            >
+              Overview
+            </button>
+            <button 
+              type="button" 
+              className={`controller-hero-tab ${activeTab === 'specifications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('specifications')}
+            >
+              Specifications
+            </button>
+            <button type="button" className="controller-hero-buy">
+              Buy
+            </button>
+          </div>
+        </section>
+
+        {activeTab === 'overview' && (
+          <>
+            <div className="onboard-desktop-container">
+              <img 
+                src="/стрконтр.png" 
+                alt="On-board computer desktop view" 
+                className="onboard-desktop-full-image" 
+              />
+              <img 
+                src="/content-box.svg" 
+                alt="On-board computer details" 
+                className="onboard-desktop-full-image" 
+              />
+            </div>
+
+            <section className="onboard-section promo-features-section">
+              <div className="promo-features-container">
+                <div className="promo-image-wrapper">
+                  <img 
+                    src="/promo_on-board-computer_winter.png" 
+                    alt="Won't freeze in winter" 
+                    className={`promo-feature-image ${activePromo === 'winter' ? 'active' : ''}`}
+                  />
+                  <img 
+                    src="/promo_on-board-computer_winter.png" 
+                    alt="Theft protection" 
+                    className={`promo-feature-image ${activePromo === 'theft' ? 'active' : ''}`}
+                  />
+                  <img 
+                    src="/promo_on-board-computer_splash.png" 
+                    alt="Splash protection" 
+                    className={`promo-feature-image ${activePromo === 'splash' ? 'active' : ''}`}
+                  />
+                </div>
+                <div className="promo-text-columns promo-text-columns-3">
+                  <div 
+                    className={`promo-text-column ${activePromo === 'winter' ? 'active' : ''}`}
+                    onClick={() => setActivePromo('winter')}
+                  >
+                    <h3 className="promo-title">Won't freeze in winter</h3>
+                    <p className="promo-description">
+                      Built-in automatic screen heating to protect against condensation and slow operation in winter.
+                    </p>
+                  </div>
+                  <div 
+                    className={`promo-text-column ${activePromo === 'theft' ? 'active' : ''}`}
+                    onClick={() => setActivePromo('theft')}
+                  >
+                    <h3 className="promo-title">Theft protection</h3>
+                    <p className="promo-description">
+                      You can set a password on the On-board computer that will protect from unauthorized start-up of the electronics.
+                    </p>
+                  </div>
+                  <div 
+                    className={`promo-text-column ${activePromo === 'splash' ? 'active' : ''}`}
+                    onClick={() => setActivePromo('splash')}
+                  >
+                    <h3 className="promo-title">Splash protection</h3>
+                    <p className="promo-description">
+                      The On-board computer is IP54 protected against dust and splashing water and can withstand light rain.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="desktop-buy-banner">
+              <div className="desktop-buy-content">
+                <h2 className="desktop-buy-title">On-board computer</h2>
+                <p className="desktop-buy-price">$110.00</p>
+                <button className="desktop-buy-button">Buy</button>
+              </div>
+            </section>
+          </>
+        )}
+
+        {activeTab === 'specifications' && (
+          <div className="specifications-container">
+            <h1 className="specifications-title">Specifications</h1>
+            {/* Add specifications table here if needed later */}
+            <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+              Specifications content coming soon...
+            </div>
+          </div>
+        )}
+      </div>
+
       <section className="reviews-section">
         <div className="section-header">
           <h2 className="section-title">Reviews</h2>

@@ -1,13 +1,16 @@
+import { useState } from "react";
 import Header from "../components/Header";
 
 export default function Controller() {
+  const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
+
   return (
     <div className="onboard-page">
       <Header />
       <section className="hero controller-hero">
         <div className="hero-image-container">
           <picture>
-            <source media="(min-width: 900px)" srcSet="/комп1.png" />
+            <source media="(min-width: 1px)" srcSet="/комп1.png" />
             <img
               src="/firstscreen1.png"
               alt="Nucular controller P24F"
@@ -101,6 +104,9 @@ export default function Controller() {
           <img src="/content-box37.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
+          <img src="/content-box43.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
           <img src="/content-box38.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
@@ -114,6 +120,87 @@ export default function Controller() {
         </section>
         <section className="onboard-section">
           <img src="/content-box42.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box44.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box45.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box46.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box47.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box48.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box49.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box50.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box51.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box52.png" alt="Controller details" className="onboard-image" />
+        </section>
+        
+        <section className="onboard-section promo-features-section">
+          <div className="promo-features-container">
+            <div 
+              className={`promo-feature-column ${activeFeature === 'water' ? 'active' : ''}`}
+              onClick={() => setActiveFeature('water')}
+            >
+              <div className="promo-image-wrapper">
+                <img 
+                  src="/promo_controller-P24F_water.png" 
+                  alt="Full water protection" 
+                  className="promo-feature-image"
+                />
+              </div>
+              <div className="promo-text-content">
+                <h3 className="promo-title">Full water protection</h3>
+                <p className="promo-description">
+                  With compound potting — protection class IP67, the controller can work even under water.
+                </p>
+              </div>
+            </div>
+            
+            <div 
+              className={`promo-feature-column ${activeFeature === 'cooling' ? 'active' : ''}`}
+              onClick={() => setActiveFeature('cooling')}
+            >
+              <div className="promo-image-wrapper">
+                <img 
+                  src="/promo_controller-P24F_cooling.png" 
+                  alt="Efficient cooling" 
+                  className="promo-feature-image"
+                />
+              </div>
+              <div className="promo-text-content">
+                <h3 className="promo-title">Efficient cooling</h3>
+                <p className="promo-description">
+                  Due to the double-sided heat sink to the case, under heavy loads, the temperature gradient is minimal. Heats up slowly, cools down quickly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="onboard-section">
+          <img src="/content-box53.png" alt="Controller details" className="onboard-image" />
+        </section>
+
+        <section className="desktop-buy-banner">
+          <div className="desktop-buy-content">
+            <h2 className="desktop-buy-title">Nucular controller P24F</h2>
+            <p className="desktop-buy-price">$610.00</p>
+            <button className="desktop-buy-button">Buy</button>
+          </div>
         </section>
       </div>
 
@@ -141,7 +228,7 @@ export default function Controller() {
               A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
             </p>
             <div className="review-author">
-              <img src="/flag1.png" alt="USA" className="review-flag" />
+              <img src="/flag.png" alt="USA" className="review-flag" />
               <span className="author-name">USA, Alex Smith</span>
             </div>
           </article>
@@ -152,7 +239,27 @@ export default function Controller() {
             </p>
             <div className="review-author">
               <img src="/flag2.png" alt="Germany" className="review-flag" />
-              <span className="author-name">Germany, Anna Muller</span>
+              <span className="author-name">Germany, Max Stoun</span>
+            </div>
+          </article>
+          <article className="review-card">
+            <h3 className="review-title">Nucular controller P24F</h3>
+            <p className="review-text">
+              A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+            </p>
+            <div className="review-author">
+              <img src="/flag3.png" alt="Norway" className="review-flag" />
+              <span className="author-name">Norway, Anna Orlova</span>
+            </div>
+          </article>
+          <article className="review-card">
+            <h3 className="review-title">The on-board computer</h3>
+            <p className="review-text">
+              The on-board computer is equipped with a large sunlight resistant screen. It displays main parameters, driving modes, ...
+            </p>
+            <div className="review-author">
+              <img src="/flag4.png" alt="France" className="review-flag" />
+              <span className="author-name">France, Robert Jonson</span>
             </div>
           </article>
         </div>

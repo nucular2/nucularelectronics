@@ -13,6 +13,17 @@
   padding-top: 120px; /* Space for header */
   padding-bottom: 60px;
   text-align: center;
+  position: relative; /* For absolute positioning of tabs */
+}
+
+.ulight-desktop-actions {
+  position: absolute;
+  top: 100px; /* Adjust based on header height */
+  right: 240px; /* Align with other pages */
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  z-index: 10;
 }
 
 .ulight-content {
@@ -244,6 +255,7 @@
     text-align: left;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
   }
 
   .ulight-content {

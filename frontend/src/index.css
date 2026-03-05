@@ -274,6 +274,43 @@ body,
   }
 }
 
+.specifications-header-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.specifications-header-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.specifications-page-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  color: #222;
+  margin: 0;
+}
+
+.controller-hero-actions.static-actions {
+  position: static;
+  margin-top: 0;
+}
+
+.controller-hero-actions.static-actions .controller-hero-tab,
+.controller-hero-actions.static-actions .controller-hero-buy {
+  color: #fff;
+}
+
+.controller-hero-actions.static-actions .controller-hero-tab.active {
+  color: #F36F25;
+}
+
 /* Promo Features Styles */
 .promo-features-section {
   padding-top: 100px;
@@ -3092,4 +3129,85 @@ body.is-mobile .review-card {
   font-family: var(--font-family);
   font-size: 12px;
   color: #999;
+}
+
+/* Specifications Tab Styles */
+.specifications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+.specifications-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 54px;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #222;
+}
+
+.specifications-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.specifications-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specifications-table th {
+  padding-bottom: 40px;
+  vertical-align: top;
+  text-align: left;
+  padding-right: 20px;
+}
+
+.spec-header-card {
+  width: 300px;
+  height: 60px;
+  background: #f6f6f6;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.spec-header-card.active {
+  background: #ffece3; /* Highlighted active card */
+}
+
+.spec-row-label {
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: #999;
+  padding-top: 24px;
+  padding-bottom: 12px;
+}
+
+.specifications-table td {
+  padding-bottom: 24px;
+  padding-right: 20px;
+  vertical-align: top;
+  font-family: var(--font-family);
+  font-size: 18px;
+  color: #222;
+  border-bottom: 1px solid #eee;
+}
+
+.specifications-table tr:nth-child(even) td {
+  /* Values rows */
+  border-bottom: 1px solid #eee;
+}
+
+.specifications-table tr:nth-child(odd) td {
+  /* Label rows */
+  border-bottom: none;
+  padding-bottom: 4px;
 }

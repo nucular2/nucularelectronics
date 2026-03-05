@@ -3,36 +3,77 @@ import Header from "../components/Header";
 
 export default function Controller() {
   const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
+  const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
 
   return (
     <div className="onboard-page">
       <Header />
-      <section className="hero controller-hero">
-        <div className="hero-image-container">
-          <picture>
-            <source media="(min-width: 1px)" srcSet="/комп1.png" />
-            <img
-              src="/firstscreen1.png"
-              alt="Nucular controller P24F"
-              className="hero-main-image"
-            />
-          </picture>
-        </div>
-        <div className="controller-hero-actions">
-          <button type="button" className="controller-hero-tab active">
-            Overview
-          </button>
-          <button type="button" className="controller-hero-tab">
-            Specifications
-          </button>
-          <button type="button" className="controller-hero-buy">
-            Buy
-          </button>
-        </div>
-      </section>
       
-      {/* Mobile Content */}
-      <div className="mobile-only">
+      {activeTab === 'overview' && (
+        <section className="hero controller-hero">
+          <div className="hero-image-container">
+            <picture>
+              <source media="(min-width: 1px)" srcSet="/комп1.png" />
+              <img
+                src="/firstscreen1.png"
+                alt="Nucular controller P24F"
+                className="hero-main-image"
+              />
+            </picture>
+          </div>
+          <div className="controller-hero-actions">
+            <button 
+              type="button" 
+              className="controller-hero-tab active"
+              onClick={() => setActiveTab('overview')}
+            >
+              Overview
+            </button>
+            <button 
+              type="button" 
+              className="controller-hero-tab"
+              onClick={() => setActiveTab('specifications')}
+            >
+              Specifications
+            </button>
+            <button type="button" className="controller-hero-buy">
+              Buy
+            </button>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'specifications' && (
+        <section className="specifications-header-section">
+          <div className="specifications-header-content">
+            <h1 className="specifications-page-title">Nucular controller P24F</h1>
+            <div className="controller-hero-actions static-actions">
+              <button 
+                type="button" 
+                className="controller-hero-tab"
+                onClick={() => setActiveTab('overview')}
+              >
+                Overview
+              </button>
+              <button 
+                type="button" 
+                className="controller-hero-tab active"
+                onClick={() => setActiveTab('specifications')}
+              >
+                Specifications
+              </button>
+              <button type="button" className="controller-hero-buy">
+                Buy
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'overview' ? (
+        <>
+          {/* Mobile Content */}
+          <div className="mobile-only">
         <section className="onboard-section">
           <img src="/content-box16.png" alt="Controller details" className="onboard-image" />
         </section>
@@ -265,6 +306,125 @@ export default function Controller() {
         </div>
       </section>
       <section className="onboard-section onboard-section-last" />
+      </>
+      ) : (
+        <div className="specifications-container">
+          <h1 className="specifications-title">Specifications</h1>
+          <div className="specifications-table-wrapper">
+            <table className="specifications-table">
+              <thead>
+                <tr>
+                  <th>
+                    <div className="spec-header-card active">
+                      Nucular controller P24F
+                    </div>
+                  </th>
+                  <th>
+                    <div className="spec-header-card">
+                      Nucular controller 6F HE
+                    </div>
+                  </th>
+                  <th>
+                    <div className="spec-header-card">
+                      Nucular controller 12F HE
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Maximum power</td>
+                </tr>
+                <tr>
+                  <td>27 kW</td>
+                  <td>4 kW</td>
+                  <td>12 kW</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Nominal power</td>
+                </tr>
+                <tr>
+                  <td>10 kW</td>
+                  <td>2 kW</td>
+                  <td>5 kW</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Voltage range</td>
+                </tr>
+                <tr>
+                  <td>30-90V</td>
+                  <td>30-90V</td>
+                  <td>30-90V</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Phase current, max</td>
+                </tr>
+                <tr>
+                  <td>500A</td>
+                  <td>120A</td>
+                  <td>250A</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Battery current, max</td>
+                </tr>
+                <tr>
+                  <td>350A</td>
+                  <td>90A</td>
+                  <td>150A</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Supply out</td>
+                </tr>
+                <tr>
+                  <td>12V 3A</td>
+                  <td>12V 3A</td>
+                  <td>12V 3A</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Phase wires</td>
+                </tr>
+                <tr>
+                  <td>7AWG terminals M6</td>
+                  <td>11AWG 5 mm bullets</td>
+                  <td>8AWG XT150</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Protection</td>
+                </tr>
+                <tr>
+                  <td>Temperature, hardware overcurrent, IO ports overvoltage protection</td>
+                  <td>Temperature and hardware overcurrent protection</td>
+                  <td>Temperature and hardware overcurrent protection</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Protection class</td>
+                </tr>
+                <tr>
+                  <td>IP67 (compound filled)</td>
+                  <td>IP54 (IP67 with compound)</td>
+                  <td>IP54 (IP67 with compound)</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Size, without wires</td>
+                </tr>
+                <tr>
+                  <td>205x98x50 mm</td>
+                  <td>53x32x91 mm</td>
+                  <td>86x43x125 mm</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="spec-row-label">Weight</td>
+                </tr>
+                <tr>
+                  <td>1400 g</td>
+                  <td>280 g</td>
+                  <td>640 g</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

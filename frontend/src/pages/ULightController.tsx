@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import './ULightController.css';
@@ -39,174 +39,208 @@ const LedStripIcon = () => (
 );
 
 export default function ULightController() {
+  const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
+
   return (
     <div className="ulight-page">
       <Header variant="transparent" />
       
       <section className="ulight-hero">
-        <div className="ulight-content">
-          <h1 className="ulight-title">
-            uLight
-            <br />
-            controller
-          </h1>
-          
-          <p className="ulight-subtitle">Lighting control controller:</p>
-          
-          <div className="ulight-features-grid">
-            <div className="ulight-feature">
-              <TurnSignalIcon />
-              <span>turn signals</span>
-            </div>
-            <div className="ulight-feature">
-              <BrakeLightIcon />
-              <span>brake light</span>
-            </div>
-            <div className="ulight-feature">
-              <HeadlightIcon />
-              <span>headlight</span>
-            </div>
-            <div className="ulight-feature">
-              <LedStripIcon />
-              <span>LED strip</span>
-            </div>
-          </div>
-
-          <div className="ulight-image-container">
-            <img 
-              src="/promo3.png" 
-              alt="uLight controller circuit board" 
-              width="374" 
-              height="231"
-              className="ulight-hero-img"
-            />
-          </div>
+        {/* Desktop Navigation */}
+        <div className="controller-hero-actions ulight-desktop-actions">
+          <button 
+            type="button" 
+            className={`controller-hero-tab ${activeTab === 'overview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('overview')}
+          >
+            Overview
+          </button>
+          <button 
+            type="button" 
+            className={`controller-hero-tab ${activeTab === 'specifications' ? 'active' : ''}`}
+            onClick={() => setActiveTab('specifications')}
+          >
+            Specifications
+          </button>
+          <button type="button" className="controller-hero-buy">
+            Buy
+          </button>
         </div>
+
+        {activeTab === 'overview' ? (
+          <div className="ulight-content">
+            <h1 className="ulight-title">
+              uLight
+              <br />
+              controller
+            </h1>
+            
+            <p className="ulight-subtitle">Lighting control controller:</p>
+            
+            <div className="ulight-features-grid">
+              <div className="ulight-feature">
+                <TurnSignalIcon />
+                <span>turn signals</span>
+              </div>
+              <div className="ulight-feature">
+                <BrakeLightIcon />
+                <span>brake light</span>
+              </div>
+              <div className="ulight-feature">
+                <HeadlightIcon />
+                <span>headlight</span>
+              </div>
+              <div className="ulight-feature">
+                <LedStripIcon />
+                <span>LED strip</span>
+              </div>
+            </div>
+
+            <div className="ulight-image-container">
+              <img 
+                src="/first screen10.png" 
+                alt="uLight controller circuit board" 
+                className="ulight-hero-img"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="specifications-container" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', paddingTop: '100px' }}>
+            <h1 className="specifications-title" style={{ textAlign: 'center', color: 'white' }}>Specifications</h1>
+            <div style={{ textAlign: 'center', padding: '40px', color: '#ccc' }}>
+              Specifications content coming soon...
+            </div>
+          </div>
+        )}
       </section>
 
-      <section className="ulight-info-section">
-        <div className="ulight-content">
-          <h2 className="ulight-info-title">Easy connection<br />to the Controller and On-<br />board computer.</h2>
-          
-          <h2 className="ulight-info-title ulight-integration-title">Integration into the CAN bus.</h2>
-          
-          <div className="ulight-image-container ulight-integration-img-container">
-            <img 
-              src="/promo3.1.png" 
-              alt="Integration into CAN bus" 
-              className="ulight-integration-img"
-            />
-          </div>
-          
-          <div className="ulight-image-container ulight-promo3-2-container">
-            <img 
-              src="/promo3.2.png" 
-              alt="uLight controller detail" 
-              width="374" 
-              height="280"
-              className="ulight-content-img"
-            />
-          </div>
-          
-          <div className="ulight-image-container ulight-promo3-3-container">
-            <img 
-              src="/promo3.3.png" 
-              alt="uLight controller usage" 
-              className="ulight-content-img"
-            />
-          </div>
-          
-          <div className="ulight-image-container ulight-promo3-4-container">
-            <img 
-              src="/promo3.4.png" 
-              alt="uLight controller additional view" 
-              className="ulight-content-img"
-            />
-          </div>
-          
-          <h2 className="ulight-connect-text">
-            You can connect to the uLight all the peripherals of the Controller via CAN bus without using the display.
-          </h2>
-          
-          <div className="ulight-content-box-container">
-            <img 
-              src="/content-box.png" 
-              alt="Connection diagram" 
-              className="ulight-content-box-img"
-            />
-          </div>
-          
-          <div className="ulight-content-box-container">
-            <img 
-              src="/content-box2.png" 
-              alt="Additional content box" 
-              className="ulight-content-box-img"
-            />
-          </div>
-          
-          <div className="ulight-content-box-container">
-            <img 
-              src="/content-box3.png" 
-              alt="Third content box" 
-              className="ulight-content-box-img"
-            />
-          </div>
+      {activeTab === 'overview' && (
+        <>
+          <section className="ulight-info-section">
+            <div className="ulight-content">
+              <h2 className="ulight-info-title">Easy connection<br />to the Controller and On-<br />board computer.</h2>
+              
+              <h2 className="ulight-info-title ulight-integration-title">Integration into the CAN bus.</h2>
+              
+              <div className="ulight-image-container ulight-integration-img-container">
+                <img 
+                  src="/promo3.1.png" 
+                  alt="Integration into CAN bus" 
+                  className="ulight-integration-img"
+                />
+              </div>
+              
+              <div className="ulight-image-container ulight-promo3-2-container">
+                <img 
+                  src="/promo3.2.png" 
+                  alt="uLight controller detail" 
+                  width="374" 
+                  height="280"
+                  className="ulight-content-img"
+                />
+              </div>
+              
+              <div className="ulight-image-container ulight-promo3-3-container">
+                <img 
+                  src="/promo3.3.png" 
+                  alt="uLight controller usage" 
+                  className="ulight-content-img"
+                />
+              </div>
+              
+              <div className="ulight-image-container ulight-promo3-4-container">
+                <img 
+                  src="/promo3.4.png" 
+                  alt="uLight controller additional view" 
+                  className="ulight-content-img"
+                />
+              </div>
+              
+              <h2 className="ulight-connect-text">
+                You can connect to the uLight all the peripherals of the Controller via CAN bus without using the display.
+              </h2>
+              
+              <div className="ulight-content-box-container">
+                <img 
+                  src="/content-box.png" 
+                  alt="Connection diagram" 
+                  className="ulight-content-box-img"
+                />
+              </div>
+              
+              <div className="ulight-content-box-container">
+                <img 
+                  src="/content-box2.png" 
+                  alt="Additional content box" 
+                  className="ulight-content-box-img"
+                />
+              </div>
+              
+              <div className="ulight-content-box-container">
+                <img 
+                  src="/content-box3.png" 
+                  alt="Third content box" 
+                  className="ulight-content-box-img"
+                />
+              </div>
 
-          <div className="ulight-buy-plate">
-            <h3 className="ulight-buy-title">uLight controller</h3>
-            <p className="ulight-buy-price">$55.00</p>
-            <button className="ulight-buy-button">Buy</button>
-          </div>
+              <div className="ulight-buy-plate">
+                <h3 className="ulight-buy-title">uLight controller</h3>
+                <p className="ulight-buy-price">$55.00</p>
+                <button className="ulight-buy-button">Buy</button>
+              </div>
 
-          <div className="ulight-reviews-section">
-            <div className="ulight-reviews-header">
-              <h2 className="ulight-reviews-title">Reviews</h2>
-              <a href="#" className="reviews-link">
-                All reviews
-                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
+              <div className="ulight-reviews-section">
+                <div className="ulight-reviews-header">
+                  <h2 className="ulight-reviews-title">Reviews</h2>
+                  <a href="#" className="reviews-link">
+                    All reviews
+                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </a>
+                </div>
+                <div className="product-reviews-list">
+                  <CardBase className="product-review-card" height={218}>
+                    <div className="product-review-text">
+                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                    </div>
+                    <div className="product-review-meta">
+                      <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
+                      <span>USA, Alex Smith</span>
+                    </div>
+                  </CardBase>
+                  <CardBase className="product-review-card" height={218}>
+                    <div className="product-review-text">
+                      Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
+                    </div>
+                    <div className="product-review-meta">
+                      <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
+                      <span>Germany, Max Stoun</span>
+                    </div>
+                  </CardBase>
+                  <CardBase className="product-review-card" height={218}>
+                    <div className="product-review-text">
+                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
+                    </div>
+                    <div className="product-review-meta">
+                      <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
+                      <span>Norway, Anna Orlova</span>
+                    </div>
+                  </CardBase>
+                  <CardBase className="product-review-card" height={218}>
+                    <div className="product-review-text">
+                      The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
+                    </div>
+                    <div className="product-review-meta">
+                      <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
+                      <span>France, Robert Jonson</span>
+                    </div>
+                  </CardBase>
+                </div>
+              </div>
             </div>
-            <div className="product-reviews-list">
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
-                  <span>USA, Alex Smith</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
-                  <span>Germany, Max Stoun</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
-                  <span>Norway, Anna Orlova</span>
-                </div>
-              </CardBase>
-              <CardBase className="product-review-card" height={218}>
-                <div className="product-review-text">
-                  The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
-                </div>
-                <div className="product-review-meta">
-                  <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
-                  <span>France, Robert Jonson</span>
-                </div>
-              </CardBase>
-            </div>
-          </div>
+          </section>
         </>
       )}
       

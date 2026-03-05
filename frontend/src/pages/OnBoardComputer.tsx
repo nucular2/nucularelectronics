@@ -3,7 +3,6 @@ import Header from "../components/Header";
 
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
-  const [activePromo, setActivePromo] = useState<'winter' | 'theft' | 'splash'>('winter');
 
   return (
     <div className="onboard-page">
@@ -100,63 +99,7 @@ export default function OnBoardComputer() {
                 alt="On-board computer desktop view" 
                 className="onboard-desktop-full-image" 
               />
-              <img 
-                src="/content-box.svg" 
-                alt="On-board computer details" 
-                className="onboard-desktop-full-image" 
-              />
             </div>
-
-            <section className="onboard-section promo-features-section">
-              <div className="promo-features-container">
-                <div className="promo-image-wrapper">
-                  <img 
-                    src="/promo_on-board-computer_winter.png" 
-                    alt="Won't freeze in winter" 
-                    className={`promo-feature-image ${activePromo === 'winter' ? 'active' : ''}`}
-                  />
-                  <img 
-                    src="/promo_on-board-computer_winter.png" 
-                    alt="Theft protection" 
-                    className={`promo-feature-image ${activePromo === 'theft' ? 'active' : ''}`}
-                  />
-                  <img 
-                    src="/promo_on-board-computer_splash.png" 
-                    alt="Splash protection" 
-                    className={`promo-feature-image ${activePromo === 'splash' ? 'active' : ''}`}
-                  />
-                </div>
-                <div className="promo-text-columns promo-text-columns-3">
-                  <div 
-                    className={`promo-text-column ${activePromo === 'winter' ? 'active' : ''}`}
-                    onClick={() => setActivePromo('winter')}
-                  >
-                    <h3 className="promo-title">Won't freeze in winter</h3>
-                    <p className="promo-description">
-                      Built-in automatic screen heating to protect against condensation and slow operation in winter.
-                    </p>
-                  </div>
-                  <div 
-                    className={`promo-text-column ${activePromo === 'theft' ? 'active' : ''}`}
-                    onClick={() => setActivePromo('theft')}
-                  >
-                    <h3 className="promo-title">Theft protection</h3>
-                    <p className="promo-description">
-                      You can set a password on the On-board computer that will protect from unauthorized start-up of the electronics.
-                    </p>
-                  </div>
-                  <div 
-                    className={`promo-text-column ${activePromo === 'splash' ? 'active' : ''}`}
-                    onClick={() => setActivePromo('splash')}
-                  >
-                    <h3 className="promo-title">Splash protection</h3>
-                    <p className="promo-description">
-                      The On-board computer is IP54 protected against dust and splashing water and can withstand light rain.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
 
             <section className="desktop-buy-banner">
               <div className="desktop-buy-content">

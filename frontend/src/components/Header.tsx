@@ -251,7 +251,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
             </div>
             <div className="dropdown-column">
               <h4 className="dropdown-title">Complete solutions</h4>
-              <a href="#" className="dropdown-link">For Sur-Ron Light Bee</a>
+              <a href="/sur-ron-light-bee" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigate('/sur-ron-light-bee'); setIsProductsOpen(false); }}>For Sur-Ron Light Bee</a>
               <a href="#" className="dropdown-link">For Talaria Sting MX3 | MX4</a>
               <a href="#" className="dropdown-link">For Talaria XXX</a>
               <a href="#" className="dropdown-link">For Electric scooters</a>

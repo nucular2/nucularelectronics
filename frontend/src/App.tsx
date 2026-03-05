@@ -27,6 +27,7 @@ import OrderDetail from './pages/OrderDetail';
 import ULightController from './pages/ULightController';
 import OnBoardComputer from './pages/OnBoardComputer';
 import Controller from './pages/Controller';
+import SurRonLightBee from './pages/SurRonLightBee';
 
 export default function App() {
   useLayoutEffect(() => {
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
           <Route path="/ulight-controller" element={<ULightController />} />
+          <Route path="/sur-ron-light-bee" element={<SurRonLightBee />} />
           <Route path="/on-board-computer" element={<OnBoardComputer />} />
           <Route path="/controller" element={<Controller />} />
           <Route path="*" element={<Home />} />

@@ -1,9 +1,21 @@
 import { useState } from "react";
 import Header from "../components/Header";
+import { useCart } from "../context/CartContext";
 
 export default function Controller() {
   const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
+  const { addToCart } = useCart();
+
+  const handleBuy = () => {
+    addToCart({
+      id: 1,
+      category: 'Components',
+      title: 'Nucular controller P24F',
+      price: '$610.00',
+      image: '/мото2.png'
+    });
+  };
 
   return (
     <div className="onboard-page">
@@ -36,7 +48,7 @@ export default function Controller() {
             >
               Specifications
             </button>
-            <button type="button" className="controller-hero-buy">
+            <button type="button" className="controller-hero-buy" onClick={handleBuy}>
               Buy
             </button>
           </div>
@@ -62,9 +74,9 @@ export default function Controller() {
               >
                 Specifications
               </button>
-              <button type="button" className="controller-hero-buy">
-                Buy
-              </button>
+              <button type="button" className="controller-hero-buy" onClick={handleBuy}>
+              Buy
+            </button>
             </div>
           </div>
         </section>
@@ -240,7 +252,7 @@ export default function Controller() {
           <div className="desktop-buy-content">
             <h2 className="desktop-buy-title">Nucular controller P24F</h2>
             <p className="desktop-buy-price">$610.00</p>
-            <button className="desktop-buy-button">Buy</button>
+            <button className="desktop-buy-button" onClick={handleBuy}>Buy</button>
           </div>
         </section>
       </div>
@@ -249,7 +261,7 @@ export default function Controller() {
         <div className="onboard-panel">
           <div className="onboard-panel-title">Nucular controller P24F</div>
           <div className="onboard-panel-price">$610.00</div>
-          <button className="onboard-panel-button">Buy</button>
+          <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
         </div>
       </section>
       <section className="reviews-section">

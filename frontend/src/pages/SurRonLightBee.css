@@ -1,0 +1,107 @@
+.surron-page {
+  background-color: #101010;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.surron-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120px;
+  padding-bottom: 60px;
+  text-align: center;
+  position: relative;
+}
+
+/* Desktop styles */
+@media (min-width: 1px) {
+  .surron-hero {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 100px; /* Space for header */
+    padding-bottom: 0;
+    text-align: center;
+    max-width: 100%;
+    margin: 0;
+    position: relative;
+    width: 100%;
+  }
+
+  .surron-desktop-actions {
+    position: absolute;
+    top: 100px; /* Adjust based on header height */
+    right: 240px; /* Align with other pages */
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .surron-full-width-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .surron-full-width-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .surron-buy-plate {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    height: auto;
+    padding: 60px 0;
+    background-color: #101010;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    box-sizing: border-box;
+  }
+
+  .surron-buy-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .surron-buy-title {
+    margin: 0;
+    font-size: 32px;
+    color: white;
+  }
+
+  .surron-buy-price {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+  }
+
+  .surron-buy-button {
+    width: 280px;
+    height: 56px;
+    background-color: #F36F25;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .surron-buy-button:hover {
+    background-color: #e0601d;
+  }
+}

@@ -1,8 +1,20 @@
 import { useState } from "react";
 import Header from "../components/Header";
+import { useCart } from "../context/CartContext";
 
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
+  const { addToCart } = useCart();
+
+  const handleBuy = () => {
+    addToCart({
+      id: 2,
+      category: 'Components',
+      title: 'On-board computer',
+      price: '$110.00',
+      image: '/miniature.png'
+    });
+  };
 
   return (
     <div className="onboard-page">
@@ -62,7 +74,7 @@ export default function OnBoardComputer() {
           <div className="onboard-panel">
             <div className="onboard-panel-title">On-board computer</div>
             <div className="onboard-panel-price">$110.00</div>
-            <button className="onboard-panel-button">Buy</button>
+            <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
           </div>
         </section>
       </div>
@@ -85,7 +97,7 @@ export default function OnBoardComputer() {
             >
               Specifications
             </button>
-            <button type="button" className="controller-hero-buy">
+            <button type="button" className="controller-hero-buy" onClick={handleBuy}>
               Buy
             </button>
           </div>
@@ -105,7 +117,7 @@ export default function OnBoardComputer() {
               <div className="desktop-buy-content">
                 <h2 className="desktop-buy-title">On-board computer</h2>
                 <p className="desktop-buy-price">$110.00</p>
-                <button className="desktop-buy-button">Buy</button>
+                <button className="desktop-buy-button" onClick={handleBuy}>Buy</button>
               </div>
             </section>
           </>

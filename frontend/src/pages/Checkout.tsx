@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -63,6 +64,8 @@ export default function Checkout() {
     comment: "",
     termsAccepted: false,
   });
+
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
 
   // Load saved data from localStorage
   useEffect(() => {
@@ -161,48 +164,55 @@ export default function Checkout() {
     }
   };
 
-  const handleCompleteCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const createOrder = async () => {
     if (!contacts.termsAccepted) {
       setError("Please accept the Terms and Conditions.");
-      return;
+      throw new Error("Terms not accepted");
     }
     
-    if (!user) return;
+    if (!user) throw new Error("User not logged in");
 
+    // Ensure session is valid before proceeding
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session) {
+      throw new Error("Session expired. Please refresh the page or log in again.");
+    }
+
+    const country = countries.find(c => c.code === recipient.countryCode);
+    const dialCode = country ? country.dial_code : "";
+    const fullPhone = `${dialCode}${recipient.phone}`;
+
+    const { data, error: insertError } = await supabase
+      .from("orders")
+      .insert({
+        user_id: user.id,
+        items: items,
+        total_amount: totalPrice,
+        status: "New",
+        customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
+        customer_phone: fullPhone,
+        customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+        recipient_info: recipient,
+        shipping_address: shipping,
+        contacts: contacts,
+        payment_method: paymentMethod
+      })
+      .select()
+      .single();
+
+    if (insertError) throw insertError;
+    if (!data) throw new Error("Failed to create order.");
+    
+    return data;
+  };
+
+  const handleCardCheckout = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      // Ensure session is valid before proceeding
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session) {
-        throw new Error("Session expired. Please refresh the page or log in again.");
-      }
-
-      const country = countries.find(c => c.code === recipient.countryCode);
-      const dialCode = country ? country.dial_code : "";
-      const fullPhone = `${dialCode}${recipient.phone}`;
-
-      const { data, error: insertError } = await supabase
-        .from("orders")
-        .insert({
-          user_id: user.id,
-          items: items,
-          total_amount: totalPrice,
-          status: "New",
-          customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
-          customer_phone: fullPhone,
-          customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
-          recipient_info: recipient,
-          shipping_address: shipping,
-          contacts: contacts,
-        })
-        .select()
-        .single();
-
-      if (insertError) throw insertError;
-      if (!data) throw new Error("Failed to create order.");
+      const order = await createOrder();
 
       // Initiate Stripe Checkout Session
       try {
@@ -211,7 +221,7 @@ export default function Checkout() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ orderId: data.id }),
+          body: JSON.stringify({ orderId: order.id }),
         });
 
         if (!response.ok) {
@@ -229,29 +239,53 @@ export default function Checkout() {
         }
       } catch (paymentError) {
         console.error('Payment initiation error:', paymentError);
-        // If payment fails to start, we still have the order created
-        // Navigate to order detail so user can try again later (if implemented)
         clearCart();
         localStorage.removeItem('checkout_recipient');
         localStorage.removeItem('checkout_shipping');
         localStorage.removeItem('checkout_contacts');
-        navigate(`/orders/${data.id}`);
+        navigate(`/orders/${order.id}`);
         return;
       }
-
-      clearCart();
-      localStorage.removeItem('checkout_recipient');
-      localStorage.removeItem('checkout_shipping');
-      localStorage.removeItem('checkout_contacts');
-      navigate("/orders");
-      
     } catch (err: any) {
-      console.error("Checkout error:", err);
-      setError(err.message || "Failed to complete checkout.");
+      if (err.message !== "Terms not accepted") {
+        console.error("Checkout error:", err);
+        setError(err.message || "Failed to complete checkout.");
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  const handlePayPalApprove = async (data: any, actions: any) => {
+    try {
+      const details = await actions.order.capture();
+      // Update order status in Supabase
+      // We need the order ID. Since createOrder returned it to PayPal createOrder, 
+      // we might need to store it or retrieve it from details/context.
+      // Actually, createOrder (below) creates the Supabase order.
+      // But we don't have easy access to that ID here unless we store it in state or use a ref.
+      
+      // Alternative: We can search for the order by some reference or rely on webhooks.
+      // But for client-side, let's use a ref to store the current order ID.
+      if (currentOrderId.current) {
+          await supabase
+            .from("orders")
+            .update({ status: "Paid", payment_details: details })
+            .eq("id", currentOrderId.current);
+            
+          clearCart();
+          localStorage.removeItem('checkout_recipient');
+          localStorage.removeItem('checkout_shipping');
+          localStorage.removeItem('checkout_contacts');
+          navigate("/orders");
+      }
+    } catch (err) {
+      console.error("PayPal capture error", err);
+      setError("Payment failed");
+    }
+  };
+  
+  const currentOrderId = React.useRef<string | null>(null);
 
   return (
     <>
@@ -397,7 +431,7 @@ export default function Checkout() {
                       <h2 className="step-title">Contacts</h2>
                       <button type="button" className="step-back-btn" onClick={() => setStep(2)}>Back</button>
                    </div>
-                  <form onSubmit={handleCompleteCheckout} className="checkout-form-grid">
+                  <form onSubmit={handleCardCheckout} className="checkout-form-grid">
                     <input
                       name="telegram"
                       placeholder="Telegram"
@@ -441,9 +475,69 @@ export default function Checkout() {
                       </label>
                     </div>
 
-                    <button type="submit" className="checkout-next-btn" disabled={loading}>
-                      {loading ? "Completing..." : "Complete checkout"}
-                    </button>
+                    <div className="payment-method-section" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                      <h3 className="step-subtitle" style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 600 }}>Payment Method</h3>
+                      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                          <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="card" 
+                            checked={paymentMethod === 'card'} 
+                            onChange={() => setPaymentMethod('card')} 
+                          />
+                          <span>Credit Card (Stripe)</span>
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                          <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="paypal" 
+                            checked={paymentMethod === 'paypal'} 
+                            onChange={() => setPaymentMethod('paypal')} 
+                          />
+                          <span>PayPal</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {paymentMethod === 'card' ? (
+                      <button type="submit" className="checkout-next-btn" disabled={loading}>
+                        {loading ? "Completing..." : "Complete checkout"}
+                      </button>
+                    ) : (
+                      <div style={{ marginTop: '16px' }}>
+                        <PayPalScriptProvider options={{ clientId: "test", currency: "USD" }}>
+                          <PayPalButtons 
+                            style={{ layout: "vertical" }}
+                            createOrder={async (data, actions) => {
+                              try {
+                                const order = await createOrder();
+                                currentOrderId.current = order.id;
+                                return actions.order.create({
+                                  intent: "CAPTURE",
+                                  purchase_units: [{
+                                    description: `Order #${order.id}`,
+                                    amount: {
+                                      currency_code: "USD",
+                                      value: totalPrice.toFixed(2)
+                                    }
+                                  }]
+                                });
+                              } catch (err) {
+                                console.error("Create order error", err);
+                                throw err;
+                              }
+                            }}
+                            onApprove={handlePayPalApprove}
+                            onError={(err) => {
+                              console.error("PayPal error", err);
+                              setError("PayPal payment failed or cancelled.");
+                            }}
+                          />
+                        </PayPalScriptProvider>
+                      </div>
+                    )}
                   </form>
                 </div>
               )}

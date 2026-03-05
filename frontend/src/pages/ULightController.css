@@ -234,8 +234,8 @@
   margin: 0;
 }
 
-/* Desktop styles */
-@media (min-width: 1px) {
+/* Desktop styles - Force applied globally */
+/* @media (min-width: 1px) { */
   .ulight-hero {
     flex-direction: row;
     justify-content: center;
@@ -380,7 +380,7 @@
     gap: 20px;
     width: 100%;
   }
-}
+/* } */
 
 /* Mobile responsiveness */
 @media (max-width: 0px) {

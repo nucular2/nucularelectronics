@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
+import { useCart } from "../context/CartContext";
 import './ULightController.css';
 
 const TurnSignalIcon = () => (
@@ -40,6 +41,17 @@ const LedStripIcon = () => (
 
 export default function ULightController() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
+  const { addToCart } = useCart();
+
+  const handleBuy = () => {
+    addToCart({
+      id: 3,
+      category: 'Components',
+      title: 'uLight controller',
+      price: '$55.00',
+      image: '/4экран.png'
+    });
+  };
 
   return (
     <div className="ulight-page">
@@ -62,7 +74,7 @@ export default function ULightController() {
           >
             Specifications
           </button>
-          <button type="button" className="controller-hero-buy">
+          <button type="button" className="controller-hero-buy" onClick={handleBuy}>
             Buy
           </button>
         </div>
@@ -101,7 +113,7 @@ export default function ULightController() {
                   <h3 className="ulight-buy-title">uLight controller</h3>
                   <p className="ulight-buy-price">$55.00</p>
                 </div>
-                <button className="ulight-buy-button">Buy</button>
+                <button className="ulight-buy-button" onClick={handleBuy}>Buy</button>
               </div>
 
               <div className="ulight-reviews-section">

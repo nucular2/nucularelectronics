@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import "./app-styles.css";
-import "./force-desktop.css"; // Force desktop styles
+// import "./force-desktop.css"; // Force desktop styles
 import App from "./App";
 
 const container = document.getElementById("root")!;

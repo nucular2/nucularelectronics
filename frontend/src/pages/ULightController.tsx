@@ -68,41 +68,12 @@ export default function ULightController() {
         </div>
 
         {activeTab === 'overview' ? (
-          <div className="ulight-content">
-            <h1 className="ulight-title">
-              uLight
-              <br />
-              controller
-            </h1>
-            
-            <p className="ulight-subtitle">Lighting control controller:</p>
-            
-            <div className="ulight-features-grid">
-              <div className="ulight-feature">
-                <TurnSignalIcon />
-                <span>turn signals</span>
-              </div>
-              <div className="ulight-feature">
-                <BrakeLightIcon />
-                <span>brake light</span>
-              </div>
-              <div className="ulight-feature">
-                <HeadlightIcon />
-                <span>headlight</span>
-              </div>
-              <div className="ulight-feature">
-                <LedStripIcon />
-                <span>LED strip</span>
-              </div>
-            </div>
-
-            <div className="ulight-image-container">
-              <img 
-                src="/first screen10.png" 
-                alt="uLight controller circuit board" 
-                className="ulight-hero-img"
-              />
-            </div>
+          <div className="ulight-desktop-hero-container">
+            <img 
+              src="/first screen10.png" 
+              alt="uLight controller overview" 
+              className="ulight-full-width-image"
+            />
           </div>
         ) : (
           <div className="specifications-container" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', paddingTop: '100px' }}>

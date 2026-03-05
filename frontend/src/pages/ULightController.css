@@ -248,14 +248,28 @@
 /* Desktop styles - Force applied globally */
 /* @media (min-width: 1px) { */
   .ulight-hero {
-    flex-direction: row;
-    justify-content: center;
-    padding-top: 160px;
-    padding-bottom: 100px;
-    text-align: left;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 140px; /* Space for header */
+    padding-bottom: 0;
+    text-align: center;
+    max-width: 100%;
+    margin: 0;
     position: relative;
+    width: 100%;
+  }
+
+  .ulight-desktop-hero-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ulight-full-width-image {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   .ulight-content {

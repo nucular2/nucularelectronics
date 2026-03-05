@@ -87,77 +87,20 @@ export default function ULightController() {
 
       {activeTab === 'overview' && (
         <>
-          <section className="ulight-info-section">
-            <div className="ulight-content">
-              <h2 className="ulight-info-title">Easy connection<br />to the Controller and On-<br />board computer.</h2>
-              
-              <h2 className="ulight-info-title ulight-integration-title">Integration into the CAN bus.</h2>
-              
-              <div className="ulight-image-container ulight-integration-img-container">
-                <img 
-                  src="/promo3.1.png" 
-                  alt="Integration into CAN bus" 
-                  className="ulight-integration-img"
-                />
-              </div>
-              
-              <div className="ulight-image-container ulight-promo3-2-container">
-                <img 
-                  src="/promo3.2.png" 
-                  alt="uLight controller detail" 
-                  width="374" 
-                  height="280"
-                  className="ulight-content-img"
-                />
-              </div>
-              
-              <div className="ulight-image-container ulight-promo3-3-container">
-                <img 
-                  src="/promo3.3.png" 
-                  alt="uLight controller usage" 
-                  className="ulight-content-img"
-                />
-              </div>
-              
-              <div className="ulight-image-container ulight-promo3-4-container">
-                <img 
-                  src="/promo3.4.png" 
-                  alt="uLight controller additional view" 
-                  className="ulight-content-img"
-                />
-              </div>
-              
-              <h2 className="ulight-connect-text">
-                You can connect to the uLight all the peripherals of the Controller via CAN bus without using the display.
-              </h2>
-              
-              <div className="ulight-content-box-container">
-                <img 
-                  src="/content-box.png" 
-                  alt="Connection diagram" 
-                  className="ulight-content-box-img"
-                />
-              </div>
-              
-              <div className="ulight-content-box-container">
-                <img 
-                  src="/content-box2.png" 
-                  alt="Additional content box" 
-                  className="ulight-content-box-img"
-                />
-              </div>
-              
-              <div className="ulight-content-box-container">
-                <img 
-                  src="/content-box3.png" 
-                  alt="Third content box" 
-                  className="ulight-content-box-img"
-                />
-              </div>
+          <div className="ulight-desktop-hero-container">
+            <img 
+              src="/uLight controller.png" 
+              alt="uLight controller info" 
+              className="ulight-full-width-image"
+            />
+          </div>
 
-              <div className="ulight-buy-plate">
-                <h3 className="ulight-buy-title">uLight controller</h3>
-                <p className="ulight-buy-price">$55.00</p>
+          <section className="ulight-reviews-container">
+             <div className="ulight-buy-plate">
+                <div className="ulight-buy-info">
+                  <h3 className="ulight-buy-title">uLight controller</h3>
+                  <p className="ulight-buy-price">$55.00</p>
+                </div>
                 <button className="ulight-buy-button">Buy</button>
               </div>
 
@@ -210,7 +153,6 @@ export default function ULightController() {
                   </CardBase>
                 </div>
               </div>
-            </div>
           </section>
         </>
       )}

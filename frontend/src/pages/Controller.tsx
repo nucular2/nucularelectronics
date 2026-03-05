@@ -3,73 +3,120 @@ import Header from "../components/Header";
 export default function Controller() {
   return (
     <div className="onboard-page">
-      <Header variant="white" />
-      <section className="hero">
+      <Header />
+      <section className="hero controller-hero">
         <div className="hero-image-container">
-          <img
-            src="/firstscreen1.png"
-            alt="Nucular controller P24F"
-            className="hero-main-image"
-          />
+          <picture>
+            <source media="(min-width: 900px)" srcSet="/комп1.png" />
+            <img
+              src="/firstscreen1.png"
+              alt="Nucular controller P24F"
+              className="hero-main-image"
+            />
+          </picture>
+        </div>
+        <div className="controller-hero-actions">
+          <button type="button" className="controller-hero-tab active">
+            Overview
+          </button>
+          <button type="button" className="controller-hero-tab">
+            Specifications
+          </button>
+          <button type="button" className="controller-hero-buy">
+            Buy
+          </button>
         </div>
       </section>
-      <section className="onboard-section">
-        <img src="/content-box16.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box17.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box18.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box19.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box20.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box21.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box22.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box23.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box24.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box25.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box26.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box27.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box28.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box29.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box30.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box31.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box32.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/Group 2087330907.png" alt="Controller details" className="onboard-image" />
-      </section>
-      <section className="onboard-section">
-        <img src="/content-box34.png" alt="Controller details" className="onboard-image" />
-      </section>
+      
+      {/* Mobile Content */}
+      <div className="mobile-only">
+        <section className="onboard-section">
+          <img src="/content-box16.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box17.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box18.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box19.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box20.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box21.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box22.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box23.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box24.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box25.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box26.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box27.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box28.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box29.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box30.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box31.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box32.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/Group 2087330907.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box34.png" alt="Controller details" className="onboard-image" />
+        </section>
+      </div>
+
+      {/* Desktop Content */}
+      <div className="desktop-only">
+        <section className="onboard-section">
+          <img src="/content-box35.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box36.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box37.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box38.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box39.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box40.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box41.png" alt="Controller details" className="onboard-image" />
+        </section>
+        <section className="onboard-section">
+          <img src="/content-box42.png" alt="Controller details" className="onboard-image" />
+        </section>
+      </div>
+
       <section className="onboard-section">
         <div className="onboard-panel">
           <div className="onboard-panel-title">Nucular controller P24F</div>

@@ -90,9 +90,11 @@ body,
 }
 
 .onboard-section {
-  padding: 40px 20px;
+  padding: 0;
+  margin: 0;
   display: flex;
   justify-content: center;
+  line-height: 0; /* Remove potential whitespace under images */
 }
 
 .onboard-section-last {
@@ -101,9 +103,37 @@ body,
 
 .onboard-image {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%; /* Ensure full width on mobile */
   height: auto;
   display: block;
+  vertical-align: bottom; /* Remove potential whitespace under images */
+}
+
+@media (min-width: 900px) {
+  .onboard-section {
+    padding: 0; /* Keep 0 for seamless desktop if images are full width */
+  }
+  
+  .onboard-image {
+    max-width: 100%; /* Or keep 1200px if desktop images need constraint, but user said "full width" */
+  }
+}
+
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .mobile-only {
+    display: none;
+  }
+  .desktop-only {
+    display: block;
+  }
 }
 
 .onboard-image-full {
@@ -122,6 +152,36 @@ body,
   justify-content: center;
   gap: 8px;
   text-align: center;
+}
+
+@media (max-width: 900px) {
+  .onboard-panel {
+    width: 100%;
+    max-width: 335px; /* Or whatever fits best on mobile */
+    height: auto;
+    padding: 24px;
+    margin: 0 auto;
+  }
+  
+  .reviews-section .section-header .section-title {
+    font-size: 24px; /* Smaller title on mobile */
+  }
+  
+  .reviews-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 20px; /* Space for scrollbar if visible */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .review-card {
+    min-width: 280px; /* Ensure cards have minimum width */
+    width: 280px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
 }
 
 .onboard-panel-title {
@@ -147,6 +207,65 @@ body,
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.controller-hero {
+  min-height: auto;
+}
+
+.controller-hero .hero-image-container {
+  position: static;
+  width: 100%;
+  height: auto;
+}
+
+.controller-hero .hero-main-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.controller-hero-actions {
+  position: absolute;
+  top: 140px;
+  right: 240px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  z-index: 2;
+}
+
+.controller-hero-tab {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.controller-hero-tab.active {
+  color: #F36F25;
+}
+
+.controller-hero-buy {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: none;
+  background: #F36F25;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .controller-hero-actions {
+    display: none;
+  }
 }
 
 /* Header Styles */

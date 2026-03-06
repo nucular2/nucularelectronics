@@ -71,28 +71,29 @@ export default function Home() {
       {!isMobile ? (
         // DESKTOP VIEW
         <div style={{ width: '100%', background: '#fff' }}>
-          <div className="scroll-up-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
           
           {/* Hero Section */}
-          <section className="hero">
-            <div className="hero-image-container">
-              <img src="/first.png" alt="Hero" className="hero-main-image" />
-            </div>
-            <div className="hero-content">
-              <a href="#components" className="see-components-link">
-                See the components 
-                <svg className="arrow-down-long" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 1V11M6 11L1 6M6 11L11 6" stroke="#C45F2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            </div>
-          </section>
+          <div style={{ 
+            position: 'relative', 
+            width: '100%', 
+            height: '100vh', 
+            minHeight: '800px',
+            overflow: 'hidden'
+          }}>
+            <img 
+              src="/first.png" 
+              alt="Hero"
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                objectPosition: 'center'
+              }} 
+            />
+            {/* Overlay buttons for Hero if needed can be added here */}
+          </div>
 
-          <div id="components" style={{ maxWidth: '1440px', margin: '0 auto', padding: '80px 40px' }}>
+          <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '80px 40px' }}>
             
             {/* Products Section */}
             <div style={{ marginBottom: '80px' }}>
@@ -101,23 +102,6 @@ export default function Home() {
                 <p style={{ fontSize: '18px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>
                   For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
                 </p>
-              </div>
-
-              {/* Preorder Badge / Notification */}
-              <div className="preorder-badge" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '32px', color: '#222', fontSize: '16px', fontWeight: 500 }}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clipPath="url(#clip0_1389_5012)">
-                    <path d="M8 6.25C8.41421 6.25 8.75 6.58579 8.75 7V12C8.75 12.4142 8.41421 12.75 8 12.75C7.58579 12.75 7.25 12.4142 7.25 12V7C7.25 6.58579 7.58579 6.25 8 6.25Z" fill="#222222" />
-                    <path d="M8 5C8.55229 5 9 4.55228 9 4C9 3.44772 8.55229 3 8 3C7.44772 3 7 3.44772 7 4C7 4.55228 7.44772 5 8 5Z" fill="#222222" />
-                    <path fillRule="evenodd" clipRule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5Z" fill="#222222" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1389_5012">
-                      <rect width="16" height="16" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <span>Waiting time after pre-order ~ 7 months</span>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
@@ -165,102 +149,6 @@ export default function Home() {
                     <span style={{ color: '#999', fontSize: '16px', fontFamily: 'var(--font-family)' }}>In development</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Accessories Section */}
-            <section className="accessories-section" style={{ padding: '0 0 80px' }}>
-              <div className="accessories-grid">
-                {/* Card 1: On-board computer */}
-                <div className="accessory-card">
-                  <h3 className="accessory-title">On-board computer</h3>
-                  <p className="accessory-description">For displaying basic parameters,<br />setting devices and power modes.</p>
-                  <div className="accessory-actions">
-                    <a href="/on-board-computer" className="card-button buy-button" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Buy</a>
-                    <a href="#" className="card-link">
-                      Learn more
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
-                      </svg>
-                    </a>
-                  </div>
-                  <div className="accessory-image-container">
-                    <img src="/3экран.png" alt="On-board computer" className="accessory-image" />
-                  </div>
-                </div>
-
-                {/* Card 2: Bluetooth module */}
-                <div className="accessory-card">
-                  <h3 className="accessory-title">Bluetooth module<br />with App</h3>
-                  <p className="accessory-description">Change all settings through your smartphone<br />instead an On-board computer.</p>
-                  <div className="accessory-actions">
-                    <button className="card-button buy-button">Buy</button>
-                  </div>
-                  <div className="accessory-image-container">
-                    <img src="/3(2)экран.png" alt="Bluetooth module" className="accessory-image" />
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* BMS Section */}
-            <section className="bms-section" style={{ padding: '0 0 80px', maxWidth: '100%' }}>
-              <h2 className="bms-main-title" style={{ textAlign: 'center' }}>Battery Management System</h2>
-              <p className="bms-main-description" style={{ textAlign: 'center' }}>
-                BMS for monitor and regulate the charging and discharge of batteries.
-              </p>
-              <div className="bms-grid">
-                {/* Card 1: BMS 16S */}
-                <div className="bms-card">
-                  <div className="bms-card-image-container">
-                     <svg className="bms-card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
-                      <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
-                    </svg>
-                  </div>
-                  <h3 className="bms-card-title">BMS 16S</h3>
-                  <p className="bms-card-description">For compact e-scooters batteries.</p>
-                  <div className="bms-card-actions">
-                    <button className="card-button preorder-button">Preorder</button>
-                    <span className="status-text bms-status">In development</span>
-                  </div>
-                </div>
-
-                {/* Card 2: BMS 24S */}
-                <div className="bms-card">
-                  <div className="bms-card-image-container">
-                     <svg className="bms-card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4.24875e-06 12L0 60H19.2375L19.2375 15L46.575 42.0556L46.575 2.97237e-06L12.15 0C5.43975 -5.79386e-07 4.83538e-06 5.37258 4.24875e-06 12Z" fill="#E9E9E9" />
-                      <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
-                    </svg>
-                  </div>
-                  <h3 className="bms-card-title">BMS 24S</h3>
-                  <p className="bms-card-description">For powerful batteries.</p>
-                  <div className="bms-card-actions">
-                    <button className="card-button preorder-button">Preorder</button>
-                    <span className="status-text bms-status">In development</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* uLight Controller Section */}
-            <div className="ulight-section" style={{ margin: '0 auto 80px', maxWidth: '100%' }}>
-              <div className="ulight-content">
-                <h3 className="ulight-title">uLight controller</h3>
-                <p className="ulight-description">Designed to connect and control lightning equipment.</p>
-                <div className="card-actions">
-                  <a href="/ulight-controller" className="card-button buy-button" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Buy</a>
-                  <a href="#" className="card-link">
-                    Learn more
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M9.23431 18.7722C8.9219 18.4685 8.9219 17.976 9.23431 17.6723L15.0686 12L9.23431 6.32775C8.92189 6.02401 8.92189 5.53155 9.23431 5.22781C9.54673 4.92407 10.0533 4.92407 10.3657 5.22781L16.7657 11.45C17.0781 11.7538 17.0781 12.2462 16.7657 12.55L10.3657 18.7722C10.0533 19.0759 9.54673 19.0759 9.23431 18.7722Z" fill="#F36F25" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-              <div className="ulight-image-container">
-                <img src="/4экран.png" alt="uLight controller" className="ulight-image" />
               </div>
             </div>
 

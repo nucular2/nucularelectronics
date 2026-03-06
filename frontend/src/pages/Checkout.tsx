@@ -292,15 +292,29 @@ export default function Checkout() {
       <Header variant="white" />
       <div className="checkout-page">
         <div className="checkout-container">
-          <div style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', marginBottom: '40px' }}>
+          {/* Desktop Title & Order Summary Row */}
+          <div className="checkout-header-desktop" style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', marginBottom: '40px' }}>
             <div></div> {/* Left spacer */}
             <h1 className="checkout-title" style={{ margin: 0 }}>Checkout</h1>
             <div style={{ display: 'flex', justifyContent: 'flex-end', fontFamily: 'var(--font-family)', fontSize: '16px', color: '#222' }}>
-              <span>Order summary: <span style={{ color: '#F36F25', fontWeight: 700 }}>${totalPrice.toFixed(2)}</span></span>
+              <span>Order summary: <span style={{ color: '#F36F25', fontWeight: 700 }}>${totalPrice.toFixed(2)} ({items.length})</span></span>
+            </div>
+          </div>
+
+          {/* Mobile Header Row: Back to cart + Order Summary */}
+          <div className="checkout-header-mobile">
+            <Link to="/cart" className="back-link">
+              <span style={{ marginRight: '8px' }}>‹</span> Back to cart
+            </Link>
+            <div className="mobile-order-summary">
+              ${totalPrice.toFixed(2)} ({items.length})
             </div>
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+          {/* Mobile Title */}
+          <h1 className="checkout-title-mobile">Checkout</h1>
+          
+          <div className="quick-fill-container">
             <button onClick={fillTestValues} style={{ padding: '8px 16px', background: '#eee', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>
               ⚡️ Quick Fill (Test)
             </button>

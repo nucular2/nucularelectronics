@@ -121,20 +121,100 @@
   display: none; /* Hide back buttons in accordion mode as users can click headers */
 }
 
-.checkout-next-btn {
-  width: 100%;
-  height: 56px;
-  background: #F36F25;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 24px;
-  transition: background-color 0.2s;
+/* Mobile specific styles */
+.checkout-header-mobile {
+  display: none;
 }
+
+.checkout-title-mobile {
+  display: none;
+}
+
+.quick-fill-container {
+  display: flex; 
+  justify-content: center; 
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .checkout-page {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+
+  .checkout-container {
+    padding: 0 20px;
+  }
+
+  /* Hide Desktop Header */
+  .checkout-header-desktop {
+    display: none !important;
+  }
+
+  /* Show Mobile Header Elements */
+  .checkout-header-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 24px;
+    font-family: var(--font-family);
+  }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    color: #222;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .mobile-order-summary {
+    color: #F36F25;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .checkout-title-mobile {
+    display: block;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 32px;
+    color: #222;
+    margin: 0 0 32px 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  /* Adjust Steps for Mobile */
+  .step-title {
+    font-size: 18px;
+  }
+
+  .step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .checkout-step-content {
+    padding-left: 0; /* Remove left padding on mobile for full width */
+    margin-top: 16px;
+  }
+
+  .checkout-step-header {
+    gap: 12px;
+  }
+
+  /* Filled circles for inactive steps on mobile (matching screenshot) */
+  .checkout-step:not(.active):not(.completed) .step-number {
+    background-color: #ddd;
+    border-color: #ddd;
+    color: #fff;
+  }
+}
+
 
 .checkout-next-btn:hover {
   background-color: #d65a15;

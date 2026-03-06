@@ -47,6 +47,21 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
+                  src="/new1.png" // Reusing new1.png as it matches context (Protection) or similar
+                  alt="Protection of controllers"
+                  className="news-image"
+                />
+              </div>
+              <div className="news-meta">May 15, 2022</div>
+              <h2 className="news-card-title">Protection of controllers</h2>
+              <p className="news-card-text">
+                New circuit engineering and improved protection of controllers from our users.
+              </p>
+            </article>
+
+            <article className="news-card news-card--small">
+              <div className="news-image-wrapper news-image-wrapper--small">
+                <img
                   src="/new3.png"
                   alt="Big/Bug update!"
                   className="news-image"
@@ -58,46 +73,13 @@ export default function News() {
                 The big update of the Controller (v0.8.1) and the On-board Computer (v0.70).
               </p>
             </article>
-
-            <article className="news-card news-card--small">
-              <Link
-                to="/news/brief-news-for-the-year"
-                className="news-image-wrapper news-image-wrapper--small"
-              >
-                <img
-                  src="/new4.png"
-                  alt="Brief news for the year"
-                  className="news-image"
-                />
-              </Link>
-              <div className="news-meta">May 20, 2022</div>
-              <h2 className="news-card-title">Brief news for the year</h2>
-              <p className="news-card-text">
-                The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ...
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new5.png"
-                  alt="Protection of controllers"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 15, 2022</div>
-              <h2 className="news-card-title">Protection of controllers</h2>
-              <p className="news-card-text">
-                New circuit engineering and improved protection of controllers from our users.
-              </p>
-            </article>
           </div>
 
           <div className="news-grid-small">
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new6.png"
+                  src="/new1.png" 
                   alt="Protection of controllers"
                   className="news-image"
                 />
@@ -112,7 +94,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new7.png"
+                  src="/new2.png"
                   alt="Price increase"
                   className="news-image"
                 />
@@ -127,7 +109,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new8.png"
+                  src="/new4.png"
                   alt="Brief news for the year"
                   className="news-image"
                 />
@@ -144,7 +126,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new9.png"
+                  src="/new1.png"
                   alt="Protection of controllers"
                   className="news-image"
                 />
@@ -159,7 +141,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new10.png"
+                  src="/new2.png"
                   alt="Price increase"
                   className="news-image"
                 />
@@ -174,7 +156,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new11.png"
+                  src="/new4.png"
                   alt="Brief news for the year"
                   className="news-image"
                 />
@@ -191,7 +173,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new12.png"
+                  src="/new3.png"
                   alt="Big/Bug update!"
                   className="news-image"
                 />
@@ -206,7 +188,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new13.png"
+                  src="/new4.png"
                   alt="Brief news for the year"
                   className="news-image"
                 />
@@ -221,7 +203,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new14.png"
+                  src="/new2.png"
                   alt="Price increase"
                   className="news-image"
                 />

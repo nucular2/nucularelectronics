@@ -2,6 +2,10 @@
 @import "./checkout-styles.css";
 @import "./footer-new.css";
 
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --accent: #ffcc00;
   --radius: 8px;
   --gap: 1rem;
   --max-width: 1440px;

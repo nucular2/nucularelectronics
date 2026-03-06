@@ -194,8 +194,8 @@ export default function Checkout() {
         customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
         recipient_info: recipient,
         shipping_address: shipping,
-        contacts: contacts,
-        payment_method: paymentMethod
+        contacts: { ...contacts, paymentMethod }, // Store payment method in contacts JSON
+        // payment_method column doesn't exist in DB
       })
       .select()
       .single();

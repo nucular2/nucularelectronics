@@ -147,7 +147,7 @@ export default function Home() {
         // MOBILE VIEW (SVG Overlay)
         <div style={{ position: 'relative', width: '100%', overflowX: 'hidden' }}>
           <img 
-            src="/моб1версия.svg" 
+            src="/mob-v2.svg" 
             alt="Nucular Mobile" 
             style={{ width: '100%', display: 'block', height: 'auto' }} 
           />

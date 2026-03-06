@@ -507,7 +507,7 @@ export default function Checkout() {
                       </button>
                     ) : (
                       <div style={{ marginTop: '16px' }}>
-                        <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || "test", currency: "USD" }}>
+                        <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
                           <PayPalButtons 
                             style={{ layout: "vertical" }}
                             createOrder={async (data, actions) => {
@@ -530,9 +530,9 @@ export default function Checkout() {
                               }
                             }}
                             onApprove={handlePayPalApprove}
-                            onError={(err) => {
-                              console.error("PayPal error", err);
-                              setError("PayPal payment failed or cancelled.");
+                            onError={(err: any) => {
+                              console.error("PayPal error:", err);
+                              setError(`PayPal payment failed: ${err.message || JSON.stringify(err)}`);
                             }}
                           />
                         </PayPalScriptProvider>

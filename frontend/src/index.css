@@ -1,4 +1,6 @@
 /* Общие переменные */
+@import "./checkout-styles.css";
+
 :root {
   --bg: #ffffff;
   --text: #222222;

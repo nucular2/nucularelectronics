@@ -292,7 +292,13 @@ export default function Checkout() {
       <Header variant="white" />
       <div className="checkout-page">
         <div className="checkout-container">
-          <h1 className="checkout-title">Checkout</h1>
+          <div style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', marginBottom: '40px' }}>
+            <div></div> {/* Left spacer */}
+            <h1 className="checkout-title" style={{ margin: 0 }}>Checkout</h1>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', fontFamily: 'var(--font-family)', fontSize: '16px', color: '#222' }}>
+              <span>Order summary: <span style={{ color: '#F36F25', fontWeight: 700 }}>${totalPrice.toFixed(2)}</span></span>
+            </div>
+          </div>
           
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             <button onClick={fillTestValues} style={{ padding: '8px 16px', background: '#eee', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>
@@ -302,205 +308,206 @@ export default function Checkout() {
           
           {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px', margin: '0 auto 20px auto', textAlign: 'center'}}>{error}</div>}
 
-          <div className="checkout-layout">
-            <div className="checkout-stepper-col">
-               <img src="/stepper.png" alt="stepper" className="stepper-image" />
-            </div>
-            
-            <div className="checkout-content-col">
-              {/* Step 1: Recipient Information */}
-              {step === 1 && (
-                <div className="step-section">
-                  <h2 className="step-title">Recipient information</h2>
-                  <form onSubmit={goToStep2} className="checkout-form-grid">
-                    <input
-                      name="firstName"
-                      placeholder="First name"
-                      value={recipient.firstName}
-                      onChange={handleRecipientChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <input
-                      name="lastName"
-                      placeholder="Last name"
-                      value={recipient.lastName}
-                      onChange={handleRecipientChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <div className="phone-input-group">
+          <div className="checkout-content">
+            {/* Step 1: Recipient Information */}
+            <div className={`checkout-step ${step === 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
+              <div className="checkout-step-header" onClick={() => setStep(1)}>
+                <div className="step-number">1</div>
+                <h2 className="step-title">Recipient information</h2>
+              </div>
+              
+              <div className="checkout-step-content">
+                <form onSubmit={goToStep2} className="checkout-form-grid">
+                  <input
+                    name="firstName"
+                    placeholder="First name"
+                    value={recipient.firstName}
+                    onChange={handleRecipientChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="lastName"
+                    placeholder="Last name"
+                    value={recipient.lastName}
+                    onChange={handleRecipientChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <div className="phone-input-group">
+                    <div style={{ position: 'relative' }}>
                       <select
                         name="countryCode"
                         value={recipient.countryCode}
                         onChange={handleRecipientChange}
                         className="country-select"
+                        style={{ paddingRight: '24px' }}
                       >
                         {countries.map((country) => (
                           <option key={country.code} value={country.code}>
-                            {country.flag} {country.dial_code}
+                            {country.flag}
                           </option>
                         ))}
                       </select>
-                      <input
-                        name="phone"
-                        placeholder="Phone number"
-                        value={recipient.phone}
-                        onChange={handleRecipientChange}
-                        required
-                        className="phone-input"
-                        type="tel"
-                      />
+                      <div style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '10px', color: '#666' }}>▼</div>
                     </div>
                     <input
-                      name="email"
-                      placeholder="E-mail"
-                      value={recipient.email}
+                      name="phone"
+                      placeholder="Phone number"
+                      value={recipient.phone}
                       onChange={handleRecipientChange}
                       required
-                      className="checkout-input"
-                      type="email"
+                      className="phone-input"
+                      type="tel"
                     />
-                    <button type="submit" className="checkout-next-btn">
-                      Next
-                    </button>
-                  </form>
-                </div>
-              )}
+                  </div>
+                  <input
+                    name="email"
+                    placeholder="E-mail"
+                    value={recipient.email}
+                    onChange={handleRecipientChange}
+                    required
+                    className="checkout-input"
+                    type="email"
+                  />
+                  <button type="submit" className="checkout-next-btn">
+                    Next
+                  </button>
+                </form>
+              </div>
+            </div>
 
-              {/* Step 2: Shipping Address */}
-              {step === 2 && (
-                <div className="step-section">
-                   <div className="step-header-row">
-                      <h2 className="step-title">Shipping address</h2>
-                      <button type="button" className="step-back-btn" onClick={() => setStep(1)}>Back</button>
-                   </div>
-                  <form onSubmit={goToStep3} className="checkout-form-grid">
-                    <input
-                      name="country"
-                      placeholder="Country"
-                      value={shipping.country}
-                      onChange={handleShippingChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <input
-                      name="zipCode"
-                      placeholder="ZIP Code"
-                      value={shipping.zipCode}
-                      onChange={handleShippingChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <input
-                      name="city"
-                      placeholder="City"
-                      value={shipping.city}
-                      onChange={handleShippingChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <input
-                      name="street"
-                      placeholder="Street name and number"
-                      value={shipping.street}
-                      onChange={handleShippingChange}
-                      required
-                      className="checkout-input"
-                    />
-                    <input
-                      name="flat"
-                      placeholder="Flat / office"
-                      value={shipping.flat}
-                      onChange={handleShippingChange}
-                      className="checkout-input"
-                    />
-                    <span className="input-hint">Optional</span>
-                    
-                    <button type="submit" className="checkout-next-btn">
-                      Next
-                    </button>
-                  </form>
-                </div>
-              )}
+            {/* Step 2: Shipping Address */}
+            <div className={`checkout-step ${step === 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
+              <div className="checkout-step-header" onClick={() => step > 1 && setStep(2)}>
+                <div className="step-number">2</div>
+                <h2 className="step-title">Shipping address</h2>
+              </div>
+              
+              <div className="checkout-step-content">
+                <form onSubmit={goToStep3} className="checkout-form-grid">
+                  <input
+                    name="country"
+                    placeholder="Country"
+                    value={shipping.country}
+                    onChange={handleShippingChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="zipCode"
+                    placeholder="ZIP Code"
+                    value={shipping.zipCode}
+                    onChange={handleShippingChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="city"
+                    placeholder="City"
+                    value={shipping.city}
+                    onChange={handleShippingChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="street"
+                    placeholder="Street name and number"
+                    value={shipping.street}
+                    onChange={handleShippingChange}
+                    required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="flat"
+                    placeholder="Flat / office"
+                    value={shipping.flat}
+                    onChange={handleShippingChange}
+                    className="checkout-input"
+                  />
+                  
+                  <button type="submit" className="checkout-next-btn">
+                    Next
+                  </button>
+                </form>
+              </div>
+            </div>
 
-              {/* Step 3: Contacts */}
-              {step === 3 && (
-                <div className="step-section">
-                   <div className="step-header-row">
-                      <h2 className="step-title">Contacts</h2>
-                      <button type="button" className="step-back-btn" onClick={() => setStep(2)}>Back</button>
-                   </div>
-                  <form onSubmit={handleCardCheckout} className="checkout-form-grid">
-                    <input
-                      name="telegram"
-                      placeholder="Telegram"
-                      value={contacts.telegram}
-                      onChange={handleContactsChange}
-                      className="checkout-input"
-                    />
-                    <span className="input-hint">Optional</span>
+            {/* Step 3: Contacts */}
+            <div className={`checkout-step ${step === 3 ? 'active' : ''}`}>
+              <div className="checkout-step-header" onClick={() => step > 2 && setStep(3)}>
+                <div className="step-number">3</div>
+                <h2 className="step-title">Contacts</h2>
+              </div>
+              
+              <div className="checkout-step-content">
+                <form onSubmit={handleCardCheckout} className="checkout-form-grid">
+                  <input
+                    name="telegram"
+                    placeholder="Telegram (Optional)"
+                    value={contacts.telegram}
+                    onChange={handleContactsChange}
+                    className="checkout-input"
+                  />
 
-                    <input
-                      name="whatsapp"
-                      placeholder="WhatsApp"
-                      value={contacts.whatsapp}
-                      onChange={handleContactsChange}
-                      className="checkout-input"
-                    />
-                    <span className="input-hint">Optional</span>
+                  <input
+                    name="whatsapp"
+                    placeholder="WhatsApp (Optional)"
+                    value={contacts.whatsapp}
+                    onChange={handleContactsChange}
+                    className="checkout-input"
+                  />
 
-                    <textarea
-                      name="comment"
-                      placeholder="Comment"
-                      value={contacts.comment}
-                      onChange={handleContactsChange}
-                      className="checkout-input checkout-textarea"
-                      style={{ textAlign: 'center' }}
-                    />
-                    <span className="input-hint">Optional</span>
+                  <textarea
+                    name="comment"
+                    placeholder="Comment (Optional)"
+                    value={contacts.comment}
+                    onChange={handleContactsChange}
+                    className="checkout-input checkout-textarea"
+                  />
 
-                    <div className="terms-checkbox">
-                      <label className="checkbox-container">
-                        <input
-                          type="checkbox"
-                          checked={contacts.termsAccepted}
-                          onChange={handleTermsChange}
-                          id="terms"
+                  <div className="terms-checkbox">
+                    <label className="checkbox-container">
+                      <input
+                        type="checkbox"
+                        checked={contacts.termsAccepted}
+                        onChange={handleTermsChange}
+                        id="terms"
+                      />
+                      <span className="checkmark"></span>
+                      <span style={{ fontSize: '14px', color: '#222' }}>
+                        By placing an order you agree to the <Link to="/terms" className="terms-link" onClick={(e) => e.stopPropagation()}>Terms and Conditions</Link>
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="payment-method-section">
+                    <h3 className="step-subtitle">Payment Method</h3>
+                    <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <input 
+                          type="radio" 
+                          name="paymentMethod" 
+                          value="card" 
+                          checked={paymentMethod === 'card'} 
+                          onChange={() => setPaymentMethod('card')} 
+                          style={{ accentColor: '#F36F25' }}
                         />
-                        <span className="checkmark"></span>
-                        <span className="checkbox-label" style={{ fontSize: '14px', color: '#666', userSelect: 'none' }}>
-                          By placing an order you agree to the <Link to="/terms" className="terms-link" onClick={(e) => e.stopPropagation()}>Terms and Conditions</Link>
-                        </span>
+                        <span style={{ fontSize: '16px', fontWeight: 500 }}>Credit Card (Stripe)</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <input 
+                          type="radio" 
+                          name="paymentMethod" 
+                          value="paypal" 
+                          checked={paymentMethod === 'paypal'} 
+                          onChange={() => setPaymentMethod('paypal')} 
+                          style={{ accentColor: '#F36F25' }}
+                        />
+                        <span style={{ fontSize: '16px', fontWeight: 500 }}>PayPal</span>
                       </label>
                     </div>
-
-                    <div className="payment-method-section" style={{ marginTop: '20px', marginBottom: '20px' }}>
-                      <h3 className="step-subtitle" style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 600 }}>Payment Method</h3>
-                      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                          <input 
-                            type="radio" 
-                            name="paymentMethod" 
-                            value="card" 
-                            checked={paymentMethod === 'card'} 
-                            onChange={() => setPaymentMethod('card')} 
-                          />
-                          <span>Credit Card (Stripe)</span>
-                        </label>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                          <input 
-                            type="radio" 
-                            name="paymentMethod" 
-                            value="paypal" 
-                            checked={paymentMethod === 'paypal'} 
-                            onChange={() => setPaymentMethod('paypal')} 
-                          />
-                          <span>PayPal</span>
-                        </label>
-                      </div>
-                    </div>
-
+                  
                     {paymentMethod === 'card' ? (
                       <button type="submit" className="checkout-next-btn" disabled={loading}>
                         {loading ? "Completing..." : "Complete checkout"}
@@ -509,7 +516,7 @@ export default function Checkout() {
                       <div style={{ marginTop: '16px' }}>
                         <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
                           <PayPalButtons 
-                            style={{ layout: "vertical" }}
+                            style={{ layout: "vertical", color: "gold", shape: "rect", label: "paypal" }}
                             createOrder={async (data, actions) => {
                               try {
                                 const order = await createOrder();
@@ -538,9 +545,9 @@ export default function Checkout() {
                         </PayPalScriptProvider>
                       </div>
                     )}
-                  </form>
-                </div>
-              )}
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

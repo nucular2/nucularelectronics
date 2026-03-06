@@ -1,0 +1,238 @@
+/* Checkout Page Styles */
+.checkout-page {
+  background-color: #fff;
+  min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+.checkout-container {
+  max-width: 1200px; /* Wider container */
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkout-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 54px;
+  margin-bottom: 40px;
+  color: #222;
+  text-align: center;
+}
+
+.checkout-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.checkout-step {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: none;
+}
+
+.checkout-step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.checkout-step.active .checkout-step-header {
+  opacity: 1;
+  cursor: default;
+}
+
+.checkout-step:not(.active) .checkout-step-header:hover {
+  opacity: 0.8;
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.checkout-step.active .step-number {
+  border-color: #F36F25;
+  color: #F36F25;
+}
+
+.checkout-step.completed .step-number {
+  background-color: #F36F25;
+  border-color: #F36F25;
+  color: #fff;
+}
+
+.step-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  color: #222;
+  margin: 0;
+}
+
+.checkout-step.active .step-title {
+  color: #222;
+}
+
+.checkout-step:not(.active) .step-title {
+  color: #999;
+}
+
+.checkout-step-content {
+  padding-left: 44px; /* Align with title text (28px icon + 16px gap) */
+  display: none;
+  animation: slideDown 0.3s ease-out;
+}
+
+.checkout-step.active .checkout-step-content {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-back-btn {
+  display: none; /* Hide back buttons in accordion mode as users can click headers */
+}
+
+.checkout-next-btn {
+  width: 100%;
+  height: 56px;
+  background: #F36F25;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: background-color 0.2s;
+}
+
+.checkout-next-btn:hover {
+  background-color: #d65a15;
+}
+
+.checkout-textarea {
+  height: 120px;
+  padding-top: 16px;
+  resize: none;
+}
+
+.input-hint {
+  font-family: var(--font-family);
+  font-size: 12px;
+  color: #999;
+  margin-top: -8px;
+  margin-left: 20px;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 28px; /* Space for custom checkbox */
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #F36F25;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.terms-link {
+  color: #F36F25;
+  text-decoration: none;
+}
+
+.payment-method-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+.step-subtitle {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 16px;
+}

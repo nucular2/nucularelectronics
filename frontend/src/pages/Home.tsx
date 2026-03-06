@@ -438,6 +438,142 @@ export default function Home() {
             </div>
           </div>
 
+          {/* 6. News Section */}
+          <div style={{ padding: '0 0 40px', background: '#ffffff' }}>
+            <div style={{ padding: '0 20px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>News</h2>
+              <a href="/news" style={{ color: '#F36F25', textDecoration: 'none', fontSize: '14px', fontWeight: 500, fontFamily: 'var(--font-family)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                All news
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+            <div style={{ 
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '16px',
+              padding: '0 20px 20px',
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none'
+            }}>
+              {/* News Card 1 */}
+              <div style={{
+                flex: '0 0 280px',
+                width: '280px',
+                scrollSnapAlign: 'start',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <div style={{ width: '100%', height: '180px', borderRadius: '20px', overflow: 'hidden' }}>
+                  <img src="/new1.png" alt="Protection" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 20, 2022</div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Protection of controllers</h3>
+                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                    New circuit engineering and improved protection of controllers from our users.
+                  </p>
+                </div>
+              </div>
+
+              {/* News Card 2 */}
+              <div style={{
+                flex: '0 0 280px',
+                width: '280px',
+                scrollSnapAlign: 'start',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <div style={{ width: '100%', height: '180px', borderRadius: '20px', overflow: 'hidden' }}>
+                  <img src="/new2.png" alt="Price increase" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 5, 2022</div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Price increase</h3>
+                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                    Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 7. Reviews Section */}
+          <div style={{ padding: '0 0 40px', background: '#ffffff' }}>
+            <div style={{ padding: '0 20px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>Reviews</h2>
+              <a href="#" style={{ color: '#F36F25', textDecoration: 'none', fontSize: '14px', fontWeight: 500, fontFamily: 'var(--font-family)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                All reviews
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+            <div style={{ 
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '16px',
+              padding: '0 20px 20px',
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none'
+            }}>
+              {/* Review Card 1 */}
+              <div style={{
+                flex: '0 0 280px',
+                width: '280px',
+                padding: '24px',
+                borderRadius: '20px',
+                background: '#f9f9f9', // Gray background for mobile
+                scrollSnapAlign: 'start',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '260px'
+              }}>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
+                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+                  </p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '20px' }}>
+                  <img src="/flag.png" alt="USA" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
+                  <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>USA, Alex Smith</span>
+                </div>
+              </div>
+
+              {/* Review Card 2 */}
+              <div style={{
+                flex: '0 0 280px',
+                width: '280px',
+                padding: '24px',
+                borderRadius: '20px',
+                background: '#f9f9f9', // Gray background for mobile
+                scrollSnapAlign: 'start',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '260px'
+              }}>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>uLight controller</h3>
+                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                    Lighting control signals, brake light and LED strip. Easy connection and necessary ...
+                  </p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '20px' }}>
+                  <img src="/flag2.png" alt="Germany" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
+                  <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>Germany, Max Stoun</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       )}
     </div>

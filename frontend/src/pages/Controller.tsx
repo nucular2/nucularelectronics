@@ -25,7 +25,7 @@ export default function Controller() {
         <section className="hero controller-hero">
           <div className="hero-image-container">
             <picture>
-              <source media="(min-width: 1px)" srcSet="/комп1.png" />
+              <source media="(min-width: 901px)" srcSet="/комп1.png" />
               <img
                 src="/firstscreen1.png"
                 alt="Nucular controller P24F"
@@ -143,6 +143,14 @@ export default function Controller() {
         <section className="onboard-section">
           <img src="/content-box34.png" alt="Controller details" className="onboard-image" />
         </section>
+
+        <section className="onboard-section">
+          <div className="onboard-panel">
+            <div className="onboard-panel-title">Nucular controller P24F</div>
+            <div className="onboard-panel-price">$610.00</div>
+            <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
+          </div>
+        </section>
       </div>
 
       {/* Desktop Content */}
@@ -257,13 +265,6 @@ export default function Controller() {
         </section>
       </div>
 
-      <section className="onboard-section">
-        <div className="onboard-panel">
-          <div className="onboard-panel-title">Nucular controller P24F</div>
-          <div className="onboard-panel-price">$610.00</div>
-          <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
-        </div>
-      </section>
       <section className="reviews-section">
         <div className="section-header">
           <h2 className="section-title">Reviews</h2>

@@ -71,29 +71,28 @@ export default function Home() {
       {!isMobile ? (
         // DESKTOP VIEW
         <div style={{ width: '100%', background: '#fff' }}>
+          <div className="scroll-up-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           
           {/* Hero Section */}
-          <div style={{ 
-            position: 'relative', 
-            width: '100%', 
-            height: '100vh', 
-            minHeight: '800px',
-            overflow: 'hidden'
-          }}>
-            <img 
-              src="/first.png" 
-              alt="Hero"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }} 
-            />
-            {/* Overlay buttons for Hero if needed can be added here */}
-          </div>
+          <section className="hero">
+            <div className="hero-image-container">
+              <img src="/first.png" alt="Hero" className="hero-main-image" />
+            </div>
+            <div className="hero-content">
+              <a href="#components" className="see-components-link">
+                See the components 
+                <svg className="arrow-down-long" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 1V11M6 11L1 6M6 11L11 6" stroke="#C45F2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </section>
 
-          <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '80px 40px' }}>
+          <div id="components" style={{ maxWidth: '1440px', margin: '0 auto', padding: '80px 40px' }}>
             
             {/* Products Section */}
             <div style={{ marginBottom: '80px' }}>
@@ -102,6 +101,23 @@ export default function Home() {
                 <p style={{ fontSize: '18px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>
                   For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
                 </p>
+              </div>
+
+              {/* Preorder Badge / Notification */}
+              <div className="preorder-badge" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '32px', color: '#222', fontSize: '16px', fontWeight: 500 }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clipPath="url(#clip0_1389_5012)">
+                    <path d="M8 6.25C8.41421 6.25 8.75 6.58579 8.75 7V12C8.75 12.4142 8.41421 12.75 8 12.75C7.58579 12.75 7.25 12.4142 7.25 12V7C7.25 6.58579 7.58579 6.25 8 6.25Z" fill="#222222" />
+                    <path d="M8 5C8.55229 5 9 4.55228 9 4C9 3.44772 8.55229 3 8 3C7.44772 3 7 3.44772 7 4C7 4.55228 7.44772 5 8 5Z" fill="#222222" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5Z" fill="#222222" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1389_5012">
+                      <rect width="16" height="16" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <span>Waiting time after pre-order ~ 7 months</span>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>

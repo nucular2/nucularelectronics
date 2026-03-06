@@ -2,7 +2,871 @@
 @import "./checkout-styles.css";
 @import "./footer-new.css";
 
-/* Reviews Section Styles */
+/* Общие переменные */
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --accent: #ffcc00;
+  --radius: 8px;
+  --gap: 1rem;
+  --max-width: 1440px;
+  --font-family: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+html,
+body,
+#root {
+  background-color: #ffffff !important;
+}
+
+/* Первый экран */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #101010;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1650px;
+  height: 590px;
+  background: url(/moto1.png) no-repeat left bottom / contain;
+  z-index: 0;
+}
+
+/* Header Styles */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--max-width);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  transition: background-color 0.3s, padding 0.3s, box-shadow 0.3s;
+}
+
+.main-header.dropdown-open {
+  background-color: #fff;
+  box-shadow: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.scroll-up-button {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 90;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.scroll-up-button:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.logo-container {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.main-nav {
+  display: flex;
+  gap: 40px;
+  margin-left: auto;
+  margin-right: 60px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  /* margin-left: auto; Removed to fix layout alignment */
+}
+
+.cart-icon-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #f36f25;
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hero Content */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 100px; /* Aligned with header padding */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-text-block {
+  margin-top: 266px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
+
+.hero-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 110%;
+  margin-bottom: 24px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-family);
+  font-weight: 300; /* Thinner weight */
+  font-size: 20px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center; /* Center buttons */
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  padding: 0 32px;
+  border-radius: var(--radius);
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: #f36f25; /* Orange color from screenshot */
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #d85e1d;
+  transform: scale(1.05); /* Scale effect */
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  padding: 0;
+  height: auto;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  opacity: 0.8;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+.scroll-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: var(--font-family);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: #fff;
+  position: relative;
+}
+
+.scroll-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transform: rotate(45deg);
+}
+
+
+.see-components-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-size: 16px;
+  margin-top: 40px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.see-components-link:hover {
+  opacity: 0.8;
+}
+
+/* Controllers Section */
+.controllers-section {
+  background-color: #fff;
+  color: #222;
+  padding: 140px 100px;
+  min-height: 100vh;
+}
+
+.controllers-title, .section-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  color: #222;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.controllers-description, .section-description {
+  font-family: var(--font-family);
+  font-weight: 400; /* Regular weight */
+  font-size: 18px;
+  line-height: 150%;
+  color: #222222; /* Specific color */
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 80px;
+}
+
+.controllers-grid {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controller-card {
+  background: #f6f6f6;
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+  width: 366px;
+  height: 560px;
+}
+
+.controller-card.large {
+  width: 780px;
+  height: 560px;
+}
+
+.controller-card.small {
+  width: 380px;
+  height: 560px;
+}
+
+.card-content {
+  margin-top: auto;
+}
+
+.card-title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.card-specs {
+  font-family: var(--font-family);
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.card-image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.card-image {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  transition: transform 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Hover effect for images */
+.controller-card:hover .card-image {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-buy, .buy-button {
+  background: #f36f25; /* Changed to orange */
+  color: #fff;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-buy:hover, .buy-button:hover {
+  background: #d85e1d;
+  transform: scale(1.05); /* Scale effect on hover */
+}
+
+.card-link, .link-learn-more {
+  color: #222;
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.card-link:hover, .link-learn-more:hover {
+  color: #f36f25;
+  border-color: #f36f25;
+}
+
+.card-link svg, .link-learn-more svg {
+  transition: transform 0.2s;
+}
+
+.card-link:hover svg, .link-learn-more:hover svg {
+  transform: translateX(4px);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+/* Accessories Section */
+.accessories-section {
+  background-color: #fff;
+  padding: 0 100px 140px; /* No top padding as it follows controllers */
+}
+
+.accessories-grid {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.accessory-card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 570px; /* (1180 - 40) / 2 approx, fitting 2 in a row */
+  height: 444px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Subtle shadow */
+  transition: transform 0.2s;
+}
+
+.accessory-card:hover {
+  transform: translateY(-5px);
+}
+
+.accessory-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 120%;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+.accessory-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.accessory-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.accessory-image-container {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.accessory-image {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.accessory-card:hover .accessory-image {
+  transform: scale(1.05);
+}
+
+/* Page Content Wrapper (White Background) */
+.page-content-white {
+  background-color: #fff;
+  padding-bottom: 32px;
+  width: 100%;
+}
+
+/* BMS Section */
+.bms-section {
+  margin: 0 auto; /* Removed top margin as it's handled by padding/flow */
+  padding-top: 140px;
+  max-width: 1180px; /* Match grid width */
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+}
+
+.bms-main-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+.bms-main-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #666;
+  margin-bottom: 80px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bms-grid {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.bms-card {
+  width: 570px; /* Half of 1180 minus gap */
+  height: 500px;
+  background-color: #101010; /* Black cards */
+  border-radius: 20px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* White text */
+  transition: transform 0.3s ease;
+}
+
+.bms-card:hover {
+  transform: translateY(-5px);
+}
+
+.bms-card-image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.bms-card-image {
+  width: 120px;
+  height: 133px;
+  opacity: 1;
+}
+
+.bms-card-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 120%;
+  margin-bottom: 8px;
+  color: #fff; /* White title */
+}
+
+.bms-card-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.7); /* Light grey description */
+  margin-bottom: 32px;
+}
+
+.bms-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bms-status {
+  color: rgba(255, 255, 255, 0.5); /* Dimmed white status */
+  font-size: 14px;
+  margin-top: 0;
+}
+
+
+.btn-preorder, .preorder-button {
+  background: #f36f25;
+  color: #fff;
+  height: 48px;
+  padding: 0 32px;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-preorder:hover, .preorder-button:hover {
+  background: #d85e1d;
+  transform: scale(1.05);
+}
+
+.status-text {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: #999;
+}
+
+
+
+/* uLight Controller Section */
+.ulight-section {
+  margin: 140px auto 0;
+  width: 1180px;
+  height: 444px;
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  padding: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #222;
+}
+
+.ulight-content {
+  max-width: 500px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ulight-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.ulight-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.ulight-image-container {
+  width: 400px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ulight-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  background-color: transparent;
+  mix-blend-mode: darken;
+}
+
+.ulight-section:hover .ulight-image {
+  transform: scale(1.05);
+}
+
+/* Dropdown Menu Styles */
+.dropdown-overlay {
+  position: absolute;
+  top: 100%; /* Position right below the header */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 40px 0 60px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 90; /* Below header content but above page content */
+}
+
+.dropdown-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 100px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0; /* No gap as we use borders */
+}
+
+.dropdown-column {
+  padding: 0 32px;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left align content */
+}
+
+.dropdown-column:first-child {
+  padding-left: 0;
+}
+
+.dropdown-column:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.dropdown-title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  color: #999;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dropdown-link {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  color: #222;
+  text-decoration: none;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+  display: block;
+}
+
+.dropdown-link:hover {
+  color: #f36f25;
+}
+
+/* Header state when dropdown is open */
+.main-header.dropdown-open {
+  background-color: #fff;
+  border-bottom: none;
+}
+
+.main-header.dropdown-open .nav-link,
+.main-header.dropdown-open .header-actions svg {
+  color: #222;
+}
+
+.main-header.dropdown-open .nav-link svg path,
+.main-header.dropdown-open .header-actions svg path {
+  fill: #222;
+}
+
+.main-header:hover:not(.dropdown-open) {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+/* Arrow rotation */
+.nav-link svg {
+  transition: transform 0.3s ease;
+}
+
+.nav-arrow.open {
+  transform: rotate(180deg);
+}
+
+
+/* Footer */
+.main-footer {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 48px 100px 32px;
+  margin: 0 auto;
 .reviews-section {
   max-width: 1180px;
   margin: 0 auto 100px;

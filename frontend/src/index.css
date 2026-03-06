@@ -1,5 +1,6 @@
 /* Общие переменные */
 @import "./checkout-styles.css";
+@import "./footer-new.css";
 
 :root {
   --bg: #ffffff;

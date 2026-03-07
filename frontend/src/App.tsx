@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
@@ -24,14 +24,14 @@ import { AuthProvider } from './context/AuthContext';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
-import Reviews from './pages/Reviews';
-import ReviewDetail from './pages/ReviewDetail';
 import ULightController from './pages/ULightController';
 import OnBoardComputer from './pages/OnBoardComputer';
 import Controller from './pages/Controller';
 import SurRonLightBee from './pages/SurRonLightBee';
 
 export default function App() {
+  const location = useLocation();
+
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
     const apply = (matches: boolean) => {
@@ -77,15 +77,13 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/reviews/ulight" element={<ReviewDetail />} />
           <Route path="/ulight-controller" element={<ULightController />} />
           <Route path="/sur-ron-light-bee" element={<SurRonLightBee />} />
           <Route path="/on-board-computer" element={<OnBoardComputer />} />
           <Route path="/controller" element={<Controller />} />
           <Route path="*" element={<Home />} />
         </Routes>
-        <Footer />
+        {location.pathname !== '/' && <Footer />}
       </CartProvider>
     </AuthProvider>
   );

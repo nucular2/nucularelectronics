@@ -1,7 +1,4 @@
 /* Общие переменные */
-@import "./checkout-styles.css";
-@import "./footer-new.css";
-
 :root {
   --bg: #ffffff;
   --text: #222222;
@@ -135,7 +132,6 @@ body,
   max-width: 100%; /* Ensure full width on mobile */
   height: auto;
   display: block;
-  vertical-align: bottom; /* Remove potential whitespace under images */
 }
 
 @media (min-width: 1px) {
@@ -2052,6 +2048,24 @@ body.is-mobile .status-text {
   line-height: 44px;
 }
 
+.quantity-arrow {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none; /* Removed square border */
+  cursor: pointer;
+  padding: 0;
+  color: #b0b0b0;
+}
+
+.quantity-arrow svg {
+  width: 10px;
+  height: 6px;
+}
+
 body.is-mobile .controller-card {
   flex: 0 0 280px;
   width: 280px;
@@ -2624,82 +2638,127 @@ body.is-mobile .review-card {
   text-decoration: underline;
 }
 
-/* News Section Styles */
-.news-section {
-  max-width: 1180px;
-  margin: 0 auto 100px;
-  padding: 0 20px;
+/* News Page Styles */
+.news-layout {
+  max-width: 1200px;
+  margin: 120px auto 160px;
+  padding: 0 40px;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.section-title {
-  font-family: var(--font-family);
+.news-title {
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 40px;
-  color: #222;
-}
-
-.section-link {
-  font-family: var(--font-family);
-  font-size: 16px;
-  font-weight: 500;
-  color: #F36F25;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.section-link:hover {
-  opacity: 0.8;
+  font-size: 54px;
+  line-height: 120%;
+  color: #222222;
+  margin-bottom: 32px;
+  margin-left: -20px;
 }
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(2, 580px);
+  gap: 12px;
+  justify-content: center;
 }
 
 .news-card {
-  display: flex;
-  flex-direction: column;
+  width: 580px;
+}
+
+.news-image-wrapper {
+  display: block;
+  width: 580px;
+  height: 382px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .news-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.news-image-wrapper:hover .news-image {
+  transform: scale(1.06);
+}
+
+.news-grid-small {
+  display: grid;
+  grid-template-columns: repeat(3, 380px);
+  gap: 24px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.news-card--small {
+  width: 380px;
+}
+
+.news-image-wrapper--small {
+  display: block;
+  width: 380px;
+  height: 250px;
   border-radius: 20px;
+  overflow: hidden;
   margin-bottom: 16px;
 }
 
-.news-date {
-  font-family: var(--font-family);
+.news-card--small .news-card-text {
+  max-width: 380px;
+  min-height: 72px;
+}
+
+.news-show-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 72px;
+  margin-bottom: 72px;
+}
+
+.news-show-more-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #f36f25;
+  text-decoration: none;
+}
+
+.news-show-more-link:hover {
+  color: #d85e1d;
+}
+
+.news-meta {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   font-size: 12px;
-  color: #999;
-  margin-bottom: 8px;
+  line-height: 150%;
+  color: #999999;
+  margin-bottom: 4px;
 }
 
-.news-title {
-  font-family: var(--font-family);
+.news-card-title {
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 18px;
-  color: #222;
+  font-size: 20px;
+  line-height: 140%;
+  color: #222222;
   margin-bottom: 8px;
-  line-height: 1.3;
 }
 
-.news-excerpt {
-  font-family: var(--font-family);
+.news-card-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: #666;
+  color: #555555;
+  max-width: 580px;
+  min-height: 83px;
 }
 
 .news-layout {
@@ -3374,6 +3433,10 @@ body.is-mobile .review-card {
     flex-basis: 100%;
     margin-top: 12px;
   }
+}
+
+.main-footer {
+  display: block;
 }
 
 /* Reviews Section Styles */

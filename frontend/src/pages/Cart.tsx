@@ -83,18 +83,23 @@ export default function Cart() {
                   </div>
                 </div>
               ))}
-              <div className="preorder-badge">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clipPath="url(#clip0_1389_5012)">
-                    <path d="M8 6.25C8.41421 6.25 8.75 6.58579 8.75 7V12C8.75 12.4142 8.41421 12.75 8 12.75C7.58579 12.75 7.25 12.4142 7.25 12V7C7.25 6.58579 7.58579 6.25 8 6.25Z" fill="#222222" />
-                    <path d="M8 5C8.55229 5 9 4.55228 9 4C9 3.44772 8.55229 3 8 3C7.44772 3 7 3.44772 7 4C7 4.55228 7.44772 5 8 5Z" fill="#222222" />
-                    <path fillRule="evenodd" clipRule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5Z" fill="#222222" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1389_5012">
-                      <rect width="16" height="16" fill="white" />
-                    </clipPath>
-                  </defs>
+              <div className="preorder-badge" style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '12px', 
+                color: '#222222', 
+                fontSize: '16px', 
+                fontWeight: 400, 
+                background: '#FFEBDF',
+                padding: '16px 24px',
+                borderRadius: '12px',
+                width: '100%',
+                marginTop: '24px'
+              }}>
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 6.25C8.41421 6.25 8.75 6.58579 8.75 7V12C8.75 12.4142 8.41421 12.75 8 12.75C7.58579 12.75 7.25 12.4142 7.25 12V7C7.25 6.58579 7.58579 6.25 8 6.25Z" fill="#222222" />
+                  <path d="M8 5C8.55229 5 9 4.55228 9 4C9 3.44772 8.55229 3 8 3C7.44772 3 7 3.44772 7 4C7 4.55228 7.44772 5 8 5Z" fill="#222222" />
+                  <path fillRule="evenodd" clipRule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5Z" fill="#222222" />
                 </svg>
                 <span>Waiting time after pre-order ~ 7 months</span>
               </div>

@@ -146,12 +146,22 @@ export default function OnBoardComputer() {
         </div>
         <div className="reviews-grid">
           <article className="review-card">
+            <h3 className="review-title">On-board computer</h3>
+            <p className="review-text">
+              The on-board computer is equipped with the large sunlight resistant screen to display main parameters...
+            </p>
+            <div className="review-author">
+              <img src="/flag.png" alt="France" className="review-flag" />
+              <span className="author-name">France, Robert Jonson</span>
+            </div>
+          </article>
+          <article className="review-card">
             <h3 className="review-title">Nucular controller P24F</h3>
             <p className="review-text">
               A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
             </p>
             <div className="review-author">
-              <img src="/flag1.png" alt="USA" className="review-flag" />
+              <img src="/flag.png" alt="USA" className="review-flag" />
               <span className="author-name">USA, Alex Smith</span>
             </div>
           </article>
@@ -163,6 +173,16 @@ export default function OnBoardComputer() {
             <div className="review-author">
               <img src="/flag2.png" alt="Germany" className="review-flag" />
               <span className="author-name">Germany, Anna Muller</span>
+            </div>
+          </article>
+          <article className="review-card">
+            <h3 className="review-title">Nucular controller P24F</h3>
+            <p className="review-text">
+              A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+            </p>
+            <div className="review-author">
+              <img src="/flag.png" alt="Norway" className="review-flag" />
+              <span className="author-name">Norway, Anna Orlova</span>
             </div>
           </article>
         </div>

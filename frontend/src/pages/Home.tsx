@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -90,196 +91,11 @@ export default function Home() {
                 objectPosition: 'center'
               }} 
             />
-            {/* Overlay buttons for Hero if needed can be added here */}
           </div>
 
-          <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '80px 40px' }}>
-            
-            {/* Products Section */}
-            <div style={{ marginBottom: '80px' }}>
-              <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                <h2 style={{ fontSize: '40px', fontWeight: 700, margin: '0 0 16px', color: '#111', fontFamily: 'var(--font-family)' }}>Products</h2>
-                <p style={{ fontSize: '18px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>
-                  For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
-                </p>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
-                {/* Product 1 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '32px', height: '480px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', height: '240px' }}>
-                    <img src="/miniature.png" alt="P24F" style={{ height: '100%', objectFit: 'contain' }} />
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
-                    <p style={{ fontSize: '16px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>27 kW</p>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <a href="/cart" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#F36F25', color: '#fff', borderRadius: '12px', padding: '0 40px', height: '54px', textDecoration: 'none', fontWeight: 600, fontSize: '16px', fontFamily: 'var(--font-family)' }}>Buy</a>
-                    <a href="#" style={{ color: '#F36F25', textDecoration: 'none', fontSize: '16px', fontWeight: 500, fontFamily: 'var(--font-family)' }}>Learn more</a>
-                  </div>
-                </div>
-
-                {/* Product 2 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '32px', height: '480px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', height: '240px', alignItems: 'center', background: '#fff', borderRadius: '16px' }}>
-                    <span style={{ fontSize: '64px', color: '#e0e0e0', fontWeight: 700, fontFamily: 'var(--font-family)' }}>N</span>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller 12F HE</h3>
-                    <p style={{ fontSize: '16px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>12 kW</p>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button disabled style={{ background: '#F36F25', color: '#fff', border: 'none', borderRadius: '12px', padding: '0 32px', height: '54px', fontWeight: 600, fontSize: '16px', opacity: 0.9, fontFamily: 'var(--font-family)' }}>Preorder</button>
-                    <span style={{ color: '#999', fontSize: '16px', fontFamily: 'var(--font-family)' }}>In development</span>
-                  </div>
-                </div>
-
-                {/* Product 3 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '32px', height: '480px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', height: '240px', alignItems: 'center', background: '#fff', borderRadius: '16px' }}>
-                    <span style={{ fontSize: '64px', color: '#e0e0e0', fontWeight: 700, fontFamily: 'var(--font-family)' }}>N</span>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller 6F HE</h3>
-                    <p style={{ fontSize: '16px', color: '#666', margin: 0, fontFamily: 'var(--font-family)' }}>4 kW</p>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button disabled style={{ background: '#F36F25', color: '#fff', border: 'none', borderRadius: '12px', padding: '0 32px', height: '54px', fontWeight: 600, fontSize: '16px', opacity: 0.9, fontFamily: 'var(--font-family)' }}>Preorder</button>
-                    <span style={{ color: '#999', fontSize: '16px', fontFamily: 'var(--font-family)' }}>In development</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* News Section */}
-            <div style={{ marginBottom: '80px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                <h2 style={{ fontSize: '40px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>News</h2>
-                <a href="/news" style={{ color: '#F36F25', textDecoration: 'none', fontSize: '16px', fontWeight: 500, fontFamily: 'var(--font-family)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  All news
-                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 13L7 7L1 1" stroke="#F36F25" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-                {/* News 1 */}
-                <div>
-                  <div style={{ width: '100%', aspectRatio: '280/185', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', background: '#f0f0f0' }}>
-                    <img src="/new1.png" alt="Protection" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 20, 2022</div>
-                  <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Protection of controllers</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    New circuit engineering and improved protection of controllers from our users.
-                  </p>
-                </div>
-                {/* News 2 */}
-                <div>
-                  <div style={{ width: '100%', aspectRatio: '280/185', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', background: '#f0f0f0' }}>
-                    <img src="/new2.png" alt="Price" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 5, 2022</div>
-                  <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Price increase</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
-                  </p>
-                </div>
-                {/* News 3 */}
-                <div>
-                  <div style={{ width: '100%', aspectRatio: '280/185', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', background: '#f0f0f0' }}>
-                    <img src="/new1.png" alt="Protection" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>May 15, 2022</div>
-                  <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Protection of controllers</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    New circuit engineering and improved protection of controllers from our users.
-                  </p>
-                </div>
-                {/* News 4 */}
-                <div>
-                  <div style={{ width: '100%', aspectRatio: '280/185', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', background: '#f0f0f0' }}>
-                    <img src="/new3.png" alt="Update" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>May 28, 2022</div>
-                  <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Big/Bug update!</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    The big update of the Controller (v0.70).
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Reviews Section */}
-            <div style={{ marginBottom: '80px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                <h2 style={{ fontSize: '40px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>Reviews</h2>
-                <a href="/reviews" style={{ color: '#F36F25', textDecoration: 'none', fontSize: '16px', fontWeight: 500, fontFamily: 'var(--font-family)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  All reviews
-                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 13L7 7L1 1" stroke="#F36F25" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-                {/* Review 1 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '24px', minHeight: '240px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured...
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src="/flag.png" alt="USA" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>USA, Alex Smith</span>
-                  </div>
-                </div>
-                {/* Review 2 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '24px', minHeight: '240px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <a href="/reviews/ulight" style={{ textDecoration: 'none' }}>
-                      <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>uLight controller</h3>
-                    </a>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                      Lighting control signals, brake light and LED strip. Easy connection and necessary...
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src="/flag2.png" alt="Germany" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>Germany, Max Stoun</span>
-                  </div>
-                </div>
-                 {/* Review 3 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '24px', minHeight: '240px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured...
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src="/flag.png" alt="USA" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>Norway, Anna Orlova</span>
-                  </div>
-                </div>
-                 {/* Review 4 */}
-                <div style={{ background: '#f9f9f9', borderRadius: '24px', padding: '24px', minHeight: '240px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>On-board computer</h3>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                      The on-board computer is equipped with the large sunlight resistant screen to display main parameters...
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src="/flag.png" alt="France" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>France, Robert Jonson</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          {/* Main SVG Content */}
+          <div style={{ width: '100%', background: '#fff' }}>
+             <img src="/Main.svg" alt="Main Content" style={{ width: '100%', display: 'block' }} />
           </div>
         </div>
       ) : (
@@ -755,6 +571,7 @@ export default function Home() {
 
         </div>
       )}
+      <Footer />
     </div>
   );
 }

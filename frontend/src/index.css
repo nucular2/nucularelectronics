@@ -152,15 +152,14 @@ body,
   display: none;
 }
 
-/* Desktop styles - Force applied globally */
-/* @media (min-width: 1px) { */
+@media (min-width: 901px) {
   .mobile-only {
     display: none !important;
   }
   .desktop-only {
     display: block !important;
   }
-/* } */
+}
 
 .onboard-image-full {
   max-width: 100%;
@@ -180,7 +179,7 @@ body,
   text-align: center;
 }
 
-@media (max-width: 1px) {
+@media (max-width: 900px) {
   .onboard-panel {
     width: 100%;
     max-width: 335px; /* Or whatever fits best on mobile */
@@ -288,13 +287,13 @@ body,
   cursor: pointer;
 }
 
-@media (max-width: 1px) {
+@media (max-width: 900px) {
   .controller-hero-actions {
     display: none;
   }
 }
 
-@media (min-width: 1px) {
+@media (min-width: 901px) {
   .onboard-panel {
     display: none !important;
   }

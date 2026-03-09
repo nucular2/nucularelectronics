@@ -562,12 +562,26 @@
 .contact-textarea {
   background: #f6f6f6;
   border-radius: 8px;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: #999999;
+  transition: all 0.2s ease;
+}
+
+.contact-input:hover,
+.contact-textarea:hover {
+  border-color: #EAEAEA;
+  box-shadow: 0 0 0 1px #EAEAEA;
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+  border-color: #EAEAEA;
+  box-shadow: 0 0 0 1px #EAEAEA;
+  background: #fff;
 }
 
 .contact-input {

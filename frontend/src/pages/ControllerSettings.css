@@ -279,7 +279,12 @@
   gap: 8px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  transition: all 0.2s ease;
+}
+
+.settings-card:hover {
+  border-color: #EAEAEA;
+  box-shadow: 0 0 0 1px #EAEAEA;
 }
 
 .settings-card-active {
@@ -329,13 +334,13 @@
 }
 
 .controller-list-item:hover {
-  background-color: #F6F6F6;
-  color: #222;
+  background-color: transparent;
+  color: #f36f25;
 }
 
 .controller-list-item-active {
-  background-color: #F6F6F6;
-  color: #222;
+  background-color: transparent;
+  color: #f36f25;
   font-weight: 500;
 }
 

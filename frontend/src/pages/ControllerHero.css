@@ -1,0 +1,50 @@
+
+/* Controller Hero Text Animation */
+.controller-hero-text {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  max-width: 500px;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-30%); /* Start slightly lower than center */
+  animation: fadeInUpText 1s ease-out forwards;
+}
+
+@keyframes fadeInUpText {
+  0% {
+    opacity: 0;
+    transform: translateY(-30%); /* Start lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%); /* End at vertical center */
+  }
+}
+
+.controller-hero-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.controller-hero-title .text-orange {
+  color: #F36F25;
+}
+
+.controller-hero-description {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #cccccc;
+  max-width: 450px;
+}
+
+@media (max-width: 900px) {
+  .controller-hero-text {
+    display: none;
+  }
+}

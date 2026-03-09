@@ -365,10 +365,10 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
             >
               <div className="product-kit-grid">
                 {kitItems.map((item) => (
-                  <div key={item.title} className="product-kit-card">
+                  <CardBase key={item.title} className="product-kit-card">
                     <div className="product-kit-card-title">{item.title}</div>
                     <div className="product-kit-quantity">{item.quantity}</div>
-                  </div>
+                  </CardBase>
                 ))}
               </div>
               {isOnBoardComputer && (

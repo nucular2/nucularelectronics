@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import './Cart.css';
 
 export default function Cart() {
   const { items, removeFromCart, updateQuantity, totalPrice, totalItems } = useCart();

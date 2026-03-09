@@ -420,32 +420,106 @@
 
 .product-kit-grid {
   margin-top: 32px;
-  display: grid;
-  grid-template-columns: repeat(3, 246px);
+  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
+  width: 786px; /* Вернули исходную ширину */
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: flex-start;
 }
 
 .product-kit-card {
+  flex: 0 0 246px; /* Фиксированная ширина */
+  width: 246px;
+  height: 121px; /* Фиксированная высота */
+  padding: 20px;
   background: #f6f6f6;
   border-radius: 20px;
-  padding: 20px;
-  width: 246px;
-  height: 101px;
+  border: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .product-kit-card-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-family);
   font-weight: 600;
   font-size: 14px;
-  color: #222222;
+  line-height: 140%;
+  text-align: center;
+  color: #222222 !important;
+  width: 100%;
+  display: block;
+  overflow: visible;
+  margin-bottom: 0;
 }
 
 .product-kit-quantity {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-family);
+  font-weight: 400;
   font-size: 12px;
-  color: #999;
+  line-height: 140%;
+  text-align: center;
+  color: #b0b0b0 !important;
+  background: transparent !important;
+  padding: 0;
+  border-radius: 0;
+  display: inline-block;
+  margin-top: 0;
+  z-index: 10;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .product-kit-grid {
+    display: flex !important;
+    flex-direction: column !important; /* Столбец, а не ряд */
+    flex-wrap: nowrap !important;
+    overflow-x: visible !important; /* Убираем горизонтальный скролл */
+    overflow-y: visible !important;
+    gap: 16px;
+    padding: 0 20px 32px;
+    width: 100% !important;
+    margin: 24px 0 0 !important;
+    justify-content: flex-start !important;
+  }
+
+  .product-kit-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-kit-card {
+    flex: none !important; /* Сбрасываем flex-basis */
+    width: 100% !important; /* На всю ширину */
+    height: auto !important; /* Высота по содержимому, но минимум 101px */
+    min-height: 101px !important;
+    background: #f6f6f6;
+    border-radius: 20px;
+    border: none;
+    padding: 24px;
+    margin: 0;
+    align-items: flex-start !important; /* Выравнивание по левому краю внутри */
+    text-align: left !important;
+  }
+
+  .product-kit-card-title {
+    justify-content: flex-start !important; /* Текст слева */
+    text-align: left !important;
+    margin-bottom: 4px;
+  }
+
+  .product-kit-quantity {
+    background: transparent !important; /* Прозрачный фон на мобилке, как на скрине */
+    color: #999 !important;
+    padding: 0 !important;
+    margin-top: 4px;
+  }
 }
 
 .product-compat-section {
@@ -473,7 +547,7 @@
   height: 230px;
   padding: 20px;
   border-radius: 20px;
-  background: #f6f6f6;
+  background: transparent;
   display: flex;
   flex-direction: column;
   gap: 12px;

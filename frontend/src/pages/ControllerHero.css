@@ -1,9 +1,8 @@
-
 /* Controller Hero Text Animation */
 .controller-hero-text {
   position: absolute;
   top: 50%;
-  left: 230px; /* Сдвинул правее (было 210px) */
+  left: 230px; /* As requested: 230px */
   max-width: 500px;
   z-index: 10;
   opacity: 0;
@@ -29,7 +28,7 @@
   line-height: 120%;
   color: #f36f25;
   margin-bottom: 24px;
-  white-space: nowrap; /* Запрещаем перенос строк */
+  white-space: nowrap; /* Prevent wrapping */
 }
 
 .controller-hero-description {
@@ -38,7 +37,7 @@
   font-size: 20px;
   line-height: 160%;
   color: #ffffff;
-  max-width: 550px; /* Немного увеличил ширину для лучшего переноса */
+  max-width: 550px;
 }
 
 @media (max-width: 900px) {

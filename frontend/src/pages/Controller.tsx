@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
+import AnimatedSpecsBlock from "../components/AnimatedSpecsBlock";
 import "./ControllerHero.css";
 
 export default function Controller() {
@@ -20,7 +21,8 @@ export default function Controller() {
 
   return (
     <div className="onboard-page">
-      <Header />
+      {/* Header with dynamic variant based on active tab */}
+      <Header variant={activeTab === 'specifications' ? 'white' : 'transparent'} />
       
       {activeTab === 'overview' && (
         <section className="hero controller-hero">
@@ -170,7 +172,7 @@ export default function Controller() {
           <img src="/content-box35.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
-          <img src="/content-box36.png" alt="Controller details" className="onboard-image" />
+          <AnimatedSpecsBlock />
         </section>
         <section className="onboard-section">
           <img src="/content-box37.png" alt="Controller details" className="onboard-image" />

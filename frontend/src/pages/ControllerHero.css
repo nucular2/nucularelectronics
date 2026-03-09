@@ -3,7 +3,7 @@
 .controller-hero-text {
   position: absolute;
   top: 50%;
-  left: 140px; /* Сдвинул правее (было 100px) */
+  left: 180px; /* Сдвинул правее (было 140px) */
   max-width: 500px;
   z-index: 10;
   opacity: 0;
@@ -29,6 +29,7 @@
   line-height: 120%;
   color: #f36f25;
   margin-bottom: 24px;
+  white-space: nowrap; /* Запрещаем перенос строк */
 }
 
 .controller-hero-description {

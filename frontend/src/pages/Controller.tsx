@@ -26,7 +26,7 @@ export default function Controller() {
         <section className="hero controller-hero">
           <div className="hero-image-container">
             <picture>
-              <source media="(min-width: 901px)" srcSet="/комп1.png" />
+              <source media="(min-width: 901px)" srcSet="/controller-hero-clean.png" />
               <img
                 src="/firstscreen1.png"
                 alt="Nucular controller P24F"
@@ -37,8 +37,7 @@ export default function Controller() {
             {/* Desktop Text Overlay with Animation */}
             <div className="controller-hero-text desktop-only">
               <h1 className="controller-hero-title">
-                Nucular <br />
-                <span className="text-orange">controller P24F</span>
+                Nucular controller P24F
               </h1>
               <p className="controller-hero-description">
                 For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC). A powerful ARM microprocessor provides precise and smooth control of the electric motor.

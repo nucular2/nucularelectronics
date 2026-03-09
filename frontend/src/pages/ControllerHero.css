@@ -3,7 +3,7 @@
 .controller-hero-text {
   position: absolute;
   top: 50%;
-  left: 180px; /* Сдвинул правее (было 140px) */
+  left: 210px; /* Сдвинул правее (было 180px) */
   max-width: 500px;
   z-index: 10;
   opacity: 0;

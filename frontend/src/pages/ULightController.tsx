@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import { useCart } from "../context/CartContext";
+import AnimatedSection from "../components/AnimatedSection";
 import './ULightController.css';
 
 const TurnSignalIcon = () => (
@@ -80,13 +81,13 @@ export default function ULightController() {
         </div>
 
         {activeTab === 'overview' ? (
-          <div className="ulight-desktop-hero-container">
+          <AnimatedSection className="ulight-desktop-hero-container" delay={0.1}>
             <img 
               src="/first screen10.png" 
               alt="uLight controller overview" 
               className="ulight-full-width-image"
             />
-          </div>
+          </AnimatedSection>
         ) : (
           <div className="specifications-container" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', paddingTop: '100px' }}>
             <h1 className="specifications-title" style={{ textAlign: 'center', color: 'white' }}>Specifications</h1>
@@ -99,15 +100,15 @@ export default function ULightController() {
 
       {activeTab === 'overview' && (
         <>
-          <div className="ulight-desktop-hero-container">
+          <AnimatedSection className="ulight-desktop-hero-container" delay={0.2}>
             <img 
               src="/uLight controller.png" 
               alt="uLight controller info" 
               className="ulight-full-width-image"
             />
-          </div>
+          </AnimatedSection>
 
-          <section className="ulight-reviews-container">
+          <AnimatedSection className="ulight-reviews-container" delay={0.3}>
              <div className="ulight-buy-plate">
                 <div className="ulight-buy-info">
                   <h3 className="ulight-buy-title">uLight controller</h3>
@@ -165,7 +166,7 @@ export default function ULightController() {
                   </CardBase>
                 </div>
               </div>
-          </section>
+          </AnimatedSection>
         </>
       )}
       

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
+import AnimatedSection from "../components/AnimatedSection";
 
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
@@ -31,45 +32,45 @@ export default function OnBoardComputer() {
             />
           </div>
         </section>
-        <section className="onboard-section">
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/2promo.png" alt="On-board computer promo" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box4.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box5.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box6.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box7.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box8.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box9.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box10.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box11.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section onboard-section-last">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section onboard-section-last" delay={0.1}>
           <img src="/content-box12.png" alt="On-board computer details" className="onboard-image onboard-image-full" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box13.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box14.png" alt="On-board computer details" className="onboard-image" />
-        </section>
-        <section className="onboard-section">
+        </AnimatedSection>
+        <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box15.png" alt="On-board computer details" className="onboard-image" />
-        </section>
+        </AnimatedSection>
         <section className="onboard-section">
           <div className="onboard-panel">
             <div className="onboard-panel-title">On-board computer</div>
@@ -105,21 +106,21 @@ export default function OnBoardComputer() {
 
         {activeTab === 'overview' && (
           <>
-            <div className="onboard-desktop-container">
+            <AnimatedSection className="onboard-desktop-container" delay={0.2}>
               <img 
                 src="/стрконтр.png" 
                 alt="On-board computer desktop view" 
                 className="onboard-desktop-full-image" 
               />
-            </div>
+            </AnimatedSection>
 
-            <section className="desktop-buy-banner">
+            <AnimatedSection className="desktop-buy-banner" delay={0.3} direction="up">
               <div className="desktop-buy-content">
                 <h2 className="desktop-buy-title">On-board computer</h2>
                 <p className="desktop-buy-price">$110.00</p>
                 <button className="desktop-buy-button" onClick={handleBuy}>Buy</button>
               </div>
-            </section>
+            </AnimatedSection>
           </>
         )}
 

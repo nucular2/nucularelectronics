@@ -1,7 +1,7 @@
 .animated-specs-block {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(100px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
   width: 100%;
   max-width: 1680px;
   margin: 0 auto;

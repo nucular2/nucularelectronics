@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
 import AnimatedSpecsBlock from "../components/AnimatedSpecsBlock";
+import AnimatedSpecsText from "../components/AnimatedSpecsText";
 import "./ControllerHero.css";
 
 export default function Controller() {
@@ -169,7 +170,23 @@ export default function Controller() {
       {/* Desktop Content */}
       <div className="desktop-only">
         <section className="onboard-section">
-          <img src="/content-box35.png" alt="Controller details" className="onboard-image" />
+          <div style={{ position: 'relative', width: '100%', maxWidth: '1680px', margin: '0 auto' }}>
+            {/* Background image - static */}
+            <img 
+              src="/content-box83.svg" 
+              alt="Specs background" 
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+            {/* Animated text overlay */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <AnimatedSpecsText 
+                imageSrc="/content-box84.svg" 
+                alt="Specs numbers"
+                width="980px"
+                height="274px"
+              />
+            </div>
+          </div>
         </section>
         <section className="onboard-section">
           <AnimatedSpecsBlock />
@@ -178,16 +195,41 @@ export default function Controller() {
           <img src="/content-box37.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
-          <img src="/content-box43.png" alt="Controller details" className="onboard-image" />
+          <AnimatedSpecsText 
+            imageSrc="/content-box74.svg" 
+            alt="Controller details" 
+          />
         </section>
         <section className="onboard-section">
-          <img src="/content-box38.png" alt="Controller details" className="onboard-image" />
+          <AnimatedSpecsText 
+            imageSrc="/content-box75.svg" 
+            alt="Controller details" 
+          />
         </section>
         <section className="onboard-section">
-          <img src="/content-box39.png" alt="Controller details" className="onboard-image" />
+          <AnimatedSpecsText 
+            imageSrc="/content-box76.svg" 
+            alt="Controller details" 
+          />
         </section>
         <section className="onboard-section">
-          <img src="/content-box40.png" alt="Controller details" className="onboard-image" />
+          <div style={{ position: 'relative', width: '100%', maxWidth: '1680px', margin: '0 auto' }}>
+            {/* Background image - static */}
+            <img 
+              src="/content-box87.svg" 
+              alt="Field-Oriented Control Graph" 
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+            {/* Animated text overlay - positioned lower */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: '130px' }}>
+              <AnimatedSpecsText 
+                imageSrc="/content-box88.svg" 
+                alt="Field-Oriented Control Description"
+                width="880px"
+                height="149px"
+              />
+            </div>
+          </div>
         </section>
         <section className="onboard-section">
           <img src="/content-box41.png" alt="Controller details" className="onboard-image" />

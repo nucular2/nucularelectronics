@@ -95,7 +95,13 @@ export default function Home() {
 
           {/* Main SVG Content */}
           <div style={{ width: '100%', background: '#fff' }}>
-             <img src="/Main.svg" alt="Main Content" style={{ width: '100%', display: 'block' }} />
+             <object
+               type="image/svg+xml"
+               data="/Main.svg"
+               style={{ width: '100%', display: 'block' }}
+             >
+               <img src="/Main.svg" alt="Main Content" style={{ width: '100%', display: 'block' }} />
+             </object>
           </div>
         </div>
       ) : (

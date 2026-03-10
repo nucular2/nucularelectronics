@@ -122,7 +122,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     closeMobileMenu();
   };
 
-  const isMobileViewport = false; // Forced desktop
+  const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
   // const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
   const isCompact = isMobile || isMobileViewport;
 
@@ -255,9 +255,18 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <a href="/sur-ron-light-bee" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigate('/sur-ron-light-bee'); setIsProductsOpen(false); }}>For Sur-Ron Light Bee</a>
               <a href="#" className="dropdown-link">For Talaria Sting MX3 | MX4</a>
               <a href="#" className="dropdown-link">For Talaria XXX</a>
-              <a href="#" className="dropdown-link">For Electric scooters</a>
-              <a href="#" className="dropdown-link">For E-bikes</a>
-              <a href="#" className="dropdown-link">For Motorcycles</a>
+              <a href="#" className="dropdown-link">For Arctic Leopard EXT 650</a>
+              <a href="#" className="dropdown-link">For dual-motor scooters</a>
+            </div>
+            <div className="dropdown-column">
+              <h4 className="dropdown-title">E-go karts solutions</h4>
+              <a href="#" className="dropdown-link">Ready made go-kart</a>
+              <a href="#" className="dropdown-link">Conversion kits</a>
+            </div>
+            <div className="dropdown-column">
+              <h4 className="dropdown-title">Electric Watersports</h4>
+              <a href="#" className="dropdown-link">Electric Surfboards</a>
+              <a href="#" className="dropdown-link">Electric Jet Drive</a>
             </div>
           </div>
         </div>

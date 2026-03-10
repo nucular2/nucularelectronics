@@ -1,0 +1,20 @@
+.animated-images-block {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  will-change: opacity, transform;
+}
+
+.animated-images-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animated-svg-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}

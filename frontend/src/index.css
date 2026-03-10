@@ -497,17 +497,16 @@ body,
   top: 0;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  margin: 0;
   width: 100%;
-  max-width: var(--max-width);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 100px;
-  padding-right: 100px;
+  max-width: 100%;
+  height: 84px;
+  padding: 20px 250px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
+  box-sizing: border-box;
   transition: background-color 0.3s ease;
 }
 
@@ -1545,7 +1544,7 @@ body.is-mobile .canbus-text {
   left: 0;
   width: 100%;
   background-color: #fff;
-  padding: 40px 0 60px;
+  padding: 0; /* Remove padding as content handles it */
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   opacity: 0;
   visibility: hidden;
@@ -1553,7 +1552,7 @@ body.is-mobile .canbus-text {
   transition: all 0.3s ease;
   z-index: 90;
   border-top: 1px solid rgba(0,0,0,0.05);
-  height: 50vh;
+  height: auto; /* Let content dictate height, or fix if needed */
 }
 
 .dropdown-overlay.open {
@@ -1563,17 +1562,20 @@ body.is-mobile .canbus-text {
 }
 
 .dropdown-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 100px;
+  width: 100%;
+  max-width: 100%;
+  height: 360px; /* Height as requested */
+  margin: 0;
+  padding: 32px 250px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
+  box-sizing: border-box;
 }
 
 .dropdown-column {
   padding: 0 32px;
-  border-right: 1px solid #eee;
+  /* border-right: 1px solid #eee; */ /* Removing border as per clean design usually */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1590,18 +1592,18 @@ body.is-mobile .canbus-text {
 
 .dropdown-title {
   font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
-  color: #999;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #999; /* Keeping title grey/distinct */
   margin-bottom: 24px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .dropdown-link {
   font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
   color: #222;
   text-decoration: none;
   margin-bottom: 16px;
@@ -3227,14 +3229,18 @@ body.is-mobile .review-card {
 .main-footer {
   background: #fff;
   color: #222;
-  padding: 80px 40px 40px;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .footer-content {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 60px 250px;
+  min-height: 360px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
@@ -3242,7 +3248,7 @@ body.is-mobile .review-card {
 .footer-top {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 40px;
   margin-bottom: 60px;
 }

@@ -30,8 +30,16 @@ import OnBoardComputer from './pages/OnBoardComputer';
 import Controller from './pages/Controller';
 import SurRonLightBee from './pages/SurRonLightBee';
 
+import AdminLayout from './admin/components/AdminLayout';
+import AdminDashboard from './admin/pages/Dashboard';
+import AdminLogin from './admin/pages/Login';
+import AdminCatalog from './admin/pages/Catalog';
+import AdminOrders from './admin/pages/Orders';
+import { AuthProvider as AdminAuthProvider, ProtectedRoute as AdminProtectedRoute } from './admin/context/AuthContext';
+
 export default function App() {
   const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -54,39 +62,57 @@ export default function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/news/protection-of-controllers" element={<NewsDetailProtection />} />
-          <Route path="/news/brief-news-for-the-year" element={<NewsDetailBrief />} />
-          <Route path="/news/price-increase" element={<NewsDetailPrice />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/settings/controller" element={<ControllerSettings />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/partners" element={<Partners />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/update-password" element={<UpdatePassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/:id" element={<OrderDetail />} />
-          <Route path="/ulight-controller" element={<ULightController />} />
-          <Route path="/sur-ron-light-bee" element={<SurRonLightBee />} />
-          <Route path="/on-board-computer" element={<OnBoardComputer />} />
-          <Route path="/controller" element={<Controller />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-        {location.pathname !== '/' && <Footer />}
-      </CartProvider>
-    </AuthProvider>
+    <AdminAuthProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/protection-of-controllers" element={<NewsDetailProtection />} />
+            <Route path="/news/brief-news-for-the-year" element={<NewsDetailBrief />} />
+            <Route path="/news/price-increase" element={<NewsDetailPrice />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/controller" element={<ControllerSettings />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/:id" element={<OrderDetail />} />
+            <Route path="/ulight-controller" element={<ULightController />} />
+            <Route path="/sur-ron-light-bee" element={<SurRonLightBee />} />
+            <Route path="/on-board-computer" element={<OnBoardComputer />} />
+            <Route path="/controller" element={<Controller />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={
+              <AdminProtectedRoute>
+                <AdminLayout />
+              </AdminProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="catalog" element={<AdminCatalog />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="*" element={<AdminDashboard />} />
+            </Route>
+            
+            <Route path="*" element={<Home />} />
+          </Routes>
+          {!isAdminRoute && location.pathname !== '/' && <Footer />}
+        </CartProvider>
+      </AuthProvider>
+    </AdminAuthProvider>
   );
 }

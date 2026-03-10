@@ -4,6 +4,7 @@ import Header from '../components/Header';
 const reviewsData = [
   {
     id: 1,
+    category: 'Controllers',
     product: 'Nucular controller P24F',
     text: 'A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...',
     author: 'USA, Alex Smith',
@@ -12,6 +13,7 @@ const reviewsData = [
   },
   {
     id: 2,
+    category: 'uLight controller',
     product: 'uLight controller',
     text: 'Lighting control signals, brake light and LED strip. Easy connection and necessary ...',
     author: 'Germany, Max Stoun',
@@ -21,6 +23,7 @@ const reviewsData = [
   },
   {
     id: 3,
+    category: 'On-board computer',
     product: 'On-board computer',
     text: 'Great display, very responsive interface. Love the dark mode!',
     author: 'France, Jean Pierre',
@@ -29,6 +32,7 @@ const reviewsData = [
   },
   {
     id: 4,
+    category: 'Controllers',
     product: 'Nucular controller 12F',
     text: 'Smooth acceleration and great battery efficiency. Highly recommended for any e-bike build.',
     author: 'Canada, Mike Ross',
@@ -37,6 +41,7 @@ const reviewsData = [
   },
   {
     id: 5,
+    category: 'Controllers',
     product: 'Nucular controller P24F',
     text: 'A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...',
     author: 'Norway, Anna Orlova',
@@ -45,6 +50,7 @@ const reviewsData = [
   },
   {
     id: 6,
+    category: 'uLight controller',
     product: 'uLight controller',
     text: 'Lighting control signals, brake light and LED strip. Easy connection and necessary ...',
     author: 'Germany, Max Stoun',
@@ -119,7 +125,9 @@ export default function Reviews() {
 
           {/* Right Content */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {reviewsData.map((review) => (
+            {reviewsData
+              .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
+              .map((review) => (
               <div key={review.id} style={{
                 background: '#f9f9f9',
                 borderRadius: '20px',
@@ -256,7 +264,9 @@ export default function Reviews() {
 
         {/* Reviews List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {reviewsData.map((review) => (
+          {reviewsData
+            .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
+            .map((review) => (
             <div key={review.id} style={{
               background: '#f9f9f9',
               borderRadius: '20px',

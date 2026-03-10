@@ -81,10 +81,10 @@ export default function Reviews() {
       <div style={{ background: '#fff', minHeight: '100vh', paddingBottom: '40px' }}>
         <Header variant="white" />
         
-        <div style={{ width: '1180px', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: '40px', alignItems: 'flex-start', paddingTop: '100px', boxSizing: 'content-box' }}>
+        <div style={{ width: '100%', maxWidth: '880px', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: '60px', alignItems: 'flex-start', paddingTop: '80px', paddingLeft: '20px', paddingRight: '20px', boxSizing: 'border-box' }}>
           
           {/* Left Sidebar */}
-          <div style={{ width: '240px', flexShrink: 0, paddingTop: '0' }}>
+          <div style={{ width: '200px', flexShrink: 0, paddingTop: '0' }}>
             <h1 style={{ fontSize: '40px', fontWeight: 700, margin: '0 0 40px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '40px' }}>
               {categories.map((cat) => (
@@ -124,42 +124,43 @@ export default function Reviews() {
           </div>
 
           {/* Right Content */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {reviewsData
               .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
               .map((review) => (
               <div key={review.id} style={{
                 background: '#f9f9f9',
                 borderRadius: '20px',
-                padding: '20px',
+                padding: '24px',
                 display: 'flex',
                 gap: '24px',
-                alignItems: 'center',
-                minHeight: '220px'
+                alignItems: 'flex-start',
+                minHeight: '214px',
+                boxSizing: 'border-box'
               }}>
-                <div style={{ width: '180px', height: '180px', flexShrink: 0, background: '#fff', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '150px', height: '150px', flexShrink: 0, background: '#fff', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {/* Placeholder for product image - using flag as placeholder for now or add product images */}
                   <img src={review.image} alt={review.product} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                    {/* @ts-ignore */}
                    {review.link ? (
                     /* @ts-ignore */
                     <a href={review.link} style={{ textDecoration: 'none' }}>
-                      <h3 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 16px', color: '#111', fontFamily: 'var(--font-family)' }}>
+                      <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
                         {review.product}
                       </h3>
                     </a>
                   ) : (
-                    <h3 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 16px', color: '#111', fontFamily: 'var(--font-family)' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
                       {review.product}
                     </h3>
                   )}
-                  <p style={{ fontSize: '16px', color: '#666', margin: '0 0 24px', lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                  <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
                     {review.text}
                   </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src={review.flag} alt="Flag" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <img src={review.flag} alt="Flag" style={{ width: '20px', height: '14px', borderRadius: '2px', objectFit: 'cover' }} />
                     <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
                   </div>
                 </div>

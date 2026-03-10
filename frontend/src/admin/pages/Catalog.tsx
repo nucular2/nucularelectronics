@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { products, Product } from '../../data/products';
-import { Folder, FolderOpen, Edit, Plus, Trash2, ChevronRight, ChevronDown, Package } from 'lucide-react';
+import { useProducts } from '../../context/ProductContext';
+import { Product } from '../../data/products';
+import { Folder, FolderOpen, Edit, Plus, Trash2, ChevronRight, ChevronDown, Package, X, Check, Upload } from 'lucide-react';
 
 interface CategoryNode {
   id: string;
@@ -11,7 +12,11 @@ interface CategoryNode {
 }
 
 const Catalog: React.FC = () => {
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [expanded, setExpanded] = useState<string[]>(['root']);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [formData, setFormData] = useState<Partial<Product>>({});
 
   // Transform flat product list into category tree
   const categoryTree = useMemo(() => {
@@ -40,11 +45,140 @@ const Catalog: React.FC = () => {
       products: [],
       children: rootChildren
     }];
-  }, []);
+  }, [products]);
 
   const toggleExpand = (id: string) => {
     setExpanded(prev => 
       prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
+  const handleEdit = (product: Product) => {
+    setEditingProduct(product);
+    setFormData(product);
+    setIsAdding(false);
+  };
+
+  const handleAdd = () => {
+    setEditingProduct(null);
+    setFormData({
+      category: 'Components',
+      title: '',
+      price: '',
+      image: '',
+      isPreorder: false
+    });
+    setIsAdding(true);
+  };
+
+  const handleSave = () => {
+    if (isAdding) {
+      if (formData.title && formData.price && formData.category) {
+        addProduct(formData as Omit<Product, 'id'>);
+        setIsAdding(false);
+        setFormData({});
+      }
+    } else if (editingProduct) {
+      updateProduct(editingProduct.id, formData);
+      setEditingProduct(null);
+      setFormData({});
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      deleteProduct(id);
+    }
+  };
+
+  const renderForm = () => {
+    if (!isAdding && !editingProduct) return null;
+
+    return (
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+        <div style={{ background: '#fff', padding: '30px', borderRadius: '8px', width: '500px', maxWidth: '90%' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h2 style={{ margin: 0 }}>{isAdding ? 'Добавить товар' : 'Редактировать товар'}</h2>
+            <button onClick={() => { setIsAdding(false); setEditingProduct(null); }} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 500 }}>Название</label>
+              <input 
+                type="text" 
+                value={formData.title || ''} 
+                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 500 }}>Категория</label>
+              <select 
+                value={formData.category || 'Components'} 
+                onChange={e => setFormData({ ...formData, category: e.target.value })}
+                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
+              >
+                <option value="Components">Components</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Spare parts">Spare parts</option>
+                <option value="Complete solutions">Complete solutions</option>
+                <option value="Apparel">Apparel</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 500 }}>Цена</label>
+              <input 
+                type="text" 
+                value={formData.price || ''} 
+                onChange={e => setFormData({ ...formData, price: e.target.value })}
+                placeholder="$0.00 or Preorder"
+                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 500 }}>Изображение (URL)</label>
+              <input 
+                type="text" 
+                value={formData.image || ''} 
+                onChange={e => setFormData({ ...formData, image: e.target.value })}
+                placeholder="/path/to/image.png"
+                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <input 
+                type="checkbox" 
+                id="isPreorder"
+                checked={formData.isPreorder || false} 
+                onChange={e => setFormData({ ...formData, isPreorder: e.target.checked })}
+              />
+              <label htmlFor="isPreorder">Предзаказ</label>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
+              <button 
+                onClick={() => { setIsAdding(false); setEditingProduct(null); }}
+                style={{ padding: '10px 20px', background: '#eee', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Отмена
+              </button>
+              <button 
+                onClick={handleSave}
+                style={{ padding: '10px 20px', background: '#2ecc71', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <Check size={18} /> Сохранить
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -65,12 +199,6 @@ const Catalog: React.FC = () => {
                 <span style={{ fontWeight: 500, color: '#333' }}>{node.name}</span>
                 <span style={{ fontSize: '12px', color: '#999', background: '#eee', padding: '2px 6px', borderRadius: '10px' }}>{node.count}</span>
               </div>
-
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button title="Редактировать" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#3498db' }}><Edit size={16} /></button>
-                <button title="Добавить" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2ecc71' }}><Plus size={16} /></button>
-                <button title="Удалить" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#e74c3c' }}><Trash2 size={16} /></button>
-              </div>
             </div>
             
             {expanded.includes(node.id) && (
@@ -84,10 +212,22 @@ const Catalog: React.FC = () => {
                     {node.products.map(product => (
                       <li key={product.id} style={{ padding: '6px 8px', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
                         <Package size={14} color="#7f8c8d" />
-                        <span style={{ color: '#555' }}>{product.title}</span>
-                        <span style={{ color: '#999', fontSize: '12px', marginLeft: 'auto' }}>{product.price}</span>
-                        <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#3498db', padding: 0, marginLeft: '8px' }}>
-                          <Edit size={14} />
+                        <div style={{ width: '30px', height: '30px', borderRadius: '4px', overflow: 'hidden', background: '#eee' }}>
+                          {product.image && <img src={product.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                        </div>
+                        <span style={{ color: '#555', flex: 1 }}>{product.title}</span>
+                        <span style={{ color: '#999', fontSize: '12px', marginRight: '10px' }}>{product.price}</span>
+                        <button 
+                          onClick={() => handleEdit(product)}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#3498db', padding: '4px' }}
+                        >
+                          <Edit size={16} />
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(product.id)}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#e74c3c', padding: '4px' }}
+                        >
+                          <Trash2 size={16} />
                         </button>
                       </li>
                     ))}
@@ -105,17 +245,22 @@ const Catalog: React.FC = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <h1 style={{ margin: 0, color: '#333' }}>Управление каталогом</h1>
-        <button style={{ background: '#2ecc71', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 500 }}>
+        <button 
+          onClick={handleAdd}
+          style={{ background: '#2ecc71', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 500 }}
+        >
           <Plus size={18} /> Добавить товар
         </button>
       </div>
 
       <div style={{ background: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
         <div style={{ paddingBottom: '16px', borderBottom: '1px solid #eee', marginBottom: '16px', color: '#666' }}>
-          Структура каталога (из src/data/products.ts)
+          Структура каталога
         </div>
         {renderTree(categoryTree)}
       </div>
+
+      {renderForm()}
     </div>
   );
 };

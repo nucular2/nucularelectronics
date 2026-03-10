@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, ShoppingCart, Users, FolderTree, Settings, LogOut, Package } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Users, FolderTree, Settings, LogOut, Package, MessageSquare } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
   const { user, logout } = useAuth();
@@ -51,7 +51,17 @@ const AdminLayout: React.FC = () => {
                 <ShoppingCart size={18} /> Заказы
               </NavLink>
             </li>
-             <li>
+            <li>
+              <NavLink 
+                to="/admin/reviews" 
+                style={({ isActive }) => ({
+                  display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 20px', color: isActive ? '#fff' : '#b8c7ce', textDecoration: 'none', background: isActive ? '#1e282c' : 'transparent', borderLeft: isActive ? '3px solid #3c8dbc' : '3px solid transparent'
+                })}
+              >
+                <MessageSquare size={18} /> Отзывы
+              </NavLink>
+            </li>
+            <li>
               <NavLink 
                 to="/admin/customers" 
                 style={({ isActive }) => ({

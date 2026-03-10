@@ -35,7 +35,10 @@ import AdminDashboard from './admin/pages/Dashboard';
 import AdminLogin from './admin/pages/Login';
 import AdminCatalog from './admin/pages/Catalog';
 import AdminOrders from './admin/pages/Orders';
+import AdminReviews from './admin/pages/ReviewsManager';
 import { AuthProvider as AdminAuthProvider, ProtectedRoute as AdminProtectedRoute } from './admin/context/AuthContext';
+import { ProductProvider } from './context/ProductContext';
+import { ReviewsProvider } from './context/ReviewsContext';
 
 export default function App() {
   const location = useLocation();
@@ -64,10 +67,12 @@ export default function App() {
   return (
     <AdminAuthProvider>
       <AuthProvider>
-        <CartProvider>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
+        <ProductProvider>
+          <ReviewsProvider>
+            <CartProvider>
+              <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
@@ -103,15 +108,18 @@ export default function App() {
             }>
               <Route index element={<AdminDashboard />} />
               <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="catalog" element={<AdminCatalog />} />
-              <Route path="orders" element={<AdminOrders />} />
-              <Route path="*" element={<AdminDashboard />} />
-            </Route>
-            
-            <Route path="*" element={<Home />} />
-          </Routes>
-          {!isAdminRoute && location.pathname !== '/' && <Footer />}
-        </CartProvider>
+                <Route path="catalog" element={<AdminCatalog />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="reviews" element={<AdminReviews />} />
+                <Route path="*" element={<AdminDashboard />} />
+              </Route>
+              
+              <Route path="*" element={<Home />} />
+            </Routes>
+            {!isAdminRoute && location.pathname !== '/' && <Footer />}
+          </CartProvider>
+          </ReviewsProvider>
+        </ProductProvider>
       </AuthProvider>
     </AdminAuthProvider>
   );

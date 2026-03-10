@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import './Shop.css';
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { products } = useProducts();
   const { addToCart } = useCart();
   const navigate = useNavigate();
 

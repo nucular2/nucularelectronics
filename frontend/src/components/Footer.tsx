@@ -14,6 +14,21 @@ export default function Footer() {
     navigate('/news');
   };
 
+  const goReviews = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/reviews');
+  };
+
+  const goSupport = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/support');
+  };
+
+  const goContact = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/contact');
+  };
+
   return (
     <footer className="main-footer">
       <div className="footer-content">
@@ -23,9 +38,9 @@ export default function Footer() {
               <h4 className="footer-title">Company</h4>
               <ul className="footer-links">
                 <li><a href="#" onClick={goNews}>News</a></li>
-                <li><a href="#">Reviews</a></li>
+                <li><a href="#" onClick={goReviews}>Reviews</a></li>
                 <li><a href="#" onClick={goPartners}>For partners</a></li>
-                <li><a href="#" onClick={goPartners}>Contact us</a></li>
+                <li><a href="#" onClick={goContact}>Contact us</a></li>
               </ul>
             </div>
             <div className="footer-column">
@@ -40,7 +55,7 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">Help</h4>
               <ul className="footer-links">
-                <li><a href="#">Support</a></li>
+                <li><a href="#" onClick={goSupport}>Support</a></li>
                 <li><a href="#">Firmware</a></li>
                 <li><a href="#">For developers</a></li>
               </ul>
@@ -69,8 +84,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="footer-middle-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '60px', marginBottom: '40px' }}>
-           <div className="trustpilot-widget" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '500' }}>
+        <div className="footer-middle-row">
+           <div className="trustpilot-widget">
                <strong>Excellent</strong> 4.5 out of 5 <span style={{ color: '#00b67a', fontSize: '20px' }}>★</span> <strong>Trustpilot</strong>
            </div>
            <div className="social-icons">
@@ -115,9 +130,9 @@ export default function Footer() {
            </svg>
         </div>
         <div className="footer-bottom-links">
-          <a href="#">Careers</a>
-          <a href="#">Terms and Conditions</a>
-          <a href="#">Privacy policy</a>
+          <a href="/careers">Careers</a>
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy">Privacy policy</a>
           <span className="copyright">© 2025 Nucular Limited. All Rights Reserved.</span>
         </div>
       </div>

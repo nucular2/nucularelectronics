@@ -14,6 +14,7 @@ import Settings from './pages/Settings';
 import ControllerSettings from './pages/ControllerSettings';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
+import Reviews from './pages/Reviews';
 import News from './pages/News';
 import NewsDetailProtection from './pages/NewsDetailProtection';
 import NewsDetailBrief from './pages/NewsDetailBrief';
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/reviews" element={<Reviews />} />
           <Route path="/news" element={<News />} />
           <Route path="/news/protection-of-controllers" element={<NewsDetailProtection />} />
           <Route path="/news/brief-news-for-the-year" element={<NewsDetailBrief />} />

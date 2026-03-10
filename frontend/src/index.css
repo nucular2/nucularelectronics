@@ -1630,7 +1630,7 @@ body.is-mobile .canbus-text {
   width: 300px;
   height: 100%;
   background-color: #fff;
-  padding: 80px 20px 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -1666,6 +1666,12 @@ body.is-mobile .mobile-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .mobile-menu-logo {
@@ -1745,9 +1751,7 @@ body.is-mobile .mobile-menu {
 }
 
 .mobile-menu-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: static;
   background: none;
   border: none;
   font-size: 24px;
@@ -3238,7 +3242,7 @@ body.is-mobile .review-card {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 60px 250px;
+  padding: 32px 250px;
   min-height: 360px;
   box-sizing: border-box;
   display: flex;
@@ -3316,10 +3320,22 @@ body.is-mobile .review-card {
   color: #f36f25;
 }
 
-.footer-middle {
+/* Middle Row: Trustpilot & Socials */
+.footer-middle-row {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 32px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.trustpilot-widget {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-family);
 }
 
 .social-icons {
@@ -3408,64 +3424,85 @@ body.is-mobile .review-card {
   font-size: 12px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .main-footer {
+    padding: 0;
+  }
+  
+  .footer-content {
     padding: 40px 20px 24px;
   }
 
   .footer-top {
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: 32px;
+    flex-direction: column-reverse; /* Language first */
+    gap: 32px;
+    margin-bottom: 40px;
   }
 
   .footer-top-right {
-    order: 0;
+    order: 0; /* Not needed with column-reverse if it was last, but explicit is good */
     margin-left: 0;
     align-items: flex-start;
+    width: 100%;
   }
 
   .footer-columns {
-    order: 1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 40px;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-column {
+    width: 100%;
   }
 
   .footer-title {
     margin-bottom: 16px;
+    font-size: 14px;
+    color: #999;
   }
 
-  .footer-middle {
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+
+  .footer-middle-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .social-icons {
+    width: 100%;
     justify-content: flex-start;
-    margin-bottom: 24px;
+    gap: 16px;
+  }
+  
+  .social-icon {
+    width: 48px;
+    height: 48px;
   }
 
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
-    padding-top: 24px;
+    gap: 24px;
+    padding-top: 0;
+    border-top: none;
   }
 
   .footer-bottom-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .footer-bottom-links a {
-    white-space: nowrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 
   .copyright {
     color: #999;
-    white-space: nowrap;
-    flex-basis: 100%;
-    margin-top: 12px;
+    margin-top: 16px;
   }
 }
 

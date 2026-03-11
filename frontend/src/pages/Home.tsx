@@ -294,7 +294,7 @@ export default function Home() {
             width: '100%', 
             maxWidth: '1680px',
             margin: '0 auto', 
-            padding: '40px 0', 
+            padding: '120px 0 40px', 
             background: '#ffffff'
           }}>
             <div style={{ 

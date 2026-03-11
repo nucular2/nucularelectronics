@@ -21,7 +21,7 @@ const initialReviews: Review[] = [
     author: 'Germany, Max Stoun',
     flag: '/flag2.png',
     link: '/reviews/ulight',
-    image: '/uLight controller.png'
+    image: '/miniature20.svg'
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const initialReviews: Review[] = [
     text: 'A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...',
     author: 'USA, Alex Smith',
     flag: '/flag.png',
-    image: '/miniature.png'
+    image: '/cover21.svg'
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const initialReviews: Review[] = [
     text: 'A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...',
     author: 'Norway, Anna Orlova',
     flag: '/flag3.png',
-    image: '/content-box3.png'
+    image: '/cover23.svg'
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const initialReviews: Review[] = [
     author: 'Germany, Max Stoun',
     flag: '/flag2.png',
     link: '/reviews/ulight',
-    image: '/uLight controller.png'
+    image: '/cover26.svg'
   },
   {
     id: 5,
@@ -58,7 +58,7 @@ const initialReviews: Review[] = [
     text: 'The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ..',
     author: 'France, Robert Jonson',
     flag: '/flag.png',
-    image: '/content-box2.png'
+    image: '/cover29svg.svg'
   },
   {
     id: 6,
@@ -67,43 +67,7 @@ const initialReviews: Review[] = [
     text: 'A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...',
     author: 'USA, Alex Smith',
     flag: '/flag.png',
-    image: '/content-box3.png'
-  },
-  {
-    id: 7,
-    category: 'Controllers',
-    product: 'Nucular controller 6F',
-    text: 'Small but mighty. Perfect for my light electric scooter. The app connectivity is a game changer for tuning settings on the fly.',
-    author: 'UK, John Doe',
-    flag: '/flag.png',
-    image: '/content-box5.png'
-  },
-  {
-    id: 8,
-    category: 'BMS',
-    product: 'Nucular BMS',
-    text: 'Keeps my battery pack perfectly balanced. The monitoring features give me peace of mind. Robust construction and reliable performance.',
-    author: 'Australia, Sarah Connor',
-    flag: '/flag2.png',
-    image: '/content-box6.png'
-  },
-  {
-    id: 9,
-    category: 'On-board computer',
-    product: 'On-board computer',
-    text: 'The best display on the market. Customizable screens are awesome. It integrates perfectly with the controller.',
-    author: 'Italy, Marco Polo',
-    flag: '/flag3.png',
-    image: '/content-box2.png'
-  },
-  {
-    id: 10,
-    category: 'Controllers',
-    product: 'Nucular controller 24F',
-    text: 'Built like a tank. Handles high currents without overheating. The regenerative braking is very effective and adjustable.',
-    author: 'Sweden, Sven Svensson',
-    flag: '/flag4.png',
-    image: '/miniature.png'
+    image: '/cover30.svg'
   }
 ];
 
@@ -120,7 +84,7 @@ export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    const storedReviews = localStorage.getItem('site_reviews');
+    const storedReviews = localStorage.getItem('site_reviews_v3');
     if (storedReviews) {
       try {
         setReviews(JSON.parse(storedReviews));
@@ -135,7 +99,7 @@ export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   useEffect(() => {
     if (reviews.length > 0) {
-      localStorage.setItem('site_reviews', JSON.stringify(reviews));
+      localStorage.setItem('site_reviews_v3', JSON.stringify(reviews));
     }
   }, [reviews]);
 

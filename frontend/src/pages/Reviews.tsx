@@ -24,28 +24,34 @@ export default function Reviews() {
       <div style={{ background: '#fff', minHeight: '100vh', paddingBottom: '40px' }}>
         <Header variant="white" />
         
-        <div style={{ width: '100%', maxWidth: '1180px', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: '60px', alignItems: 'flex-start', paddingTop: '80px', paddingLeft: '20px', paddingRight: '20px', boxSizing: 'border-box' }}>
+        <div style={{ width: '100%', maxWidth: '1180px', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: '60px', alignItems: 'flex-start', paddingTop: '150px', paddingLeft: '20px', paddingRight: '20px', boxSizing: 'border-box' }}>
           
           {/* Left Sidebar */}
-          <div style={{ width: '200px', flexShrink: 0, paddingTop: '0' }}>
-            <h1 style={{ fontSize: '40px', fontWeight: 700, margin: '0 0 40px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '40px' }}>
-              {categories.map((cat) => (
-                <div
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  style={{
-                    fontSize: '16px',
-                    fontWeight: selectedCategory === cat ? 700 : 500,
-                    color: selectedCategory === cat ? '#F36F25' : '#111',
-                    cursor: 'pointer',
-                    fontFamily: 'var(--font-family)',
-                    transition: 'color 0.2s'
-                  }}
-                >
-                  {cat}
-                </div>
-              ))}
+          <div style={{ width: '240px', display: 'flex', flexDirection: 'column', gap: '40px', paddingTop: '0' }}>
+            <h1 style={{ fontSize: '40px', fontWeight: 700, margin: '0 0 20px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ fontSize: '16px', fontWeight: selectedCategory === 'All reviews' ? 700 : 500, color: selectedCategory === 'All reviews' ? '#F36F25' : '#111', cursor: 'pointer', fontFamily: 'var(--font-family)' }} onClick={() => setSelectedCategory('All reviews')}>All reviews</div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {categories.filter(cat => cat !== 'All reviews').map((cat) => (
+                  <div
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: selectedCategory === cat ? 700 : 500,
+                      color: selectedCategory === cat ? '#F36F25' : '#111',
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font-family)',
+                      transition: 'color 0.2s',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {cat}
+                  </div>
+                ))}
+              </div>
             </div>
             
             <button style={{
@@ -60,14 +66,15 @@ export default function Reviews() {
               cursor: 'pointer',
               fontFamily: 'var(--font-family)',
               whiteSpace: 'nowrap',
-              width: '100%'
+              width: '160px',
+              marginTop: '10px'
             }}>
               Leave feedback
             </button>
           </div>
 
           {/* Right Content */}
-          <div style={{ width: '880px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ width: '880px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px', marginLeft: 'auto' }}>
             {reviews
               .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
               .map((review) => (

@@ -561,10 +561,10 @@ export default function Home() {
             </div>
           </div>
           
-          {/* 3. Bottom Image (мобилка6.svg) */}
+          {/* 3. Bottom Image (content-box92.svg) */}
           <div style={{ width: '100%' }}>
             <img 
-              src="/мобилка6.svg" 
+              src="/content-box92.svg" 
               alt="Footer Content" 
               style={{ width: '100%', display: 'block', height: 'auto' }} 
             />

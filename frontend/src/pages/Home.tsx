@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useReviews } from "../context/ReviewsContext";
+import AnimatedSpecsText from "../components/AnimatedSpecsText";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
+  const { reviews } = useReviews();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 900px)");
@@ -12,6 +15,108 @@ export default function Home() {
     mediaQuery.addEventListener("change", updateMatch);
     return () => mediaQuery.removeEventListener("change", updateMatch);
   }, []);
+
+  // News Data
+  const newsData = [
+    {
+      id: 1,
+      title: "Protection of controllers",
+      date: "June 20, 2022",
+      image: "/new1.png",
+      text: "New circuit engineering and improved protection of controllers from our users."
+    },
+    {
+      id: 2,
+      title: "Price increase",
+      date: "June 5, 2022",
+      image: "/new2.png",
+      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
+    },
+    {
+      id: 3,
+      title: "Big/Bug update!",
+      date: "May 28, 2022",
+      image: "/new3.png",
+      text: "The big update of the Controller (v0.8.1) and the On-board Computer (v0.70)."
+    },
+    {
+      id: 4,
+      title: "Discount on pre-order",
+      date: "May 24, 2022",
+      image: "/new4.png",
+      text: "Until the end of spring, you can order a controller with a 15% discount."
+    },
+    {
+      id: 5,
+      title: "Protection of controllers",
+      date: "May 15, 2022",
+      image: "/new5.png",
+      text: "New circuit engineering and improved protection of controllers from our users."
+    },
+    {
+      id: 6,
+      title: "Protection of controllers",
+      date: "June 20, 2022",
+      image: "/new6.png",
+      text: "New circuit engineering and improved protection of controllers from our users."
+    },
+    {
+      id: 7,
+      title: "Price increase",
+      date: "June 5, 2022",
+      image: "/new7.png",
+      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
+    },
+    {
+      id: 8,
+      title: "Brief news for the year",
+      date: "April 3, 2022",
+      image: "/new8.png",
+      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
+    },
+    {
+      id: 9,
+      title: "Protection of controllers",
+      date: "May 15, 2022",
+      image: "/new9.png",
+      text: "New circuit engineering and improved protection of controllers from our users."
+    },
+    {
+      id: 10,
+      title: "Price increase",
+      date: "April 29, 2022",
+      image: "/new10.png",
+      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
+    },
+    {
+      id: 11,
+      title: "Brief news for the year",
+      date: "May 20, 2022",
+      image: "/new11.png",
+      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
+    },
+    {
+      id: 12,
+      title: "Big/Bug update!",
+      date: "April 25, 2022",
+      image: "/new12.png",
+      text: "The big update of the Controller (v0.8.1) and the On-board Computer (v0.70)."
+    },
+    {
+      id: 13,
+      title: "Brief news for the year",
+      date: "April 3, 2022",
+      image: "/new13.png",
+      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
+    },
+    {
+      id: 14,
+      title: "Price increase",
+      date: "June 5, 2022",
+      image: "/new14.png",
+      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
+    }
+  ];
 
   // Styles for Mobile View
   const controllersSectionStyle = { overflowX: "auto" as const };
@@ -95,13 +200,194 @@ export default function Home() {
 
           {/* Main SVG Content */}
           <div style={{ width: '100%', background: '#fff' }}>
-             <object
-               type="image/svg+xml"
-               data="/Main.svg"
-               style={{ width: '100%', display: 'block' }}
-             >
-               <img src="/Main.svg" alt="Main Content" style={{ width: '100%', display: 'block' }} />
-             </object>
+             <img 
+               src="/content-box85.svg" 
+               alt="Main Content" 
+               style={{ width: '100%', display: 'block' }} 
+             />
+          </div>
+
+          {/* Desktop News Section */}
+          <div style={{ 
+            width: '100%', 
+            maxWidth: '1680px',
+            margin: '0 auto', 
+            padding: '40px 0', 
+            background: '#ffffff'
+          }}>
+            <div style={{ 
+              width: '1180px',
+              height: '455px',
+              margin: '0 auto',
+              display: 'flex', 
+              flexDirection: 'column'
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                marginBottom: '24px'
+              }}>
+                <h2 style={{ 
+                  fontSize: '32px', 
+                  fontWeight: 700, 
+                  margin: 0, 
+                  color: '#111', 
+                  fontFamily: 'var(--font-family)' 
+                }}>News</h2>
+                <a href="/news" style={{ 
+                  color: '#F36F25', 
+                  textDecoration: 'none', 
+                  fontSize: '14px', 
+                  fontWeight: 500, 
+                  fontFamily: 'var(--font-family)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px' 
+                }}>
+                  All news
+                  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+              
+              <div className="desktop-news-scroll" style={{ 
+                display: 'flex',
+                overflowX: 'auto',
+                gap: '20px',
+                paddingBottom: '20px',
+                height: '100%',
+                scrollbarWidth: 'none', // Firefox
+                msOverflowStyle: 'none'  // IE/Edge
+              }}>
+                <style>{`
+                  .desktop-news-scroll::-webkit-scrollbar {
+                    display: none;
+                  }
+                  .news-card-image-wrapper:hover .news-card-image {
+                    transform: scale(1.05);
+                  }
+                  .news-card-image {
+                    transition: transform 0.3s ease;
+                  }
+                `}</style>
+                
+                {newsData.map((news) => (
+                  <article key={news.id} style={{ flex: '0 0 380px', width: '380px', display: 'flex', flexDirection: 'column' }}>
+                    <div className="news-card-image-wrapper" style={{ width: '100%', height: '240px', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', cursor: 'pointer' }}>
+                      <img src={news.image} alt={news.title} className="news-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
+                    <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>{news.title}</h3>
+                    <p style={{ fontSize: '16px', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
+                      {news.text}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Reviews Section */}
+          <div style={{ 
+            width: '100%', 
+            maxWidth: '1680px',
+            margin: '0 auto', 
+            padding: '40px 0', 
+            background: '#ffffff'
+          }}>
+            <div style={{ 
+              width: '1180px',
+              margin: '0 auto',
+              display: 'flex', 
+              flexDirection: 'column'
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                marginBottom: '24px'
+              }}>
+                <h2 style={{ 
+                  fontSize: '32px', 
+                  fontWeight: 700, 
+                  margin: 0, 
+                  color: '#111', 
+                  fontFamily: 'var(--font-family)' 
+                }}>Reviews</h2>
+                <a href="/reviews" style={{ 
+                  color: '#F36F25', 
+                  textDecoration: 'none', 
+                  fontSize: '14px', 
+                  fontWeight: 500, 
+                  fontFamily: 'var(--font-family)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px' 
+                }}>
+                  All reviews
+                  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+              
+              <div className="desktop-reviews-scroll" style={{ 
+                display: 'flex',
+                overflowX: 'auto',
+                gap: '20px',
+                paddingBottom: '20px',
+                scrollbarWidth: 'none', // Firefox
+                msOverflowStyle: 'none'  // IE/Edge
+              }}>
+                <style>{`
+                  .desktop-reviews-scroll::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                {reviews.slice(0, 5).map((review) => (
+                  <div key={review.id} style={{ 
+                    flex: '0 0 380px', 
+                    width: '380px', 
+                    background: '#F9F9F9',
+                    borderRadius: '20px',
+                    padding: '32px',
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    minHeight: '280px'
+                  }}>
+                    <div>
+                      <h3 style={{ 
+                        fontSize: '18px', 
+                        fontWeight: 700, 
+                        margin: '0 0 12px', 
+                        color: '#111', 
+                        fontFamily: 'var(--font-family)' 
+                      }}>
+                        {review.product}
+                      </h3>
+                      <p style={{ 
+                        fontSize: '14px', 
+                        color: '#666', 
+                        margin: 0, 
+                        lineHeight: 1.5, 
+                        fontFamily: 'var(--font-family)' 
+                      }}>
+                        {review.text}
+                      </p>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '20px' }}>
+                      <img src={review.flag} alt="Flag" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
+                      <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -419,47 +705,27 @@ export default function Home() {
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
             }}>
-              {/* News Card 1 */}
-              <div style={{
-                flex: '0 0 280px',
-                width: '280px',
-                scrollSnapAlign: 'start',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
-                <div style={{ width: '280px', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
-                  <img src="/new1.png" alt="Protection" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {newsData.map((news) => (
+                <div key={news.id} style={{
+                  flex: '0 0 280px',
+                  width: '280px',
+                  scrollSnapAlign: 'start',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px'
+                }}>
+                  <div style={{ width: '280px', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
+                    <img src={news.image} alt={news.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
+                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>{news.title}</h3>
+                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                      {news.text}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 20, 2022</div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Protection of controllers</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    New circuit engineering and improved protection of controllers from our users.
-                  </p>
-                </div>
-              </div>
-
-              {/* News Card 2 */}
-              <div style={{
-                flex: '0 0 280px',
-                width: '280px',
-                scrollSnapAlign: 'start',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
-                <div style={{ width: '280px', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
-                  <img src="/new2.png" alt="Price increase" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>June 5, 2022</div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>Price increase</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

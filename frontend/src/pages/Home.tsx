@@ -561,10 +561,10 @@ export default function Home() {
             </div>
           </div>
           
-          {/* 3. Bottom Image (content-box92.svg) */}
+          {/* 3. Bottom Image (content-box90.svg) */}
           <div style={{ width: '100%' }}>
             <img 
-              src="/content-box92.svg" 
+              src="/content-box90.svg" 
               alt="Footer Content" 
               style={{ width: '100%', display: 'block', height: 'auto' }} 
             />
@@ -575,7 +575,7 @@ export default function Home() {
             display: 'flex',
             overflowX: 'auto',
             gap: '16px',
-            padding: '0 20px 40px', // Added horizontal padding for scroll snap and spacing
+            padding: '20px 20px 40px', // Added horizontal padding for scroll snap and spacing
             background: '#ffffff',
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',

@@ -1696,6 +1696,7 @@ body.is-mobile .mobile-menu {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 0 20px; /* Added horizontal padding to align with header */
 }
 
 .mobile-menu-link {
@@ -3326,6 +3327,8 @@ body.is-mobile .review-card {
   color: #222;
   text-decoration: none;
   transition: color 0.2s;
+  display: block;
+  padding-left: 2px;
 }
 
 .footer-links li a:hover {
@@ -3348,6 +3351,7 @@ body.is-mobile .review-card {
   font-size: 14px;
   font-weight: 500;
   font-family: var(--font-family);
+  padding-left: 2px;
 }
 
 .social-icons {
@@ -3396,6 +3400,7 @@ body.is-mobile .review-card {
   text-decoration: none;
   font-weight: 400;
   font-size: 12px;
+  padding-left: 2px;
 }
 
 .footer-bottom-links a:hover {

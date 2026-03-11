@@ -470,7 +470,7 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: '#f9f9f9',
+                background: 'transparent',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',
@@ -510,7 +510,7 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: '#f9f9f9',
+                background: 'transparent',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',
@@ -551,7 +551,7 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: '#f9f9f9',
+                background: 'transparent',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',

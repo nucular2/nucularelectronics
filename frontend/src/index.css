@@ -1639,19 +1639,20 @@ body.is-mobile .canbus-text {
 
 .mobile-menu {
   position: relative;
-  width: 300px;
+  width: 100%; /* Changed from 300px to 100% for full width */
   height: 100%;
   background-color: #fff;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* Removed shadow since it's full screen */
 }
 
 body.is-mobile .mobile-menu {
   background: #fff !important;
   opacity: 1;
+  width: 100%; /* Ensure full width on mobile body class */
 }
 
 .reviews-grid {

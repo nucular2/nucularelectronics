@@ -92,11 +92,17 @@ body,
   padding: 0;
 }
 
-.onboard-desktop-full-image {
-  width: 100%;
-  height: auto;
-  display: block;
+@media (max-width: 900px) {
+  .main-header {
+    height: 68px !important;
+    padding: 12px 20px !important;
+  }
+  .main-header .logo-container svg {
+    width: 238px !important;
+    height: 56px !important;
+  }
 }
+
 
 .onboard-desktop-hero {
   position: absolute;

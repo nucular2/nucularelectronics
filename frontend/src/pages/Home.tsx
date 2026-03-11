@@ -605,6 +605,7 @@ export default function Home() {
             overflowX: 'auto',
             gap: '16px',
             padding: '20px 20px 40px', // Added horizontal padding for scroll snap and spacing
+            marginLeft: '20px', // Shift slightly right
             background: '#ffffff',
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
@@ -720,6 +721,7 @@ export default function Home() {
               overflowX: 'auto',
               gap: '16px',
               padding: '20px 20px 20px',
+              marginLeft: '20px', // Shift slightly right
               background: '#ffffff',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none',
@@ -755,6 +757,7 @@ export default function Home() {
               overflowX: 'auto',
               gap: '16px',
               padding: '20px 20px 20px',
+              marginLeft: '20px', // Shift slightly right
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
@@ -800,6 +803,7 @@ export default function Home() {
               overflowX: 'auto',
               gap: '16px',
               padding: '20px 20px 20px',
+              marginLeft: '20px', // Shift slightly right
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'

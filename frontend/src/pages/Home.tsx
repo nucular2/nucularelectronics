@@ -460,8 +460,7 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px',
-              marginLeft: '20px',
+              padding: '20px 20px 20px 40px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
@@ -605,8 +604,7 @@ export default function Home() {
             display: 'flex',
             overflowX: 'auto',
             gap: '16px',
-            padding: '20px 20px 40px', // Added horizontal padding for scroll snap and spacing
-            marginLeft: '20px', // Shift slightly right
+            padding: '20px 20px 40px 40px', // Added horizontal padding for scroll snap and spacing
             background: '#ffffff',
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
@@ -721,8 +719,7 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px',
-              marginLeft: '20px', // Shift slightly right
+              padding: '20px 20px 20px 40px',
               background: '#ffffff',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none',
@@ -757,8 +754,7 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px',
-              marginLeft: '20px', // Shift slightly right
+              padding: '20px 20px 20px 40px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'

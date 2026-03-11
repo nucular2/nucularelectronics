@@ -490,8 +490,11 @@ export default function Home() {
                 height: '380px',
                 boxShadow: 'none'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center', background: '#fff', borderRadius: '12px' }}>
-                  <span style={{ fontSize: '48px', color: '#e0e0e0', fontWeight: 700, fontFamily: 'var(--font-family)' }}>N</span>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
+                  <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 8.00001L0 40H12.6667L12.6667 10L30.6666 28.0374V0H8C3.58133 -3.86256e-07 3.1838e-06 3.58172 2.79752e-06 8.00001Z" fill="#E9E9E9"/>
+                    <path d="M53.3334 52V20H40.6667V50L22.6667 31.9626V60H45.3334C49.7521 60 53.3334 56.4183 53.3334 52Z" fill="#E9E9E9"/>
+                  </svg>
                 </div>
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller 12F HE</h3>
@@ -528,8 +531,11 @@ export default function Home() {
                 height: '380px',
                 boxShadow: 'none'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center', background: '#fff', borderRadius: '12px' }}>
-                   <span style={{ fontSize: '48px', color: '#e0e0e0', fontWeight: 700, fontFamily: 'var(--font-family)' }}>N</span>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
+                  <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 8.00001L0 40H12.6667L12.6667 10L30.6666 28.0374V0H8C3.58133 -3.86256e-07 3.1838e-06 3.58172 2.79752e-06 8.00001Z" fill="#E9E9E9"/>
+                    <path d="M53.3334 52V20H40.6667V50L22.6667 31.9626V60H45.3334C49.7521 60 53.3334 56.4183 53.3334 52Z" fill="#E9E9E9"/>
+                  </svg>
                 </div>
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller 6F HE</h3>

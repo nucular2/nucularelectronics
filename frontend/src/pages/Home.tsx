@@ -460,7 +460,8 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px 40px',
+              padding: '20px 20px 20px 20px',
+              scrollPaddingLeft: '20px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
@@ -477,7 +478,7 @@ export default function Home() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 height: '380px',
-                boxShadow: 'none' // Removed shadow for cleaner look on white
+                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
                   <img src="/miniature.png" alt="P24F" style={{ height: '180px', objectFit: 'contain' }} />
@@ -517,7 +518,7 @@ export default function Home() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 height: '380px',
-                boxShadow: 'none'
+                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
                   <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -558,7 +559,7 @@ export default function Home() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 height: '380px',
-                boxShadow: 'none'
+                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
                   <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -604,7 +605,8 @@ export default function Home() {
             display: 'flex',
             overflowX: 'auto',
             gap: '16px',
-            padding: '20px 20px 40px 40px', // Added horizontal padding for scroll snap and spacing
+            padding: '20px 20px 40px 20px', // Added horizontal padding for scroll snap and spacing
+            scrollPaddingLeft: '20px',
             background: '#ffffff',
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
@@ -719,7 +721,8 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px 40px',
+              padding: '20px 20px 20px 20px',
+              scrollPaddingLeft: '20px',
               background: '#ffffff',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none',
@@ -754,7 +757,8 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px 40px',
+              padding: '20px 20px 20px 20px',
+              scrollPaddingLeft: '20px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
@@ -766,9 +770,13 @@ export default function Home() {
                   scrollSnapAlign: 'start',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px'
+                  gap: '12px',
+                  padding: '20px',
+                  background: '#fff',
+                  borderRadius: '20px',
+                  boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
                 }}>
-                  <div style={{ width: '280px', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
                     <img src={news.image} alt={news.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div>
@@ -799,8 +807,8 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '20px 20px 20px',
-              marginLeft: '20px', // Shift slightly right
+              padding: '20px 20px 20px 20px',
+              scrollPaddingLeft: '20px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
@@ -816,7 +824,8 @@ export default function Home() {
                   scrollSnapAlign: 'start',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
                 }}>
                   <div>
                     <a href={review.link} style={{ textDecoration: 'none' }}>

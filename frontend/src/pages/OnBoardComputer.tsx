@@ -138,7 +138,7 @@ export default function OnBoardComputer() {
       <section className="reviews-section" id="reviews">
         <div className="section-header">
           <h2 className="section-title">Reviews</h2>
-          <a href="#reviews" className="section-link">
+          <a href="/reviews" className="section-link">
             All reviews
             <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

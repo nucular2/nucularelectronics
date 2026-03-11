@@ -3671,3 +3671,46 @@ body.is-mobile .review-card {
   border-bottom: none;
   padding-bottom: 4px;
 }
+
+/* Shared Section Header Styles */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
+  margin: 0;
+  color: #111;
+}
+
+.section-link {
+  color: #F36F25;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-family);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+  border-bottom: none; /* Remove any underline */
+}
+
+.section-link:hover {
+  opacity: 0.8;
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+/* Reviews Section Container */
+.reviews-section {
+  padding: 80px 20px 40px; /* Increased top padding to 80px */
+  background: #ffffff;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}

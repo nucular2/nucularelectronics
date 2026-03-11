@@ -3366,21 +3366,17 @@ body.is-mobile .review-card {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #111;
-  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s;
+  background: none; /* Removed background color */
 }
 
-.social-icon:hover {
-  opacity: 0.85;
-}
-
-.social-icon svg {
-  width: 18px;
-  height: 18px;
+.social-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .footer-bottom {

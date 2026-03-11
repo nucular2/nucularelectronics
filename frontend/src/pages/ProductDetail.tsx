@@ -159,10 +159,10 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const images = imagesOverride
     ? imagesOverride
     : isP24F
-    ? ["/мото2.png", "/miniature11.png", "/miniature12.png", "/miniature13.png"]
+    ? ["/miniature.svg", "/miniature11.png", "/miniature12.png", "/miniature13.png"]
     : product.image
     ? [product.image]
-    : ["/мото2.png"];
+    : ["/miniature.svg"];
 
   const [mainImage, setMainImage] = useState<string>(images[0]);
 
@@ -189,6 +189,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
               <div className="product-main-image">
                 <img src={mainImage} alt={displayTitle} />
               </div>
+              <img src="/точки.svg" alt="Pagination" className="product-mobile-dots" />
               <div className="product-thumbnails">
                 {images.map((src) => (
                   <button

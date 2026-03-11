@@ -3716,11 +3716,72 @@ body.is-mobile .review-card {
   text-decoration: none; /* Ensure no underline on hover */
 }
 
-/* Reviews Section Container */
-.reviews-section {
-  padding: 80px 20px 40px; /* Increased top padding to 80px */
-  background: #ffffff;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+/* Mobile Product Page Styles */
+.product-mobile-dots {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .product-variant-tab {
+    background: transparent !important; /* Remove background pill */
+    border: none !important;
+    padding: 0 8px !important; /* Adjust padding */
+    font-size: 16px;
+    font-weight: 500;
+    color: #999;
+    cursor: pointer;
+    position: relative; /* For underline effect if needed later */
+  }
+
+  .product-variant-tab.active {
+    color: #F36F25 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove thumbnails container background on mobile */
+  .product-thumbnails {
+    display: none !important;
+  }
+
+  .product-thumbnail {
+    display: none !important;
+  }
+
+  /* Remove main image container background on mobile */
+  .product-main-image {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Remove mix-blend-mode for main image on mobile */
+  .product-main-image img {
+    mix-blend-mode: normal !important;
+  }
+
+  .product-mobile-dots {
+    display: block !important;
+    margin: 16px auto 0;
+    width: 52px;
+    height: 6px;
+  }
+
+  .product-review-card {
+    width: 280px !important;
+    height: 213px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    flex: 0 0 280px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .product-main {
+    margin-bottom: 24px !important;
+  }
+  .product-overview-section {
+    padding-top: 0 !important;
+    margin-top: 24px !important;
+  }
 }

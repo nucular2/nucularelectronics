@@ -128,10 +128,10 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
 
   const headerStyle = isCompact
     ? {
-        padding: '12px 16px',
+        padding: '12px 20px',
         width: '100%',
         maxWidth: 'none',
-        height: '48px',
+        height: '68px',
         margin: '0',
         boxSizing: 'border-box' as const,
         backgroundColor: isWhite ? '#fff' : '#111',
@@ -139,7 +139,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     : undefined;
 
   const logoWrapStyle = isCompact ? { cursor: 'pointer', marginLeft: '0' } : { cursor: 'pointer', marginLeft: '8px' };
-  const logoSize = isCompact ? { width: 140, height: 33 } : { width: 170, height: 40 };
+  const logoSize = isCompact ? { width: 238, height: 56 } : { width: 170, height: 40 };
   const iconSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };
   const profileSize = isCompact ? { width: 22, height: 22 } : { width: 22, height: 22 };
   const menuSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };

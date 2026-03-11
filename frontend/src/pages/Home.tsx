@@ -728,16 +728,29 @@ export default function Home() {
               scrollbarWidth: 'none',
               scrollSnapType: 'x mandatory'
             }}>
-              <img 
-                src="/скролл5.svg" 
-                alt="Complete Solutions" 
-                style={{ 
-                  height: '320px', 
-                  width: 'auto', 
-                  maxWidth: 'none', 
-                  display: 'block' 
-                }} 
-              />
+              {[
+                "/мото11.png",
+                "/мото22.png",
+                "/мото33.png",
+                "/мото44.png",
+                "/мото66.png",
+                "/мото77.png"
+              ].map((src, index) => (
+                <img 
+                  key={index}
+                  src={src} 
+                  alt={`Complete Solution ${index + 1}`} 
+                  style={{ 
+                    height: '320px', 
+                    width: 'auto', 
+                    maxWidth: 'none', 
+                    display: 'block',
+                    borderRadius: '20px',
+                    boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)',
+                    scrollSnapAlign: 'start'
+                  }} 
+                />
+              ))}
             </div>
           </div>
 

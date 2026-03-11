@@ -16,6 +16,34 @@ export default function Home() {
     return () => mediaQuery.removeEventListener("change", updateMatch);
   }, []);
 
+  // Reviews Data
+  const reviewsData = [
+    {
+      id: 1,
+      title: "Nucular controller P24F",
+      description: "A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...",
+      author: "USA, Alex Smith",
+      flag: "/flag.png",
+      link: "#"
+    },
+    {
+      id: 2,
+      title: "uLight controller",
+      description: "Lighting control signals, brake light and LED strip. Easy connection and necessary ...",
+      author: "Germany, Max Stoun",
+      flag: "/flag2.png",
+      link: "/reviews/ulight"
+    },
+    {
+      id: 3,
+      title: "Nucular controller 6F",
+      description: "Compact and reliable controller for small electric vehicles. Perfect for e-bikes and scooters...",
+      author: "France, Hans Muller",
+      flag: "/flag3.png",
+      link: "#"
+    }
+  ];
+
   // News Data
   const newsData = [
     {
@@ -434,7 +462,8 @@ export default function Home() {
               gap: '16px',
               padding: '0 20px 20px',
               scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch'
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none'
             }}>
               {/* Card 1: P24F */}
               <div style={{
@@ -687,12 +716,14 @@ export default function Home() {
               </p>
             </div>
             <div style={{ 
-              width: '100%', 
-              overflowX: 'auto', 
-              padding: '0 20px', // Horizontal padding
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '16px',
+              padding: '0 20px 20px',
               background: '#ffffff',
               WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none'
+              scrollbarWidth: 'none',
+              scrollSnapType: 'x mandatory'
             }}>
               <img 
                 src="/скролл5.svg" 
@@ -707,7 +738,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 6. News Section */}
+          {/* 7. News Slider */}
           <div style={{ padding: '0 0 40px', background: '#ffffff' }}>
             <div style={{ padding: '0 20px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '32px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>News</h2>
@@ -718,6 +749,7 @@ export default function Home() {
                 </svg>
               </a>
             </div>
+            
             <div style={{ 
               display: 'flex',
               overflowX: 'auto',
@@ -728,7 +760,7 @@ export default function Home() {
               scrollbarWidth: 'none'
             }}>
               {newsData.map((news) => (
-                <div key={news.id} style={{
+                <div key={news.id} style={{ 
                   flex: '0 0 280px',
                   width: '280px',
                   scrollSnapAlign: 'start',
@@ -741,8 +773,8 @@ export default function Home() {
                   </div>
                   <div>
                     <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: '1.3', fontFamily: 'var(--font-family)' }}>{news.title}</h3>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: 1.3, fontFamily: 'var(--font-family)' }}>{news.title}</h3>
+                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
                       {news.text}
                     </p>
                   </div>
@@ -751,7 +783,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 7. Reviews Section */}
+          {/* 8. Reviews Slider */}
           <div style={{ padding: '0 0 40px', background: '#ffffff' }}>
             <div style={{ padding: '0 20px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '32px', fontWeight: 700, margin: 0, color: '#111', fontFamily: 'var(--font-family)' }}>Reviews</h2>
@@ -762,6 +794,7 @@ export default function Home() {
                 </svg>
               </a>
             </div>
+            
             <div style={{ 
               display: 'flex',
               overflowX: 'auto',
@@ -771,57 +804,33 @@ export default function Home() {
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'
             }}>
-              {/* Review Card 1 */}
-              <div style={{
-                flex: '0 0 280px',
-                width: '280px',
-                height: '213px',
-                padding: '20px',
-                borderRadius: '20px',
-                background: '#f9f9f9',
-                scrollSnapAlign: 'start',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}>
-                <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
-                  </p>
+              {reviewsData.slice(0, 3).map((review) => (
+                <div key={review.id} style={{ 
+                  flex: '0 0 280px',
+                  width: '280px',
+                  height: '213px',
+                  padding: '20px',
+                  borderRadius: '20px',
+                  background: '#f9f9f9',
+                  scrollSnapAlign: 'start',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}>
+                  <div>
+                    <a href={review.link} style={{ textDecoration: 'none' }}>
+                      <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>{review.title}</h3>
+                    </a>
+                    <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
+                      {review.description}
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img src={review.flag} alt="Flag" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
+                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
+                  </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <img src="/flag.png" alt="USA" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                  <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>USA, Alex Smith</span>
-                </div>
-              </div>
-
-              {/* Review Card 2 */}
-              <div style={{
-                flex: '0 0 280px',
-                width: '280px',
-                height: '213px',
-                padding: '20px',
-                borderRadius: '20px',
-                background: '#f9f9f9',
-                scrollSnapAlign: 'start',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}>
-                <div>
-                  <a href="/reviews/ulight" style={{ textDecoration: 'none' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#111', fontFamily: 'var(--font-family)' }}>uLight controller</h3>
-                  </a>
-                  <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-                    Lighting control signals, brake light and LED strip. Easy connection and necessary ...
-                  </p>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <img src="/flag2.png" alt="Germany" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                  <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>Germany, Max Stoun</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

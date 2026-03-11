@@ -40,6 +40,7 @@ import AdminReviews from './admin/pages/ReviewsManager';
 import { AuthProvider as AdminAuthProvider, ProtectedRoute as AdminProtectedRoute } from './admin/context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
 import { ReviewsProvider } from './context/ReviewsContext';
+import CookieBanner from './components/CookieBanner';
 
 export default function App() {
   const location = useLocation();
@@ -119,6 +120,7 @@ export default function App() {
               <Route path="*" element={<Home />} />
             </Routes>
             {!isAdminRoute && location.pathname !== '/' && <Footer />}
+            <CookieBanner />
           </CartProvider>
           </ReviewsProvider>
         </ProductProvider>

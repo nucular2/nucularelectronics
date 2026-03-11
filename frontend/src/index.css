@@ -1564,18 +1564,18 @@ body.is-mobile .canbus-text {
 .dropdown-content {
   width: 100%;
   max-width: 100%;
-  height: 360px; /* Height as requested */
+  height: 360px;
   margin: 0;
   padding: 32px 250px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0;
   box-sizing: border-box;
 }
 
 .dropdown-column {
   padding: 0 32px;
-  /* border-right: 1px solid #eee; */ /* Removing border as per clean design usually */
+  border-right: 1px solid #eee;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1592,10 +1592,10 @@ body.is-mobile .canbus-text {
 
 .dropdown-title {
   font-family: var(--font-family);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 14px;
   line-height: 140%;
-  color: #999; /* Keeping title grey/distinct */
+  color: #999;
   margin-bottom: 24px;
 }
 
@@ -1609,6 +1609,12 @@ body.is-mobile .canbus-text {
   margin-bottom: 16px;
   transition: color 0.2s;
   display: block;
+}
+
+.dropdown-link.soon {
+  color: #ccc;
+  cursor: default;
+  pointer-events: none;
 }
 
 .dropdown-link:hover {

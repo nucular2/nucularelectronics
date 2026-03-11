@@ -246,9 +246,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
                 On-board computer
               </a>
               <a href="/ulight-controller" className="dropdown-link" onClick={(e) => { e.preventDefault(); navigate('/ulight-controller'); setIsProductsOpen(false); }}>uLight controller</a>
-              <a href="#" className="dropdown-link">Motors</a>
-              <a href="#" className="dropdown-link">Bluetooth module with App</a>
-              <a href="#" className="dropdown-link soon">BMS (soon)</a>
+              <span className="dropdown-link soon">BMS (soon)</span>
             </div>
             <div className="dropdown-column">
               <h4 className="dropdown-title">Complete solutions</h4>
@@ -259,14 +257,9 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <a href="#" className="dropdown-link">For dual-motor scooters</a>
             </div>
             <div className="dropdown-column">
-              <h4 className="dropdown-title">E-go karts solutions</h4>
-              <a href="#" className="dropdown-link">Ready made go-kart</a>
-              <a href="#" className="dropdown-link">Conversion kits</a>
-            </div>
-            <div className="dropdown-column">
-              <h4 className="dropdown-title">Electric Watersports</h4>
-              <a href="#" className="dropdown-link">Electric Surfboards</a>
-              <a href="#" className="dropdown-link">Electric Jet Drive</a>
+              <h4 className="dropdown-title">Mobile App</h4>
+              <span className="dropdown-link soon">Bluetooth (soon)</span>
+              <span className="dropdown-link soon">Nucular App (soon)</span>
             </div>
           </div>
         </div>

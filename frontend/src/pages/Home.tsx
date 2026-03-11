@@ -460,7 +460,8 @@ export default function Home() {
               display: 'flex',
               overflowX: 'auto',
               gap: '16px',
-              padding: '0 20px 20px',
+              padding: '20px 20px 20px',
+              marginLeft: '20px',
               scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none'

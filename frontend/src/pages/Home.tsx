@@ -294,7 +294,7 @@ export default function Home() {
             width: '100%', 
             maxWidth: '1680px',
             margin: '0 auto', 
-            padding: '120px 0 40px', 
+            padding: '40px 0 40px', 
             background: '#ffffff'
           }}>
             <div style={{ 
@@ -361,15 +361,31 @@ export default function Home() {
                     minHeight: '280px'
                   }}>
                     <div>
-                      <h3 style={{ 
-                        fontSize: '18px', 
-                        fontWeight: 700, 
-                        margin: '0 0 12px', 
-                        color: '#111', 
-                        fontFamily: 'var(--font-family)' 
-                      }}>
-                        {review.product}
-                      </h3>
+                      {/* @ts-ignore */}
+                      {review.link ? (
+                        /* @ts-ignore */
+                        <a href={review.link} style={{ textDecoration: 'none' }}>
+                          <h3 style={{ 
+                            fontSize: '18px', 
+                            fontWeight: 700, 
+                            margin: '0 0 12px', 
+                            color: '#111', 
+                            fontFamily: 'var(--font-family)' 
+                          }}>
+                            {review.product}
+                          </h3>
+                        </a>
+                      ) : (
+                        <h3 style={{ 
+                          fontSize: '18px', 
+                          fontWeight: 700, 
+                          margin: '0 0 12px', 
+                          color: '#111', 
+                          fontFamily: 'var(--font-family)' 
+                        }}>
+                          {review.product}
+                        </h3>
+                      )}
                       <p style={{ 
                         fontSize: '14px', 
                         color: '#666', 

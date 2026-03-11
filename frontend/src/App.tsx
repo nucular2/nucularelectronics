@@ -26,6 +26,7 @@ import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
 import ULightController from './pages/ULightController';
+import ReviewDetailULight from './pages/ReviewDetailULight';
 import OnBoardComputer from './pages/OnBoardComputer';
 import Controller from './pages/Controller';
 import SurRonLightBee from './pages/SurRonLightBee';
@@ -95,6 +96,7 @@ export default function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrderDetail />} />
             <Route path="/ulight-controller" element={<ULightController />} />
+            <Route path="/reviews/ulight" element={<ReviewDetailULight />} />
             <Route path="/sur-ron-light-bee" element={<SurRonLightBee />} />
             <Route path="/on-board-computer" element={<OnBoardComputer />} />
             <Route path="/controller" element={<Controller />} />

@@ -784,10 +784,10 @@ export default function Home() {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '12px',
-                  padding: '20px',
-                  background: '#fff',
-                  borderRadius: '20px',
-                  boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
+                  padding: '0px',
+                  background: 'transparent',
+                  borderRadius: '0px',
+                  boxShadow: 'none'
                 }}>
                   <div style={{ width: '100%', height: '185px', borderRadius: '20px', overflow: 'hidden' }}>
                     <img src={news.image} alt={news.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -796,7 +796,7 @@ export default function Home() {
                     <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
                     <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px', color: '#111', lineHeight: 1.3, fontFamily: 'var(--font-family)' }}>{news.title}</h3>
                     <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
-                      {news.text}
+                      {news.text.length > 80 ? news.text.slice(0, 80) + '...' : news.text}
                     </p>
                   </div>
                 </div>

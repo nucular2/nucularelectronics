@@ -130,6 +130,11 @@ export default function Cart() {
               >
                 Go to checkout
               </button>
+              <div style={{ marginTop: '30px', width: '100%' }}>
+                <svg width="100%" height="1" viewBox="0 0 414 1" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                  <rect width="100%" height="1" fill="#E9E9E9" />
+                </svg>
+              </div>
             </aside>
           </div>
         </div>

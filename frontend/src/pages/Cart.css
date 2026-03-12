@@ -11,13 +11,13 @@
   font-size: 40px; /* Adjusted size based on screenshot look */
   color: #222;
   margin-bottom: 40px;
-  margin-left: 0; /* Align left */
+  margin-left: 80px; /* Align with content */
 }
 
 .cart-container {
   max-width: 1180px; /* Standard max-width */
   margin: 0 auto;
-  padding: 0 40px; /* Add padding to align content */
+  padding: 0; /* Remove padding to allow full-width elements */
 }
 
 .cart-layout {
@@ -25,7 +25,8 @@
   min-height: 295px;
   display: flex;
   justify-content: flex-start;
-  gap: 80px; /* Reduced gap slightly */
+  gap: 80px;
+  padding-left: 80px; /* Left alignment for content */
 }
 
 .cart-main {
@@ -41,6 +42,7 @@
 
 .cart-item {
   display: flex;
+  align-items: center; /* Align items horizontally */
   padding-bottom: 24px;
   border-bottom: 1px solid #EAEAEA;
 }
@@ -95,6 +97,7 @@
   display: flex;
   align-items: center;
   gap: 32px;
+  margin-left: auto; /* Push actions to the right */
 }
 
 .quantity-controls {
@@ -154,7 +157,7 @@
 
 /* Cart Summary */
 .cart-summary {
-  width: 420px; /* Increased width */
+  width: 600px; /* Increased width to accommodate full length elements */
   flex-shrink: 0;
 }
 
@@ -164,11 +167,13 @@
   font-size: 32px; /* Larger title */
   color: #222;
   margin-bottom: 32px;
+  text-align: left; /* Align title left */
 }
 
 .cart-summary-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Align row items left */
+  gap: 20px;
   margin-bottom: 16px;
   align-items: center;
 }
@@ -184,6 +189,7 @@
   font-weight: 500;
   font-size: 16px;
   color: #222;
+  margin-left: auto; /* Push value to right */
 }
 
 .cart-summary-row-total {
@@ -200,11 +206,12 @@
 .cart-summary-row-total .cart-summary-value {
   font-size: 32px;
   font-weight: 700;
+  margin-left: auto;
 }
 
 .checkout-btn {
-  width: 100%;
-  height: 54px;
+  width: 280px; /* Specific width from design if needed, or keep wide */
+  height: 44px; /* More compact height like in screenshot */
   background: #F36F25;
   color: #fff;
   border: none;
@@ -214,6 +221,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: background 0.2s;
+  display: block;
 }
 
 .checkout-btn:hover {
@@ -308,4 +316,23 @@
     font-size: 32px;
     margin-left: 0;
   }
+
+  /* Full bleed elements on mobile */
+  .preorder-badge {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+    border-radius: 0;
+  }
+
+  .cart-divider {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+  }
+}
+
+.cart-divider {
+  margin-top: 30px;
+  width: 100%;
 }

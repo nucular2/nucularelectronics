@@ -24,13 +24,13 @@
   width: 100%;
   min-height: 295px;
   display: flex;
-  justify-content: flex-start; /* Align to start */
-  gap: 120px; /* Increased gap to push summary right */
+  justify-content: flex-start;
+  gap: 80px; /* Reduced gap slightly */
 }
 
 .cart-main {
   flex: 1;
-  max-width: 600px; /* Kept same width for item list */
+  max-width: 700px; /* Increased max-width */
 }
 
 .cart-items {
@@ -154,7 +154,7 @@
 
 /* Cart Summary */
 .cart-summary {
-  width: 380px; /* Increased width as requested */
+  width: 420px; /* Increased width */
   flex-shrink: 0;
 }
 

@@ -112,6 +112,12 @@ export default function Footer() {
         </div>
         </div>
 
+        <div className="footer-divider">
+          <svg width="100%" height="1" viewBox="0 0 414 1" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <rect width="100%" height="1" fill="#E9E9E9" />
+          </svg>
+        </div>
+
         <div className="footer-bottom">
         <div className="footer-logo">
           <svg width="119" height="28" viewBox="0 0 119 28" fill="none" xmlns="http://www.w3.org/2000/svg">

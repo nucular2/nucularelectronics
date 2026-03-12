@@ -3344,7 +3344,7 @@ body.is-mobile .review-card {
   justify-content: space-between;
   align-items: center;
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .trustpilot-widget {
@@ -3383,8 +3383,13 @@ body.is-mobile .review-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #e0e0e0;
-  padding-top: 32px;
+  /* border-top: 1px solid #e0e0e0; */
+  /* padding-top: 32px; */
+}
+
+.footer-divider {
+  width: 100%;
+  margin-bottom: 32px;
 }
 
 .footer-bottom-links {

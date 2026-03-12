@@ -7,17 +7,17 @@
 
 .cart-title {
   font-family: var(--font-family);
-  font-weight: 700; /* Made bolder as requested (was 700 already, keeping it or can try 800 if font supports) */
-  font-size: 40px; /* Adjusted size based on screenshot look */
+  font-weight: 700;
+  font-size: 40px;
   color: #222;
   margin-bottom: 40px;
-  margin-left: 80px; /* Align with content */
+  margin-left: 0;
 }
 
 .cart-container {
-  max-width: 1180px; /* Standard max-width */
+  max-width: 1460px;
   margin: 0 auto;
-  padding: 0; /* Remove padding to allow full-width elements */
+  padding: 0 40px;
 }
 
 .cart-layout {
@@ -26,7 +26,6 @@
   display: flex;
   justify-content: flex-start;
   gap: 80px;
-  padding-left: 80px; /* Left alignment for content */
 }
 
 .cart-main {
@@ -226,6 +225,12 @@
 
 .checkout-btn:hover {
   background: #d65a15;
+}
+
+.cart-divider {
+  width: calc(100% + 40px);
+  margin-right: -40px;
+  margin-top: 30px;
 }
 
 /* Preorder Badge */

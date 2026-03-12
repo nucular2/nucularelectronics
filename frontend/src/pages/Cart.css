@@ -7,24 +7,30 @@
 
 .cart-title {
   font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 54px; /* As requested */
+  font-weight: 700; /* Made bolder as requested (was 700 already, keeping it or can try 800 if font supports) */
+  font-size: 40px; /* Adjusted size based on screenshot look */
   color: #222;
   margin-bottom: 40px;
+  margin-left: 0; /* Align left */
+}
+
+.cart-container {
+  max-width: 1180px; /* Standard max-width */
+  margin: 0 auto;
+  padding: 0 40px; /* Add padding to align content */
 }
 
 .cart-layout {
-  width: 980px; /* As requested */
-  min-height: 295px; /* As requested */
-  margin: 0 auto;
+  width: 100%;
+  min-height: 295px;
   display: flex;
-  justify-content: space-between;
-  gap: 60px;
+  justify-content: flex-start; /* Align to start */
+  gap: 120px; /* Increased gap to push summary right */
 }
 
 .cart-main {
   flex: 1;
-  max-width: 600px;
+  max-width: 600px; /* Kept same width for item list */
 }
 
 .cart-items {
@@ -55,14 +61,14 @@
   height: 80px;
   flex-shrink: 0;
   background: transparent !important;
-  border-radius: 0 !important; /* Убрали скругление */
-  display: block; /* Убрали центрирование флексом, чтобы картинка была "как есть" */
+  border-radius: 0 !important;
+  display: block;
 }
 
 .cart-item-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Картинка вписывается, но не обрезается */
+  object-fit: contain;
   object-position: center;
   background: transparent !important;
 }
@@ -73,7 +79,7 @@
 
 .cart-item-title {
   font-family: var(--font-family);
-  font-weight: 600;
+  font-weight: 700; /* Bold title */
   font-size: 16px;
   color: #222;
   margin-bottom: 4px;
@@ -94,10 +100,12 @@
 .quantity-controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   background: #F5F5F5;
   padding: 8px 16px;
   border-radius: 8px;
+  width: 100px; /* Fixed width for controls */
 }
 
 .quantity-value {
@@ -105,12 +113,21 @@
   font-weight: 500;
   font-size: 14px;
   color: #222;
-  min-width: 20px;
-  text-align: center;
+}
+
+.quantity-arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-price-remove {
   text-align: right;
+  min-width: 80px;
 }
 
 .cart-item-price {
@@ -125,7 +142,7 @@
   background: none;
   border: none;
   font-family: var(--font-family);
-  font-size: 12px;
+  font-size: 14px;
   color: #F36F25;
   cursor: pointer;
   padding: 0;
@@ -137,28 +154,29 @@
 
 /* Cart Summary */
 .cart-summary {
-  width: 320px;
+  width: 380px; /* Increased width as requested */
   flex-shrink: 0;
 }
 
 .cart-summary-title {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 32px; /* Larger title */
   color: #222;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .cart-summary-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  align-items: center;
 }
 
 .cart-summary-label {
   font-family: var(--font-family);
   font-size: 16px;
-  color: #666;
+  color: #999; /* Grey label */
 }
 
 .cart-summary-value {
@@ -175,8 +193,8 @@
 }
 
 .cart-summary-row-total .cart-summary-label {
-  font-size: 18px;
-  color: #222;
+  font-size: 16px;
+  color: #999;
 }
 
 .cart-summary-row-total .cart-summary-value {
@@ -186,11 +204,11 @@
 
 .checkout-btn {
   width: 100%;
-  height: 56px;
+  height: 54px;
   background: #F36F25;
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
@@ -200,6 +218,21 @@
 
 .checkout-btn:hover {
   background: #d65a15;
+}
+
+/* Preorder Badge */
+.preorder-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #222;
+  font-size: 14px;
+  font-weight: 400;
+  background: #FFEBDF;
+  padding: 16px 24px;
+  border-radius: 12px;
+  width: 100%; /* Ensure full width */
+  margin-top: 24px;
 }
 
 /* Empty Cart */
@@ -249,10 +282,17 @@
 }
 
 @media (max-width: 900px) {
+  .cart-page {
+    padding-top: 100px;
+  }
+
+  .cart-container {
+    padding: 0 20px;
+  }
+
   .cart-layout {
     width: 100%;
     flex-direction: column;
-    padding: 0 20px;
     gap: 40px;
   }
   
@@ -266,6 +306,6 @@
   
   .cart-title {
     font-size: 32px;
-    margin-left: 20px;
+    margin-left: 0;
   }
 }

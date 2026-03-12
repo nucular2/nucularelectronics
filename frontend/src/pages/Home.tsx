@@ -480,7 +480,7 @@ export default function Home() {
                 height: '380px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-                  <img src="/miniature.svg" alt="P24F" style={{ height: '180px', objectFit: 'contain' }} />
+                  <img src="/miniature.svg" alt="P24F" style={{ height: '180px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
                 </div>
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>

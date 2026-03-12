@@ -577,7 +577,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                 <div className="product-add-grid">
                   <CardBase className="product-add-card">
                     <div className="product-add-image">
-                      <img className="card-image" src="/miniature15.png" alt="On-board computer" />
+                      <img className="card-image" src="/miniature.svg" alt="On-board computer" style={{ background: 'transparent', mixBlendMode: 'normal' }} />
                     </div>
                     <div className="product-add-name">On-board computer</div>
                     <div className="product-add-price">$110.00</div>

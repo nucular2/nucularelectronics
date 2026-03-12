@@ -470,18 +470,17 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: 'transparent',
+                background: '#F6F6F6',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                height: '380px',
-                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
+                height: '380px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-                  <img src="/miniature.png" alt="P24F" style={{ height: '180px', objectFit: 'contain' }} />
+                  <img src="/miniature.svg" alt="P24F" style={{ height: '180px', objectFit: 'contain' }} />
                 </div>
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px', color: '#111', fontFamily: 'var(--font-family)' }}>Nucular controller P24F</h3>
@@ -510,15 +509,14 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: 'transparent',
+                background: '#F6F6F6',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                height: '380px',
-                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
+                height: '380px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
                   <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -551,15 +549,14 @@ export default function Home() {
               <div style={{
                 flex: '0 0 280px',
                 width: '280px',
-                background: 'transparent',
+                background: '#F6F6F6',
                 borderRadius: '20px',
                 padding: '20px',
                 scrollSnapAlign: 'start',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                height: '380px',
-                boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
+                height: '380px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', height: '180px', alignItems: 'center' }}>
                   <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">

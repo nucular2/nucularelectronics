@@ -3594,6 +3594,25 @@ body.is-mobile .review-card {
   justify-content: space-between;
 }
 
+@media (max-width: 900px) {
+  .controller-page .reviews-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 16px !important;
+    padding: 20px !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .controller-page .review-card {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    max-width: 280px !important;
+    height: 213px !important;
+    padding: 20px !important;
+  }
+}
 /* Reviews Section Styles */
 .reviews-section {
   width: 100%;

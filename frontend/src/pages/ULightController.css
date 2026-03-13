@@ -251,8 +251,8 @@
   margin: 0;
 }
 
-/* Desktop styles - Force applied globally */
-/* @media (min-width: 1px) { */
+/* Desktop styles */
+@media (min-width: 901px) {
   .ulight-hero {
     flex-direction: column;
     justify-content: flex-start;
@@ -469,10 +469,46 @@
     min-width: 380px;
     flex-shrink: 0;
   }
-/* } */
+}
 
 /* Mobile responsiveness */
-@media (max-width: 0px) {
+@media (max-width: 900px) {
+  /* Full-bleed buy plate and reviews (compensate 20px container paddings) */
+  .ulight-buy-plate {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 32px 20px;
+  }
+
+  .ulight-reviews-section {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 40px 0;
+  }
+
+  .ulight-reviews-header {
+    padding: 0 20px;
+  }
+
+  .product-reviews-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 0 20px 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .product-reviews-list::-webkit-scrollbar { display: none; }
+
+  .product-review-card {
+    min-width: 280px;
+    width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
   .ulight-info-title {
     font-size: 24px;
     padding: 0 10px;

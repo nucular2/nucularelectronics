@@ -167,7 +167,7 @@
   .shop-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
+    gap: 12px !important;
     padding: 0 !important;
     width: 100% !important;
   }
@@ -175,8 +175,8 @@
   /* Card Base */
   .shop-card {
     width: 100% !important;
-    height: 313px !important;
-    padding: 20px !important;
+    height: 293px !important;
+    padding: 16px !important;
     border-radius: 20px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -199,9 +199,9 @@
 
   /* Image Container */
   .shop-card-image-container {
-    height: 141px !important;
+    height: 125px !important;
     width: 100% !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 20px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -210,16 +210,16 @@
   }
   
   .shop-card-image {
-    width: 141px !important;
-    height: 141px !important;
+    width: 125px !important;
+    height: 125px !important;
     object-fit: contain !important;
     mix-blend-mode: darken !important;
   }
   
   /* Placeholder SVG */
   .shop-card-image-container svg {
-    width: 27px !important;
-    height: 30px !important;
+    width: 34px !important;
+    height: 38px !important;
     transform: scale(1) !important;
   }
 
@@ -232,7 +232,7 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     text-align: left !important;
-    white-space: normal !important;
+    white-space: pre-line !important;
     overflow: visible !important;
     height: auto !important;
     min-height: 34px !important; /* At least 2 lines */
@@ -250,7 +250,7 @@
     justify-content: flex-end !important;
     align-items: flex-start !important;
     gap: 0 !important;
-    padding-bottom: 20px !important;
+    padding-bottom: 16px !important;
     min-height: auto !important;
   }
 
@@ -262,7 +262,7 @@
     font-family: var(--font-family) !important;
     font-size: 14px !important;
     color: #888 !important;
-    margin-top: 4px !important; /* Small gap after title */
+    margin-top: 8px !important; /* Small gap after title */
     margin-bottom: 0 !important;
     font-weight: 500 !important;
     text-align: left !important;
@@ -289,7 +289,7 @@
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    margin-top: -20px !important;
+    margin-top: -8px !important;
     width: auto !important;
     height: auto !important;
     text-align: left !important;

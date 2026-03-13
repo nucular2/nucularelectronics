@@ -19,7 +19,7 @@ export const products: Product[] = [
   {
     id: 2,
     category: 'Components',
-    title: 'On-board computer',
+    title: 'On-board\ncomputer',
     price: '$110.00',
     image: '/miniature.png'
   },

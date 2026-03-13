@@ -607,12 +607,16 @@ body,
 
 .cart-icon-container {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-count {
   position: absolute;
   top: -8px;
   right: -8px;
+  transform: none; /* stay anchored to corner by default (desktop) */
   background: #F36F25;
   color: #fff;
   font-size: 10px;
@@ -625,6 +629,7 @@ body,
   justify-content: center;
 }
 
+/* Mobile: badge overlaps icon tightly */
 body.is-mobile .cart-count {
   top: 0;
   right: 0;
@@ -650,6 +655,7 @@ body.is-mobile .cart-count {
 .profile-icon-container svg {
   width: 20px;
   height: 20px;
+  display: block;
 }
 
 .dropdown-arrow {

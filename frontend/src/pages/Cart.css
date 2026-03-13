@@ -30,7 +30,6 @@
 
 .cart-main {
   flex: 1;
-  max-width: 700px; /* Increased max-width */
 }
 
 .cart-items {
@@ -231,6 +230,99 @@
   width: calc(100% + 40px);
   margin-right: -40px;
   margin-top: 30px;
+}
+
+/* Desktop sizing to match design */
+@media (min-width: 1024px) {
+  .cart-page {
+    justify-content: center !important;
+  }
+  .cart-container {
+    padding-left: 0 !important;
+    margin: 0 auto !important;
+  }
+  .cart-layout {
+    width: 920px !important; /* 580 + 60 gap + 280 */
+    min-height: 221px !important;
+    gap: 60px !important; /* space between columns */
+    margin: 0 auto !important;
+  }
+  .cart-main {
+    width: 580px !important;
+    max-width: 580px !important;
+  }
+  .cart-items {
+    height: 177px !important;
+  }
+  .cart-summary {
+    width: 280px !important;
+    height: 221px !important;
+    position: static !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    margin-top: 40px !important; /* ниже */
+    margin-left: 20px !important; /* правее */
+  }
+  .cart-summary-title {
+    font-size: 28px !important; /* Bold 28 */
+    font-weight: 700 !important;
+    line-height: 120% !important;
+    margin: 0 0 8px 0 !important;
+  }
+  .cart-summary .checkout-btn {
+    width: 100% !important; /* equals 280px because aside is 280px */
+    height: 44px !important;
+    line-height: 44px !important;
+    flex: 0 0 44px !important;
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    align-self: stretch !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    appearance: none !important;
+    overflow: hidden !important;
+    background: #F36F25 !important;
+    color: #fff !important;
+    border: none !important;
+    margin-top: auto !important; /* прижать вниз внутри 221px */
+  }
+  aside.cart-summary > .checkout-btn {
+    width: 280px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    flex: 0 0 44px !important;
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    appearance: none !important;
+    overflow: hidden !important;
+    background: #F36F25 !important;
+    color: #fff !important;
+    border: none !important;
+  }
+  .cart-page .checkout-btn {
+    width: 280px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    appearance: none !important;
+    overflow: hidden !important;
+    background: #F36F25 !important;
+    color: #fff !important;
+    border: none !important;
+  }
 }
 
 /* Preorder Badge */

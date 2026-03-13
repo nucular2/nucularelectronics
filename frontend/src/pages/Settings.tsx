@@ -98,9 +98,7 @@ export default function Settings() {
                   </button>
                 )}
               </div>
-              <button className="support-search-button" type="submit">
-                Search
-              </button>
+              <button className="support-search-button" type="submit">Search</button>
             </form>
 
             {query && (

@@ -473,6 +473,11 @@
 
 /* Mobile responsiveness */
 @media (max-width: 900px) {
+  /* Hide desktop-specific hero containers on mobile */
+  .ulight-desktop-hero-container {
+    display: none !important;
+  }
+
   /* Full-bleed buy plate and reviews (compensate 20px container paddings) */
   .ulight-buy-plate {
     width: calc(100% + 40px);
@@ -494,7 +499,9 @@
 
   .product-reviews-list {
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
     gap: 16px;
     padding: 0 20px 20px;
     -webkit-overflow-scrolling: touch;

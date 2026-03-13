@@ -524,13 +524,13 @@
 
   /* Help banner full-bleed on mobile */
   .support-help-banner {
-    width: 100vw;
-    max-width: none;
+    box-sizing: border-box;
+    width: calc(100% + 40px); /* compensate container padding 20px on both sides */
     height: 290px;
     padding: 32px 20px;
     border-radius: 0;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    margin-left: -20px;  /* pull to left edge */
+    margin-right: -20px; /* pull to right edge */
   }
   .support-help-title {
     font-size: 20px;

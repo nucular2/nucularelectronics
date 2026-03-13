@@ -3594,6 +3594,44 @@ body.is-mobile .review-card {
   justify-content: space-between;
 }
 
+/* Enforce mobile slider when body.has is-mobile (JS toggle) */
+body.is-mobile .controller-page .reviews-section,
+body.is-mobile .onboard-page .reviews-section {
+  padding: 0 0 40px !important;
+  background: #fff !important;
+}
+body.is-mobile .controller-page .reviews-grid,
+body.is-mobile .onboard-page .reviews-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 16px !important;
+  padding: 0 20px 12px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+body.is-mobile .controller-page .reviews-grid::-webkit-scrollbar,
+body.is-mobile .onboard-page .reviews-grid::-webkit-scrollbar {
+  display: none;
+}
+body.is-mobile .controller-page .review-card,
+body.is-mobile .onboard-page .review-card {
+  flex: 0 0 280px !important;
+  width: 280px !important;
+  max-width: 280px !important;
+  height: 213px !important;
+  padding: 20px !important;
+  border-radius: 20px !important;
+  background: #F9F9F9 !important;
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1) !important;
+  scroll-snap-align: start !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
 @media (max-width: 900px) {
   .controller-page .reviews-grid {
     display: flex !important;

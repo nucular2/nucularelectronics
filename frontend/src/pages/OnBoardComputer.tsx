@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
 import AnimatedSection from "../components/AnimatedSection";
@@ -6,6 +6,26 @@ import AnimatedSection from "../components/AnimatedSection";
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
   const { addToCart } = useCart();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const apply = () => {
+      setIsMobile(mq.matches);
+      if (mq.matches) {
+        document.body.classList.add("is-mobile");
+      } else {
+        document.body.classList.remove("is-mobile");
+      }
+    };
+    apply();
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+    else mq.addListener(apply);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", apply);
+      else mq.removeListener(apply);
+    };
+  }, []);
 
   const handleBuy = () => {
     addToCart({
@@ -145,7 +165,22 @@ export default function OnBoardComputer() {
             </svg>
           </a>
         </div>
-        <div className="reviews-grid">
+        <div
+          className="reviews-grid"
+          style={
+            isMobile
+              ? {
+                  display: "flex",
+                  flexWrap: "nowrap",
+                  overflowX: "auto",
+                  overflowY: "hidden",
+                  gap: "16px",
+                  padding: "0 20px 12px",
+                  WebkitOverflowScrolling: "touch",
+                }
+              : undefined
+          }
+        >
           <article className="review-card">
             <h3 className="review-title">On-board computer</h3>
             <p className="review-text">

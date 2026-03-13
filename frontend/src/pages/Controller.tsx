@@ -368,6 +368,7 @@ export default function Controller() {
                   overflowY: "hidden",
                   gap: "16px",
                   padding: "0 20px 12px",
+                  scrollSnapType: "x mandatory",
                   WebkitOverflowScrolling: "touch",
                 }
               : undefined
@@ -380,6 +381,7 @@ export default function Controller() {
                 ? {
                     flex: "0 0 280px",
                     width: "280px",
+                    minWidth: "280px",
                     maxWidth: "280px",
                     height: "213px",
                     padding: "20px",
@@ -410,6 +412,7 @@ export default function Controller() {
                 ? {
                     flex: "0 0 280px",
                     width: "280px",
+                    minWidth: "280px",
                     maxWidth: "280px",
                     height: "213px",
                     padding: "20px",
@@ -440,6 +443,7 @@ export default function Controller() {
                 ? {
                     flex: "0 0 280px",
                     width: "280px",
+                    minWidth: "280px",
                     maxWidth: "280px",
                     height: "213px",
                     padding: "20px",
@@ -470,6 +474,7 @@ export default function Controller() {
                 ? {
                     flex: "0 0 280px",
                     width: "280px",
+                    minWidth: "280px",
                     maxWidth: "280px",
                     height: "213px",
                     padding: "20px",

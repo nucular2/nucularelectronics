@@ -225,11 +225,17 @@ body,
   }
 
   .onboard-panel {
-    width: 100%;
-    max-width: none;
-    height: auto;
-    padding: 24px 20px;
-    margin: 0;
+    padding: 32px 20px;
+    width: 414px;
+    height: 187px;
+    margin: 0 auto; /* centers on 414 viewport; keeps edges on 414px artboard */
+    box-sizing: border-box;
+  }
+  .onboard-panel-button {
+    width: 374px;
+    height: 44px;
+    border-radius: 8px;
+    padding: 0 24px;
   }
   
   .reviews-section .section-header .section-title {
@@ -238,12 +244,16 @@ body,
   
   .reviews-grid {
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     gap: 16px;
     padding: 0 20px 20px 20px; /* inner gutters while section is full-bleed */
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .reviews-grid::-webkit-scrollbar { display: none; }
   
   .review-card {
     min-width: 280px; /* Ensure cards have minimum width */

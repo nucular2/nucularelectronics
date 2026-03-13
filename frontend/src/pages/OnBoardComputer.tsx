@@ -179,6 +179,7 @@ export default function OnBoardComputer() {
             isMobile
               ? {
                   display: "flex",
+                  flexDirection: "row",
                   flexWrap: "nowrap",
                   overflowX: "auto",
                   overflowY: "hidden",

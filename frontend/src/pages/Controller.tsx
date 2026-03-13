@@ -363,6 +363,7 @@ export default function Controller() {
             isMobile
               ? {
                   display: "flex",
+                  flexDirection: "row",
                   flexWrap: "nowrap",
                   overflowX: "auto",
                   overflowY: "hidden",

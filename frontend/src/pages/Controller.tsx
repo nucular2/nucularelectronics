@@ -21,7 +21,7 @@ export default function Controller() {
   };
 
   return (
-    <div className="onboard-page">
+    <div className="onboard-page controller-page">
       {/* Header with dynamic variant based on active tab */}
       <Header variant={activeTab === 'specifications' ? 'white' : 'transparent'} />
       

@@ -58,6 +58,15 @@ export default function ULightController() {
     <div className="ulight-page">
       <Header variant="transparent" />
       
+      {/* Mobile hero */}
+      <AnimatedSection className="ulight-mobile-hero" delay={0.05}>
+        <img 
+          src="/uLight controller.svg" 
+          alt="uLight controller" 
+          className="ulight-mobile-hero-image"
+        />
+      </AnimatedSection>
+      
       <section className="ulight-hero">
         {/* Desktop Navigation */}
         <div className="controller-hero-actions ulight-desktop-actions">

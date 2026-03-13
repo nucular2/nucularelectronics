@@ -473,6 +473,24 @@
 
 /* Mobile responsiveness */
 @media (max-width: 900px) {
+  /* Mobile hero image block */
+  .ulight-mobile-hero {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 0;
+  }
+  .ulight-mobile-hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Hide desktop hero section on mobile */
+  .ulight-hero {
+    display: none !important;
+  }
+
   /* Hide desktop-specific hero containers on mobile */
   .ulight-desktop-hero-container {
     display: none !important;
@@ -530,5 +548,11 @@
   .ulight-reviews-section .product-reviews-list {
     margin-left: 0 !important;
     margin-right: 0 !important;
+  }
+}
+
+@media (min-width: 901px) {
+  .ulight-mobile-hero {
+    display: none !important;
   }
 }

@@ -340,7 +340,14 @@ export default function Controller() {
         </section>
       </div>
 
-      <section className="reviews-section">
+      <section
+        className="reviews-section"
+        style={
+          isMobile
+            ? { padding: "0 0 40px", background: "#fff" }
+            : undefined
+        }
+      >
         <div className="section-header">
           <h2 className="section-title">Reviews</h2>
           <a href="/reviews" className="section-link">
@@ -366,7 +373,27 @@ export default function Controller() {
               : undefined
           }
         >
-          <article className="review-card">
+          <article
+            className="review-card"
+            style={
+              isMobile
+                ? {
+                    flex: "0 0 280px",
+                    width: "280px",
+                    maxWidth: "280px",
+                    height: "213px",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    background: "#F9F9F9",
+                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
+                    scrollSnapAlign: "start",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }
+                : undefined
+            }
+          >
             <h3 className="review-title">Nucular controller P24F</h3>
             <p className="review-text">
               A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
@@ -376,7 +403,27 @@ export default function Controller() {
               <span className="author-name">USA, Alex Smith</span>
             </div>
           </article>
-          <article className="review-card">
+          <article
+            className="review-card"
+            style={
+              isMobile
+                ? {
+                    flex: "0 0 280px",
+                    width: "280px",
+                    maxWidth: "280px",
+                    height: "213px",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    background: "#F9F9F9",
+                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
+                    scrollSnapAlign: "start",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }
+                : undefined
+            }
+          >
             <h3 className="review-title">uLight controller</h3>
             <p className="review-text">
               Lighting control signals, brake light and LED strip. Easy connection and necessary ...
@@ -386,7 +433,27 @@ export default function Controller() {
               <span className="author-name">Germany, Max Stoun</span>
             </div>
           </article>
-          <article className="review-card">
+          <article
+            className="review-card"
+            style={
+              isMobile
+                ? {
+                    flex: "0 0 280px",
+                    width: "280px",
+                    maxWidth: "280px",
+                    height: "213px",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    background: "#F9F9F9",
+                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
+                    scrollSnapAlign: "start",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }
+                : undefined
+            }
+          >
             <h3 className="review-title">Nucular controller P24F</h3>
             <p className="review-text">
               A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
@@ -396,7 +463,27 @@ export default function Controller() {
               <span className="author-name">Norway, Anna Orlova</span>
             </div>
           </article>
-          <article className="review-card">
+          <article
+            className="review-card"
+            style={
+              isMobile
+                ? {
+                    flex: "0 0 280px",
+                    width: "280px",
+                    maxWidth: "280px",
+                    height: "213px",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    background: "#F9F9F9",
+                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
+                    scrollSnapAlign: "start",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }
+                : undefined
+            }
+          >
             <h3 className="review-title">The on-board computer</h3>
             <p className="review-text">
               The on-board computer is equipped with a large sunlight resistant screen. It displays main parameters, driving modes, ...

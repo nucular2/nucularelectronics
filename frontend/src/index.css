@@ -3703,7 +3703,8 @@ body.is-mobile .review-card {
 
 /* Controller page: make reviews look like homepage slider */
 .controller-page .reviews-section {
-  padding: 0 0 40px;
+  padding: 0 0 20px;
+  margin: 0 0 24px;
   background: #fff;
 }
 .controller-page .reviews-grid {
@@ -3711,7 +3712,7 @@ body.is-mobile .review-card {
   overflow-x: auto;
   overflow-y: hidden;
   gap: 16px;
-  padding: 20px;
+  padding: 20px 20px 12px 20px;
   scroll-padding-left: 20px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -3737,6 +3738,13 @@ body.is-mobile .controller-page .reviews-section,
 body.is-mobile .onboard-page .reviews-section {
   padding: 0 0 40px !important;
   background: #fff !important;
+}
+
+/* Onboard pages desktop spacing tighten */
+.onboard-page .reviews-section {
+  padding: 0 0 20px;
+  margin: 0 0 24px;
+  background: #fff;
 }
 body.is-mobile .controller-page .reviews-grid,
 body.is-mobile .onboard-page .reviews-grid {

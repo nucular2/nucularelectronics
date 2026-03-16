@@ -47,6 +47,8 @@
 .support-inner {
   width: 780px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .support-title {
@@ -158,12 +160,13 @@
 }
 
 .support-topics {
-  margin-top: 56px;
+  margin-top: 32px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 20px;
   row-gap: 16px;
   width: 100%;
+  order: 2;
 }
 
 .support-topic {
@@ -191,7 +194,7 @@
 }
 
 .support-help-banner {
-  margin-top: 72px;
+  margin-top: 24px;
   width: 780px;
   height: 266px;
   border-radius: 20px;
@@ -200,6 +203,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  order: 3;
 }
 
 .support-help-content {
@@ -257,6 +261,16 @@
   height: 44px;
   border-radius: 50%;
   flex-shrink: 0;
+  display: inline-block;
+  object-fit: contain;
+}
+/* Ensure inline SVG icons match 44x44 size */
+.support-help-icons svg {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: inline-block;
+  border-radius: 100px;
 }
 
 .settings-grid {
@@ -461,9 +475,16 @@
   color: #F36F25;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .support-help-icons {
+    width: 268px;
+    height: 44px;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
   .support-page {
     padding-top: 80px;
+    padding-bottom: 24px;
   }
 
   .support-container {
@@ -525,12 +546,13 @@
   /* Help banner full-bleed on mobile */
   .support-help-banner {
     box-sizing: border-box;
-    width: calc(100% + 40px); /* compensate container padding 20px on both sides */
+    width: 100vw;
     height: 290px;
     padding: 32px 20px;
     border-radius: 0;
-    margin-left: -20px;  /* pull to left edge */
-    margin-right: -20px; /* pull to right edge */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 8px;
   }
   .support-help-title {
     font-size: 20px;

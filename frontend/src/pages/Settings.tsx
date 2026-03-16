@@ -208,6 +208,7 @@ export default function Settings() {
                     <img src="/тг.png" alt="Telegram" />
                     <img src="/ватсап.png" alt="WhatsApp" />
                     <img src="/макс.png" alt="Messenger" />
+                    <img src="/вайбер.svg" alt="Viber" />
                   </div>
                 </div>
               </div>

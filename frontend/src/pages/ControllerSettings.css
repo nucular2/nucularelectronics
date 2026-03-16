@@ -476,6 +476,11 @@
 }
 
 @media (max-width: 900px) {
+  .support-help-content {
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+  }
   .support-help-icons {
     width: 268px;
     height: 44px;
@@ -553,6 +558,7 @@
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     margin-top: 8px;
+    border-bottom: 1px solid #E9E9E9;
   }
   .support-help-title {
     font-size: 20px;
@@ -561,6 +567,10 @@
   .support-help-text {
     font-size: 14px;
     font-weight: 400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   .support-search-results {
@@ -591,9 +601,13 @@
   }
 
   .support-help-banner {
-    width: 100%;
-    height: auto;
-    padding: 24px;
+    width: 100vw;
+    height: 290px;
+    padding: 32px 20px;
+    border-radius: 0;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-bottom: 1px solid #E9E9E9;
   }
 
   .settings-grid {

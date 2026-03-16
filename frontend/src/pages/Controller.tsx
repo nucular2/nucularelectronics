@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import AnimatedSpecsBlock from "../components/AnimatedSpecsBlock";
 import AnimatedSpecsText from "../components/AnimatedSpecsText";
 import "./ControllerHero.css";
+import NewsletterBanner from "../components/NewsletterBanner";
 
 export default function Controller() {
   const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
@@ -506,6 +507,9 @@ export default function Controller() {
         </div>
       </section>
       <section className="onboard-section onboard-section-last" />
+      <div className="desktop-only">
+        <NewsletterBanner />
+      </div>
       </>
       ) : (
         <div className="specifications-container">

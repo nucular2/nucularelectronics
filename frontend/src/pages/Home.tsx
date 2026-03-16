@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useReviews } from "../context/ReviewsContext";
 import AnimatedSpecsText from "../components/AnimatedSpecsText";
+import NewsletterBanner from "../components/NewsletterBanner";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -224,6 +225,14 @@ export default function Home() {
                 objectPosition: 'center'
               }} 
             />
+            <div className="hero-content">
+              <a href="#components" className="see-components-link">
+                See the components
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M8 0C8.42758 0 8.77419 0.346618 8.77419 0.774194V13.3567L14.6784 7.45256C14.9807 7.15022 15.4709 7.15022 15.7732 7.45256C16.0756 7.7549 16.0756 8.2451 15.7732 8.54744L8.54744 15.7732C8.2451 16.0756 7.7549 16.0756 7.45256 15.7732L0.226756 8.54744C-0.0755853 8.2451 -0.0755853 7.7549 0.226756 7.45256C0.529097 7.15022 1.01929 7.15022 1.32163 7.45256L7.22581 13.3567V0.774194C7.22581 0.346618 7.57242 0 8 0Z" fill="#F36F25" />
+                </svg>
+              </a>
+            </div>
           </div>
 
           {/* Main SVG Content */}
@@ -432,6 +441,10 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+          
+          <div className="desktop-only">
+            <NewsletterBanner />
           </div>
         </div>
       ) : (

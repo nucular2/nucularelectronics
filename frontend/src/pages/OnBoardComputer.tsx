@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
 import AnimatedSection from "../components/AnimatedSection";
+import NewsletterBanner from "../components/NewsletterBanner";
 
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
@@ -155,14 +156,13 @@ export default function OnBoardComputer() {
         )}
       </div>
 
+      <div className="desktop-only">
+        <NewsletterBanner />
+      </div>
       <section
         className="reviews-section"
         id="reviews"
-        style={
-          isMobile
-            ? { padding: "0 0 40px", background: "#fff" }
-            : undefined
-        }
+        style={isMobile ? { padding: "0 0 40px", background: "#fff" } : undefined}
       >
         <div className="section-header">
           <h2 className="section-title">Reviews</h2>

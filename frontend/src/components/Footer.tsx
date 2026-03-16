@@ -4,29 +4,9 @@ import { useNavigate } from 'react-router-dom';
 export default function Footer() {
   const navigate = useNavigate();
 
-  const goPartners = (e: React.MouseEvent) => {
+  const goTo = (e: React.MouseEvent, path: string) => {
     e.preventDefault();
-    navigate('/partners');
-  };
-
-  const goNews = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/news');
-  };
-
-  const goReviews = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/reviews');
-  };
-
-  const goSupport = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/support');
-  };
-
-  const goContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/contact');
+    navigate(path);
   };
 
   return (
@@ -37,10 +17,10 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">Company</h4>
               <ul className="footer-links">
-                <li><a href="#" onClick={goNews}>News</a></li>
-                <li><a href="#" onClick={goReviews}>Reviews</a></li>
-                <li><a href="#" onClick={goPartners}>For partners</a></li>
-                <li><a href="#" onClick={goContact}>Contact us</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/news')}>News</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/reviews')}>Reviews</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/partners')}>Dealers</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/contact')}>Contact us</a></li>
               </ul>
             </div>
             <div className="footer-column">
@@ -55,7 +35,7 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">Help</h4>
               <ul className="footer-links">
-                <li><a href="#" onClick={goSupport}>Support</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/support')}>Support</a></li>
                 <li><a href="#">Firmware</a></li>
                 <li><a href="#">For developers</a></li>
               </ul>
@@ -63,9 +43,9 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-title">For partners</h4>
               <ul className="footer-links">
-                <li><a href="#" onClick={goPartners}>Become a dealer</a></li>
-                <li><a href="#" onClick={goPartners}>For Influencers</a></li>
-                <li><a href="#" onClick={goPartners}>For OEMs</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/partners')}>Become a dealer</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/partners')}>For Influencers</a></li>
+                <li><a href="#" onClick={(e) => goTo(e, '/partners')}>For OEMs</a></li>
               </ul>
             </div>
           </div>

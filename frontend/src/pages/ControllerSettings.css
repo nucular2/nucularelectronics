@@ -594,6 +594,15 @@
 }
 
 @media (max-width: 899.98px) {
+  .support-inner.support-inner--narrow {
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+  .support-upper {
+    width: 100% !important;
+    height: auto !important;
+  }
   .support-help-content {
     max-width: 320px;
     width: 100%;
@@ -724,6 +733,7 @@
     width: 100%;
     grid-template-columns: 1fr;
     column-gap: 0;
+    height: auto !important;
   }
 
   .support-help-banner {

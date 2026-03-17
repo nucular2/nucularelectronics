@@ -251,6 +251,12 @@
   outline: none;
   box-shadow: none;
 }
+.product-primary-button:focus-visible,
+.product-secondary-button:focus-visible,
+.product-add-cta:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 
 .product-benefits {
   display: flex;

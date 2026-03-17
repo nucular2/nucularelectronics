@@ -383,6 +383,13 @@ body,
   .controller-hero-actions {
     display: none;
   }
+  .controller-hero-actions.mobile-actions {
+    display: flex !important;
+    position: static;
+    margin: 16px 20px 0;
+    justify-content: center;
+    gap: 12px;
+  }
 }
 
 @media (min-width: 901px) {

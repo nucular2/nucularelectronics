@@ -50,9 +50,9 @@ export default function Controller() {
         <section className="hero controller-hero">
           <div className="hero-image-container">
             <picture>
-              <source media="(min-width: 901px)" srcSet="/controller-hero-clean.png" />
+              <source media="(min-width: 901px)" srcSet="/главная 2.png" />
               <img
-                src="/firstscreen1.png"
+                src="/first%20screen90.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />
@@ -87,6 +87,27 @@ export default function Controller() {
               Buy
             </button>
           </div>
+          {isMobile && (
+            <div className="controller-hero-actions mobile-actions">
+              <button 
+                type="button" 
+                className={`controller-hero-tab ${activeTab === 'overview' ? 'active' : ''}`}
+                onClick={() => setActiveTab('overview')}
+              >
+                Overview
+              </button>
+              <button 
+                type="button" 
+                className={`controller-hero-tab ${activeTab !== 'overview' ? 'active' : ''}`}
+                onClick={() => setActiveTab('specifications')}
+              >
+                Specifications
+              </button>
+              <button type="button" className="controller-hero-buy" onClick={handleBuy}>
+                Buy
+              </button>
+            </div>
+          )}
         </section>
       )}
 

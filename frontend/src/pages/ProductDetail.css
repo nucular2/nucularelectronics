@@ -838,6 +838,45 @@
   mix-blend-mode: darken;
 }
 
+.mobile-only.product-compact {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile-only.product-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .product-line1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #222;
+  }
+  .product-line2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #999;
+  }
+  .product-compact-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .product-title,
+  .product-code,
+  .product-info-row {
+    display: none;
+  }
+  .product-info > .product-actions {
+    display: none;
+  }
+  .product-compact .product-actions {
+    display: flex;
+  }
+}
 .product-add-name {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;

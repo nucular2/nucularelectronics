@@ -303,6 +303,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .support-inner.support-inner--narrow .support-upper {
     width: 780px;
@@ -324,6 +325,9 @@
     padding: 48px;
     display: flex !important;
     margin-top: 24px;
+    background: #101010 !important;
+    position: relative;
+    z-index: 1;
   }
   .support-inner.support-inner--narrow .support-search-row {
     width: 780px;

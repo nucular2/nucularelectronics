@@ -289,6 +289,34 @@
   grid-row: 4;
 }
 
+/* Narrow content variant for Support page (desktop) */
+@media (min-width: 900px) {
+  .support-inner.support-inner--narrow {
+    width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .support-inner.support-inner--narrow .support-search-input {
+    width: 780px;
+    height: 54px;
+  }
+  .support-inner.support-inner--narrow .support-topics {
+    width: 780px;
+    height: 168px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .support-inner.support-inner--narrow .support-help-banner {
+    width: 780px;
+    height: 266px;
+    border-radius: 20px;
+    padding: 48px;
+  }
+  .support-inner.support-inner--narrow .support-search-row {
+    width: 780px;
+  }
+}
+
 .support-help-content {
   display: flex;
   flex-direction: column;

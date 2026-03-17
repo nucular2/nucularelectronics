@@ -232,6 +232,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s;
+  white-space: nowrap;
 }
 .product-secondary-button {
   flex: 1;
@@ -245,6 +246,7 @@
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+  white-space: nowrap;
 }
 .product-primary-button:focus,
 .product-secondary-button:focus {

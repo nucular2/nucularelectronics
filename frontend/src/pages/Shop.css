@@ -141,6 +141,7 @@
   color: #F36F25;
   justify-content: flex-start;
   text-align: left;
+  white-space: nowrap;
 }
 
 .shop-card .card-button.buy-button:hover {

@@ -44,13 +44,14 @@
 
 .product-main-image {
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 0;
   aspect-ratio: auto;
-  height: 520px;
+  min-height: 560px;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 40px 60px;
+  padding: 40px 40px 80px;
 }
 
 .product-main-image img {
@@ -487,6 +488,11 @@
 }
 
 @media (max-width: 900px) {
+  .product-overview-text {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+  }
   .product-main {
     grid-template-columns: 1fr;
     gap: 24px;

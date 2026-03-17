@@ -300,6 +300,7 @@
 @media (min-width: 900px) {
   .support-content-narrow {
     width: 780px;
+    height: 729px;
     margin-left: auto;
     margin-right: auto;
     display: flex;

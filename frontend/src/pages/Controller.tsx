@@ -49,14 +49,19 @@ export default function Controller() {
       {activeTab === 'overview' && (
         <section className="hero controller-hero">
           <div className="hero-image-container">
-            <picture>
-              <source media="(min-width: 901px)" srcSet="/главная%202.png" />
+            {isMobile ? (
               <img
                 src="/first%20screen90.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />
-            </picture>
+            ) : (
+              <img
+                src="/главная%202.png"
+                alt="Nucular controller P24F"
+                className="hero-main-image"
+              />
+            )}
             
             {/* Desktop Text Overlay with Animation */}
             <div className="controller-hero-text desktop-only">

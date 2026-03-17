@@ -7,7 +7,7 @@
 /* Desktop: показываем иконки внутри плашки */
 
 @media (min-width: 900px) {
-  .support-help-banner { display: none; }
+  .support-help-banner { display: flex; }
   .support-help-actions {
     display: flex;
     flex-direction: row;
@@ -243,6 +243,7 @@
   width: 100%;
   order: 2;
   grid-column: 1 / span 12;
+  grid-row: 3;
 }
 
 .support-topic {
@@ -281,6 +282,7 @@
   justify-content: flex-start;
   order: 1;
   grid-column: 1 / span 12;
+  grid-row: 4;
 }
 
 .support-help-content {

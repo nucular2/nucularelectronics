@@ -87,7 +87,8 @@ export default function Support() {
                 )}
               </div>
               <button className="support-search-button" type="submit">Search</button>
-            </form>
+        </form>
+        
 
             {query && (
               <div className="support-search-results">

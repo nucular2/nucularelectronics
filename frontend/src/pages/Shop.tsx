@@ -26,7 +26,7 @@ export default function Shop() {
     <>
       <Header variant="white" />
       <div className="shop-page">
-        <div className={`shop-container ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+        <div className={`shop-container grid-container ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
           <h1 className="shop-title">Shop</h1>
           
           <div className="shop-tabs">
@@ -62,7 +62,7 @@ export default function Shop() {
             </div>
           </div>
 
-          <div className="shop-grid">
+          <div className="shop-grid grid-12">
             {filteredProducts.map(product => (
               <div 
                 key={product.id} 

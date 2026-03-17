@@ -49,7 +49,7 @@ export default function Support() {
     <>
       <Header variant="white" />
       <div className="support-page">
-        <div className="support-container">
+        <div className="support-container grid-container">
           <div className="support-inner">
             <h1 className="support-title">Support</h1>
             <form className="support-search-row" onSubmit={handleSubmit}>

@@ -8,6 +8,26 @@
   --max-width: 1440px;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
+
+/* Grid */
+.grid-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 80px);
+  column-gap: 20px;
+  row-gap: 24px;
+}
+@media (max-width: 900px) {
+  .grid-12 {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 16px;
+  }
+}
 /* Карточки комплектации и товаров */
 .product-kit-quantity,
 .product-kit-card,

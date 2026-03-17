@@ -178,7 +178,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     <>
       <Header variant="white" />
       <div className="product-page">
-        <div className="product-container">
+        <div className="product-container grid-container grid-12">
           <button className="product-back-link" onClick={() => navigate("/shop")}>
             <span className="product-back-arrow">←</span>
             <span>Back to shop</span>

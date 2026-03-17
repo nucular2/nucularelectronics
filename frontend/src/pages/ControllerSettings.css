@@ -297,6 +297,10 @@
     display: flex;
     flex-direction: column;
   }
+  .support-inner.support-inner--narrow .support-upper {
+    width: 780px;
+    height: 729px;
+  }
   .support-inner.support-inner--narrow .support-search-input {
     width: 780px;
     height: 54px;

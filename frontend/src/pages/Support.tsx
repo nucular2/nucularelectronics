@@ -52,6 +52,7 @@ export default function Support() {
         <div className="support-container grid-container">
           <div className="support-inner support-inner--narrow">
             <h1 className="support-title">Support</h1>
+            <div className="support-upper">
             <form className="support-search-row" onSubmit={handleSubmit}>
               <div className="support-search-input">
                 <svg
@@ -154,6 +155,7 @@ export default function Support() {
                 </div>
                 <span>For developers</span>
               </div>
+            </div>
             </div>
 
             <div className="support-help-banner">

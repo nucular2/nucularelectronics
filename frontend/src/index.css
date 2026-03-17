@@ -266,7 +266,7 @@ body,
     padding: 32px 20px;
     width: 414px;
     height: 187px;
-    margin: 0 auto; /* centers on 414 viewport; keeps edges on 414px artboard */
+    margin-left: 20px; /* align left relative to page padding */
     box-sizing: border-box;
   }
   .onboard-panel-button {

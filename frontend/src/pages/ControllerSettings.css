@@ -298,27 +298,25 @@
 
 /* Narrow content variant for Support page (desktop) */
 @media (min-width: 900px) {
-  .support-inner.support-inner--narrow {
+  .support-content-narrow {
     width: 780px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 24px;
   }
-  .support-inner.support-inner--narrow .support-upper {
-    width: 780px;
-    height: 729px;
-  }
-  .support-inner.support-inner--narrow .support-search-input {
+  .support-content-narrow .support-search-input {
     width: 780px;
     height: 54px;
   }
-  .support-inner.support-inner--narrow .support-topics {
+  .support-content-narrow .support-topics {
     width: 780px;
-    height: 168px;
     grid-template-columns: 1fr 1fr;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .support-inner.support-inner--narrow .support-help-banner {
+  .support-help-banner--narrow {
     width: 780px;
     height: 266px;
     border-radius: 20px;
@@ -328,9 +326,13 @@
     background: #101010 !important;
     position: relative;
     z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .support-inner.support-inner--narrow .support-search-row {
+  .support-content-narrow .support-search-row {
     width: 780px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

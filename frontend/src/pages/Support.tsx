@@ -50,9 +50,9 @@ export default function Support() {
       <Header variant="white" />
       <div className="support-page">
         <div className="support-container grid-container">
-          <div className="support-inner support-inner--narrow">
+          <div className="support-inner">
             <h1 className="support-title">Support</h1>
-            <div className="support-upper">
+            <div className="support-content-narrow">
             <form className="support-search-row" onSubmit={handleSubmit}>
               <div className="support-search-input">
                 <svg
@@ -158,18 +158,7 @@ export default function Support() {
             </div>
             </div>
 
-            <div
-              className="support-help-banner"
-              style={{
-                width: 780,
-                height: 266,
-                borderRadius: 20,
-                padding: 48,
-                background: "#101010",
-                margin: "24px auto 0",
-                display: "flex"
-              }}
-            >
+            <div className="support-help-banner support-help-banner--narrow">
               <div className="support-help-content">
                 <div className="support-help-title">I need help!</div>
                 <div className="support-help-text">

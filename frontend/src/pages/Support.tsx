@@ -51,8 +51,8 @@ export default function Support() {
       <div className="support-page">
         <div className="support-container grid-container">
           <div className="support-inner">
-            <h1 className="support-title">Support</h1>
             <div className="support-content-narrow">
+            <h1 className="support-title">Support</h1>
             <form className="support-search-row" onSubmit={handleSubmit}>
               <div className="support-search-input">
                 <input
@@ -141,9 +141,7 @@ export default function Support() {
                 <span>For developers</span>
               </div>
             </div>
-            </div>
-
-            <div className="support-help-banner support-help-banner--narrow">
+              <div className="support-help-banner support-help-banner--narrow">
               <div className="support-help-content">
                 <div className="support-help-title">I need help!</div>
                 <div className="support-help-text">
@@ -201,6 +199,7 @@ export default function Support() {
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

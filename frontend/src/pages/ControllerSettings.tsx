@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import "./ControllerSettings.css";
 
@@ -13,6 +13,7 @@ type ControllerSection =
 export default function ControllerSettings() {
   const [activeSection, setActiveSection] = useState<ControllerSection>("setup");
   const navigate = useNavigate();
+  const location = useLocation();
   const setupImageRef = useRef<HTMLImageElement | null>(null);
 
   const handleGoToSetupImage = () => {
@@ -23,6 +24,13 @@ export default function ControllerSettings() {
       }
     }, 0);
   };
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash === "#problems_and_diagnostics" || hash === "#diagnostics") {
+      setActiveSection("diagnostics");
+    }
+  }, [location.hash]);
 
   return (
     <>
@@ -231,7 +239,7 @@ export default function ControllerSettings() {
                   )}
                   {activeSection === "diagnostics" && (
                     <>
-                      <div className="controller-content-title">
+                      <div id="problems_and_diagnostics" className="controller-content-title">
                         Diagnostics of controller malfunctions
                       </div>
                     </>

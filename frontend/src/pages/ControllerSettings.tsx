@@ -245,15 +245,7 @@ export default function ControllerSettings() {
                   )}
                   {activeSection === "diagnostics" && (
                     <>
-<<<<<<< HEAD
-                      <div
-                        id="problems_and_diagnostics"
-                        ref={diagnosticsTitleRef}
-                        className="controller-content-title"
-                      >
-=======
                       <div id="problems_and_diagnostics" ref={diagnosticsTitleRef} className="controller-content-title">
->>>>>>> 6f01dae (Support page (frontend):)
                         Diagnostics of controller malfunctions
                       </div>
                     </>

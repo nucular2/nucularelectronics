@@ -216,7 +216,7 @@ export default function Home() {
             overflow: 'hidden'
           }}>
             <img 
-              src="/главная%202.png" 
+              src="/first.png" 
               alt="Hero"
               style={{ 
                 width: '100%', 
@@ -225,13 +225,6 @@ export default function Home() {
                 objectPosition: 'center'
               }} 
             />
-            <div className="hero-overlay">
-              <h1 className="hero-title">Nucular controller P24F</h1>
-              <p className="hero-subtitle">
-                For controlling 3‑phase permanent magnet electric motors (BLDC, PMSM or PMAC).<br />
-                A powerful ARM microprocessor provides precise and smooth control of the electric motor.
-              </p>
-            </div>
             <div className="hero-content">
               <a href="#components" className="see-components-link">
                 See the components

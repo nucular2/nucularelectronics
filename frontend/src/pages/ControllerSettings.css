@@ -4,6 +4,13 @@
   padding-top: 100px;
   padding-bottom: 80px;
 }
+/* Center the Support page content on desktop */
+@media (min-width: 900px) {
+  .support-page .support-container {
+    display: flex;
+    justify-content: center;
+  }
+}
 /* Desktop: показываем иконки внутри плашки */
 
 @media (min-width: 900px) {

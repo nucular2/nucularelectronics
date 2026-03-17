@@ -315,6 +315,8 @@
     height: 266px;
     border-radius: 20px;
     padding: 48px;
+    display: flex !important;
+    margin-top: 24px;
   }
   .support-inner.support-inner--narrow .support-search-row {
     width: 780px;

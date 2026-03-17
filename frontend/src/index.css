@@ -173,6 +173,11 @@ body,
   color: #ffffff;
 }
 
+/* Hide Viber icon, keep only 4 contact icons */
+.support-help-icons > :last-child {
+  display: none;
+}
+
 .hero-main-image-mobile {
   display: none;
 }

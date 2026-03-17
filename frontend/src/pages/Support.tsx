@@ -158,7 +158,18 @@ export default function Support() {
             </div>
             </div>
 
-            <div className="support-help-banner">
+            <div
+              className="support-help-banner"
+              style={{
+                width: 780,
+                height: 266,
+                borderRadius: 20,
+                padding: 48,
+                background: "#101010",
+                margin: "24px auto 0",
+                display: "flex"
+              }}
+            >
               <div className="support-help-content">
                 <div className="support-help-title">I need help!</div>
                 <div className="support-help-text">

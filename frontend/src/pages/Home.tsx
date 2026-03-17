@@ -216,7 +216,7 @@ export default function Home() {
             overflow: 'hidden'
           }}>
             <img 
-              src="/главная 2.png" 
+              src="/first.png" 
               alt="Hero"
               style={{ 
                 width: '100%', 

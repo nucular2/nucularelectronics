@@ -224,6 +224,7 @@
   background: #f36f25;
   color: #ffffff;
   border: none;
+  outline: none;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
@@ -237,11 +238,17 @@
   background: transparent;
   color: #f36f25;
   border: 1px solid #f36f25;
+  outline: none;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+}
+.product-primary-button:focus,
+.product-secondary-button:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .product-benefits {

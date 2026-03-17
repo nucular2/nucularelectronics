@@ -372,11 +372,16 @@ body,
   padding: 0 16px;
   border-radius: 8px;
   border: none;
+  outline: none;
   background: #F36F25;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+}
+.controller-hero-buy:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 @media (max-width: 900px) {

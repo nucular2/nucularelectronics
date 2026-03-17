@@ -63,15 +63,6 @@ export default function Controller() {
               />
             )}
             
-            {/* Desktop Text Overlay with Animation */}
-            <div className="controller-hero-text desktop-only">
-              <h1 className="controller-hero-title">
-                Nucular <br /> controller P24F
-              </h1>
-              <p className="controller-hero-description">
-                For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC). A powerful ARM microprocessor provides precise and smooth control of the electric motor.
-              </p>
-            </div>
           </div>
           <div className="controller-hero-actions">
             <button 
@@ -140,6 +131,20 @@ export default function Controller() {
             </button>
             </div>
           </div>
+          {isMobile && (
+            <div className="controller-hero-buttons">
+              <button 
+                type="button" 
+                className="controller-hero-button primary"
+                onClick={handleBuy}
+              >
+                Add to cart
+              </button>
+              <a href="/product/1" className="controller-hero-button secondary">
+                Learn more
+              </a>
+            </div>
+          )}
         </section>
       )}
 

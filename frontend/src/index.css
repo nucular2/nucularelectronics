@@ -339,7 +339,7 @@ body,
 .controller-hero .hero-main-image {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -389,6 +389,36 @@ body,
     margin: 16px 20px 0;
     justify-content: center;
     gap: 12px;
+  }
+  .controller-hero .hero-main-image {
+    object-fit: cover;
+  }
+  .controller-hero-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 0 20px;
+    margin-top: 12px;
+  }
+  .controller-hero-button {
+    flex: 1;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+  .controller-hero-button.primary {
+    background: #F36F25;
+    color: #fff;
+    border: none;
+  }
+  .controller-hero-button.secondary {
+    background: transparent;
+    color: #F36F25;
+    border: 1px solid #F36F25;
   }
 }
 

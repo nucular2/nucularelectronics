@@ -15,6 +15,7 @@ export default function ControllerSettings() {
   const navigate = useNavigate();
   const location = useLocation();
   const setupImageRef = useRef<HTMLImageElement | null>(null);
+  const diagnosticsTitleRef = useRef<HTMLDivElement | null>(null);
 
   const handleGoToSetupImage = () => {
     setActiveSection("setup");
@@ -29,6 +30,11 @@ export default function ControllerSettings() {
     const hash = location.hash;
     if (hash === "#problems_and_diagnostics" || hash === "#diagnostics") {
       setActiveSection("diagnostics");
+      setTimeout(() => {
+        if (diagnosticsTitleRef.current) {
+          diagnosticsTitleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 0);
     }
   }, [location.hash]);
 
@@ -239,7 +245,11 @@ export default function ControllerSettings() {
                   )}
                   {activeSection === "diagnostics" && (
                     <>
-                      <div id="problems_and_diagnostics" className="controller-content-title">
+                      <div
+                        id="problems_and_diagnostics"
+                        ref={diagnosticsTitleRef}
+                        className="controller-content-title"
+                      >
                         Diagnostics of controller malfunctions
                       </div>
                     </>

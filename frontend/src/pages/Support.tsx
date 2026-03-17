@@ -149,7 +149,7 @@ export default function Support() {
                   following methods to contact us.
                 </div>
                 <div className="support-help-actions">
-                  <button className="support-help-button">Write to us</button>
+                  <button className="support-help-button support-help-button--narrow">Write to us</button>
                   <div className="support-help-icons">
                     <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Email">
                       <g clipPath="url(#clip0_2080_26453)">

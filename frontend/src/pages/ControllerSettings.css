@@ -34,8 +34,10 @@
     height: 38px;
   }
   .support-help-button {
-    width: 180px;
-    height: 38px;
+    border-radius: 8px;
+    padding: 0 24px;
+    width: 124px;
+    height: 44px;
   }
   .support-color-sample {
     width: 212px;
@@ -143,7 +145,10 @@
   align-items: center;
   justify-content: start;
   gap: 20px;
-  grid-column: 1 / span 12;
+  width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
 }
 
 .support-search-input {
@@ -204,7 +209,7 @@
 .support-search-results {
   margin-top: 8px;
   padding: 16px 24px;
-  width: 100%;
+  width: 780px;
   background: #ffffff;
   border-radius: 0 0 16px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
@@ -248,9 +253,7 @@
   column-gap: 20px;
   row-gap: 16px;
   width: 100%;
-  order: 2;
-  grid-column: 1 / span 12;
-  grid-row: 3;
+  order: 1;
 }
 
 .support-topic {
@@ -282,8 +285,8 @@
 }
 
 .support-help-banner {
-  margin-top: 8px;
-  width: 100%;
+  margin-top: 16px;
+  width: 780px;
   height: 266px;
   border-radius: 20px;
   padding: 48px;
@@ -291,50 +294,9 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  order: 1;
-  grid-column: 1 / span 12;
-  grid-row: 4;
-}
-
-/* Narrow content variant for Support page (desktop) */
-@media (min-width: 900px) {
-  .support-content-narrow {
-    width: 780px;
-    height: 729px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  .support-content-narrow .support-search-input {
-    width: 100%;
-    height: 54px;
-  }
-  .support-content-narrow .support-topics {
-    width: 780px;
-    grid-template-columns: 1fr 1fr;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .support-help-banner--narrow {
-    width: 780px;
-    height: 266px;
-    border-radius: 20px;
-    padding: 48px;
-    display: flex !important;
-    margin-top: 24px;
-    background: #101010 !important;
-    position: relative;
-    z-index: 1;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .support-content-narrow .support-search-row {
-    width: 780px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  order: 2;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .support-help-content {
@@ -370,7 +332,7 @@
 .support-help-button {
   border-radius: 8px;
   padding: 0 24px;
-  width: 124px;
+  width: 180px;
   height: 44px;
   background: #f36f25;
   border: none;
@@ -380,6 +342,22 @@
   font-size: 14px;
   cursor: pointer;
   white-space: nowrap;
+}
+
+/* Ensure banner button dimensions on desktop with higher specificity */
+@media (min-width: 900px) {
+  .support-help-banner .support-help-button {
+    border-radius: 8px;
+    padding: 0 24px;
+    width: 180px;
+    height: 44px;
+  }
+  .support-help-button--narrow {
+    border-radius: 8px;
+    padding: 0 24px;
+    width: 180px;
+    height: 44px;
+  }
 }
 
 .support-help-icons {

@@ -50,7 +50,7 @@ export default function Controller() {
         <section className="hero controller-hero">
           <div className="hero-image-container">
             <picture>
-              <source media="(min-width: 901px)" srcSet="/главная 2.png" />
+              <source media="(min-width: 901px)" srcSet="/главная%202.png" />
               <img
                 src="/first%20screen90.png"
                 alt="Nucular controller P24F"

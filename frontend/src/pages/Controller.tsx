@@ -140,9 +140,13 @@ export default function Controller() {
               >
                 Add to cart
               </button>
-              <a href="/product/1" className="controller-hero-button secondary">
+              <button 
+                type="button" 
+                className="controller-hero-button secondary"
+                onClick={() => { window.location.assign('/product/1'); }}
+              >
                 Learn more
-              </a>
+              </button>
             </div>
           )}
         </section>

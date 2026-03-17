@@ -100,9 +100,9 @@
 }
 
 .product-variant-tab {
-  padding: 8px 16px;
-  border-radius: 20px;
-  background-color: #F6F6F6;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   border: none;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
@@ -111,8 +111,9 @@
 }
 
 .product-variant-tab.active {
-  background-color: #222;
-  color: #fff;
+  background: transparent;
+  color: #F36F25;
+  font-weight: 600;
 }
 
 .product-title {
@@ -153,35 +154,66 @@
 
 .product-color-dots {
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  width: 212px;
+  height: 32px;
+  align-items: center;
 }
 
 .product-color-dot {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
   border: none;
+  background: transparent;
+  padding: 0;
   cursor: pointer;
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.product-color-dot::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
+ 
 
 .product-actions {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   margin-bottom: 40px;
 }
 
+.product-info-separator {
+  width: 100%;
+  height: 1px;
+  background: #EEEEEE;
+  margin: 20px 0 12px;
+}
+
+.product-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 16px 0;
+}
+.product-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 180px;
+  height: 38px;
+}
+.product-info-text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  color: #222;
+}
+.product-info-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.product-info-link {
+  color: #F36F25;
+}
 .product-primary-button {
   flex: 1;
   height: 54px;
@@ -195,11 +227,6 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
-.product-primary-button:hover {
-  background-color: #d85e1d;
-}
-
 .product-secondary-button {
   flex: 1;
   height: 54px;
@@ -242,35 +269,7 @@
   color: #222222;
 }
 
-.product-help-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 8px;
-  margin-bottom: 72px;
-  margin-left: 0;
-  margin-right: auto;
-}
-
-.product-help-question {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  color: #222222;
-}
-
-.product-help-link {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  color: #f36f25;
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  margin-top: 8px;
-}
+ 
 
 /* Collapsible Sections */
 .product-overview-section,
@@ -943,27 +942,28 @@
 
   .product-primary-button,
   .product-secondary-button {
-    flex: 1;
+    flex: 0;
     width: auto;
-    height: 40px;
-    border-radius: 8px;
-    padding: 0 16px;
-    font-size: 14px;
+    height: auto;
+    border-radius: 0;
+    padding: 0;
+    font-size: 16px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    color: #F36F25 !important;
   }
 
   .product-primary-button {
-    background-color: #F36F25 !important;
-    transform: translateY(-1px);
+    background: transparent !important;
+    transform: none;
+    color: #F36F25 !important;
   }
 
   .product-secondary-button {
-    background: transparent;
-    color: #f36f25;
-    border: 1px solid #f36f25;
+    background: transparent !important;
+    color: #F36F25 !important;
+    border: none !important;
   }
 
   .product-overview-title,
@@ -1067,23 +1067,6 @@
   .product-benefit-title {
     font-weight: 500;
     margin-bottom: 4px;
-  }
-
-  .product-help-section {
-    padding-top: 24px;
-    border-top: 1px solid #eee;
-    gap: 0;
-    margin-bottom: 0;
-  }
-
-  .product-help-question {
-    color: #666;
-    margin-bottom: 8px;
-  }
-
-  .product-help-link {
-    text-decoration: underline;
-    margin-top: 0;
   }
 
   .product-overview-text {

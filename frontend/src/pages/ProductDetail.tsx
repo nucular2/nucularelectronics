@@ -154,7 +154,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const compatibleControllers = products.filter((p) => [1, 4].includes(p.id));
   const apparelProducts = products.filter((p) => p.category === "Apparel");
 
-  const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D"];
+  const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D", "#E2E4E5"];
 
   const images = imagesOverride
     ? imagesOverride
@@ -237,13 +237,37 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                 <div className="product-color-section">
                   <span className="product-color-label">Color — Black</span>
                   <div className="product-color-dots">
-                    {colorOptions.map((color) => (
-                      <button
-                        key={color}
-                        className="product-color-dot"
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
+                    <button className="product-color-dot" aria-label="Black">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="11" fill="#0A0A0D" />
+                        <circle cx="16" cy="16" r="15" stroke="#B0B0B0" strokeWidth="2" />
+                      </svg>
+                    </button>
+                    <button className="product-color-dot" aria-label="Blue">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#13447C" />
+                      </svg>
+                    </button>
+                    <button className="product-color-dot" aria-label="Green">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#48A43F" />
+                      </svg>
+                    </button>
+                    <button className="product-color-dot" aria-label="Orange">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#F3752C" />
+                      </svg>
+                    </button>
+                    <button className="product-color-dot" aria-label="Red">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#C1121C" />
+                      </svg>
+                    </button>
+                    <button className="product-color-dot" aria-label="Gray">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#E2E4E5" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               )}
@@ -273,45 +297,31 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                   </>
                 )}
               </div>
-
-              <div className="product-benefits">
-                <div className="product-benefit">
-                  <div className="product-benefit-icon">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0.21967 0.21967C0.512563 -0.0732233 0.987437 -0.0732233 1.28033 0.21967L21.2803 20.2197C21.5732 20.5126 21.5732 20.9874 21.2803 21.2803C20.9874 21.5732 20.5126 21.5732 20.2197 21.2803L17.4393 18.5H2.75C1.23122 18.5 0 17.2688 0 15.75V5.75C0 4.47904 0.862192 3.40946 2.03359 3.09425L0.21967 1.28033C-0.0732233 0.987437 -0.0732233 0.512563 0.21967 0.21967ZM3.43934 4.5H2.75C2.05964 4.5 1.5 5.05964 1.5 5.75V8H6.93934L3.43934 4.5ZM8.43934 9.5H1.5V15.75C1.5 16.4404 2.05964 17 2.75 17H15.9393L8.43934 9.5Z" fill="#222222" />
-                      <path d="M21.5 5.75V16.25C21.5 16.6642 21.1642 17 20.75 17C20.3358 17 20 16.6642 20 16.25V9.5H13.25C12.8358 9.5 12.5 9.16421 12.5 8.75C12.5 8.33579 12.8358 8 13.25 8H20V5.75C20 5.05964 19.4404 4.5 18.75 4.5H8.25C7.83579 4.5 7.5 4.16421 7.5 3.75C7.5 3.33579 7.83579 3 8.25 3H18.75C20.2688 3 21.5 4.23122 21.5 5.75Z" fill="#222222" />
-                    </svg>
-                  </div>
-                  <div className="product-benefit-text">
-                    <div className="product-benefit-title">Not prepayment for placing a pre-order</div>
-                  </div>
+              <div className="product-info-separator" />
+              <div className="product-info-row">
+                <div className="product-info-item">
+                  <svg className="product-info-icon" width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Delivery">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M0.767442 0C0.343595 0 0 0.34538 0 0.771429V13.1143C0 13.5403 0.343595 13.8857 0.767442 13.8857H2.35334C2.15717 14.2715 2.04651 14.7085 2.04651 15.1714C2.04651 16.7336 3.30636 18 4.86047 18C6.41457 18 7.67442 16.7336 7.67442 15.1714C7.67442 14.7085 7.56376 14.2715 7.36759 13.8857H14.6324C14.4362 14.2715 14.3256 14.7085 14.3256 15.1714C14.3256 16.7336 15.5854 18 17.1395 18C18.6936 18 19.9535 16.7336 19.9535 15.1714C19.9535 14.7085 19.8428 14.2715 19.6467 13.8857H21.2326C21.6564 13.8857 22 13.5403 22 13.1143V7.97143C22 7.78728 21.9345 7.60921 21.8152 7.46939L19.184 4.38368C19.0382 4.21269 18.8254 4.11429 18.6013 4.11429H15.8605V0.771429C15.8605 0.34538 15.5169 0 15.093 0H0.767442ZM20.4651 12.3429V8.2568L18.2484 5.65714H15.8605V12.3429H20.4651ZM17.1395 13.8857C16.4331 13.8857 15.8605 14.4613 15.8605 15.1714C15.8605 15.8815 16.4331 16.4571 17.1395 16.4571C17.8459 16.4571 18.4186 15.8815 18.4186 15.1714C18.4186 14.4613 17.8459 13.8857 17.1395 13.8857ZM3.5814 15.1714C3.5814 14.4613 4.15405 13.8857 4.86047 13.8857C5.56688 13.8857 6.13953 14.4613 6.13953 15.1714C6.13953 15.8815 5.56688 16.4571 4.86047 16.4571C4.15405 16.4571 3.5814 15.8815 3.5814 15.1714ZM14.3256 12.3429H1.53488V1.54286H14.3256V12.3429Z" fill="#222222" />
+                  </svg>
+                <span className="product-info-text">Worldwide delivery by courier services</span>
                 </div>
-                <div className="product-benefit">
-                  <div className="product-benefit-icon">
-                    <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0.767442 0C0.343595 0 0 0.34538 0 0.771429V13.1143C0 13.5403 0.343595 13.8857 0.767442 13.8857H2.35334C2.15717 14.2715 2.04651 14.7085 2.04651 15.1714C2.04651 16.7336 3.30636 18 4.86047 18C6.41457 18 7.67442 16.7336 7.67442 15.1714C7.67442 14.7085 7.56376 14.2715 7.36759 13.8857H14.6324C14.4362 14.2715 14.3256 14.7085 14.3256 15.1714C14.3256 16.7336 15.5854 18 17.1395 18C18.6936 18 19.9535 16.7336 19.9535 15.1714C19.9535 14.7085 19.8428 14.2715 19.6467 13.8857H21.2326C21.6564 13.8857 22 13.5403 22 13.1143V7.97143C22 7.78728 21.9345 7.60921 21.8152 7.46939L19.184 4.38368C19.0382 4.21269 18.8254 4.11429 18.6013 4.11429H15.8605V0.771429C15.8605 0.34538 15.5169 0 15.093 0H0.767442ZM20.4651 12.3429V8.2568L18.2484 5.65714H15.8605V12.3429H20.4651ZM17.1395 13.8857C16.4331 13.8857 15.8605 14.4613 15.8605 15.1714C15.8605 15.8815 16.4331 16.4571 17.1395 16.4571C17.8459 16.4571 18.4186 15.8815 18.4186 15.1714C18.4186 14.4613 17.8459 13.8857 17.1395 13.8857ZM3.5814 15.1714C3.5814 14.4613 4.15405 13.8857 4.86047 13.8857C5.56688 13.8857 6.13953 14.4613 6.13953 15.1714C6.13953 15.8815 5.56688 16.4571 4.86047 16.4571C4.15405 16.4571 3.5814 15.8815 3.5814 15.1714ZM14.3256 12.3429H1.53488V1.54286H14.3256V12.3429Z" fill="#222222" />
-                    </svg>
-                  </div>
-                  <div className="product-benefit-text">
-                    <div className="product-benefit-title">Worldwide delivery by courier services</div>
-                  </div>
+                <div className="product-info-item">
+                  <svg className="product-info-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Warranty">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1ZM10.2564 2.69515C6.10695 3.46785 2.90936 6.94763 2.56555 11.2326H7.17257C7.37842 8.14651 8.45126 5.18846 10.2564 2.69515ZM13.7436 2.69515C15.5487 5.18846 16.6216 8.14651 16.8274 11.2326H21.4345C21.0906 6.94763 17.893 3.46785 13.7436 2.69515ZM15.2888 11.2326C15.0654 8.19783 13.917 5.30431 12 2.94284C10.083 5.30431 8.93463 8.19783 8.71122 11.2326H15.2888ZM8.71123 12.7674H15.2888C15.0653 15.8021 13.917 18.6956 12 21.0571C10.083 18.6956 8.93465 15.8021 8.71123 12.7674ZM7.17258 12.7674H2.56555C2.90936 17.0524 6.10699 20.5322 10.2564 21.3049C8.4513 18.8116 7.37845 15.8535 7.17258 12.7674ZM13.7436 21.3049C15.5487 18.8116 16.6216 15.8535 16.8274 12.7674H21.4345C21.0906 17.0524 17.893 20.5322 13.7436 21.3049Z" fill="#222222" />
+                  </svg>
+                <span className="product-info-text">Worldwide warranty up to 3-years</span>
                 </div>
-                <div className="product-benefit">
-                  <div className="product-benefit-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1ZM10.2564 2.69515C6.10695 3.46785 2.90936 6.94763 2.56555 11.2326H7.17257C7.37842 8.14651 8.45126 5.18846 10.2564 2.69515ZM13.7436 2.69515C15.5487 5.18846 16.6216 8.14651 16.8274 11.2326H21.4345C21.0906 6.94763 17.893 3.46785 13.7436 2.69515ZM15.2888 11.2326C15.0654 8.19783 13.917 5.30431 12 2.94284C10.083 5.30431 8.93463 8.19783 8.71122 11.2326H15.2888ZM8.71123 12.7674H15.2888C15.0653 15.8021 13.917 18.6956 12 21.0571C10.083 18.6956 8.93465 15.8021 8.71123 12.7674ZM7.17258 12.7674H2.56555C2.90936 17.0524 6.10699 20.5322 10.2564 21.3049C8.4513 18.8116 7.37845 15.8535 7.17258 12.7674ZM13.7436 21.3049C15.5487 18.8116 16.6216 15.8535 16.8274 12.7674H21.4345C21.0906 17.0524 17.893 20.5322 13.7436 21.3049Z" fill="#222222" />
-                    </svg>
-                  </div>
-                  <div className="product-benefit-text">
-                    <div className="product-benefit-title">Worldwide warranty up to 3-years</div>
-                  </div>
+                <div className="product-info-item">
+                  <svg className="product-info-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Questions">
+                    <path d="M12.0098 16C12.5749 16 13.0332 16.4583 13.0332 17.0234C13.0331 17.5885 12.5748 18.0469 12.0098 18.0469H12C11.4349 18.0469 10.9767 17.5885 10.9766 17.0234C10.9766 16.4583 11.4349 16 12 16H12.0098Z" fill="#222222" />
+                    <path d="M9.97363 6.63965C10.7547 6.18079 11.6736 6.01296 12.5664 6.16602C13.4594 6.31924 14.27 6.78438 14.8535 7.47754C15.4367 8.17042 15.7559 9.04749 15.7549 9.95312L15.7432 10.2158C15.6233 11.5025 14.6417 12.3859 13.8789 12.8945C13.4491 13.1811 13.024 13.3926 12.71 13.5322C12.5522 13.6023 12.4183 13.6552 12.3232 13.6914C12.2762 13.7093 12.2374 13.7236 12.21 13.7334C12.1965 13.7382 12.1849 13.7433 12.1768 13.7461C12.1729 13.7474 12.1686 13.7482 12.166 13.749L12.1631 13.75L12.1621 13.751C11.76 13.885 11.3235 13.6667 11.1895 13.2646C11.0562 12.863 11.2734 12.429 11.6748 12.2949L11.6953 12.2881C11.7128 12.2819 11.7413 12.2716 11.7773 12.2578C11.85 12.2301 11.9569 12.1872 12.0859 12.1299C12.3472 12.0137 12.6903 11.8418 13.0273 11.6172C13.748 11.1366 14.2205 10.5687 14.2207 9.95312V9.95117C14.2213 9.40791 14.0295 8.88148 13.6797 8.46582C13.3296 8.04994 12.8424 7.77066 12.3066 7.67871C11.7712 7.58702 11.2204 7.68874 10.752 7.96387C10.2835 8.23916 9.92665 8.67117 9.74609 9.18359C9.60547 9.58335 9.16735 9.79382 8.76758 9.65332C8.36797 9.51266 8.15846 9.07546 8.29883 8.67578C8.59958 7.82108 9.19248 7.09874 9.97363 6.63965Z" fill="#222222" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1ZM12 2.53516C6.77256 2.53516 2.53516 6.77256 2.53516 12C2.53516 17.2274 6.77256 21.4648 12 21.4648C17.2274 21.4648 21.4648 17.2274 21.4648 12C21.4648 6.77256 17.2274 2.53516 12 2.53516Z" fill="#222222" />
+                  </svg>
+                <span className="product-info-text">Do you have any questions? <a href="/contact" className="product-info-link">Contact us</a></span>
                 </div>
               </div>
 
-              <div className="product-help-section">
-                <div className="product-help-question">Have you questions?</div>
-                <button className="product-help-link">Terms and Conditions</button>
-              </div>
+ 
             </div>
           </div>
 

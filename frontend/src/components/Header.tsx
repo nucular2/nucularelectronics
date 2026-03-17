@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -125,6 +125,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
   // const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 900;
   const isCompact = isMobile || isMobileViewport;
+  const location = useLocation();
+  const path = location.pathname;
+  const useContentWidth =
+    (!isCompact) &&
+    (path.startsWith('/shop') || path.startsWith('/settings/controller'));
 
   const headerStyle = isCompact
     ? {
@@ -135,6 +140,16 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         margin: '0',
         boxSizing: 'border-box' as const,
         backgroundColor: isWhite ? '#fff' : '#111',
+      }
+    : useContentWidth
+    ? {
+        paddingLeft: 'calc((100vw - 1180px) / 2)',
+        paddingRight: 'calc((100vw - 1180px) / 2)',
+        height: '84px',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box' as const,
+        backgroundColor: isWhite ? '#fff' : undefined,
       }
     : undefined;
 

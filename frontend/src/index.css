@@ -147,6 +147,32 @@ body,
   object-position: center;
 }
 
+.hero-overlay {
+  position: absolute;
+  left: 160px;
+  top: 200px;
+  max-width: 720px;
+  color: #fff;
+  z-index: 2;
+}
+.hero-title {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 1.05;
+  margin: 0 0 32px;
+  color: #F36F25;
+}
+.hero-subtitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+}
+
 .hero-main-image-mobile {
   display: none;
 }
@@ -3377,6 +3403,96 @@ body.is-mobile .review-card {
   }
 }
 
+/* Shared support help banner styles (used outside Support page) */
+.support-help-banner {
+  background: #101010;
+  padding: 48px;
+  border-radius: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.support-help-content {
+  width: 100%;
+  max-width: 780px;
+}
+.support-help-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 120%;
+  color: #fff;
+  margin: 0 0 12px;
+}
+.support-help-text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: #fff;
+  opacity: 0.85;
+  margin: 0 0 20px;
+}
+.support-help-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.support-help-button {
+  width: 240px;
+  height: 44px;
+  border-radius: 8px;
+  padding: 0 24px;
+  background: #F36F25;
+  color: #fff;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.support-help-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.support-help-icons img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-block;
+  object-fit: contain;
+}
+@media (max-width: 900px) {
+  .support-help-banner {
+    width: 100vw;
+    height: 290px;
+    padding: 32px 20px;
+    border-radius: 0;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    border-bottom: 1px solid #E9E9E9;
+  }
+  .support-help-content {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .support-help-title {
+    font-size: 20px;
+  }
+  .support-help-text {
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .support-help-button {
+    width: 100%;
+  }
+}
 @media (min-width: 901px) {
   .hero-content {
     bottom: 8px;

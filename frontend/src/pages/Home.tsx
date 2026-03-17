@@ -216,7 +216,7 @@ export default function Home() {
             overflow: 'hidden'
           }}>
             <img 
-              src="/first.png" 
+              src="/главная 2.png" 
               alt="Hero"
               style={{ 
                 width: '100%', 
@@ -225,6 +225,13 @@ export default function Home() {
                 objectPosition: 'center'
               }} 
             />
+            <div className="hero-overlay">
+              <h1 className="hero-title">Nucular controller P24F</h1>
+              <p className="hero-subtitle">
+                For controlling 3‑phase permanent magnet electric motors (BLDC, PMSM or PMAC).<br />
+                A powerful ARM microprocessor provides precise and smooth control of the electric motor.
+              </p>
+            </div>
             <div className="hero-content">
               <a href="#components" className="see-components-link">
                 See the components
@@ -451,10 +458,10 @@ export default function Home() {
         // MOBILE VIEW
         <div style={{ width: '100%', overflowX: 'hidden', background: '#ffffff', minHeight: '100vh' }}>
           
-          {/* 1. Hero Image (firstmob.png) */}
+          {/* 1. Hero Image (mobile) */}
           <div style={{ position: 'relative', width: '100%' }}>
             <img 
-              src="/firstmob.png" 
+              src="/first%20screen90.png" 
               alt="Nucular Mobile Hero" 
               style={{ width: '100%', display: 'block', height: 'auto' }} 
             />
@@ -867,41 +874,24 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 8. Newsletter Section */}
-          <div style={{ width: '100%', background: '#101010', padding: '32px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxSizing: 'border-box' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '0 0 12px', color: '#fff', textAlign: 'center', fontFamily: 'var(--font-family)' }}>Join our newsletter</h2>
-            <p style={{ fontSize: '14px', color: '#ccc', textAlign: 'center', margin: '0 0 24px', lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
-              We will notify you of the release of new features and firmware for the Nucular platform.
-            </p>
-            <div style={{ width: '100%', maxWidth: '374px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input 
-                type="email" 
-                placeholder="E-mail" 
-                style={{ 
-                  width: '100%', 
-                  height: '54px', 
-                  padding: '0 20px', 
-                  borderRadius: '8px', 
-                  border: 'none', 
-                  fontSize: '16px',
-                  boxSizing: 'border-box',
-                  fontFamily: 'var(--font-family)'
-                }} 
-              />
-              <button style={{ 
-                width: '100%', 
-                height: '54px', 
-                background: '#F36F25', 
-                color: '#fff', 
-                border: 'none', 
-                borderRadius: '8px', 
-                fontSize: '16px', 
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontFamily: 'var(--font-family)'
-              }}>
-                Subscribe
-              </button>
+          {/* 8. Help Banner Section (support-help-banner) */}
+          <div className="support-help-banner">
+            <div className="support-help-content">
+              <div className="support-help-title">I need help!</div>
+              <div className="support-help-text">
+                If you have questions, suggestions or you need technical support, use one of the
+                following methods to contact us.
+              </div>
+              <div className="support-help-actions">
+                <button className="support-help-button">Write to us</button>
+                <div className="support-help-icons">
+                  <img src="/social.png" alt="Email" />
+                  <img src="/тг.png" alt="Telegram" />
+                  <img src="/ватсап.png" alt="WhatsApp" />
+                  <img src="/макс.png" alt="Messenger" />
+                  <img src="/вайбер.svg" alt="Viber" />
+                </div>
+              </div>
             </div>
           </div>
 

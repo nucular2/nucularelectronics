@@ -180,8 +180,8 @@ export default function Support() {
                     </svg>
                     <img src="/тг.png" alt="Telegram" />
                     <img src="/ватсап.png" alt="WhatsApp" />
-                      <img src="/макс.png" alt="Messenger" />
-                      <svg
+                    <img src="/макс.png" alt="Messenger" />
+                    <svg
                         className="viber-icon"
                         width="44"
                         height="44"

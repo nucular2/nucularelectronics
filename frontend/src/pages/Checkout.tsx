@@ -173,11 +173,14 @@ export default function Checkout() {
     
     if (!user) throw new Error("User not logged in");
 
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    if (sessionError || !session) {
-      const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
-      if (refreshError || !refreshed.session) {
-        throw new Error("Session expired. Please log in again.");
+    const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+    if (!isServerless) {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+        if (refreshError || !refreshed.session) {
+          throw new Error("Session expired. Please log in again.");
+        }
       }
     }
 
@@ -185,11 +188,10 @@ export default function Checkout() {
     const dialCode = country ? country.dial_code : "";
     const fullPhone = `${dialCode}${recipient.phone}`;
 
-    const { data, error: insertError } = await supabase
-      .from("orders")
-      .insert({
+    if (isServerless) {
+      const payload = {
         user_id: user.id,
-        items: items,
+        items,
         total_amount: totalPrice,
         status: "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
@@ -197,16 +199,40 @@ export default function Checkout() {
         customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
         recipient_info: recipient,
         shipping_address: shipping,
-        contacts: { ...contacts, paymentMethod }, // Store payment method in contacts JSON
-        // payment_method column doesn't exist in DB
-      })
-      .select()
-      .single();
-
-    if (insertError) throw insertError;
-    if (!data) throw new Error("Failed to create order.");
-    
-    return data;
+        contacts: { ...contacts, paymentMethod },
+      };
+      const r = await fetch('/api/orders/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ payload })
+      });
+      if (!r.ok) {
+        const txt = await r.text();
+        throw new Error(txt || 'Failed to create order (srv)');
+      }
+      const { order } = await r.json();
+      return order;
+    } else {
+      const { data, error: insertError } = await supabase
+        .from("orders")
+        .insert({
+          user_id: user.id,
+          items: items,
+          total_amount: totalPrice,
+          status: "New",
+          customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
+          customer_phone: fullPhone,
+          customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+          recipient_info: recipient,
+          shipping_address: shipping,
+          contacts: { ...contacts, paymentMethod },
+        })
+        .select()
+        .single();
+      if (insertError) throw insertError;
+      if (!data) throw new Error("Failed to create order.");
+      return data;
+    }
   };
 
   const handleCardCheckout = async (e: React.FormEvent) => {

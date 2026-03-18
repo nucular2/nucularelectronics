@@ -476,6 +476,37 @@ body,
   }
 }
 
+/* Desktop fixed header width and full-bleed hero/images */
+@media (min-width: 1024px) {
+  .main-header {
+    padding-left: calc((100vw - 1180px) / 2);
+    padding-right: calc((100vw - 1180px) / 2);
+    height: 84px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .controller-hero .hero-image-container {
+    width: 100vw;
+    margin-left: calc((100vw - var(--content-w)) / -2);
+  }
+  .controller-hero .hero-main-image {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
+  .onboard-section .onboard-image {
+    width: 100vw;
+    height: auto;
+    display: block;
+    margin-left: calc((100vw - var(--content-w)) / -2);
+  }
+  .onboard-section.gray-full,
+  .onboard-section {
+    position: relative;
+  }
+}
+
 @media (min-width: 901px) {
   .onboard-panel {
     display: none !important;
@@ -3960,6 +3991,15 @@ body.is-mobile .review-card {
 
 .main-footer {
   display: block;
+}
+
+/* Footer content centered with fixed width on desktop */
+.main-footer .footer-content {
+  width: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 /* Controller page: make reviews look like homepage slider */

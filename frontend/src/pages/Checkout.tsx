@@ -214,6 +214,22 @@ export default function Checkout() {
     try {
       const order = await createOrder();
 
+      try {
+        const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+        const endpoint = apiBase ? `${apiBase}/api/retailcrm/order` : '/api/retailcrm/order';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order }),
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || 'RetailCRM request failed');
+        }
+      } catch (crmErr) {
+        console.error('RetailCRM send error:', crmErr);
+      }
+
       // Initiate Stripe Checkout Session
       try {
         const response = await fetch('/api/checkout-session', {

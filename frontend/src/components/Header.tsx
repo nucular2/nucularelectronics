@@ -127,9 +127,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const isCompact = isMobile || isMobileViewport;
   const location = useLocation();
   const path = location.pathname;
-  const useContentWidth =
-    (!isCompact) &&
-    (path.startsWith('/shop') || path.startsWith('/settings/controller'));
+  const useContentWidth = !isCompact;
 
   const headerStyle = isCompact
     ? {

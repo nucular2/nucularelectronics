@@ -1,10 +1,9 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE!
-);
+const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -12,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).end('Method Not Allowed');
   }
   try {
-    if (!process.env.VITE_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE) {
+    if (!supabaseUrl || !supabaseKey) {
       console.error('Missing Supabase env vars');
       return res.status(500).json({ message: 'Server misconfiguration: Supabase env' });
     }

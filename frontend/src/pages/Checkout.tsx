@@ -173,10 +173,12 @@ export default function Checkout() {
     
     if (!user) throw new Error("User not logged in");
 
-    // Ensure session is valid before proceeding
     const { data: { session }, error: sessionError } = await supabase.auth.getSession();
     if (sessionError || !session) {
-      throw new Error("Session expired. Please refresh the page or log in again.");
+      const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+      if (refreshError || !refreshed.session) {
+        throw new Error("Session expired. Please log in again.");
+      }
     }
 
     const country = countries.find(c => c.code === recipient.countryCode);
@@ -236,7 +238,7 @@ export default function Checkout() {
       // Initiate Stripe Checkout Session
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        const endpoint = apiBase ? `${apiBase}/api/checkout/session` : '/api/checkout/session';
+        const endpoint = apiBase ? `${apiBase}/api/checkout/session` : '/api/checkout-session';
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {

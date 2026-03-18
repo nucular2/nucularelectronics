@@ -66,7 +66,7 @@ export default function Footer() {
 
         <div className="footer-middle-row">
            <div className="trustpilot-widget">
-               <strong>Excellent</strong> 4.5 out of 5 <span style={{ color: '#00b67a', fontSize: '20px' }}>★</span> <strong>Trustpilot</strong> • Обработано заказов: 694
+               <strong>Excellent</strong> 4.5 out of 5 <span style={{ color: '#00b67a', fontSize: '20px' }}>★</span> <strong>Trustpilot</strong>
            </div>
            <div className="social-icons">
            {/* Facebook */}

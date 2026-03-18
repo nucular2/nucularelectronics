@@ -219,7 +219,8 @@ export default function Checkout() {
 
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        const endpoint = apiBase ? `${apiBase}/api/retailcrm/order` : '/api/retailcrm/order';
+        const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+        const endpoint = apiBase && !isServerless ? `${apiBase}/api/retailcrm/order` : '/api/retailcrm/order';
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -238,7 +239,8 @@ export default function Checkout() {
       // Initiate Stripe Checkout Session
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        const endpoint = apiBase ? `${apiBase}/api/checkout/session` : '/api/checkout-session';
+        const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+        const endpoint = apiBase && !isServerless ? `${apiBase}/api/checkout/session` : '/api/checkout-session';
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {

@@ -64,6 +64,19 @@ export default function Controller() {
             )}
             
           </div>
+          <div className="controller-hero-overlay">
+            <div className="controller-hero-text-box">
+              <div className="controller-hero-title">Nucular<br/>controller P24F</div>
+              <div className="controller-hero-description">
+                <span className="controller-hero-desc-line">
+                  For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
+                </span>
+                <span className="controller-hero-desc-line">
+                  A powerful ARM microprocessor provides precise and smooth control of the electric motor.
+                </span>
+              </div>
+            </div>
+          </div>
           <div className="controller-hero-actions">
             <button 
               type="button" 
@@ -225,7 +238,7 @@ export default function Controller() {
 
       {/* Desktop Content */}
       <div className="desktop-only">
-        <section className="onboard-section">
+        <section className="onboard-section gray-full">
           <div style={{ position: 'relative', width: '100%', maxWidth: '1680px', margin: '0 auto' }}>
             {/* Background image - static */}
             <img 
@@ -268,7 +281,7 @@ export default function Controller() {
             alt="Controller details" 
           />
         </section>
-        <section className="onboard-section">
+        <section className="onboard-section gray-full">
           <div style={{ position: 'relative', width: '100%', maxWidth: '1680px', margin: '0 auto' }}>
             {/* Background image - static */}
             <img 
@@ -287,10 +300,10 @@ export default function Controller() {
             </div>
           </div>
         </section>
-        <section className="onboard-section">
+        <section className="onboard-section gray-full">
           <img src="/content-box41.png" alt="Controller details" className="onboard-image" />
         </section>
-        <section className="onboard-section">
+        <section className="onboard-section gray-full">
           <img src="/content-box42.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
@@ -318,63 +331,16 @@ export default function Controller() {
           <img src="/content-box51.png" alt="Controller details" className="onboard-image" />
         </section>
         <section className="onboard-section">
-          <img src="/content-box52.png" alt="Controller details" className="onboard-image" />
+          <img src="/content-box95.svg" alt="Controller details" className="onboard-image" />
         </section>
         
-        <section className="onboard-section promo-features-section">
-          <div className="promo-features-container">
-            <div 
-              className={`promo-feature-column ${activeFeature === 'water' ? 'active' : ''}`}
-              onClick={() => setActiveFeature('water')}
-            >
-              <div className="promo-image-wrapper">
-                <img 
-                  src="/promo_controller-P24F_water.png" 
-                  alt="Full water protection" 
-                  className="promo-feature-image"
-                />
-              </div>
-              <div className="promo-text-content">
-                <h3 className="promo-title">Full water protection</h3>
-                <p className="promo-description">
-                  With compound potting — protection class IP67, the controller can work even under water.
-                </p>
-              </div>
-            </div>
-            
-            <div 
-              className={`promo-feature-column ${activeFeature === 'cooling' ? 'active' : ''}`}
-              onClick={() => setActiveFeature('cooling')}
-            >
-              <div className="promo-image-wrapper">
-                <img 
-                  src="/promo_controller-P24F_cooling.png" 
-                  alt="Efficient cooling" 
-                  className="promo-feature-image"
-                />
-              </div>
-              <div className="promo-text-content">
-                <h3 className="promo-title">Efficient cooling</h3>
-                <p className="promo-description">
-                  Due to the double-sided heat sink to the case, under heavy loads, the temperature gradient is minimal. Heats up slowly, cools down quickly.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* promo-features-section removed per design */}
 
-        <section className="onboard-section">
-          <img src="/content-box53.png" alt="Controller details" className="onboard-image" />
-        </section>
+        {/* Removed extra image section per design */}
 
-        <section className="desktop-buy-banner">
-          <div className="desktop-buy-content">
-            <h2 className="desktop-buy-title">Nucular controller P24F</h2>
-            <p className="desktop-buy-price">$610.00</p>
-            <button className="desktop-buy-button" onClick={handleBuy}>Buy</button>
-          </div>
-        </section>
       </div>
+
+      {/* Price panel placed in the following last onboard section */}
 
       <section
         className="reviews-section"
@@ -543,7 +509,13 @@ export default function Controller() {
       </section>
       <section className="onboard-section onboard-section-last" />
       <div className="desktop-only">
-        <NewsletterBanner />
+        <section className="controller-price-banner">
+          <div className="controller-price-content">
+            <h2 className="controller-price-title">Nucular controller P24F</h2>
+            <p className="controller-price-value">$610.00</p>
+            <button className="controller-price-button" onClick={handleBuy}>Buy</button>
+          </div>
+        </section>
       </div>
       </>
       ) : (

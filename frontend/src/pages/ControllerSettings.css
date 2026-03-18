@@ -337,7 +337,7 @@
   border: none;
   color: #ffffff;
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
   white-space: nowrap;
@@ -350,12 +350,14 @@
     padding: 0 24px;
     width: 180px;
     height: 44px;
+    font-weight: 500;
   }
   .support-help-button--narrow {
     border-radius: 8px;
     padding: 0 24px;
     width: 180px;
     height: 44px;
+    font-weight: 500;
   }
 }
 
@@ -363,6 +365,10 @@
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.support-help-icons .viber-icon {
+  display: none;
 }
 
 .support-help-icons img {

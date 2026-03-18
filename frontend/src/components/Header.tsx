@@ -164,7 +164,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const mobileMenuButtonStyle = isCompact ? { width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : undefined;
 
   return (
-    <header className={`main-header ${isWhite ? 'dropdown-open' : ''}`} style={headerStyle}>
+    <header className={`main-header ${isWhite ? 'dropdown-open' : 'black-divider'}`} style={headerStyle}>
       <div className="logo-container" onClick={handleLogoClick} style={logoWrapStyle}>
         <svg width={logoSize.width} height={logoSize.height} viewBox="0 0 119 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 3.73333L0 18.6667H5.91111L5.91111 4.66667L14.3111 13.084V0H3.73334C1.67147 -1.80253e-07 1.48577e-06 1.67147 1.30551e-06 3.73333Z" fill={logoColor}/>

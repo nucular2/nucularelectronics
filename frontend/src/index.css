@@ -7,12 +7,24 @@
   --gap: 1rem;
   --max-width: 1440px;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --layout-min: 1280px;
+  --layout-max: 5120px;
+  --content-w: clamp(1180px, 75vw, 1680px);
+  --space-1: clamp(8px, 0.5vw, 16px);
+  --space-2: clamp(12px, 0.8vw, 24px);
+  --space-3: clamp(16px, 1vw, 32px);
+  --space-4: clamp(20px, 1.25vw, 40px);
+  --space-5: clamp(32px, 2vw, 64px);
+  --space-6: clamp(48px, 3vw, 96px);
+  --fs-body: clamp(14px, 0.9vw, 18px);
+  --fs-subtitle: clamp(16px, 1vw, 24px);
+  --fs-title: clamp(24px, 1.56vw, 40px);
 }
 
 /* Grid */
 .grid-container {
   width: 100%;
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto;
 }
 .grid-12 {
@@ -111,6 +123,10 @@ body,
   margin: 0;
   padding: 0;
   display: block;
+}
+.onboard-page,
+.controller-page {
+  container-type: inline-size;
 }
 
 @media (max-width: 900px) {
@@ -216,6 +232,20 @@ body,
   max-width: 100%; /* Ensure full width on mobile */
   height: auto;
   display: block;
+}
+
+/* Full-width gray background for specs block to remove side white space */
+.onboard-section.gray-full {
+  background: #F6F6F6;
+}
+.onboard-section.gray-full .onboard-image {
+  background: #F6F6F6;
+}
+.onboard-section.gray-full > div {
+  background: #F6F6F6;
+}
+.onboard-section.gray-full img {
+  background: #F6F6F6;
 }
 
 @media (min-width: 1px) {
@@ -375,7 +405,7 @@ body,
   border: none;
   color: #fff;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   padding: 0;
 }
@@ -615,6 +645,52 @@ body,
   background: #d65a15;
 }
 
+/* Controller price banner (desktop) */
+.controller-price-banner {
+  background: #000;
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.controller-price-content {
+  width: 1680px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+}
+.controller-price-title {
+  font-family: var(--font-family);
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+.controller-price-value {
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+  color: #fff;
+}
+.controller-price-button {
+  background: #F36F25;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 32px;
+  width: 91px;
+  height: 54px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
 /* Header Styles */
 .main-header {
   position: fixed;
@@ -785,6 +861,9 @@ body.is-mobile .cart-count {
   color: #000;
   font-size: 14px;
   font-weight: 400;
+}
+.main-header.black-divider {
+  border-bottom: 1px solid #474747;
 }
 .main-header.dropdown-open .dropdown-arrow {
   color: #000;
@@ -3899,16 +3978,19 @@ body.is-mobile .review-card {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  max-width: var(--content-w);
+  margin: 0 auto; /* Center like homepage */
 }
 .controller-page .reviews-grid::-webkit-scrollbar { display: none; }
 .controller-page .review-card {
-  flex: 0 0 280px;
-  width: 280px;
-  height: 213px;
-  padding: 20px;
+  flex: 0 0 clamp(320px, 24vw, 380px);
+  width: clamp(320px, 24vw, 380px);
+  height: 218px;
+  padding: 32px;
   border-radius: 20px;
-  background: #F9F9F9;
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
+  background: #F6F6F6; /* match design */
+  box-shadow: none; /* no shadow */
+  border: none; /* no border */
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -4019,7 +4101,7 @@ body.is-mobile .onboard-page .review-card {
 }
 
 .reviews-section .section-header {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 32px;
   padding: 0 20px;
 }

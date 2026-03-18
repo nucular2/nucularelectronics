@@ -68,14 +68,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       phone: normalizePhoneE164(order.customer_phone),
       email: order.recipient_info?.email,
       items: Array.isArray(order.items)
-        ? order.items.map((i: any) => ({
-            offer: {
-              article: i.article ?? i.sku ?? undefined,
-              externalId: i.article ? undefined : String(i.id),
-            },
-            quantity: i.quantity,
-            productName: i.title || i.name,
-          }))
+        ? order.items.map((i: any) => {
+            const article = i.article ?? i.sku;
+            const item: any = {
+              quantity: i.quantity,
+              productName: i.title || i.name,
+            };
+            if (article) {
+              item.offer = { article };
+            }
+            return item;
+          })
         : [],
       customerComment: order.contacts?.comment || '',
       delivery: {

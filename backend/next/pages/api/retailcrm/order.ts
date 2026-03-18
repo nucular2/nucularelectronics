@@ -35,6 +35,14 @@ async function postRetailCRM(order: any): Promise<Response> {
   if (!apiUrl || !apiKey) {
     throw new Error('RetailCRM credentials are missing');
   }
+  const discountAmount =
+    (order.discount_total as number) ??
+    (order.contacts?.discountAmount as number) ??
+    0;
+  const discountPercent =
+    (order.discount_percent as number) ??
+    (order.contacts?.discountPercent as number) ??
+    undefined;
   const payload = {
     order: {
       externalId: order.id,
@@ -43,9 +51,12 @@ async function postRetailCRM(order: any): Promise<Response> {
       phone: order.customer_phone,
       email: order.recipient_info?.email,
       items: order.items.map((i: any) => ({
-        offer: { externalId: String(i.id) },
+        offer: {
+          article: i.article ?? i.sku ?? undefined,
+          externalId: i.article ? undefined : String(i.id),
+        },
         quantity: i.quantity,
-        productName: i.title
+        productName: i.title,
       })),
       customerComment: order.contacts?.comment || '',
       delivery: {
@@ -53,7 +64,9 @@ async function postRetailCRM(order: any): Promise<Response> {
           text: order.customer_address
         }
       },
-      status: 'new'
+      status: 'new',
+      discountManualAmount: discountPercent ? undefined : discountAmount,
+      discountManualPercent: discountPercent ?? undefined
     }
   };
   const url = `${apiUrl}/api/v5/orders/create?apiKey=${apiKey}`;

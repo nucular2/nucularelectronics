@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 120px; /* Space for header */
+  padding-top: 84px; /* reduce top space */
   padding-bottom: 60px;
   text-align: center;
   position: relative; /* For absolute positioning of tabs */
@@ -18,7 +18,7 @@
 
 .ulight-desktop-actions {
   position: absolute;
-  top: 100px; /* Adjust based on header height */
+  top: 140px; /* place actions lower */
   right: 240px; /* Align with other pages */
   display: flex;
   gap: 24px;
@@ -234,7 +234,7 @@
 
 .ulight-reviews-header {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--content-w);
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
@@ -256,7 +256,7 @@
   .ulight-hero {
     flex-direction: column;
     justify-content: flex-start;
-    padding-top: 140px; /* Space for header */
+    padding-top: 96px; /* reduce top space */
     padding-bottom: 0;
     text-align: center;
     max-width: 100%;
@@ -270,12 +270,14 @@
     max-width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: -120px; /* pull image further up to remove black space */
   }
 
   .ulight-full-width-image {
     width: 100%;
     height: auto;
     display: block;
+    margin-top: 0;
   }
 
   .ulight-content {
@@ -436,7 +438,7 @@
 
   .ulight-reviews-header {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--content-w);
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -451,11 +453,10 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    width: 100%;
-    padding: 0 20px 40px;
+    width: 1484px; /* 3*380 + 2*20 + 0.8*380 */
+    margin-left: calc(50% - (var(--content-w) / 2) + 20px); /* align left edge with h2 */
+    padding: 0 0 40px 0;
     box-sizing: border-box;
-    max-width: 1200px;
-    margin: 0 auto;
     /* Hide scrollbar but keep functionality */
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -466,8 +467,10 @@
   }
   
   .product-review-card {
+    width: 380px;
     min-width: 380px;
-    flex-shrink: 0;
+    flex: 0 0 380px;
+    height: 218px;
   }
 }
 

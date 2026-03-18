@@ -3,8 +3,8 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET!, {
-  apiVersion: '2026-01-28.clover',
-});
+  apiVersion: '2024-04-10',
+} as any);
 
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL!,

@@ -135,6 +135,109 @@ app.post("/api/checkout/session", async (req: Request, res: Response) => {
   }
 });
 
+function normalizePhoneE164(phone?: string): string | undefined {
+  if (!phone) return undefined;
+  const digits = phone.replace(/[^\d+]/g, "");
+  if (digits.startsWith("+")) return digits;
+  return `+${digits.replace(/^\+/, "")}`;
+}
+
+function countryIsoFrom(order: any): string | undefined {
+  const iso = order?.shipping_address?.countryIso;
+  if (iso) return iso;
+  const country = order?.shipping_address?.country || order?.recipient_info?.country;
+  if (!country) return undefined;
+  const map: Record<string, string> = {
+    "United States": "US",
+    USA: "US",
+    "United Kingdom": "GB",
+    UK: "GB",
+    Germany: "DE",
+    France: "FR",
+    Norway: "NO",
+  };
+  return map[country] || undefined;
+}
+
+app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
+  httpRequests.inc();
+  const { order } = req.body as { order: any };
+  if (!order || !order.id) {
+    return res.status(400).json({ message: "Invalid order payload" });
+  }
+  const apiUrl = process.env.RETAILCRM_URL;
+  const apiKey = process.env.RETAILCRM_API_KEY;
+  if (!apiUrl || !apiKey) {
+    return res.status(500).json({ message: "RetailCRM credentials are missing" });
+  }
+  const managerId = process.env.RETAILCRM_MANAGER_ID ? Number(process.env.RETAILCRM_MANAGER_ID) : undefined;
+  const discountAmount =
+    (order.discount_total as number) ??
+    (order.contacts?.discountAmount as number) ??
+    0;
+  const discountPercent =
+    (order.discount_percent as number) ??
+    (order.contacts?.discountPercent as number) ??
+    undefined;
+  const addr = order.shipping_address || {};
+  const payload = {
+    order: {
+      externalId: order.id,
+      firstName: order.recipient_info?.firstName,
+      lastName: order.recipient_info?.lastName,
+      phone: normalizePhoneE164(order.customer_phone),
+      email: order.recipient_info?.email,
+      items: Array.isArray(order.items)
+        ? order.items.map((i: any) => ({
+            offer: {
+              article: i.article ?? i.sku ?? undefined,
+              externalId: i.article ? undefined : String(i.id),
+            },
+            quantity: i.quantity,
+            productName: i.title || i.name,
+          }))
+        : [],
+      customerComment: order.contacts?.comment || "",
+      delivery: {
+        address: {
+          countryIso: countryIsoFrom(order),
+          index: addr.zipCode || addr.postcode || undefined,
+          region: addr.region || undefined,
+          city: addr.city || undefined,
+          text: order.customer_address || addr.text || undefined,
+        },
+      },
+      status: "new",
+      ...(managerId ? { managerId } : {}),
+      discountManualAmount: discountPercent ? undefined : discountAmount,
+      discountManualPercent: discountPercent ?? undefined,
+      customFields: {
+        ...(order.contacts?.telegram ? { telegram_nick: order.contacts.telegram } : {}),
+        ...(order.contacts?.whatsapp ? { messenger: "WhatsApp" } : order.contacts?.messenger ? { messenger: order.contacts.messenger } : {}),
+      },
+    },
+  };
+  try {
+    await supabase.from("orders").update({ status: "Processing" }).eq("id", order.id);
+    const url = `${apiUrl}/api/v5/orders/create?apiKey=${apiKey}`;
+    const r = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      await supabase.from("orders").update({ status: "Error" }).eq("id", order.id);
+      return res.status(r.status).json({ message: "RetailCRM error", details: data });
+    }
+    await supabase.from("orders").update({ status: "Sent" }).eq("id", order.id);
+    return res.status(200).json({ ok: true, data });
+  } catch (e: any) {
+    await supabase.from("orders").update({ status: "Error" }).eq("id", order.id);
+    return res.status(500).json({ message: "RetailCRM exception", details: e?.message || String(e) });
+  }
+});
+
 app.post("/api/orders/create", csrfProtection, async (_req: Request, res: Response) => {
   httpRequests.inc();
   res.status(501).json({ message: "not implemented" });

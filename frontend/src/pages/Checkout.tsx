@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../lib/supabase";
 import { countries } from "../data/countries";
+import "../checkout-styles.css";
 
 // Types for our form data
 interface RecipientInfo {
@@ -338,7 +339,8 @@ export default function Checkout() {
           
           {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px', margin: '0 auto 20px auto', textAlign: 'center'}}>{error}</div>}
 
-          <div className="checkout-content">
+          <div className="checkout-panel">
+            <h1 className="checkout-title" style={{ marginBottom: '24px', textAlign: 'left' }}>Checkout</h1>
             {/* Step 1: Recipient Information */}
             <div className={`checkout-step ${step === 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
               <div className="checkout-step-header" onClick={() => setStep(1)}>

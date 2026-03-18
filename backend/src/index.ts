@@ -171,6 +171,7 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
     return res.status(500).json({ message: "RetailCRM credentials are missing" });
   }
   const managerId = process.env.RETAILCRM_MANAGER_ID ? Number(process.env.RETAILCRM_MANAGER_ID) : undefined;
+  const site = process.env.RETAILCRM_SITE || undefined;
   const discountAmount =
     (order.discount_total as number) ??
     (order.contacts?.discountAmount as number) ??
@@ -183,6 +184,7 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   const payload = {
     order: {
       externalId: order.id,
+      ...(site ? { site } : {}),
       firstName: order.recipient_info?.firstName,
       lastName: order.recipient_info?.lastName,
       phone: normalizePhoneE164(order.customer_phone),

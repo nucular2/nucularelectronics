@@ -38,6 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const apiUrl = process.env.RETAILCRM_URL;
   const apiKey = process.env.RETAILCRM_API_KEY;
   const managerId = process.env.RETAILCRM_MANAGER_ID ? Number(process.env.RETAILCRM_MANAGER_ID) : undefined;
+  const site = process.env.RETAILCRM_SITE || undefined;
 
   if (!apiUrl || !apiKey) {
     return res.status(500).json({ message: 'RetailCRM credentials are missing' });
@@ -61,6 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const payload = {
     order: {
       externalId: order.id,
+      ...(site ? { site } : {}),
       firstName: order.recipient_info?.firstName,
       lastName: order.recipient_info?.lastName,
       phone: normalizePhoneE164(order.customer_phone),

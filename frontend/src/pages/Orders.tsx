@@ -136,7 +136,6 @@ export default function Orders() {
         <div className="orders-container">
           <div className="orders-layout">
             <aside className="orders-sidebar">
-              <div className="orders-sidebar-title">Orders</div>
               <nav className="orders-nav">
                 <button className="orders-nav-item active">Orders</button>
                 <button className="orders-nav-item" onClick={() => navigate("/profile")}>
@@ -169,6 +168,14 @@ export default function Orders() {
                 </button>
               </div>
 
+              <div className="orders-list-header">
+                <div>Order ID</div>
+                <div>Order date</div>
+                <div>Status</div>
+                <div>Order amount</div>
+                <div />
+              </div>
+
               {loading && <div className="orders-loading">Loading orders...</div>}
               {error && <div className="orders-error">{error}</div>}
 
@@ -188,41 +195,25 @@ export default function Orders() {
               ) : (
                 <div className="orders-list">
                   {filteredOrders.map((order) => (
-                    <div 
-                      key={order.id} 
-                      className="order-card" 
-                      onClick={() => navigate(`/orders/${order.id}`)}
+                    <div
+                      key={order.id}
+                      className="order-card"
                       style={{ cursor: "pointer" }}
+                      onClick={() => navigate(`/orders/${order.id}`)}
                     >
-                      <div className="order-card-header">
-                        <span className={`status-badge ${getStatusStyle(order.status)}`}>
-                          {order.status}
-                        </span>
-                        <button className="order-menu-btn">
-                          <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="2" cy="2" r="2" fill="#111"/>
-                            <circle cx="2" cy="8" r="2" fill="#111"/>
-                            <circle cx="2" cy="14" r="2" fill="#111"/>
-                          </svg>
-                        </button>
+                      <div className="order-id">{order.id.slice(0, 8)}</div>
+                      <div className="order-date">{formatDate(order.created_at)}</div>
+                      <div className="order-status">
+                        <span className={`status-badge ${getStatusStyle(order.status)}`}>{order.status}</span>
                       </div>
-                      
-                      <div className="order-card-date">
-                        {formatDate(order.created_at)}
-                      </div>
-                      
-                      <div className="order-card-divider"></div>
-                      
-                      <div className="order-card-details">
-                        <div className="order-detail-item">
-                          <span className="order-detail-label">Order ID</span>
-                          <span className="order-detail-value">{order.id.slice(0, 8)}</span>
-                        </div>
-                        <div className="order-detail-item right">
-                          <span className="order-detail-label">Order amount</span>
-                          <span className="order-detail-value bold">${order.total_amount.toFixed(2)}</span>
-                        </div>
-                      </div>
+                      <div className="order-amount">${order.total_amount.toFixed(2)}</div>
+                      <button className="order-menu-btn" aria-label="Order actions">
+                        <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="2" cy="2" r="2" fill="#111"/>
+                          <circle cx="2" cy="8" r="2" fill="#111"/>
+                          <circle cx="2" cy="14" r="2" fill="#111"/>
+                        </svg>
+                      </button>
                     </div>
                   ))}
                 </div>

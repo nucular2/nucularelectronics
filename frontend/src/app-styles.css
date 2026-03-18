@@ -344,23 +344,24 @@
   .orders-tabs {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     background: #F6F6F6;
     border-radius: 8px;
-    padding: 12px 20px;
-    width: 780px !important;
-    height: 68px !important;
+    padding: 4px;
+    width: 197px !important;
+    height: 44px !important;
     box-sizing: border-box;
     margin-left: 0;
+    margin-top: 12px;
   }
   .orders-tab {
-    height: 44px;
-    padding: 0 16px;
+    height: 36px;
+    padding: 0 8px;
     border-radius: 6px;
     background: transparent;
     border: none;
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     color: #999;
     cursor: pointer;
     display: flex;
@@ -369,11 +370,83 @@
     transition: all 0.2s;
     box-sizing: border-box;
   }
+  .orders-tabs .orders-tab:first-child {
+    width: 77px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
+  .orders-tabs .orders-tab:last-child {
+    width: 112px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
   .orders-tab.active {
     background: #fff;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
     color: #111;
     font-weight: 600;
+  }
+}
+
+/* Desktop Orders grid header and rows aligned by columns */
+@media (min-width: 1024px) {
+  .orders-list-header {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 40px;
+    padding: 0 24px 16px 24px;
+    border-bottom: 1px solid #EAEAEA;
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 12px;
+  }
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .orders-list .order-card {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 40px;
+    align-items: center;
+    padding: 24px;
+    background: #F6F6F6;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  .orders-list .order-card .order-card-header,
+  .orders-list .order-card .order-card-divider,
+  .orders-list .order-card .order-card-details,
+  .orders-list .order-card .order-card-date {
+    display: contents; /* allow grid children rendered directly */
+  }
+  .orders-list .order-card .order-id {
+    grid-column: 1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #111;
+  }
+  .orders-list .order-card .order-date {
+    grid-column: 2;
+    color: #999;
+  }
+  .orders-list .order-card .order-status {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+  }
+  .orders-list .order-card .order-amount {
+    grid-column: 4;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #111;
+    text-align: right;
+  }
+  .orders-list .order-card .order-menu-btn {
+    grid-column: 5;
+    justify-self: end;
   }
 }
 .orders-list {
@@ -437,7 +510,8 @@
   align-items: flex-end;
 }
 
-/* Desktop compact order card (long and thin) */
+/* Desktop: использовать исходный формат карточки (вертикальная раскладка) */
+/* Компактная десктопная карточка (длинная и тонкая) */
 @media (min-width: 1024px) {
   .order-card {
     width: 780px !important;
@@ -447,9 +521,10 @@
     border-radius: 8px;
     padding: 12px 20px;
     display: grid;
-    grid-template-columns: 140px 1fr 140px 24px;
+    grid-template-columns: 180px 1fr 180px 24px;
     align-items: center;
     gap: 16px;
+    box-sizing: border-box;
   }
   .order-card-header {
     margin-bottom: 0;

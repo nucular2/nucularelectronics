@@ -225,15 +225,19 @@ export default function Checkout() {
         });
         if (!res.ok) {
           const text = await res.text();
+          setError(text || 'Не удалось отправить заказ в CRM');
           throw new Error(text || 'RetailCRM request failed');
         }
       } catch (crmErr) {
         console.error('RetailCRM send error:', crmErr);
+        if (!error) setError('Ошибка отправки заказа в CRM');
       }
 
       // Initiate Stripe Checkout Session
       try {
-        const response = await fetch('/api/checkout-session', {
+        const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+        const endpoint = apiBase ? `${apiBase}/api/checkout/session` : '/api/checkout/session';
+        const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -242,7 +246,9 @@ export default function Checkout() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to initiate payment');
+          const text = await response.text();
+          setError(text || 'Не удалось инициировать оплату');
+          throw new Error(text || 'Failed to initiate payment');
         }
 
         const { url } = await response.json();
@@ -253,6 +259,8 @@ export default function Checkout() {
           localStorage.removeItem('checkout_contacts');
           window.location.href = url;
           return;
+        } else {
+          setError('Платёжная страница недоступна (url пустой)');
         }
       } catch (paymentError) {
         console.error('Payment initiation error:', paymentError);
@@ -260,6 +268,7 @@ export default function Checkout() {
         localStorage.removeItem('checkout_recipient');
         localStorage.removeItem('checkout_shipping');
         localStorage.removeItem('checkout_contacts');
+        setError('Ошибка запуска оплаты. Заказ сохранён, откройте детали заказа.');
         navigate(`/orders/${order.id}`);
         return;
       }

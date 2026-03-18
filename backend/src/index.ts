@@ -238,6 +238,24 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   }
 });
 
+// Delete order by ID (admin/test cleanup)
+app.post("/api/orders/delete", async (req: Request, res: Response) => {
+  httpRequests.inc();
+  const { orderId } = req.body as { orderId?: string };
+  if (!orderId) {
+    return res.status(400).json({ message: "orderId is required" });
+  }
+  try {
+    const { error } = await supabase.from("orders").delete().eq("id", orderId);
+    if (error) {
+      return res.status(500).json({ message: "Failed to delete order", details: error.message });
+    }
+    return res.status(200).json({ ok: true });
+  } catch (e: any) {
+    return res.status(500).json({ message: "Exception deleting order", details: e?.message || String(e) });
+  }
+});
+
 app.post("/api/orders/create", csrfProtection, async (_req: Request, res: Response) => {
   httpRequests.inc();
   res.status(501).json({ message: "not implemented" });

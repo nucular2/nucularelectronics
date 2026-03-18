@@ -201,17 +201,20 @@ export default function Checkout() {
         shipping_address: shipping,
         contacts: { ...contacts, paymentMethod },
       };
-      const r = await fetch('/api/orders/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ payload })
-      });
-      if (!r.ok) {
-        const txt = await r.text();
-        throw new Error(txt || 'Failed to create order (srv)');
+      try {
+        const r = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ payload })
+        });
+        if (r.ok) {
+          const { order } = await r.json();
+          return order;
+        }
+        // serverless failed, fall back to client supabase
+      } catch (_) {
+        // ignore and fall back
       }
-      const { order } = await r.json();
-      return order;
     } else {
       const { data, error: insertError } = await supabase
         .from("orders")
@@ -233,6 +236,26 @@ export default function Checkout() {
       if (!data) throw new Error("Failed to create order.");
       return data;
     }
+    // Fallback path when serverless failed: create order via client supabase
+    const { data, error: insertError } = await supabase
+      .from("orders")
+      .insert({
+        user_id: user.id,
+        items: items,
+        total_amount: totalPrice,
+        status: "New",
+        customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
+        customer_phone: fullPhone,
+        customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+        recipient_info: recipient,
+        shipping_address: shipping,
+        contacts: { ...contacts, paymentMethod },
+      })
+      .select()
+      .single();
+    if (insertError) throw insertError;
+    if (!data) throw new Error("Failed to create order.");
+    return data;
   };
 
   const handleCardCheckout = async (e: React.FormEvent) => {
@@ -246,16 +269,30 @@ export default function Checkout() {
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
         const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
-        const endpoint = apiBase && !isServerless ? `${apiBase}/api/retailcrm/order` : '/api/retailcrm/order';
-        const res = await fetch(endpoint, {
+        // Try serverless first
+        const resSrv = await fetch('/api/retailcrm/order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ order }),
         });
-        if (!res.ok) {
-          const text = await res.text();
-          setError(text || 'Не удалось отправить заказ в CRM');
-          throw new Error(text || 'RetailCRM request failed');
+        if (!resSrv.ok) {
+          // Fallback to backend Express if configured
+          if (apiBase && !isServerless) {
+            const resApi = await fetch(`${apiBase}/api/retailcrm/order`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ order }),
+            });
+            if (!resApi.ok) {
+              const text = await resApi.text();
+              setError(text || 'Не удалось отправить заказ в CRM');
+              throw new Error(text || 'RetailCRM request failed');
+            }
+          } else {
+            const text = await resSrv.text();
+            setError(text || 'Не удалось отправить заказ в CRM');
+            throw new Error(text || 'RetailCRM request failed');
+          }
         }
       } catch (crmErr) {
         console.error('RetailCRM send error:', crmErr);
@@ -266,15 +303,20 @@ export default function Checkout() {
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
         const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
-        const endpoint = apiBase && !isServerless ? `${apiBase}/api/checkout/session` : '/api/checkout-session';
-        const response = await fetch(endpoint, {
+        // Try serverless Stripe
+        let response = await fetch('/api/checkout-session', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ orderId: order.id }),
         });
-
+        if (!response.ok && apiBase && !isServerless) {
+          // Fallback to backend Express
+          response = await fetch(`${apiBase}/api/checkout/session`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderId: order.id }),
+          });
+        }
         if (!response.ok) {
           const text = await response.text();
           setError(text || 'Не удалось инициировать оплату');

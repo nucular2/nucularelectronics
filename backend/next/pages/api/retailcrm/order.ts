@@ -29,12 +29,37 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 );
 
+function normalizePhoneE164(phone: string | undefined): string | undefined {
+  if (!phone) return undefined;
+  const digits = phone.replace(/[^\d+]/g, '');
+  if (digits.startsWith('+')) return digits;
+  return `+${digits.replace(/^\+/, '')}`;
+}
+
+function countryIsoFrom(order: any): string | undefined {
+  const iso = order?.shipping_address?.countryIso;
+  if (iso) return iso;
+  const country = order?.shipping_address?.country || order?.recipient_info?.country;
+  if (!country) return undefined;
+  const map: Record<string, string> = {
+    'United States': 'US',
+    'USA': 'US',
+    'United Kingdom': 'GB',
+    'UK': 'GB',
+    'Germany': 'DE',
+    'France': 'FR',
+    'Norway': 'NO'
+  };
+  return map[country] || undefined;
+}
+
 async function postRetailCRM(order: any): Promise<Response> {
   const apiUrl = process.env.RETAILCRM_URL;
   const apiKey = process.env.RETAILCRM_API_KEY;
   if (!apiUrl || !apiKey) {
     throw new Error('RetailCRM credentials are missing');
   }
+  const managerId = process.env.RETAILCRM_MANAGER_ID ? Number(process.env.RETAILCRM_MANAGER_ID) : undefined;
   const discountAmount =
     (order.discount_total as number) ??
     (order.contacts?.discountAmount as number) ??
@@ -43,12 +68,22 @@ async function postRetailCRM(order: any): Promise<Response> {
     (order.discount_percent as number) ??
     (order.contacts?.discountPercent as number) ??
     undefined;
+  const customFields: Record<string, any> = {};
+  if (order.contacts?.telegram) {
+    customFields['telegram_nick'] = order.contacts.telegram;
+  }
+  if (order.contacts?.whatsapp) {
+    customFields['messenger'] = 'WhatsApp';
+  } else if (order.contacts?.messenger) {
+    customFields['messenger'] = order.contacts.messenger;
+  }
+  const addr = order.shipping_address || {};
   const payload = {
     order: {
       externalId: order.id,
       firstName: order.recipient_info?.firstName,
       lastName: order.recipient_info?.lastName,
-      phone: order.customer_phone,
+      phone: normalizePhoneE164(order.customer_phone),
       email: order.recipient_info?.email,
       items: order.items.map((i: any) => ({
         offer: {
@@ -61,12 +96,18 @@ async function postRetailCRM(order: any): Promise<Response> {
       customerComment: order.contacts?.comment || '',
       delivery: {
         address: {
-          text: order.customer_address
+          countryIso: countryIsoFrom(order),
+          index: addr.zipCode || addr.postcode || undefined,
+          region: addr.region || undefined,
+          city: addr.city || undefined,
+          text: order.customer_address || addr.text || undefined
         }
       },
       status: 'new',
+      ...(managerId ? { managerId } : {}),
       discountManualAmount: discountPercent ? undefined : discountAmount,
-      discountManualPercent: discountPercent ?? undefined
+      discountManualPercent: discountPercent ?? undefined,
+      customFields
     }
   };
   const url = `${apiUrl}/api/v5/orders/create?apiKey=${apiKey}`;

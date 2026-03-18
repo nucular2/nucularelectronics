@@ -1,0 +1,83 @@
+/* Reviews section like uLight */
+.onboard-reviews-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 80px 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.onboard-reviews-header {
+  width: 100%;
+  max-width: var(--content-w);
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+}
+
+.onboard-reviews-title {
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  color: #101010;
+  margin: 0;
+}
+
+@media (min-width: 901px) {
+  .product-reviews-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    width: 1484px; /* 3×380 + 2×20 + 0.8×380 */
+    margin-left: calc(50% - (var(--content-w) / 2) + 20px); /* align with h2 left edge */
+    padding: 0 0 40px 0;
+    box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .product-reviews-list::-webkit-scrollbar {
+    display: none;
+  }
+  .product-review-card {
+    width: 380px;
+    min-width: 380px;
+    flex: 0 0 380px;
+    height: 218px;
+  }
+}
+
+@media (max-width: 900px) {
+  .onboard-reviews-section {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 40px 0;
+  }
+  .onboard-reviews-header {
+    padding: 0 20px;
+  }
+  .product-reviews-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 16px;
+    padding: 0 20px 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .product-reviews-list::-webkit-scrollbar { display: none; }
+  .product-review-card {
+    min-width: 280px;
+    width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}

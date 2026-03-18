@@ -147,7 +147,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         width: '100%',
         maxWidth: '100%',
         boxSizing: 'border-box' as const,
-        backgroundColor: isWhite ? '#fff' : undefined,
+        backgroundColor: isWhite ? '#fff' : '#111',
       }
     : undefined;
 

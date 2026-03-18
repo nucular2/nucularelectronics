@@ -30,25 +30,6 @@
   margin: 0 auto;
 }
 
-.checkout-panel {
-  width: 380px;
-  height: 710px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.08);
-  padding: 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.checkout-panel .checkout-step {
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-}
-
 .checkout-step {
   margin-bottom: 24px;
   padding-bottom: 24px;
@@ -156,14 +137,6 @@
 }
 
 @media (max-width: 768px) {
-  .checkout-panel {
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0 0 20px 0;
-  }
-
   .checkout-page {
     padding-top: 80px;
     padding-bottom: 40px;

@@ -170,6 +170,10 @@ export default function Checkout() {
       setError("Please accept the Terms and Conditions.");
       throw new Error("Terms not accepted");
     }
+    if (!items.length || totalPrice <= 0) {
+      setError("Your cart is empty. Please add items before checkout.");
+      throw new Error("Cart is empty");
+    }
     
     if (!user) throw new Error("User not logged in");
 
@@ -621,7 +625,7 @@ export default function Checkout() {
                     </div>
                   
                     {paymentMethod === 'card' ? (
-                      <button type="submit" className="checkout-next-btn" disabled={loading}>
+                      <button type="submit" className="checkout-next-btn" disabled={loading || !items.length || totalPrice <= 0}>
                         {loading ? "Completing..." : "Complete checkout"}
                       </button>
                     ) : (

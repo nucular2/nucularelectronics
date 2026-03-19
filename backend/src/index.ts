@@ -192,12 +192,20 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
       items: Array.isArray(order.items)
         ? order.items.map((i: any) => {
             const article = i.article ?? i.sku;
+            const unitPrice =
+              i.price ??
+              i.initialPrice ??
+              (typeof i.total === "number" && i.quantity ? i.total / i.quantity : undefined) ??
+              (typeof order.total_amount === "number" && i.quantity ? order.total_amount / i.quantity : undefined);
             const item: any = {
-              quantity: i.quantity,
-              productName: i.title || i.name,
+              quantity: i.quantity ?? 1,
+              productName: i.title || i.name || "Item",
             };
             if (article) {
               item.offer = { article };
+            }
+            if (typeof unitPrice === "number" && !isNaN(unitPrice)) {
+              item.initialPrice = Math.round(unitPrice * 100) / 100;
             }
             return item;
           })

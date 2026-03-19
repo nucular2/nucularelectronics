@@ -68,19 +68,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         lastName: order.recipient_info?.lastName,
         phone: normalizePhoneE164(order.customer_phone),
         email: order.recipient_info?.email,
-        items: Array.isArray(order.items)
-          ? order.items.map((i: any) => {
-              const article = i.article ?? i.sku;
-              const item: any = {
-                quantity: i.quantity,
-                productName: i.title || i.name,
-              };
-              if (article) {
-                item.offer = { article };
-              }
-              return item;
-            })
-          : [],
+      items: Array.isArray(order.items)
+        ? order.items.map((i: any) => {
+            const article = i.article ?? i.sku;
+            // Derive unit price
+            const unitPrice =
+              i.price ??
+              i.initialPrice ??
+              (typeof i.total === 'number' && i.quantity ? i.total / i.quantity : undefined) ??
+              (typeof order.total_amount === 'number' && i.quantity ? order.total_amount / i.quantity : undefined);
+            const item: any = {
+              quantity: i.quantity ?? 1,
+              productName: i.title || i.name || 'Item',
+            };
+            if (article) {
+              item.offer = { article };
+            }
+            if (typeof unitPrice === 'number' && !isNaN(unitPrice)) {
+              item.initialPrice = Math.round(unitPrice * 100) / 100;
+            }
+            return item;
+          })
+        : [],
         customerComment: order.contacts?.comment || '',
         delivery: {
           address: {

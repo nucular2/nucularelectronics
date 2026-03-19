@@ -108,10 +108,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Do not fail CRM call due to supabase error; still attempt send
     }
     const url = `${apiUrl}/api/v5/orders/create?apiKey=${apiKey}${site ? `&site=${encodeURIComponent(site)}` : ''}`;
+    const form = new URLSearchParams();
+    form.set('order', JSON.stringify(payload.order));
     const r = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+      body: form.toString(),
     });
     const text = await r.text();
     let data: any = {};

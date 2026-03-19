@@ -225,10 +225,12 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   try {
     await supabase.from("orders").update({ status: "Processing" }).eq("id", order.id);
     const url = `${apiUrl}/api/v5/orders/create?apiKey=${apiKey}${site ? `&site=${encodeURIComponent(site)}` : ''}`;
+    const form = new URLSearchParams();
+    form.set("order", JSON.stringify(payload.order));
     const r = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
+      body: form.toString(),
     });
     const data = await r.json().catch(() => ({}));
     if (!r.ok) {

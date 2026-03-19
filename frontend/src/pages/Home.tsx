@@ -253,8 +253,8 @@ export default function Home() {
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: '1180px',
-              height: '455px',
+              width: 'var(--content-w)',
+              height: 'auto',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
@@ -311,7 +311,7 @@ export default function Home() {
                 `}</style>
                 
                 {newsData.map((news) => (
-                  <article key={news.id} style={{ flex: '0 0 380px', width: '380px', display: 'flex', flexDirection: 'column' }}>
+                  <article key={news.id} style={{ flex: '0 0 clamp(320px, 24vw, 380px)', width: 'clamp(320px, 24vw, 380px)', display: 'flex', flexDirection: 'column' }}>
                     <div className="news-card-image-wrapper" style={{ width: '100%', height: '240px', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', cursor: 'pointer' }}>
                       <img src={news.image} alt={news.title} className="news-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
@@ -335,7 +335,7 @@ export default function Home() {
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: '1180px',
+              width: 'var(--content-w)',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
@@ -386,8 +386,8 @@ export default function Home() {
                 
                 {reviews.slice(0, 5).map((review) => (
                   <div key={review.id} style={{ 
-                    flex: '0 0 380px', 
-                    width: '380px', 
+                    flex: '0 0 clamp(320px, 24vw, 380px)', 
+                    width: 'clamp(320px, 24vw, 380px)', 
                     background: '#F9F9F9',
                     borderRadius: '20px',
                     padding: '32px',

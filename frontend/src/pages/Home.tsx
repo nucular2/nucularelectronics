@@ -253,7 +253,7 @@ export default function Home() {
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: 'var(--content-w)',
+              width: '1180px',
               height: 'auto',
               margin: '0 auto',
               display: 'flex', 
@@ -335,7 +335,7 @@ export default function Home() {
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: 'var(--content-w)',
+              width: '1180px',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'

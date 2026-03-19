@@ -3748,7 +3748,7 @@ body.is-mobile .review-card {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 32px calc((100vw - var(--content-w)) / 2);
+  padding: 32px 250px;
   min-height: 360px;
   box-sizing: border-box;
   display: flex;
@@ -4048,12 +4048,14 @@ body.is-mobile .review-card {
 }
 
 /* Footer content centered with fixed width on desktop */
-.main-footer .footer-content {
-  width: 100%;
-  max-width: var(--content-w);
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box;
+@media (min-width: 1920px) {
+  .main-footer .footer-content {
+    width: 100%;
+    max-width: var(--content-w);
+    margin: 0 auto;
+    padding: 0 calc((100vw - var(--content-w)) / 2);
+    box-sizing: border-box;
+  }
 }
 
 /* Controller page: make reviews look like homepage slider */

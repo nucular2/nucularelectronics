@@ -141,8 +141,8 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
       }
     : useContentWidth
     ? {
-        paddingLeft: 'calc((100vw - 1180px) / 2)',
-        paddingRight: 'calc((100vw - 1180px) / 2)',
+        paddingLeft: 'calc((100vw - var(--content-w)) / 2)',
+        paddingRight: 'calc((100vw - var(--content-w)) / 2)',
         height: '84px',
         width: '100%',
         maxWidth: '100%',

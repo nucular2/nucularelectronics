@@ -10,7 +10,7 @@
   --layout-min: 1280px;
   --layout-max: 5120px;
   /* Контейнер ширины: плавно, с верхним пределом, затем расширяем на очень больших экранах */
-  --content-w: clamp(1440px, 76vw, 1680px);
+  --content-w: clamp(1280px, 76vw, 1680px);
   --space-1: clamp(8px, 0.5vw, 16px);
   --space-2: clamp(12px, 0.8vw, 24px);
   --space-3: clamp(16px, 1vw, 32px);
@@ -809,7 +809,7 @@ body,
 
 .nav-link {
   font-family: var(--font-family);
-  font-size: clamp(14px, 1vw, 18px);
+  font-size: clamp(13px, 0.9vw, 16px);
   font-weight: 400;
   color: #fff;
   text-decoration: none;
@@ -825,6 +825,20 @@ body,
   gap: 12px;
   opacity: 0.8;
   transition: opacity 0.2s;
+}
+
+/* Desktop-only: show 3 reviews in a grid on very wide screens */
+@media (min-width: 1920px) {
+  .desktop-reviews-scroll {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    column-gap: 20px !important;
+    row-gap: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  .desktop-reviews-scroll > * {
+    width: 100% !important;
+  }
 }
 
 .nav-link:hover {

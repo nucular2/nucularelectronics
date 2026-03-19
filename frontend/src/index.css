@@ -10,7 +10,7 @@
   --layout-min: 1280px;
   --layout-max: 5120px;
   /* Контейнер ширины: плавно, с верхним пределом, затем расширяем на очень больших экранах */
-  --content-w: clamp(1280px, 76vw, 1680px);
+  --content-w: clamp(1440px, 76vw, 1680px);
   --space-1: clamp(8px, 0.5vw, 16px);
   --space-2: clamp(12px, 0.8vw, 24px);
   --space-3: clamp(16px, 1vw, 32px);
@@ -809,7 +809,7 @@ body,
 
 .nav-link {
   font-family: var(--font-family);
-  font-size: clamp(13px, 0.9vw, 16px);
+  font-size: clamp(14px, 1vw, 18px);
   font-weight: 400;
   color: #fff;
   text-decoration: none;

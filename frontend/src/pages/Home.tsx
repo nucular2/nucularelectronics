@@ -371,12 +371,11 @@ export default function Home() {
               </div>
               
               <div className="desktop-reviews-scroll" style={{ 
-                display: 'flex',
-                overflowX: 'auto',
-                gap: '20px',
-                paddingBottom: '20px',
-                scrollbarWidth: 'none', // Firefox
-                msOverflowStyle: 'none'  // IE/Edge
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                columnGap: '20px',
+                rowGap: '20px',
+                paddingBottom: '20px'
               }}>
                 <style>{`
                   .desktop-reviews-scroll::-webkit-scrollbar {
@@ -384,10 +383,9 @@ export default function Home() {
                   }
                 `}</style>
                 
-                {reviews.slice(0, 5).map((review) => (
+                {reviews.slice(0, 6).map((review) => (
                   <div key={review.id} style={{ 
-                    flex: '0 0 clamp(320px, 24vw, 380px)', 
-                    width: 'clamp(320px, 24vw, 380px)', 
+                    width: '100%',
                     background: '#F9F9F9',
                     borderRadius: '20px',
                     padding: '32px',

@@ -30,6 +30,7 @@ import ReviewDetailULight from './pages/ReviewDetailULight';
 import OnBoardComputer from './pages/OnBoardComputer';
 import Controller from './pages/Controller';
 import SurRonLightBee from './pages/SurRonLightBee';
+import AuthConfirm from './pages/AuthConfirm';
 
 import AdminLayout from './admin/components/AdminLayout';
 import AdminDashboard from './admin/pages/Dashboard';
@@ -92,6 +93,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/update-password" element={<UpdatePassword />} />
+            <Route path="/auth/confirm" element={<AuthConfirm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/orders" element={<Orders />} />

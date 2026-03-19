@@ -10,7 +10,7 @@
   --layout-min: 1280px;
   --layout-max: 5120px;
   /* Контейнер ширины: плавно, с верхним пределом, затем расширяем на очень больших экранах */
-  --content-w: clamp(1180px, 72vw, 1600px);
+  --content-w: clamp(1280px, 76vw, 1680px);
   --space-1: clamp(8px, 0.5vw, 16px);
   --space-2: clamp(12px, 0.8vw, 24px);
   --space-3: clamp(16px, 1vw, 32px);
@@ -26,13 +26,13 @@
 /* Крупные десктопы: 1920+, 2560+ расширяем контейнер */
 @media (min-width: 1920px) {
   :root {
-    --content-w: clamp(1360px, 66vw, 1760px);
+    --content-w: clamp(1480px, 72vw, 1800px);
     --fs-title: clamp(30px, 1.6vw, 48px);
   }
 }
 @media (min-width: 2560px) {
   :root {
-    --content-w: clamp(1480px, 62vw, 1920px);
+    --content-w: clamp(1680px, 68vw, 1920px);
     --fs-title: clamp(32px, 1.5vw, 52px);
   }
 }
@@ -1656,7 +1656,7 @@ body.is-mobile .cart-count {
 
 /* Complete Solutions Section */
 .complete-solutions-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 100px;
   text-align: center;
 }

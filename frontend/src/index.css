@@ -3559,13 +3559,18 @@ body.is-mobile .review-card {
 }
 .newsletter-inner {
   width: 100%;
-  max-width: var(--content-w);
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+}
+@media (min-width: 1920px) {
+  .newsletter-inner {
+    max-width: var(--content-w);
+  }
 }
 .newsletter-title {
   font-family: var(--font-family);

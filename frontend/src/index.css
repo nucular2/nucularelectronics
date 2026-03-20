@@ -804,7 +804,7 @@ body,
   gap: 40px;
   align-items: center;
   margin-left: auto;
-  margin-right: 0;
+  margin-right: 32px;
 }
 
 .nav-link {
@@ -822,7 +822,8 @@ body,
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  white-space: nowrap;
   opacity: 0.8;
   transition: opacity 0.2s;
 }
@@ -934,6 +935,7 @@ body.is-mobile .cart-count {
 
 .dropdown-arrow {
   transition: transform 0.3s ease;
+  flex: 0 0 auto;
 }
 
 /* Nav color when dropdown is open (white header background) */

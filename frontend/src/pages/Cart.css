@@ -384,6 +384,7 @@
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {

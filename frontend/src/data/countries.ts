@@ -30,6 +30,7 @@ export const countries: Country[] = [
   { code: "VN", name: "Vietnam", dial_code: "+84", flag: "🇻🇳" },
   { code: "TH", name: "Thailand", dial_code: "+66", flag: "🇹🇭" },
   { code: "MY", name: "Malaysia", dial_code: "+60", flag: "🇲🇾" },
+  { code: "SG", name: "Singapore", dial_code: "+65", flag: "🇸🇬" },
   { code: "PL", name: "Poland", dial_code: "+48", flag: "🇵🇱" },
   { code: "NL", name: "Netherlands", dial_code: "+31", flag: "🇳🇱" },
   { code: "SE", name: "Sweden", dial_code: "+46", flag: "🇸🇪" },

@@ -22,6 +22,7 @@ interface ShippingAddress {
   zipCode: string;
   city: string;
   street: string;
+  buildingName?: string;
   flat?: string;
 }
 
@@ -56,6 +57,7 @@ export default function Checkout() {
     zipCode: "",
     city: "",
     street: "",
+    buildingName: "",
     flat: "",
   });
 
@@ -137,6 +139,7 @@ export default function Checkout() {
       zipCode: "12345",
       city: "Test City",
       street: "Test Street 1",
+      buildingName: "",
       flat: "1",
     });
     setContacts({
@@ -200,7 +203,7 @@ export default function Checkout() {
         status: "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
-        customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+        customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
         recipient_info: recipient,
         shipping_address: shipping,
         contacts: { ...contacts, paymentMethod },
@@ -229,7 +232,7 @@ export default function Checkout() {
           status: "New",
           customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
           customer_phone: fullPhone,
-          customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+          customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
           recipient_info: recipient,
           shipping_address: shipping,
           contacts: { ...contacts, paymentMethod },
@@ -250,7 +253,7 @@ export default function Checkout() {
         status: "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
-        customer_address: `${shipping.street} ${shipping.flat ? shipping.flat + ' ' : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
+        customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
         recipient_info: recipient,
         shipping_address: shipping,
         contacts: { ...contacts, paymentMethod },
@@ -507,10 +510,16 @@ export default function Checkout() {
                     onChange={handleShippingChange}
                     required
                     className="checkout-input"
+                    list="shipping-country-list"
                   />
+                  <datalist id="shipping-country-list">
+                    {countries.map((c) => (
+                      <option key={c.code} value={c.name} />
+                    ))}
+                  </datalist>
                   <input
                     name="zipCode"
-                    placeholder="ZIP Code"
+                    placeholder="Postcode"
                     value={shipping.zipCode}
                     onChange={handleShippingChange}
                     required
@@ -530,6 +539,13 @@ export default function Checkout() {
                     value={shipping.street}
                     onChange={handleShippingChange}
                     required
+                    className="checkout-input"
+                  />
+                  <input
+                    name="buildingName"
+                    placeholder="Building name (if applicable)"
+                    value={shipping.buildingName}
+                    onChange={handleShippingChange}
                     className="checkout-input"
                   />
                   <input

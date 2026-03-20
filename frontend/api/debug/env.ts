@@ -1,6 +1,11 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
-export default function handler(_req: VercelRequest, res: VercelResponse) {
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  const debugToken = process.env.DEBUG_TOKEN;
+  const providedToken = (req.headers['x-debug-token'] as string | undefined) || (req.query.token as string | undefined);
+  if (!debugToken || providedToken !== debugToken) {
+    return res.status(404).end();
+  }
   const vars = {
     RETAILCRM_URL: !!process.env.RETAILCRM_URL,
     RETAILCRM_API_KEY: !!process.env.RETAILCRM_API_KEY,

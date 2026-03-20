@@ -177,8 +177,8 @@ export default function Checkout() {
     
     if (!user) throw new Error("User not logged in");
 
-    const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
-    if (!isServerless) {
+    const isProduction = import.meta.env.PROD;
+    if (!isProduction) {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       if (sessionError || !session) {
         const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
@@ -192,7 +192,7 @@ export default function Checkout() {
     const dialCode = country ? country.dial_code : "";
     const fullPhone = `${dialCode}${recipient.phone}`;
 
-    if (isServerless) {
+    if (isProduction) {
       const payload = {
         user_id: user.id,
         items,
@@ -272,7 +272,6 @@ export default function Checkout() {
 
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
         // Try serverless first
         const resSrv = await fetch('/api/retailcrm/order', {
           method: 'POST',
@@ -281,7 +280,7 @@ export default function Checkout() {
         });
         if (!resSrv.ok) {
           // Fallback to backend Express if configured
-          if (apiBase && !isServerless) {
+          if (apiBase) {
             const resApi = await fetch(`${apiBase}/api/retailcrm/order`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -306,14 +305,13 @@ export default function Checkout() {
       // Initiate Stripe Checkout Session
       try {
         const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        const isServerless = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
         // Try serverless Stripe
         let response = await fetch('/api/checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ orderId: order.id }),
         });
-        if (!response.ok && apiBase && !isServerless) {
+        if (!response.ok && apiBase) {
           // Fallback to backend Express
           response = await fetch(`${apiBase}/api/checkout/session`, {
             method: 'POST',

@@ -46,6 +46,7 @@ import CookieBanner from './components/CookieBanner';
 export default function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const enableAdmin = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
 
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -104,20 +105,31 @@ export default function App() {
             <Route path="/on-board-computer" element={<OnBoardComputer />} />
             <Route path="/controller" element={<Controller />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={
-              <AdminProtectedRoute>
-                <AdminLayout />
-              </AdminProtectedRoute>
-            }>
-              <Route index element={<AdminDashboard />} />
-              <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="catalog" element={<AdminCatalog />} />
-                <Route path="orders" element={<AdminOrders />} />
-                <Route path="reviews" element={<AdminReviews />} />
-                <Route path="*" element={<AdminDashboard />} />
-              </Route>
+            {enableAdmin ? (
+              <>
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminLayout />
+                    </AdminProtectedRoute>
+                  }
+                >
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="catalog" element={<AdminCatalog />} />
+                  <Route path="orders" element={<AdminOrders />} />
+                  <Route path="reviews" element={<AdminReviews />} />
+                  <Route path="*" element={<AdminDashboard />} />
+                </Route>
+              </>
+            ) : (
+              <>
+                <Route path="/admin/login" element={<Home />} />
+                <Route path="/admin/*" element={<Home />} />
+              </>
+            )}
               
               <Route path="*" element={<Home />} />
             </Routes>

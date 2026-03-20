@@ -159,6 +159,21 @@ function countryIsoFrom(order: any): string | undefined {
   return map[country] || undefined;
 }
 
+function parseMoney(value: unknown): number | undefined {
+  if (typeof value === "number") {
+    return isNaN(value) ? undefined : value;
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return undefined;
+    if (trimmed.toLowerCase() === "preorder") return undefined;
+    const normalized = trimmed.replace(/[^0-9.,-]/g, "").replace(/,/g, "");
+    const num = parseFloat(normalized);
+    return isNaN(num) ? undefined : num;
+  }
+  return undefined;
+}
+
 app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   httpRequests.inc();
   const { order } = req.body as { order: any };
@@ -180,6 +195,8 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
     (order.discount_percent as number) ??
     (order.contacts?.discountPercent as number) ??
     undefined;
+  const itemsArray = Array.isArray(order.items) ? order.items : [];
+  const orderTotal = parseMoney(order.total_amount);
   const addr = order.shipping_address || {};
   const payload = {
     order: {
@@ -189,16 +206,17 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
       lastName: order.recipient_info?.lastName,
       phone: normalizePhoneE164(order.customer_phone),
       email: order.recipient_info?.email,
-      items: Array.isArray(order.items)
-        ? order.items.map((i: any) => {
+      items: itemsArray.map((i: any) => {
             const article = i.article ?? i.sku;
+            const quantity = typeof i.quantity === "number" && i.quantity > 0 ? i.quantity : 1;
+            const totalParsed = parseMoney(i.total);
             const unitPrice =
-              i.price ??
-              i.initialPrice ??
-              (typeof i.total === "number" && i.quantity ? i.total / i.quantity : undefined) ??
-              (typeof order.total_amount === "number" && i.quantity ? order.total_amount / i.quantity : undefined);
+              parseMoney(i.price) ??
+              parseMoney(i.initialPrice) ??
+              (totalParsed !== undefined ? totalParsed / quantity : undefined) ??
+              (itemsArray.length === 1 && orderTotal !== undefined ? orderTotal / quantity : undefined);
             const item: any = {
-              quantity: i.quantity ?? 1,
+              quantity,
               productName: i.title || i.name || "Item",
             };
             if (article) {
@@ -208,8 +226,7 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
               item.initialPrice = Math.round(unitPrice * 100) / 100;
             }
             return item;
-          })
-        : [],
+          }),
       customerComment: order.contacts?.comment || "",
       delivery: {
         address: {

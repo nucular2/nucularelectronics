@@ -59,6 +59,20 @@ export default function Profile() {
     fetchProfile();
   }, [user, navigate]);
 
+  const deriveNameFromMetadata = (meta: any) => {
+    const directFirst = typeof meta?.first_name === 'string' ? meta.first_name : '';
+    const directLast = typeof meta?.last_name === 'string' ? meta.last_name : '';
+    if (directFirst || directLast) {
+      return { first_name: directFirst, last_name: directLast };
+    }
+    const full = typeof meta?.full_name === 'string' ? meta.full_name.trim() : '';
+    if (!full) {
+      return { first_name: '', last_name: '' };
+    }
+    const parts = full.split(/\s+/).filter(Boolean);
+    return { first_name: parts[0] || '', last_name: parts.slice(1).join(' ') };
+  };
+
   const fetchProfile = async () => {
     try {
       setLoading(true);
@@ -100,6 +114,16 @@ export default function Profile() {
       }
 
       if (data) {
+        const meta = user?.user_metadata || {};
+        const derived = deriveNameFromMetadata(meta);
+        const shouldPatchName = (!data.first_name && derived.first_name) || (!data.last_name && derived.last_name);
+        if (shouldPatchName) {
+          try {
+            await supabase
+              .from('profiles')
+              .upsert({ id: user.id, first_name: data.first_name || derived.first_name, last_name: data.last_name || derived.last_name, updated_at: new Date() });
+          } catch (_) {}
+        }
         setProfile(data);
         // Initialize forms
         setNameForm({ first_name: data.first_name || '', last_name: data.last_name || '' });
@@ -114,18 +138,26 @@ export default function Profile() {
       } else {
         // Try to get from metadata if profile doesn't exist
         const meta = user?.user_metadata || {};
+        const derived = deriveNameFromMetadata(meta);
         const initialProfile = {
-            first_name: meta.first_name || '',
-            last_name: meta.last_name || '',
-            phone: '',
-            country: '',
-            city: '',
-            street: '',
-            flat: '',
-            zip_code: ''
+          first_name: derived.first_name || '',
+          last_name: derived.last_name || '',
+          phone: '',
+          country: '',
+          city: '',
+          street: '',
+          flat: '',
+          zip_code: ''
         };
         setProfile(initialProfile);
         setNameForm({ first_name: initialProfile.first_name, last_name: initialProfile.last_name });
+        if (derived.first_name || derived.last_name) {
+          try {
+            await supabase
+              .from('profiles')
+              .upsert({ id: user.id, first_name: initialProfile.first_name, last_name: initialProfile.last_name, updated_at: new Date() });
+          } catch (_) {}
+        }
       }
       setEmailForm(user?.email || '');
     } catch (error) {

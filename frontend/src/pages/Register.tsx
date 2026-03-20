@@ -27,13 +27,20 @@ export default function Register() {
     setLoading(true);
     setError(null);
 
+    const trimmedName = name.trim();
+    const parts = trimmedName.split(/\s+/).filter(Boolean);
+    const firstName = parts[0] || '';
+    const lastName = parts.slice(1).join(' ');
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/confirm`,
         data: {
-          full_name: name,
+          full_name: trimmedName,
+          first_name: firstName,
+          last_name: lastName,
         },
       },
     });

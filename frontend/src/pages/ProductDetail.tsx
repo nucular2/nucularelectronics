@@ -3,7 +3,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import CollapsibleSection from "../components/CollapsibleSection";
-import { products } from "../data/products";
+import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
 import "./ProductDetail.css";
 
@@ -17,9 +17,22 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { products } = useProducts();
 
   const resolvedProductId = productId ?? Number(id);
   const product = products.find((p) => p.id === resolvedProductId) || products[0];
+  if (!product) {
+    return (
+      <>
+        <Header variant="white" />
+        <div className="product-page">
+          <div className="product-container">
+            <div className="product-title">Product not found</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   const isP24F = product.id === 1;
   const isOnBoardComputer = product.id === 2;

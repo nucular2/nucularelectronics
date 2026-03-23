@@ -34,6 +34,7 @@ import AuthConfirm from './pages/AuthConfirm';
 
 import AdminLayout from './admin/components/AdminLayout';
 import AdminDashboard from './admin/pages/Dashboard';
+import AdminDashboard3 from './admin/pages/Dashboard3';
 import AdminLogin from './admin/pages/Login';
 import AdminCatalog from './admin/pages/Catalog';
 import AdminOrders from './admin/pages/Orders';
@@ -116,8 +117,9 @@ export default function App() {
                     </AdminProtectedRoute>
                   }
                 >
-                  <Route index element={<AdminDashboard />} />
+                  <Route index element={<AdminDashboard3 />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="dashboard-3" element={<AdminDashboard3 />} />
                   <Route path="catalog" element={<AdminCatalog />} />
                   <Route path="orders" element={<AdminOrders />} />
                   <Route path="reviews" element={<AdminReviews />} />

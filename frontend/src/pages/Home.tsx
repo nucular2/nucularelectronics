@@ -246,16 +246,13 @@ export default function Home() {
 
           {/* Desktop News Section */}
           <div style={{ 
-            width: '100%', 
-            maxWidth: '1680px',
-            margin: '0 auto', 
-            padding: '40px 0', 
+            width: '100%',
+            margin: '0',
+            padding: 'var(--home-section-pad-y) calc((100vw - var(--content-w)) / 2)',
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: '1180px',
-              height: 'auto',
-              margin: '0 auto',
+              width: '100%',
               display: 'flex', 
               flexDirection: 'column'
             }}>
@@ -263,10 +260,10 @@ export default function Home() {
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'center',
-                marginBottom: '24px'
+                marginBottom: 'var(--home-section-header-mb)'
               }}>
                 <h2 style={{ 
-                  fontSize: '32px', 
+                  fontSize: 'var(--home-section-title-fs)', 
                   fontWeight: 700, 
                   margin: 0, 
                   color: '#111', 
@@ -275,7 +272,7 @@ export default function Home() {
                 <a href="/news" style={{ 
                   color: '#F36F25', 
                   textDecoration: 'none', 
-                  fontSize: '14px', 
+                  fontSize: 'var(--home-section-link-fs)', 
                   fontWeight: 500, 
                   fontFamily: 'var(--font-family)', 
                   display: 'flex', 
@@ -292,8 +289,8 @@ export default function Home() {
               <div className="desktop-news-scroll" style={{ 
                 display: 'flex',
                 overflowX: 'auto',
-                gap: '20px',
-                paddingBottom: '20px',
+                gap: 'var(--home-slider-gap)',
+                paddingBottom: 'var(--home-section-header-mb)',
                 height: '100%',
                 scrollbarWidth: 'none', // Firefox
                 msOverflowStyle: 'none'  // IE/Edge
@@ -311,13 +308,13 @@ export default function Home() {
                 `}</style>
                 
                 {newsData.map((news) => (
-                  <article key={news.id} style={{ flex: '0 0 clamp(320px, 24vw, 380px)', width: 'clamp(320px, 24vw, 380px)', display: 'flex', flexDirection: 'column' }}>
-                    <div className="news-card-image-wrapper" style={{ width: '100%', height: '240px', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', cursor: 'pointer' }}>
+                  <article key={news.id} style={{ flex: '0 0 var(--home-card-w)', width: 'var(--home-card-w)', display: 'flex', flexDirection: 'column' }}>
+                    <div className="news-card-image-wrapper" style={{ width: '100%', height: 'var(--home-card-img-h)', borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', cursor: 'pointer' }}>
                       <img src={news.image} alt={news.title} className="news-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
-                    <div style={{ fontSize: '14px', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
-                    <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>{news.title}</h3>
-                    <p style={{ fontSize: '16px', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
+                    <div style={{ fontSize: 'var(--home-card-meta-fs)', color: '#999', marginBottom: '8px', fontFamily: 'var(--font-family)' }}>{news.date}</div>
+                    <h3 style={{ fontSize: 'var(--home-card-title-fs)', fontWeight: 700, margin: '0 0 8px', color: '#111', fontFamily: 'var(--font-family)' }}>{news.title}</h3>
+                    <p style={{ fontSize: 'var(--home-card-text-fs)', color: '#666', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-family)' }}>
                       {news.text}
                     </p>
                   </article>
@@ -328,15 +325,13 @@ export default function Home() {
 
           {/* Desktop Reviews Section */}
           <div style={{ 
-            width: '100%', 
-            maxWidth: '1680px',
-            margin: '0 auto', 
-            padding: '40px 0 40px', 
+            width: '100%',
+            margin: '0',
+            padding: 'var(--home-section-pad-y) calc((100vw - var(--content-w)) / 2)',
             background: '#ffffff'
           }}>
             <div style={{ 
-              width: '1180px',
-              margin: '0 auto',
+              width: '100%',
               display: 'flex', 
               flexDirection: 'column'
             }}>
@@ -344,10 +339,10 @@ export default function Home() {
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'center',
-                marginBottom: '24px'
+                marginBottom: 'var(--home-section-header-mb)'
               }}>
                 <h2 style={{ 
-                  fontSize: '32px', 
+                  fontSize: 'var(--home-section-title-fs)', 
                   fontWeight: 700, 
                   margin: 0, 
                   color: '#111', 
@@ -356,7 +351,7 @@ export default function Home() {
                 <a href="/reviews" style={{ 
                   color: '#F36F25', 
                   textDecoration: 'none', 
-                  fontSize: '14px', 
+                  fontSize: 'var(--home-section-link-fs)', 
                   fontWeight: 500, 
                   fontFamily: 'var(--font-family)', 
                   display: 'flex', 
@@ -373,8 +368,8 @@ export default function Home() {
               <div className="desktop-reviews-scroll" style={{ 
                 display: 'flex',
                 overflowX: 'auto',
-                gap: '20px',
-                paddingBottom: '20px',
+                gap: 'var(--home-slider-gap)',
+                paddingBottom: 'var(--home-section-header-mb)',
                 scrollbarWidth: 'none', // Firefox
                 msOverflowStyle: 'none'  // IE/Edge
               }}>
@@ -386,16 +381,16 @@ export default function Home() {
                 
                 {reviews.slice(0, 5).map((review) => (
                   <div key={review.id} style={{ 
-                    flex: '0 0 clamp(320px, 24vw, 380px)', 
-                    width: 'clamp(320px, 24vw, 380px)', 
+                    flex: '0 0 var(--home-card-w)', 
+                    width: 'var(--home-card-w)', 
                     background: '#F9F9F9',
                     borderRadius: '20px',
-                    padding: '32px',
+                    padding: 'var(--home-card-pad)',
                     boxSizing: 'border-box',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    minHeight: '280px'
+                    minHeight: 'var(--home-review-min-h)'
                   }}>
                     <div>
                       {/* @ts-ignore */}
@@ -403,7 +398,7 @@ export default function Home() {
                         /* @ts-ignore */
                         <a href={review.link} style={{ textDecoration: 'none' }}>
                           <h3 style={{ 
-                            fontSize: '18px', 
+                            fontSize: 'var(--home-review-title-fs)', 
                             fontWeight: 700, 
                             margin: '0 0 12px', 
                             color: '#111', 
@@ -414,7 +409,7 @@ export default function Home() {
                         </a>
                       ) : (
                         <h3 style={{ 
-                          fontSize: '18px', 
+                          fontSize: 'var(--home-review-title-fs)', 
                           fontWeight: 700, 
                           margin: '0 0 12px', 
                           color: '#111', 
@@ -424,7 +419,7 @@ export default function Home() {
                         </h3>
                       )}
                       <p style={{ 
-                        fontSize: '14px', 
+                        fontSize: 'var(--home-review-text-fs)', 
                         color: '#666', 
                         margin: 0, 
                         lineHeight: 1.5, 
@@ -434,8 +429,8 @@ export default function Home() {
                       </p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '20px' }}>
-                      <img src={review.flag} alt="Flag" style={{ width: '24px', height: '16px', borderRadius: '2px', objectFit: 'cover' }} />
-                      <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
+                      <img src={review.flag} alt="Flag" style={{ width: 'clamp(24px, 1.4vw, 40px)', height: 'clamp(16px, 1vw, 28px)', borderRadius: '2px', objectFit: 'cover' }} />
+                      <span style={{ fontSize: 'var(--home-review-author-fs)', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
                     </div>
                   </div>
                 ))}

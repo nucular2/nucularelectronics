@@ -36,6 +36,7 @@ export default function Orders() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
+  const [openMenuOrderId, setOpenMenuOrderId] = useState<string | null>(null);
 
   useEffect(() => {
     // TEMPORARY: Allow viewing orders without login for design review
@@ -87,9 +88,48 @@ export default function Orders() {
       });
   }, [user, navigate]);
 
+  useEffect(() => {
+    if (!openMenuOrderId) return;
+    const onDocumentMouseDown = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest?.(".order-menu-wrap")) return;
+      setOpenMenuOrderId(null);
+    };
+    document.addEventListener("mousedown", onDocumentMouseDown);
+    return () => document.removeEventListener("mousedown", onDocumentMouseDown);
+  }, [openMenuOrderId]);
+
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const handleCancelOrder = async (orderId: string) => {
+    setOpenMenuOrderId(null);
+    if (!user) {
+      setOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? { ...o, status: "Canceled" as OrderStatus } : o))
+      );
+      return;
+    }
+
+    const { error } = await supabase
+      .from("orders")
+      .update({ status: "Canceled" })
+      .eq("id", orderId)
+      .eq("user_id", user.id);
+
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: "Canceled" } : o)));
+  };
+
+  const handleGoToPayment = (orderId: string) => {
+    setOpenMenuOrderId(null);
+    navigate(`/orders/${orderId}`, { state: { action: "pay" } });
   };
 
   const filteredOrders = orders.filter((order) => {
@@ -201,19 +241,56 @@ export default function Orders() {
                       style={{ cursor: "pointer" }}
                       onClick={() => navigate(`/orders/${order.id}`)}
                     >
-                      <div className="order-id">{order.id.slice(0, 8)}</div>
+                      <div className="order-id">{order.id}</div>
                       <div className="order-date">{formatDate(order.created_at)}</div>
                       <div className="order-status">
                         <span className={`status-badge ${getStatusStyle(order.status)}`}>{order.status}</span>
                       </div>
                       <div className="order-amount">${order.total_amount.toFixed(2)}</div>
-                      <button className="order-menu-btn" aria-label="Order actions">
-                        <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="2" cy="2" r="2" fill="#111"/>
-                          <circle cx="2" cy="8" r="2" fill="#111"/>
-                          <circle cx="2" cy="14" r="2" fill="#111"/>
-                        </svg>
-                      </button>
+                      <div
+                        className="order-menu-wrap"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          className="order-menu-btn"
+                          aria-label="Order actions"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenMenuOrderId((prev) => (prev === order.id ? null : order.id));
+                          }}
+                        >
+                          <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="2" cy="2" r="2" fill="#111"/>
+                            <circle cx="2" cy="8" r="2" fill="#111"/>
+                            <circle cx="2" cy="14" r="2" fill="#111"/>
+                          </svg>
+                        </button>
+                        {openMenuOrderId === order.id && (
+                          <div className="order-menu" role="menu" onMouseDown={(e) => e.stopPropagation()}>
+                            <button
+                              className="order-menu-item"
+                              role="menuitem"
+                              onClick={() => {
+                                setOpenMenuOrderId(null);
+                                navigate(`/orders/${order.id}`);
+                              }}
+                            >
+                              Order details
+                            </button>
+                            <button className="order-menu-item" role="menuitem" onClick={() => handleGoToPayment(order.id)}>
+                              Go to payment
+                            </button>
+                            <button
+                              className="order-menu-item order-menu-item-danger"
+                              role="menuitem"
+                              onClick={() => handleCancelOrder(order.id)}
+                            >
+                              Cancel order
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

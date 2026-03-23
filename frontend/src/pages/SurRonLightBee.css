@@ -2,7 +2,7 @@
   background-color: #101010;
   min-height: 100vh;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-family);
 }
 
 .surron-hero {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
@@ -37,6 +37,7 @@ interface Order {
 export default function OrderDetail() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams<{ id: string }>();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
@@ -65,6 +66,17 @@ export default function OrderDetail() {
         setLoading(false);
       });
   }, [user, navigate, id]);
+
+  useEffect(() => {
+    // @ts-ignore
+    const action = location.state?.action;
+    if (loading || !order) return;
+    if (action !== "pay") return;
+    const actionsEl = document.querySelector(".order-actions") as HTMLElement | null;
+    actionsEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const payBtn = document.querySelector(".order-actions .action-btn.primary") as HTMLButtonElement | null;
+    payBtn?.focus();
+  }, [loading, order, location.state]);
 
   const handleSignOut = async () => {
     await signOut();

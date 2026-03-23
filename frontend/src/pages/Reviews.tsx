@@ -24,14 +24,14 @@ export default function Reviews() {
       <div style={{ background: '#fff', minHeight: '100vh', paddingBottom: '40px' }}>
         <Header variant="white" />
         
-        <div style={{ width: '100%', maxWidth: '1180px', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: '60px', alignItems: 'flex-start', paddingTop: '150px', paddingLeft: '20px', paddingRight: '20px', boxSizing: 'border-box' }}>
+        <div style={{ width: '100%', maxWidth: 'var(--content-w)', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: 'var(--home-slider-gap)', alignItems: 'flex-start', paddingTop: 'calc(var(--header-h) + 40px)', paddingLeft: '0', paddingRight: '0', boxSizing: 'border-box' }}>
           
           {/* Left Sidebar */}
-          <div style={{ width: '240px', display: 'flex', flexDirection: 'column', gap: '40px', paddingTop: '0' }}>
-            <h1 style={{ fontSize: '40px', fontWeight: 700, margin: '0 0 20px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
+          <div style={{ width: 'clamp(240px, 18vw, 420px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 3vw, 64px)', paddingTop: '0' }}>
+            <h1 style={{ fontSize: 'var(--home-section-title-fs)', fontWeight: 700, margin: '0 0 20px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ fontSize: '16px', fontWeight: selectedCategory === 'All reviews' ? 700 : 500, color: selectedCategory === 'All reviews' ? '#F36F25' : '#111', cursor: 'pointer', fontFamily: 'var(--font-family)' }} onClick={() => setSelectedCategory('All reviews')}>All reviews</div>
+              <div style={{ fontSize: 'var(--footer-link-fs)', fontWeight: selectedCategory === 'All reviews' ? 700 : 500, color: selectedCategory === 'All reviews' ? '#F36F25' : '#111', cursor: 'pointer', fontFamily: 'var(--font-family)' }} onClick={() => setSelectedCategory('All reviews')}>All reviews</div>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {categories.filter(cat => cat !== 'All reviews').map((cat) => (
@@ -39,7 +39,7 @@ export default function Reviews() {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     style={{
-                      fontSize: '16px',
+                      fontSize: 'var(--footer-link-fs)',
                       fontWeight: selectedCategory === cat ? 700 : 500,
                       color: selectedCategory === cat ? '#F36F25' : '#111',
                       cursor: 'pointer',
@@ -60,13 +60,13 @@ export default function Reviews() {
               border: 'none',
               borderRadius: '8px',
               padding: '0 20px',
-              height: '44px',
-              fontSize: '14px',
+              height: 'var(--newsletter-control-h)',
+              fontSize: 'var(--footer-link-fs)',
               fontWeight: 600,
               cursor: 'pointer',
               fontFamily: 'var(--font-family)',
               whiteSpace: 'nowrap',
-              width: '160px',
+              width: 'auto',
               marginTop: '10px'
             }}>
               Leave feedback
@@ -74,21 +74,21 @@ export default function Reviews() {
           </div>
 
           {/* Right Content */}
-          <div style={{ width: '880px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px', marginLeft: 'auto' }}>
+          <div style={{ width: 'clamp(880px, 62vw, 1200px)', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 'var(--home-slider-gap)', marginLeft: 'auto' }}>
             {reviews
               .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
               .map((review) => (
               <div key={review.id} style={{
                 background: '#F6F6F6',
                 borderRadius: '20px',
-                padding: '32px',
+                padding: 'var(--home-card-pad)',
                 display: 'flex',
-                gap: '32px',
+                gap: 'var(--home-slider-gap)',
                 alignItems: 'flex-start',
-                minHeight: '214px',
+                minHeight: 'clamp(214px, 16vw, 360px)',
                 boxSizing: 'border-box'
               }}>
-                <div style={{ width: '150px', height: '150px', flexShrink: 0, background: '#fff', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 'clamp(150px, 10vw, 240px)', height: 'clamp(150px, 10vw, 240px)', flexShrink: 0, background: '#fff', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {/* Placeholder for product image - using flag as placeholder for now or add product images */}
                   <img src={review.image} alt={review.product} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
@@ -97,21 +97,21 @@ export default function Reviews() {
                    {review.link ? (
                     /* @ts-ignore */
                     <a href={review.link} style={{ textDecoration: 'none' }}>
-                      <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#222', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
+                      <h3 style={{ fontSize: 'var(--home-review-title-fs)', fontWeight: 700, margin: '0 0 12px', color: '#222', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
                         {review.product}
                       </h3>
                     </a>
                   ) : (
-                    <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 12px', color: '#222', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
+                    <h3 style={{ fontSize: 'var(--home-review-title-fs)', fontWeight: 700, margin: '0 0 12px', color: '#222', fontFamily: 'var(--font-family)', lineHeight: '1.2' }}>
                       {review.product}
                     </h3>
                   )}
-                  <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
+                  <p style={{ fontSize: 'var(--home-review-text-fs)', color: '#666', margin: '0 0 16px', lineHeight: '1.5', fontFamily: 'var(--font-family)' }}>
                     {review.text}
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <img src={review.flag} alt="Flag" style={{ width: '20px', height: '14px', borderRadius: '2px', objectFit: 'cover' }} />
-                    <span style={{ fontSize: '14px', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
+                    <img src={review.flag} alt="Flag" style={{ width: 'clamp(20px, 1.2vw, 40px)', height: 'clamp(14px, 0.8vw, 28px)', borderRadius: '2px', objectFit: 'cover' }} />
+                    <span style={{ fontSize: 'var(--home-review-author-fs)', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
                   </div>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function Reviews() {
                 background: 'transparent',
                 border: 'none',
                 color: '#F36F25',
-                fontSize: '14px',
+                fontSize: 'var(--home-section-link-fs)',
                 fontWeight: 500,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-family)'

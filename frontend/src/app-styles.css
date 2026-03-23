@@ -185,16 +185,16 @@
 .orders-page {
   padding-top: calc(var(--header-h) + 40px);
   min-height: calc(100vh - 400px);
-  padding-bottom: clamp(80px, 6vw, 160px);
+  padding-bottom: 80px;
   display: flex;
   justify-content: flex-start;
 }
 
 .orders-container {
   width: 100%;
-  max-width: 100%; /* Changed to allow full width alignment control */
-  padding: 0 calc((100vw - var(--content-w)) / 2);
-  margin: 0;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0;
 }
 
 .orders-layout {
@@ -394,7 +394,7 @@
 @media (min-width: 1024px) {
   .orders-list-header {
     display: grid;
-    grid-template-columns: clamp(160px, 12vw, 260px) clamp(180px, 14vw, 320px) 1fr clamp(140px, 10vw, 240px) 40px;
+    grid-template-columns: 260px 200px 1fr 160px 40px;
     padding: 0 24px 16px 24px;
     border-bottom: 1px solid #EAEAEA;
     font-size: 14px;
@@ -409,9 +409,9 @@
   }
   .orders-list .order-card {
     display: grid;
-    grid-template-columns: clamp(160px, 12vw, 260px) clamp(180px, 14vw, 320px) 1fr clamp(140px, 10vw, 240px) 40px;
+    grid-template-columns: 260px 200px 1fr 160px 40px;
     align-items: center;
-    padding: clamp(20px, 1.4vw, 32px);
+    padding: 24px;
     background: #F6F6F6;
     border-radius: 20px;
     box-sizing: border-box;
@@ -611,11 +611,11 @@
 
 .contact-layout {
   max-width: var(--content-w);
-  margin: calc(var(--header-h) + 40px) auto clamp(160px, 8vw, 260px);
+  margin: 140px auto 160px;
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: var(--home-slider-gap);
+  gap: 36px;
 }
 
 .contact-page {
@@ -623,7 +623,7 @@
 }
 
 .contact-left {
-  max-width: clamp(420px, 28vw, 720px);
+  max-width: 420px;
 }
 
 .contact-title {
@@ -632,7 +632,7 @@
   font-size: var(--home-section-title-fs);
   line-height: 120%;
   color: #222222;
-  margin-bottom: clamp(24px, 1.6vw, 40px);
+  margin-bottom: 24px;
 }
 
 .contact-subtitle {
@@ -641,7 +641,7 @@
   font-size: var(--fs-body);
   line-height: 160%;
   color: #555555;
-  margin-bottom: clamp(32px, 2vw, 56px);
+  margin-bottom: 32px;
 }
 
 .contact-company {
@@ -650,7 +650,7 @@
   font-size: var(--footer-link-fs);
   line-height: 160%;
   color: #222222;
-  margin-bottom: clamp(16px, 1vw, 28px);
+  margin-bottom: 16px;
 }
 
 .contact-address {
@@ -659,7 +659,7 @@
   font-size: var(--footer-link-fs);
   line-height: 160%;
   color: #222222;
-  margin-bottom: clamp(32px, 2vw, 56px);
+  margin-bottom: 32px;
 }
 
 .contact-socials {
@@ -669,8 +669,8 @@
 }
 
 .contact-socials .social-icon {
-  width: clamp(40px, 2.2vw, 72px);
-  height: clamp(40px, 2.2vw, 72px);
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -686,18 +686,18 @@
 }
 
 .contact-socials .social-icon svg {
-  width: clamp(20px, 1.2vw, 36px);
-  height: clamp(20px, 1.2vw, 36px);
+  width: 20px;
+  height: 20px;
   fill: currentColor;
 }
 
 .contact-form {
   flex: 1;
-  max-width: clamp(380px, 30vw, 640px);
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: clamp(32px, 2vw, 56px);
+  margin-top: 32px;
 }
 
 .contact-input,
@@ -729,17 +729,17 @@
 .contact-input {
   width: 100%;
   height: var(--newsletter-control-h);
-  padding: 0 clamp(16px, 1.2vw, 28px);
+  padding: 0 16px;
 }
 
 .contact-input:nth-of-type(3) {
-  padding: 0 clamp(12px, 1vw, 24px) 0 clamp(16px, 1.2vw, 28px);
+  padding: 0 12px 0 16px;
 }
 
 .contact-textarea {
   width: 100%;
-  height: clamp(147px, 10vw, 260px);
-  padding: clamp(16px, 1.2vw, 28px);
+  height: 147px;
+  padding: 16px 44px 16px 16px;
 }
 
 .contact-send-button {
@@ -828,8 +828,10 @@
 
 .cart-container {
   width: 100%;
-  max-width: 100%;
-  padding: 40px calc((100vw - var(--content-w)) / 2);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 0;
+  box-sizing: border-box;
 }
 
 .cart-title {
@@ -1080,17 +1082,16 @@
   }
 
   .cart-container {
-    padding-left: calc((100vw - var(--content-w)) / 2);
-    padding-right: calc((100vw - var(--content-w)) / 2);
-    max-width: 100%;
-    margin: 0;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 0;
   }
 
   .cart-layout {
     display: grid;
-    grid-template-columns: 1fr clamp(420px, 26vw, 720px);
+    grid-template-columns: 1fr 280px;
     align-items: start;
-    gap: var(--home-slider-gap);
+    gap: 60px;
   }
 
   .cart-main {
@@ -1143,7 +1144,7 @@
   .cart-item-details {
     flex: 0 0 auto;
     padding-left: 16px;
-    width: clamp(320px, 22vw, 520px);
+    width: 300px;
   }
 
   .cart-item-title {
@@ -1172,8 +1173,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: clamp(140px, 10vw, 220px);
-    height: var(--newsletter-control-h);
+    width: 100px;
+    height: 48px;
     background: #F6F6F6;
     border-radius: 8px;
     padding: 0 12px;

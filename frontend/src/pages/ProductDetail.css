@@ -1,7 +1,7 @@
 .product-page {
   background-color: #fff;
   min-height: 100vh;
-  padding-top: 100px; /* Header height */
+  padding-top: 100px;
   padding-bottom: 80px;
 }
 
@@ -9,6 +9,7 @@
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .product-back-link {
@@ -107,7 +108,7 @@
   background: transparent;
   border: none;
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: var(--footer-link-fs);
   color: #666;
   cursor: pointer;
 }
@@ -129,7 +130,7 @@
 
 .product-code {
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: var(--footer-link-fs);
   color: #999;
   margin-bottom: 24px;
 }
@@ -149,7 +150,7 @@
 .product-color-label {
   display: block;
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: var(--footer-link-fs);
   color: #666;
   margin-bottom: 12px;
 }
@@ -262,7 +263,7 @@
 
 .product-benefits {
   display: flex;
-  gap: 40px;
+  gap: var(--home-slider-gap);
   padding-top: 24px;
   padding-bottom: 24px;
   border-top: 1px solid #e0e0e0;
@@ -285,7 +286,7 @@
 .product-benefit-title {
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--footer-link-fs);
   color: #222222;
 }
 
@@ -312,7 +313,7 @@
 .product-overview-text {
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--fs-body);
   line-height: 160%;
   color: #555555;
   text-align: left;
@@ -442,7 +443,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  width: 786px; /* Вернули исходную ширину */
+  width: 786px;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -450,9 +451,9 @@
 }
 
 .product-kit-card {
-  flex: 0 0 246px; /* Фиксированная ширина */
+  flex: 0 0 246px;
   width: 246px;
-  height: 121px; /* Фиксированная высота */
+  height: 121px;
   padding: 20px;
   background: #f6f6f6;
   border-radius: 20px;
@@ -843,7 +844,7 @@
 
 .product-add-image {
   width: 100%;
-  height: 260px;
+  height: var(--home-card-img-h);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -902,14 +903,14 @@
 .product-add-name {
   font-family: var(--font-family);
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--home-card-title-fs);
   color: #222222;
 }
 
 .product-add-price {
   font-family: var(--font-family);
   font-weight: 500;
-  font-size: 14px;
+  font-size: var(--home-card-text-fs);
   color: #888888;
 }
 
@@ -924,7 +925,7 @@
   color: #f36f25;
   font-family: var(--font-family);
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--home-section-link-fs);
   cursor: pointer;
 }
 .product-add-cta:focus {

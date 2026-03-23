@@ -9,75 +9,47 @@
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --layout-min: 1280px;
   --layout-max: 5120px;
-  /* Контейнер ширины: шире на обычных десктопах, ещё шире на ultra-wide */
-  --content-w: clamp(1280px, 78vw, 1900px);
-  --space-1: clamp(8px, 0.5vw, 16px);
-  --space-2: clamp(12px, 0.8vw, 24px);
-  --space-3: clamp(16px, 1vw, 32px);
-  --space-4: clamp(20px, 1.25vw, 40px);
-  --space-5: clamp(32px, 2vw, 64px);
-  --space-6: clamp(48px, 3vw, 96px);
-  /* Типографика: относительные единицы с clamp для разных диапазонов */
-  --fs-body: clamp(14px, 0.95vw, 18px);
-  --fs-subtitle: clamp(16px, 1.1vw, 24px);
-  --fs-title: clamp(28px, 1.8vw, 44px);
-  --header-h: clamp(84px, 6vw, 160px);
-  --header-pad-y: clamp(20px, 1.8vw, 44px);
-  --header-logo-w: clamp(170px, 12vw, 360px);
-  --header-nav-fs: clamp(14px, 1.1vw, 28px);
-  --header-actions-gap: clamp(24px, 1.8vw, 44px);
-  --header-nav-actions-gap: clamp(24px, 2vw, 80px);
-  --header-icon-size: clamp(20px, 1.5vw, 40px);
-  --footer-pad-y: clamp(32px, 2.4vw, 80px);
-  --footer-title-fs: clamp(14px, 1.2vw, 26px);
-  --footer-link-fs: clamp(14px, 1.2vw, 26px);
-  --footer-bottom-link-fs: clamp(12px, 0.9vw, 18px);
-  --footer-bottom-pad-top: clamp(16px, 1.4vw, 40px);
-  --newsletter-title-fs: clamp(40px, 2vw, 72px);
-  --newsletter-subtitle-fs: clamp(16px, 1.2vw, 28px);
-  --newsletter-control-h: clamp(54px, 3vw, 84px);
-  --newsletter-control-fs: clamp(14px, 1.1vw, 24px);
-  --home-section-title-fs: clamp(32px, 1.8vw, 64px);
-  --home-section-link-fs: clamp(14px, 1.1vw, 28px);
-  --home-section-pad-y: clamp(40px, 2.2vw, 96px);
-  --home-section-header-mb: clamp(24px, 1.6vw, 48px);
-  --home-slider-gap: clamp(20px, 1.8vw, 48px);
-  --home-card-w: clamp(320px, 24vw, 620px);
-  --home-card-img-h: clamp(240px, 12vw, 360px);
-  --home-card-meta-fs: clamp(14px, 1.05vw, 24px);
-  --home-card-title-fs: clamp(20px, 1.2vw, 34px);
-  --home-card-text-fs: clamp(16px, 1.15vw, 24px);
-  --home-review-title-fs: clamp(18px, 1.2vw, 32px);
-  --home-review-text-fs: clamp(14px, 1.05vw, 22px);
-  --home-review-author-fs: clamp(14px, 1.05vw, 22px);
-  --home-card-pad: clamp(32px, 1.8vw, 56px);
-  --home-review-min-h: clamp(280px, 18vw, 460px);
-}
-
-/* Крупные десктопы: 1920+, 2560+ расширяем контейнер */
-@media (min-width: 1920px) {
-  :root {
-    --content-w: clamp(1600px, 82vw, 2400px);
-    --fs-title: clamp(32px, 1.7vw, 56px);
-  }
-}
-
-@media (min-width: 1600px) {
-  :root {
-    --fs-body: 22px;
-    --fs-subtitle: 26px;
-    --header-nav-fs: 32px;
-    --header-nav-actions-gap: 64px;
-    --footer-title-fs: 24px;
-    --footer-link-fs: 22px;
-    --footer-bottom-link-fs: 18px;
-  }
-}
-@media (min-width: 2560px) {
-  :root {
-    --content-w: clamp(1800px, 84vw, 2800px);
-    --fs-title: clamp(36px, 1.6vw, 64px);
-  }
+  --content-w: 1180px;
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 20px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --fs-body: 14px;
+  --fs-subtitle: 16px;
+  --fs-title: 40px;
+  --header-h: 100px;
+  --header-pad-y: 24px;
+  --header-logo-w: 200px;
+  --header-nav-fs: 14px;
+  --header-actions-gap: 32px;
+  --header-nav-actions-gap: 40px;
+  --header-icon-size: 20px;
+  --footer-pad-y: 40px;
+  --footer-title-fs: 16px;
+  --footer-link-fs: 14px;
+  --footer-bottom-link-fs: 12px;
+  --footer-bottom-pad-top: 24px;
+  --newsletter-title-fs: 54px;
+  --newsletter-subtitle-fs: 16px;
+  --newsletter-control-h: 54px;
+  --newsletter-control-fs: 14px;
+  --home-section-title-fs: 32px;
+  --home-section-link-fs: 14px;
+  --home-section-pad-y: 40px;
+  --home-section-header-mb: 24px;
+  --home-slider-gap: 20px;
+  --home-card-w: 380px;
+  --home-card-img-h: 240px;
+  --home-card-meta-fs: 12px;
+  --home-card-title-fs: 20px;
+  --home-card-text-fs: 14px;
+  --home-review-title-fs: 18px;
+  --home-review-text-fs: 14px;
+  --home-review-author-fs: 14px;
+  --home-card-pad: 32px;
+  --home-review-min-h: 280px;
 }
 
 /* Grid */
@@ -539,11 +511,12 @@ body,
 /* Desktop fixed header width and full-bleed hero/images */
 @media (min-width: 1024px) {
   .main-header {
-    padding-left: calc((100vw - var(--content-w)) / 2);
-    padding-right: calc((100vw - var(--content-w)) / 2);
     height: var(--header-h);
     width: 100%;
-    max-width: 100%;
+    max-width: var(--content-w);
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
     box-sizing: border-box;
   }
   .controller-hero .hero-image-container {
@@ -811,13 +784,29 @@ body,
   width: 100%;
   max-width: 100%;
   height: var(--header-h);
-  padding: var(--header-pad-y) calc((100vw - var(--content-w)) / 2);
+  padding: var(--header-pad-y) 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
   box-sizing: border-box;
   transition: background-color 0.3s ease;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .header-inner {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 }
 
 .home-mobile .main-header {
@@ -851,7 +840,7 @@ body,
 
 .main-nav {
   display: flex;
-  gap: clamp(20px, 1.8vw, 40px);
+  gap: 20px;
   align-items: center;
   margin-left: auto;
   margin-right: var(--header-nav-actions-gap);
@@ -3595,7 +3584,7 @@ body.is-mobile .review-card {
   width: 100vw;
   min-height: 346px;
   height: auto;
-  padding: clamp(72px, 4vw, 140px) 0;
+  padding: 72px 0;
   background: #101010;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
@@ -3604,9 +3593,9 @@ body.is-mobile .review-card {
 }
 .newsletter-inner {
   width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0 calc((100vw - var(--content-w)) / 2);
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3638,7 +3627,7 @@ body.is-mobile .review-card {
   margin-top: 8px;
 }
 .newsletter-input {
-  width: clamp(380px, 28vw, 640px);
+  width: 640px;
   height: var(--newsletter-control-h);
   border-radius: 8px;
   padding: 0 16px;
@@ -3787,9 +3776,9 @@ body.is-mobile .review-card {
 
 .footer-content {
   width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: var(--footer-pad-y) calc((100vw - var(--content-w)) / 2);
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: var(--footer-pad-y) 0;
   min-height: 360px;
   box-sizing: border-box;
   display: flex;
@@ -3939,7 +3928,7 @@ body.is-mobile .review-card {
 }
 
 .footer-logo svg {
-  width: clamp(119px, 8vw, 220px);
+  width: 119px;
   height: auto;
   display: block;
 }
@@ -4094,17 +4083,6 @@ body.is-mobile .review-card {
   display: block;
 }
 
-/* Footer content centered with fixed width on desktop */
-@media (min-width: 1920px) {
-  .main-footer .footer-content {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: var(--footer-pad-y) calc((100vw - var(--content-w)) / 2);
-    box-sizing: border-box;
-  }
-}
-
 /* Controller page: make reviews look like homepage slider */
 .controller-page .reviews-section {
   padding: 0 0 20px;
@@ -4126,8 +4104,8 @@ body.is-mobile .review-card {
 }
 .controller-page .reviews-grid::-webkit-scrollbar { display: none; }
 .controller-page .review-card {
-  flex: 0 0 clamp(320px, 24vw, 380px);
-  width: clamp(320px, 24vw, 380px);
+  flex: 0 0 380px;
+  width: 380px;
   height: 218px;
   padding: 32px;
   border-radius: 20px;

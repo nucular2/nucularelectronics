@@ -248,11 +248,13 @@ export default function Home() {
           <div style={{ 
             width: '100%',
             margin: '0',
-            padding: 'var(--home-section-pad-y) calc((100vw - var(--content-w)) / 2)',
+            padding: '40px 0',
             background: '#ffffff'
           }}>
             <div style={{ 
               width: '100%',
+              maxWidth: '1180px',
+              margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
             }}>
@@ -327,11 +329,13 @@ export default function Home() {
           <div style={{ 
             width: '100%',
             margin: '0',
-            padding: 'var(--home-section-pad-y) calc((100vw - var(--content-w)) / 2)',
+            padding: '40px 0',
             background: '#ffffff'
           }}>
             <div style={{ 
               width: '100%',
+              maxWidth: '1180px',
+              margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
             }}>
@@ -429,7 +433,7 @@ export default function Home() {
                       </p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '20px' }}>
-                      <img src={review.flag} alt="Flag" style={{ width: 'clamp(24px, 1.4vw, 40px)', height: 'clamp(16px, 1vw, 28px)', borderRadius: '2px', objectFit: 'cover' }} />
+                      <img src={review.flag} alt="Flag" style={{ width: '20px', height: '14px', borderRadius: '2px', objectFit: 'cover' }} />
                       <span style={{ fontSize: 'var(--home-review-author-fs)', color: '#999', fontFamily: 'var(--font-family)' }}>{review.author}</span>
                     </div>
                   </div>

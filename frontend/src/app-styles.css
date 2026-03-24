@@ -1024,23 +1024,31 @@
 
   .order-card {
     min-height: 168px;
-    grid-template-columns: 1fr 1fr;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "status menu"
+      "date date"
+      "id amount";
     row-gap: 12px;
     column-gap: 16px;
     align-items: start;
   }
 
   .order-status {
-    grid-column: 1;
+    grid-area: status;
   }
 
   .order-menu-wrap {
-    grid-column: 2;
+    grid-area: menu;
     justify-self: end;
   }
 
   .order-date {
-    grid-column: 1 / -1;
+    grid-area: date;
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 12px;
@@ -1052,6 +1060,7 @@
 
   .order-id,
   .order-amount {
+    grid-area: id;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -1071,6 +1080,7 @@
   }
 
   .order-amount {
+    grid-area: amount;
     text-align: right;
     justify-self: end;
   }

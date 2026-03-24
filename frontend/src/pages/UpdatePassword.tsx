@@ -117,6 +117,12 @@ export default function UpdatePassword() {
             </aside>
 
             <main className="orders-content">
+              <div className="orders-mobile-bar">
+                <button className="orders-mobile-link" onClick={() => navigate("/orders")}>Orders</button>
+                <button className="orders-mobile-link" onClick={() => navigate("/profile")}>User info</button>
+                <button className="orders-mobile-link active">Password</button>
+                <button className="orders-mobile-link logout" onClick={handleSignOut}>Log out</button>
+              </div>
               <h1 className="orders-title">Password</h1>
 
               <div className="password-form-container">

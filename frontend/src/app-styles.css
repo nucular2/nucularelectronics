@@ -226,15 +226,20 @@
   border: none;
   padding: 0;
   font-family: var(--font-family);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 14px;
   line-height: 140%;
-  color: #111;
+  color: #222;
   cursor: pointer;
 }
 
 .orders-mobile-link.logout {
-  color: #111;
+  color: #222;
+  margin-left: auto;
+}
+
+.orders-mobile-link.active {
+  color: #f36f25;
 }
 
 /* Sidebar Nav */
@@ -969,9 +974,10 @@
   .orders-mobile-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
     margin-bottom: 24px;
+    gap: 24px;
   }
 
   .orders-title {
@@ -981,6 +987,100 @@
 
   .orders-list-header {
     display: none;
+  }
+
+  .user-info-section {
+    padding: 24px 0;
+  }
+
+  .user-info-label {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    color: #b0b0b0;
+  }
+
+  .user-info-value {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    color: #222;
+  }
+
+  .user-info-edit-btn {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #f36f25;
+  }
+
+  .user-info-edit-btn.cancel {
+    color: #f36f25;
+  }
+
+  .orders-list {
+    gap: 12px;
+  }
+
+  .order-card {
+    min-height: 168px;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 12px;
+    column-gap: 16px;
+    align-items: start;
+  }
+
+  .order-status {
+    grid-column: 1;
+  }
+
+  .order-menu-wrap {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .order-date {
+    grid-column: 1 / -1;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #b0b0b0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+
+  .order-id,
+  .order-amount {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    line-height: 140%;
+    color: #222;
+    font-weight: 600;
+  }
+
+  .order-id::before {
+    content: "Order ID";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #b0b0b0;
+  }
+
+  .order-amount {
+    text-align: right;
+    justify-self: end;
+  }
+
+  .order-amount::before {
+    content: "Order amount";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #b0b0b0;
   }
 }
 .checkout-container {

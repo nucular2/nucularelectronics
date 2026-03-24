@@ -4322,10 +4322,8 @@ body.is-mobile .onboard-page .review-card {
   }
 
   body:not(.is-home) .reviews-section .reviews-grid {
-    max-width: 1180px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 20px 20px 20px;
+    padding-left: max(20px, calc((100% - 1180px) / 2 + 20px));
+    padding-right: 0;
   }
 }
 

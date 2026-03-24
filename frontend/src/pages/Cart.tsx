@@ -40,9 +40,9 @@ export default function Cart() {
       <Header variant="white" />
       <div className="cart-page">
         <div className="cart-container">
+          <h1 className="cart-title">Cart</h1>
           <div className="cart-layout">
             <div className="cart-main">
-              <h1 className="cart-title">Cart</h1>
             <div className="cart-items">
               {items.map((item) => (
                 <div key={item.id} className="cart-item">
@@ -94,18 +94,20 @@ export default function Cart() {
               </div>
             </div>
             </div>
-            <aside className="cart-summary">
-              <h2 className="cart-summary-title">Order summary</h2>
-              <div className="cart-summary-row">
-                <span className="cart-summary-label">Quantity</span>
-                <span className="cart-summary-value">{totalItems}</span>
-              </div>
-              <div className="cart-summary-row cart-summary-row-total">
-                <span className="cart-summary-label">Total</span>
-                <span className="cart-summary-value">
-                  ${totalPrice.toFixed(2)}
-                </span>
-              </div>
+            <div className="cart-summary-column">
+              <aside className="cart-summary">
+                <h2 className="cart-summary-title">Order summary</h2>
+                <div className="cart-summary-row">
+                  <span className="cart-summary-label">Quantity</span>
+                  <span className="cart-summary-value">{totalItems}</span>
+                </div>
+                <div className="cart-summary-row cart-summary-row-total">
+                  <span className="cart-summary-label">Total</span>
+                  <span className="cart-summary-value">
+                    ${totalPrice.toFixed(2)}
+                  </span>
+                </div>
+              </aside>
               <button
                 className="checkout-btn"
                 onClick={() => {
@@ -118,7 +120,7 @@ export default function Cart() {
               >
                 Go to checkout
               </button>
-            </aside>
+            </div>
           </div>
         </div>
       </div>

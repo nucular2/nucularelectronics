@@ -9,6 +9,7 @@ interface AuthContextType {
   login: (email: string, pass: string) => Promise<boolean>;
   logout: () => Promise<void>;
   user: User | null;
+  errorMessage: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,8 +57,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, pass: string) => {
     setLoading(true);
+    setErrorMessage(null);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
     if (error) {
+      setErrorMessage(error.message);
       setLoading(false);
       return false;
     }
@@ -66,6 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await supabase.auth.signOut();
       setUser(null);
       setIsAuthenticated(false);
+      setErrorMessage('Нет доступа: email не добавлен в список администраторов');
       setLoading(false);
       return false;
     }
@@ -83,7 +88,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ loading, isAuthenticated, login, logout, user }}>
+    <AuthContext.Provider value={{ loading, isAuthenticated, login, logout, user, errorMessage }}>
       {children}
     </AuthContext.Provider>
   );

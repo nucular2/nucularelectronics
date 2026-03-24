@@ -7,17 +7,17 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login, loading, errorMessage } = useAuth();
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    const ok = await login(email, password);
-    if (ok) {
+    const result = await login(email, password);
+    if (result.ok) {
       navigate('/admin');
     } else {
-      setError(errorMessage || 'Неверный логин или пароль');
+      setError(result.message || 'Неверный логин или пароль');
     }
   };
 

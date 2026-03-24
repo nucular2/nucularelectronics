@@ -6,7 +6,7 @@ import { supabase } from '../../lib/supabase';
 interface AuthContextType {
   loading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, pass: string) => Promise<boolean>;
+  login: (email: string, pass: string) => Promise<{ ok: boolean; message?: string }>;
   logout: () => Promise<void>;
   user: User | null;
   errorMessage: string | null;
@@ -58,11 +58,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, pass: string) => {
     setLoading(true);
     setErrorMessage(null);
+
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+    if (!supabaseUrl || !supabaseAnonKey) {
+      const msg = 'Supabase не настроен: проверь VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY';
+      setErrorMessage(msg);
+      setLoading(false);
+      return { ok: false, message: msg };
+    }
+
+    if (adminEmails.size === 0 && !import.meta.env.DEV) {
+      const msg = 'Админ-доступ не настроен: переменная VITE_ADMIN_EMAILS пустая';
+      setErrorMessage(msg);
+      setLoading(false);
+      return { ok: false, message: msg };
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
     if (error) {
       setErrorMessage(error.message);
       setLoading(false);
-      return false;
+      return { ok: false, message: error.message };
     }
     const nextUser = data.user ?? null;
     const ok = isAdmin(nextUser);
@@ -70,14 +87,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await supabase.auth.signOut();
       setUser(null);
       setIsAuthenticated(false);
-      setErrorMessage('Нет доступа: email не добавлен в список администраторов');
+      const msg = 'Нет доступа: email не добавлен в список администраторов';
+      setErrorMessage(msg);
       setLoading(false);
-      return false;
+      return { ok: false, message: msg };
     }
     setUser(nextUser);
     setIsAuthenticated(true);
     setLoading(false);
-    return true;
+    return { ok: true };
   };
 
   const logout = async () => {

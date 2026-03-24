@@ -13,6 +13,10 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    if (!email.trim() || !password) {
+      setError('Заполните поле');
+      return;
+    }
     const result = await login(email, password);
     if (result.ok) {
       navigate('/admin');
@@ -33,7 +37,7 @@ const Login: React.FC = () => {
           <div className="admin-alert">{error}</div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form noValidate onSubmit={handleSubmit}>
           <div style={{ marginTop: 20 }}>
             <label style={{ display: 'block', marginBottom: 8, fontSize: 12, fontWeight: 600 }} className="admin-muted">
               Email
@@ -43,7 +47,6 @@ const Login: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="admin-input"
-              required
             />
           </div>
           
@@ -56,7 +59,6 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="admin-input"
-              required
             />
           </div>
 

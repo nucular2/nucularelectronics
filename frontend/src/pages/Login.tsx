@@ -17,6 +17,10 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim() || !password) {
+      setError('Please fill out this field.');
+      return;
+    }
     setLoading(true);
     setError(null);
 
@@ -52,7 +56,7 @@ export default function Login() {
 
           {error && <div className="auth-error">{error}</div>}
           
-          <form onSubmit={handleLogin} className="auth-form">
+          <form noValidate onSubmit={handleLogin} className="auth-form">
             <div className="form-group">
               <input
                 type="email"
@@ -60,7 +64,6 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="auth-input"
-                required
               />
             </div>
             
@@ -71,7 +74,6 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="auth-input"
-                required
               />
               <button
                 type="button"

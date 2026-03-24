@@ -15,6 +15,12 @@ export default function Register() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    const trimmedName = name.trim();
+    if (!trimmedName || !email.trim() || !password) {
+      setError('Please fill out this field.');
+      return;
+    }
     if (!acceptedPolicy) {
       setError('You must accept the privacy policy to register.');
       return;
@@ -25,9 +31,7 @@ export default function Register() {
     }
 
     setLoading(true);
-    setError(null);
 
-    const trimmedName = name.trim();
     const parts = trimmedName.split(/\s+/).filter(Boolean);
     const firstName = parts[0] || '';
     const lastName = parts.slice(1).join(' ');
@@ -62,7 +66,7 @@ export default function Register() {
           
           {error && <div className="auth-error">{error}</div>}
           
-          <form onSubmit={handleRegister} className="auth-form">
+          <form noValidate onSubmit={handleRegister} className="auth-form">
             <div className="form-group">
               <input
                 type="text"
@@ -70,7 +74,6 @@ export default function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="auth-input"
-                required
               />
             </div>
             <div className="form-group">
@@ -80,7 +83,6 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="auth-input"
-                required
               />
             </div>
             
@@ -91,7 +93,6 @@ export default function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="auth-input"
-                required
               />
               <button
                 type="button"

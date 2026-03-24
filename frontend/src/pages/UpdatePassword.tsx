@@ -35,6 +35,10 @@ export default function UpdatePassword() {
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      setError('Please fill out this field.');
+      return;
+    }
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match.');
       return;
@@ -140,7 +144,7 @@ export default function UpdatePassword() {
                 {error && <div className="auth-error" style={{marginBottom: '16px'}}>{error}</div>}
                 {success && <div className="auth-success" style={{color: 'green', marginBottom: '16px'}}>Password updated successfully.</div>}
 
-                <form onSubmit={handleUpdatePassword} className="password-form">
+                <form noValidate onSubmit={handleUpdatePassword} className="password-form">
                   <div className="password-input-wrapper">
                     <input
                       type={showOldPassword ? "text" : "password"}
@@ -148,7 +152,6 @@ export default function UpdatePassword() {
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
                       className="user-info-input" // Reuse style
-                      required
                     />
                     <button type="button" className="password-toggle-btn" onClick={() => setShowOldPassword(!showOldPassword)}>
                       {showOldPassword ? toggleIconOff : toggleIcon}
@@ -162,7 +165,6 @@ export default function UpdatePassword() {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="user-info-input"
-                      required
                     />
                     <button type="button" className="password-toggle-btn" onClick={() => setShowNewPassword(!showNewPassword)}>
                       {showNewPassword ? toggleIconOff : toggleIcon}
@@ -178,7 +180,6 @@ export default function UpdatePassword() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="user-info-input"
-                      required
                     />
                     <button type="button" className="password-toggle-btn" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                       {showConfirmPassword ? toggleIconOff : toggleIcon}

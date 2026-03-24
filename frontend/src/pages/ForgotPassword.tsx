@@ -11,6 +11,10 @@ export default function ForgotPassword() {
 
   const handleRecover = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim()) {
+      setError('Please fill out this field.');
+      return;
+    }
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -49,7 +53,7 @@ export default function ForgotPassword() {
 
           {error && <div className="auth-error">{error}</div>}
           
-          <form onSubmit={handleRecover} className="auth-form">
+          <form noValidate onSubmit={handleRecover} className="auth-form">
             <div className="form-group">
               <input
                 type="email"
@@ -57,7 +61,6 @@ export default function ForgotPassword() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="auth-input"
-                required
               />
             </div>
             

@@ -842,12 +842,12 @@ export default function Home() {
                   height: '213px',
                   padding: '20px',
                   borderRadius: '20px',
-                  background: '#f9f9f9',
+                  background: '#F6F6F6',
                   scrollSnapAlign: 'start',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  boxShadow: '0 0 20px 0 rgba(0, 0, 0, 0.1)'
+                  boxShadow: 'none'
                 }}>
                   <div>
                     <a href={review.link} style={{ textDecoration: 'none' }}>

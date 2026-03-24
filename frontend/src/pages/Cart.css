@@ -337,7 +337,9 @@
 
 @media (max-width: 900px) {
   .cart-page {
-    padding-top: 100px;
+    padding-top: calc(var(--header-h) + 12px);
+    padding-bottom: 40px;
+    min-height: 0;
   }
 
   .cart-container {
@@ -346,8 +348,9 @@
 
   .cart-layout {
     width: 100%;
+    display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 24px;
   }
   
   .cart-main {
@@ -361,20 +364,34 @@
   .cart-title {
     font-size: 32px;
     margin-left: 0;
+    margin-bottom: 24px;
   }
 
-  /* Full bleed elements on mobile */
   .preorder-badge {
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
-    border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .cart-divider {
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .cart-item {
+    align-items: flex-start;
+    padding-bottom: 16px;
+  }
+
+  .cart-item-main {
+    align-items: flex-start;
+  }
+
+  .cart-item-actions {
+    gap: 16px;
   }
 }
 

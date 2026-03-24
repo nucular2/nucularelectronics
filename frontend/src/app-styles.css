@@ -761,9 +761,9 @@
   color: #999999;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .contact-layout {
-    margin: 80px auto 20px;
+    margin: 0 auto 20px;
     flex-direction: column;
     padding: 0 20px;
   }
@@ -791,6 +791,7 @@
   .contact-form {
     max-width: 100%;
     gap: 12px;
+    margin-top: 0;
   }
 
   .contact-input,

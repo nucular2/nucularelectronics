@@ -58,6 +58,20 @@
   max-width: var(--content-w);
   margin: 0 auto;
 }
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .grid-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+
+  .page-content-white {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+}
 .grid-12 {
   display: grid;
   grid-template-columns: repeat(12, 80px);

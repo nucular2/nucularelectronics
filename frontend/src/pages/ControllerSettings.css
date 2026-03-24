@@ -59,6 +59,13 @@
   padding: 0;
 }
 
+@media (min-width: 901px) and (max-width: 1200px) {
+  .support-container {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+}
+
 .support-breadcrumb {
   display: flex;
   align-items: center;

@@ -192,6 +192,7 @@
   .shop-card {
     width: 100% !important;
     height: 293px !important;
+    min-height: 0 !important;
     padding: 20px !important;
     border-radius: 20px !important;
     display: flex !important;

@@ -62,8 +62,8 @@
   white-space: nowrap;
 }
 
-.shop-tab:hover {
-  color: #222;
+.shop-tab:not(.active):hover {
+  color: rgba(243, 111, 37, 0.75);
 }
 
 .shop-tab.active {

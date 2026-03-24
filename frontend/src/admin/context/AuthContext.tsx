@@ -1,53 +1,89 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '../../lib/supabase';
 
 interface AuthContextType {
+  loading: boolean;
   isAuthenticated: boolean;
-  login: (username: string, pass: string) => boolean;
-  logout: () => void;
-  user: string | null;
+  login: (email: string, pass: string) => Promise<boolean>;
+  logout: () => Promise<void>;
+  user: User | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    // Check local storage on mount
-    const storedAuth = localStorage.getItem('admin_auth');
-    if (storedAuth === 'true') {
-      setIsAuthenticated(true);
-      setUser('Дмитрий');
-    }
+  const adminEmails = useMemo(() => {
+    const raw = (import.meta.env.VITE_ADMIN_EMAILS as string | undefined) || '';
+    const emails = raw
+      .split(/[,\s;]+/g)
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    return new Set(emails);
   }, []);
 
-  const login = (username: string, pass: string) => {
-    // Fixed credentials as requested
-    if (username === 'дмитрий' && pass === '123456') {
-      setIsAuthenticated(true);
-      setUser('Дмитрий');
-      localStorage.setItem('admin_auth', 'true');
-      console.log(`[Admin Log] Login successful: ${username} at ${new Date().toISOString()}`);
-      return true;
-    }
-    console.warn(`[Admin Log] Login failed: ${username} at ${new Date().toISOString()}`);
-    return false;
+  const isAdmin = (u: User | null) => {
+    if (!u?.email) return false;
+    if (adminEmails.size === 0 && import.meta.env.DEV) return true;
+    return adminEmails.has(u.email.toLowerCase());
   };
 
-  const logout = () => {
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const nextUser = data.session?.user ?? null;
+      setUser(nextUser);
+      setIsAuthenticated(isAdmin(nextUser));
+      setLoading(false);
+    });
+
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      const nextUser = session?.user ?? null;
+      setUser(nextUser);
+      setIsAuthenticated(isAdmin(nextUser));
+      setLoading(false);
+    });
+
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, pass: string) => {
+    setLoading(true);
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    if (error) {
+      setLoading(false);
+      return false;
+    }
+    const nextUser = data.user ?? null;
+    const ok = isAdmin(nextUser);
+    if (!ok) {
+      await supabase.auth.signOut();
+      setUser(null);
+      setIsAuthenticated(false);
+      setLoading(false);
+      return false;
+    }
+    setUser(nextUser);
+    setIsAuthenticated(true);
+    setLoading(false);
+    return true;
+  };
+
+  const logout = async () => {
     setIsAuthenticated(false);
     setUser(null);
-    localStorage.removeItem('admin_auth');
-    console.log(`[Admin Log] Logout: ${user} at ${new Date().toISOString()}`);
+    await supabase.auth.signOut();
     navigate('/admin/login');
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user }}>
+    <AuthContext.Provider value={{ loading, isAuthenticated, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );
@@ -62,15 +98,16 @@ export const useAuth = () => {
 };
 
 export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    if (loading) return;
     if (!isAuthenticated) {
       navigate('/admin/login', { state: { from: location } });
     }
-  }, [isAuthenticated, navigate, location]);
+  }, [isAuthenticated, loading, navigate, location]);
 
-  return isAuthenticated ? <>{children}</> : null;
+  return !loading && isAuthenticated ? <>{children}</> : null;
 };

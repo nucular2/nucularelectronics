@@ -3,16 +3,18 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(username, password)) {
-      navigate('/admin/dashboard');
+    setError('');
+    const ok = await login(email, password);
+    if (ok) {
+      navigate('/admin');
     } else {
       setError('Неверный логин или пароль');
     }
@@ -56,12 +58,12 @@ const Login: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '16px' }}>
             <label style={{ display: 'block', marginBottom: '8px', color: '#555', fontSize: '14px', fontWeight: 500 }}>
-              Логин
+              Email
             </label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               style={{
                 width: '100%',
                 padding: '10px',
@@ -96,16 +98,17 @@ const Login: React.FC = () => {
 
           <button
             type="submit"
+            disabled={loading}
             style={{
               width: '100%',
               padding: '12px',
-              background: '#1e91cf',
+              background: loading ? '#93c5fd' : '#1e91cf',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
               fontSize: '16px',
               fontWeight: 500,
-              cursor: 'pointer',
+              cursor: loading ? 'not-allowed' : 'pointer',
               transition: 'background 0.2s'
             }}
           >

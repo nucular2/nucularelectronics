@@ -130,7 +130,7 @@ const AdminLayout: React.FC = () => {
         </nav>
 
         <button
-          onClick={logout}
+          onClick={() => void logout()}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -164,7 +164,7 @@ const AdminLayout: React.FC = () => {
           }}
         >
           <div style={{ fontFamily: 'var(--font-family)', color: '#111', fontWeight: 600, fontSize: 14 }}>
-            {user ? `Welcome, ${user}` : 'Welcome'}
+            {user?.email ? `Welcome, ${user.email}` : 'Welcome'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div

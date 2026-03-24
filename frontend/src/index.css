@@ -4338,26 +4338,43 @@ body.is-mobile .onboard-page .review-card {
 }
 
 @media (min-width: 901px) {
+  body:not(.is-home) {
+    --reviews-grid-left: max(20px, calc((100vw - var(--content-w)) / 2 + 20px));
+  }
+
   body:not(.is-home) .reviews-section .section-header {
     max-width: 1180px;
     padding: 0;
   }
 
-  body:not(.is-home) .reviews-section .reviews-grid {
+  body:not(.is-home) .reviews-section {
     width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding-left: max(20px, calc((100vw - 1180px) / 2 + 20px));
-    padding-right: 0;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    overflow: visible;
+  }
+
+  body:not(.is-home) .reviews-section .reviews-grid {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: var(--reviews-grid-left) !important;
+    padding-right: 0 !important;
   }
 
   body:not(.is-home) .product-reviews-list {
     width: 100vw !important;
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
-    padding-left: max(20px, calc((100vw - 1180px) / 2 + 20px)) !important;
+    padding-left: var(--reviews-grid-left) !important;
     padding-right: 0 !important;
+  }
+
+  body:not(.is-home) .controller-page .reviews-grid {
+    gap: 20px !important;
+    padding-bottom: 40px !important;
+    scroll-padding-left: var(--reviews-grid-left) !important;
   }
 }
 

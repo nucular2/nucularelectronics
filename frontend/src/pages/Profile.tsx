@@ -253,6 +253,10 @@ export default function Profile() {
             </aside>
 
             <main className="orders-content">
+              <div className="orders-mobile-bar">
+                <button className="orders-mobile-link" onClick={() => navigate("/orders")}>Orders</button>
+                <button className="orders-mobile-link logout" onClick={handleSignOut}>Log out</button>
+              </div>
               <h1 className="orders-title">User info</h1>
 
               {/* Name Section */}

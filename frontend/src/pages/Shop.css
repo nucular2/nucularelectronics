@@ -163,8 +163,10 @@
 @media (max-width: 768px) {
   /* Page Layout */
   .shop-page {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-top: calc(var(--header-h) + 12px);
+    padding-bottom: 40px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .shop-container {
@@ -176,17 +178,21 @@
   /* Shop Grid - 2 Columns */
   .shop-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 181px) !important;
     gap: 12px !important;
     padding: 0 !important;
     width: 100% !important;
+    max-width: 374px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: space-between !important;
   }
   
   /* Card Base */
   .shop-card {
     width: 100% !important;
     height: 293px !important;
-    padding: 16px !important;
+    padding: 20px !important;
     border-radius: 20px !important;
     display: flex !important;
     flex-direction: column !important;

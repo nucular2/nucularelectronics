@@ -2379,6 +2379,39 @@ body.is-mobile .page-content-white {
   padding-right: 20px;
 }
 
+body.is-mobile .news-layout {
+  max-width: 374px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+body.is-mobile .news-title {
+  margin-bottom: 24px;
+}
+
+body.is-mobile .news-grid,
+body.is-mobile .news-grid-small {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+body.is-mobile .news-grid {
+  margin-top: 0;
+}
+
+body.is-mobile .news-image-wrapper,
+body.is-mobile .news-image-wrapper--small {
+  height: 250px;
+}
+
+body.is-mobile .news-show-more {
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+
 body.is-mobile .controllers-grid,
 body.is-mobile .accessories-grid,
 body.is-mobile .complete-solutions-grid,

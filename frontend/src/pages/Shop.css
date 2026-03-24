@@ -2,7 +2,7 @@
   padding-top: calc(var(--header-h) + 20px);
   width: 100%;
   background-color: #fff;
-  padding-bottom: 80px;
+  padding-bottom: 96px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -117,15 +117,15 @@
 
 .shop-card-price {
   font-family: var(--font-family);
-  font-size: var(--home-card-text-fs);
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   color: #888;
   margin-bottom: 8px;
 }
 
 .shop-card-price.preorder {
   color: #F36F25;
-  font-weight: 500;
+  font-weight: 400;
   margin-top: 0;
   position: relative;
   top: 6px;
@@ -133,8 +133,8 @@
 
 .shop-card .card-button.buy-button {
   font-family: var(--font-family);
-  font-weight: 500;
-  font-size: var(--home-section-link-fs);
+  font-weight: 400;
+  font-size: 14px;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -163,7 +163,7 @@
   /* Page Layout */
   .shop-page {
     padding-top: calc(var(--header-h) + 12px);
-    padding-bottom: 40px;
+    padding-bottom: 96px;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
@@ -280,14 +280,14 @@
     color: #888 !important;
     margin-top: 8px !important; /* Small gap after title */
     margin-bottom: 0 !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     text-align: left !important;
     line-height: 1.2 !important;
   }
   
   .shop-card-price.preorder {
     color: #F36F25 !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     margin-top: 0 !important;
     position: relative !important;
     top: 10px !important;
@@ -297,7 +297,7 @@
   /* Buy Button */
   .shop-card .buy-button {
     font-family: var(--font-family) !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     font-size: 14px !important;
     line-height: 1.2 !important;
     color: #f36f25 !important;

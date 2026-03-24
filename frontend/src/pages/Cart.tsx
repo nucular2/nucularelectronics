@@ -59,18 +59,20 @@ export default function Cart() {
                       <p className="cart-item-category">{item.category}</p>
                     </div>
                     <div className="cart-item-actions">
-                      <select
-                        className="cart-qty-select"
-                        value={item.quantity}
-                        onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
-                        aria-label="Quantity"
-                      >
-                        {Array.from({ length: 10 }, (_, idx) => idx + 1).map((q) => (
-                          <option key={q} value={q}>
-                            {q}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="cart-qty-select-wrap">
+                        <select
+                          className="cart-qty-select"
+                          value={item.quantity}
+                          onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
+                          aria-label="Quantity"
+                        >
+                          {Array.from({ length: 10 }, (_, idx) => idx + 1).map((q) => (
+                            <option key={q} value={q}>
+                              {q}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                       <div className="cart-price-remove">
                         <p className="cart-item-price">{item.price}</p>
                         <button

@@ -149,7 +149,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     : undefined;
 
   const logoWrapStyle = { cursor: 'pointer', marginLeft: '0' };
-  const logoSize = isCompact ? { width: 102, height: 24 } : { width: 170, height: 40 };
+  const logoSize = isCompact ? { width: 102, height: 24 } : { width: 160, height: 38 };
   const iconSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };
   const profileSize = isCompact ? { width: 22, height: 22 } : { width: 22, height: 22 };
   const menuSize = isCompact ? { width: 22, height: 22 } : { width: 24, height: 24 };

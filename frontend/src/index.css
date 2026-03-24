@@ -22,7 +22,7 @@
   --fs-title: 40px;
   --header-h: 100px;
   --header-pad-y: 24px;
-  --header-logo-w: 200px;
+  --header-logo-w: 160px;
   --header-nav-fs: 14px;
   --header-actions-gap: 32px;
   --header-nav-actions-gap: 40px;
@@ -879,7 +879,7 @@ body,
 
 .main-nav {
   display: flex;
-  gap: 20px;
+  gap: 32px;
   align-items: center;
   margin-left: auto;
   margin-right: var(--header-nav-actions-gap);

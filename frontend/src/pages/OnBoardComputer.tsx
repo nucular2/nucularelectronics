@@ -147,7 +147,7 @@ export default function OnBoardComputer() {
 
             {/* Reviews: same layout and spacing as uLight */}
             <AnimatedSection className="onboard-reviews-container" delay={0.35}>
-              <div className="onboard-reviews-section">
+              <div className="onboard-reviews-section reviews-bleed">
                 <div className="onboard-reviews-header">
                   <h2 className="onboard-reviews-title">Reviews</h2>
                   <a href="#" className="reviews-link">

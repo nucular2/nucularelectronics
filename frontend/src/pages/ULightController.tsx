@@ -126,7 +126,7 @@ export default function ULightController() {
                 <button className="ulight-buy-button" onClick={handleBuy}>Buy</button>
               </div>
 
-              <div className="ulight-reviews-section">
+              <div className="ulight-reviews-section reviews-bleed">
                 <div className="ulight-reviews-header">
                   <h2 className="ulight-reviews-title">Reviews</h2>
                   <a href="#" className="reviews-link">

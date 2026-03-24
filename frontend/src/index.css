@@ -4280,7 +4280,7 @@ body.is-mobile .onboard-page .review-card {
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  padding: 0 0 20px max(20px, calc((100% - 1180px) / 2 + 20px)); /* Align start with content, end at edge */
+  padding: 0 20px 20px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -4338,46 +4338,40 @@ body.is-mobile .onboard-page .review-card {
 }
 
 @media (min-width: 901px) {
-  body:not(.is-home) {
-    --reviews-grid-left: max(20px, calc((100vw - var(--content-w)) / 2 + 20px));
+  .reviews-bleed {
+    display: grid !important;
+    grid-template-columns: minmax(20px, 1fr) minmax(0, var(--content-w)) minmax(0, 1fr);
+    width: 100% !important;
+    padding: 80px 0 !important;
+    margin: 0 !important;
+    background: #fff;
+    overflow: visible !important;
+    box-sizing: border-box;
   }
 
-  body:not(.is-home) .reviews-section .section-header {
-    max-width: 1180px;
+  .reviews-bleed > .section-header,
+  .reviews-bleed > .onboard-reviews-header,
+  .reviews-bleed > .ulight-reviews-header {
+    grid-column: 2;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 40px;
     padding: 0;
+    box-sizing: border-box;
   }
 
-  body:not(.is-home) .reviews-section {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    overflow: visible;
+  .reviews-bleed > .reviews-grid,
+  .reviews-bleed > .product-reviews-list {
+    grid-column: 2 / 4;
+    width: 100%;
+    padding: 0 0 40px 0;
+    margin: 0;
+    box-sizing: border-box;
   }
 
-  body:not(.is-home) .reviews-section .reviews-grid {
-    width: 100vw !important;
-    max-width: none !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: calc(50% - 50vw) !important;
-    padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
-    padding-left: var(--reviews-grid-left) !important;
-    padding-right: 0 !important;
-  }
-
-  body:not(.is-home) .product-reviews-list {
-    width: 100vw !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: calc(50% - 50vw) !important;
-    padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
-    padding-left: var(--reviews-grid-left) !important;
-    padding-right: 0 !important;
-  }
-
-  body:not(.is-home) .controller-page .reviews-grid {
-    gap: 20px !important;
-    padding-bottom: 40px !important;
-    scroll-padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
-    scroll-padding-left: var(--reviews-grid-left) !important;
+  .reviews-bleed .review-card {
+    min-height: 218px;
+    height: 218px;
   }
 }
 

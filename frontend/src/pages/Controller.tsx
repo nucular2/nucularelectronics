@@ -343,7 +343,7 @@ export default function Controller() {
       {/* Price panel placed in the following last onboard section */}
 
       <section
-        className="reviews-section"
+        className="reviews-section reviews-bleed"
         style={
           isMobile
             ? { padding: "0 0 40px", background: "#fff" }

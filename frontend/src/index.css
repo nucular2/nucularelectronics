@@ -433,19 +433,22 @@ body,
 }
 
 .controller-hero {
-  min-height: auto;
+  min-height: 100vh;
 }
 
 .controller-hero .hero-image-container {
-  position: static;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .controller-hero .hero-main-image {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
   display: block;
 }
 
@@ -549,11 +552,13 @@ body,
   .controller-hero .hero-image-container {
     width: 100vw;
     margin-left: calc((100vw - var(--content-w)) / -2);
+    height: 100vh;
   }
   .controller-hero .hero-main-image {
     width: 100vw;
-    height: auto;
+    height: 100vh;
     object-fit: cover;
+    object-position: right center;
   }
   .onboard-section .onboard-image {
     width: 100vw;

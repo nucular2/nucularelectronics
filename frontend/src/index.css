@@ -1,4 +1,5 @@
 /* Общие переменные */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 :root {
   --bg: #ffffff;
   --text: #222222;
@@ -6,7 +7,7 @@
   --radius: 5px;
   --gap: 1rem;
   --max-width: 1440px;
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --layout-min: 1280px;
   --layout-max: 5120px;
   --content-w: 1180px;
@@ -150,7 +151,7 @@
 html,
 body {
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-family);
   font-size: var(--fs-body);
   background: var(--bg);
   color: var(--text);

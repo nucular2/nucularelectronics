@@ -79,7 +79,7 @@ export default function News() {
             <article className="news-card news-card--small">
               <div className="news-image-wrapper news-image-wrapper--small">
                 <img
-                  src="/new5.png"
+                  src="/new9.png"
                   alt="Protection of controllers"
                   className="news-image"
                 />

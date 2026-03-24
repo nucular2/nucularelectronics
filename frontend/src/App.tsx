@@ -69,6 +69,26 @@ export default function App() {
     return () => mediaQuery.removeEventListener('change', updateMatch);
   }, []);
 
+  useEffect(() => {
+    if (isAdminRoute) return;
+    const path = `${location.pathname}${location.search}`;
+    try {
+      const body = JSON.stringify({ path });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/analytics/track', new Blob([body], { type: 'application/json' }));
+      } else {
+        fetch('/api/analytics/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body,
+          keepalive: true,
+        }).catch(() => undefined);
+      }
+    } catch {
+      return;
+    }
+  }, [isAdminRoute, location.pathname, location.search]);
+
   return (
     <AdminAuthProvider>
       <AuthProvider>

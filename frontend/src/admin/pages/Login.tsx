@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import '../admin.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,77 +22,40 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      background: '#f4f6f8',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
-    }}>
-      <div style={{
-        background: 'white',
-        padding: '40px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-        width: '100%',
-        maxWidth: '400px'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <h2 style={{ color: '#333', margin: 0 }}>Административная панель</h2>
-          <p style={{ color: '#666', fontSize: '14px', marginTop: '8px' }}>Вход в систему</p>
+    <div className="admin-login-shell">
+      <div className="admin-login-card">
+        <div style={{ textAlign: 'center' }}>
+          <h2 className="admin-login-title">Административная панель</h2>
+          <p className="admin-login-subtitle">Вход в систему</p>
         </div>
         
         {error && (
-          <div style={{
-            background: '#ffebee',
-            color: '#c62828',
-            padding: '12px',
-            borderRadius: '4px',
-            marginBottom: '16px',
-            fontSize: '14px'
-          }}>
-            {error}
-          </div>
+          <div className="admin-alert">{error}</div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', color: '#555', fontSize: '14px', fontWeight: 500 }}>
+          <div style={{ marginTop: 20 }}>
+            <label style={{ display: 'block', marginBottom: 8, fontSize: 12, fontWeight: 600 }} className="admin-muted">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                fontSize: '16px',
-                boxSizing: 'border-box'
-              }}
+              className="admin-input"
               required
             />
           </div>
           
-          <div style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', color: '#555', fontSize: '14px', fontWeight: 500 }}>
+          <div style={{ marginTop: 16 }}>
+            <label style={{ display: 'block', marginBottom: 8, fontSize: 12, fontWeight: 600 }} className="admin-muted">
               Пароль
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                fontSize: '16px',
-                boxSizing: 'border-box'
-              }}
+              className="admin-input"
               required
             />
           </div>
@@ -99,18 +63,8 @@ const Login: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            style={{
-              width: '100%',
-              padding: '12px',
-              background: loading ? '#93c5fd' : '#1e91cf',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '16px',
-              fontWeight: 500,
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'background 0.2s'
-            }}
+            className="admin-primary"
+            style={{ marginTop: 20 }}
           >
             Войти
           </button>

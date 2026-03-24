@@ -509,6 +509,13 @@
   .product-main-image {
     padding: 0;
     aspect-ratio: auto;
+    min-height: 0;
+  }
+  .product-main-image img {
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: contain;
   }
   .product-mobile-dots {
     display: block;

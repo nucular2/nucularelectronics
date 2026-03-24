@@ -866,26 +866,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 8. Help Banner Section (support-help-banner) */}
-          <div className="support-help-banner">
-            <div className="support-help-content">
-              <div className="support-help-title">I need help!</div>
-              <div className="support-help-text">
-                If you have questions, suggestions or you need technical support, use one of the
-                following methods to contact us.
-              </div>
-              <div className="support-help-actions">
-                <button className="support-help-button">Write to us</button>
-                <div className="support-help-icons">
-                  <img src="/social.png" alt="Email" />
-                  <img src="/тг.png" alt="Telegram" />
-                  <img src="/ватсап.png" alt="WhatsApp" />
-                  <img src="/макс.png" alt="Messenger" />
-                  <img src="/вайбер.svg" alt="Viber" />
-                </div>
-              </div>
-            </div>
-          </div>
+          <NewsletterBanner />
 
         </div>
       )}

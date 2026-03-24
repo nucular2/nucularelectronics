@@ -4359,6 +4359,7 @@ body.is-mobile .onboard-page .review-card {
     max-width: none !important;
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
+    padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
     padding-left: var(--reviews-grid-left) !important;
     padding-right: 0 !important;
   }
@@ -4367,6 +4368,7 @@ body.is-mobile .onboard-page .review-card {
     width: 100vw !important;
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
+    padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
     padding-left: var(--reviews-grid-left) !important;
     padding-right: 0 !important;
   }
@@ -4374,6 +4376,7 @@ body.is-mobile .onboard-page .review-card {
   body:not(.is-home) .controller-page .reviews-grid {
     gap: 20px !important;
     padding-bottom: 40px !important;
+    scroll-padding-left: calc((100vw - var(--content-w)) / 2 + 20px) !important;
     scroll-padding-left: var(--reviews-grid-left) !important;
   }
 }

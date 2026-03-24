@@ -2407,6 +2407,16 @@ body.is-mobile .news-image-wrapper--small {
   height: 250px;
 }
 
+body.is-mobile .news-image {
+  transition: none;
+  transform: none;
+}
+
+body.is-mobile .news-image-wrapper:hover .news-image,
+body.is-mobile .news-image-wrapper--small:hover .news-image {
+  transform: none;
+}
+
 body.is-mobile .news-show-more {
   margin-top: 32px;
   margin-bottom: 0;

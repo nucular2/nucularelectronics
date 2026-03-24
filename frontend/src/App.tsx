@@ -70,6 +70,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const isHome = location.pathname === '/';
+    document.body.classList.toggle('is-home', isHome);
+    document.documentElement.classList.toggle('is-home', isHome);
+  }, [location.pathname]);
+
+  useEffect(() => {
     if (isAdminRoute) return;
     const path = `${location.pathname}${location.search}`;
     try {

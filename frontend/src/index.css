@@ -4315,6 +4315,20 @@ body.is-mobile .onboard-page .review-card {
   color: #999;
 }
 
+@media (min-width: 901px) {
+  body:not(.is-home) .reviews-section .section-header {
+    max-width: 1180px;
+    padding: 0;
+  }
+
+  body:not(.is-home) .reviews-section .reviews-grid {
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px 20px 20px;
+  }
+}
+
 /* Specifications Tab Styles */
 .specifications-container {
   max-width: 1200px;

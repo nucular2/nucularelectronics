@@ -19,6 +19,7 @@ export default function Profile() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const designStorageKey = "design_profile_v1";
   const [profile, setProfile] = useState<ProfileData>({
     first_name: '',
     last_name: '',
@@ -78,8 +79,7 @@ export default function Profile() {
       setLoading(true);
       
       if (!user) {
-        // Mock data for design review
-        setProfile({
+        const fallbackProfile = {
           first_name: 'Dmitry',
           last_name: 'User',
           phone: '+7 900 123 45 67',
@@ -88,17 +88,33 @@ export default function Profile() {
           street: 'Lenina st.',
           flat: '42',
           zip_code: '101000'
-        });
-        setNameForm({ first_name: 'Dmitry', last_name: 'User' });
-        setPhoneForm('+7 900 123 45 67');
+        };
+        let nextProfile: ProfileData = fallbackProfile;
+        let nextEmail = 'demo@example.com';
+        try {
+          const raw = localStorage.getItem(designStorageKey);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed?.profile) {
+              nextProfile = parsed.profile;
+            }
+            if (typeof parsed?.email === 'string') {
+              nextEmail = parsed.email;
+            }
+          }
+        } catch (_) {}
+
+        setProfile(nextProfile);
+        setNameForm({ first_name: nextProfile.first_name || '', last_name: nextProfile.last_name || '' });
+        setPhoneForm(nextProfile.phone || '');
         setAddressForm({
-          country: 'Russia',
-          city: 'Moscow',
-          street: 'Lenina st.',
-          flat: '42',
-          zip_code: '101000'
+          country: nextProfile.country || '',
+          city: nextProfile.city || '',
+          street: nextProfile.street || '',
+          flat: nextProfile.flat || '',
+          zip_code: nextProfile.zip_code || ''
         });
-        setEmailForm('demo@example.com'); // Mock email
+        setEmailForm(nextEmail);
         setLoading(false);
         return;
       }
@@ -173,7 +189,16 @@ export default function Profile() {
   };
 
   const updateProfile = async (updates: Partial<ProfileData>) => {
-    if (!user) return;
+    if (!user) {
+      setProfile((prev) => {
+        const next = { ...prev, ...updates };
+        try {
+          localStorage.setItem(designStorageKey, JSON.stringify({ profile: next, email: emailForm }));
+        } catch (_) {}
+        return next;
+      });
+      return;
+    }
     try {
       const { error } = await supabase
         .from('profiles')
@@ -208,6 +233,13 @@ export default function Profile() {
   // but usually email is in auth.users. 
   // If the user wants to change login email, we need supabase.auth.updateUser({ email: ... })
   const saveEmail = async () => {
+    if (!user) {
+      try {
+        localStorage.setItem(designStorageKey, JSON.stringify({ profile, email: emailForm }));
+      } catch (_) {}
+      setEditingEmail(false);
+      return;
+    }
     if (emailForm !== user?.email) {
        const { error } = await supabase.auth.updateUser({ email: emailForm });
        if (error) {
@@ -323,7 +355,7 @@ export default function Profile() {
                     <button className="user-info-save-btn" onClick={saveEmail}>Save</button>
                    </div>
                 ) : (
-                  <div className="user-info-value">{user?.email || 'demo@example.com'}</div>
+                  <div className="user-info-value">{user?.email || emailForm || 'demo@example.com'}</div>
                 )}
               </div>
 

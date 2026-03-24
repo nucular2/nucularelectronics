@@ -44,11 +44,46 @@ export default function OrderDetail() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate(`/login?redirect=/orders/${id}`);
+    if (!id) return;
+
+    const stateOrder = (location.state as any)?.order as Order | undefined;
+    if (stateOrder?.id === id) {
+      setOrder(stateOrder);
+      setError(null);
+      setLoading(false);
       return;
     }
-    if (!id) return;
+
+    if (!user) {
+      const mockOrder: Order = {
+        id,
+        user_id: "mock-user",
+        items: [
+          { id: 1, productId: 1, name: "Nucular controller P24F", quantity: 1, price: 610, image: "/miniature.svg", sku: "NUCP24F" },
+        ],
+        total_amount: 610,
+        status: "Processing",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        recipient_info: {
+          firstName: "Dmitry",
+          lastName: "User",
+          phone: "+7 900 123 45 67",
+          email: "demo@example.com",
+        },
+        shipping_address: {
+          country: "Russia",
+          city: "Moscow",
+          street: "Lenina st.",
+          zipCode: "101000",
+          flat: "42",
+        },
+      };
+      setOrder(mockOrder);
+      setError(null);
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
     supabase
@@ -65,7 +100,7 @@ export default function OrderDetail() {
         }
         setLoading(false);
       });
-  }, [user, navigate, id]);
+  }, [user, id, location.state]);
 
   useEffect(() => {
     // @ts-ignore
@@ -243,7 +278,18 @@ export default function OrderDetail() {
 
           <div className="order-products-list">
             {Array.isArray(order.items) && order.items.map((item: any, index: number) => (
-              <div key={index} className="order-product-row">
+              <div
+                key={index}
+                className="order-product-row"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  const rawProductId = item?.productId ?? item?.id;
+                  const nextId = Number(rawProductId);
+                  if (Number.isFinite(nextId) && nextId > 0) {
+                    navigate(`/product/${nextId}`);
+                  }
+                }}
+              >
                 <div className="product-image">
                    {item.image ? <img src={item.image} alt={item.name} /> : <div className="no-image">IMG</div>}
                 </div>

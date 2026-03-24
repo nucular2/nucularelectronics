@@ -48,29 +48,32 @@ export default function Orders() {
     setLoading(true);
     
     if (!user) {
-        // Mock orders
-        setOrders([
-            {
-                id: '123456',
-                user_id: 'mock-user',
-                items: [{ name: 'Controller', quantity: 1, price: 100 }],
-                total_amount: 100,
-                status: 'Processing',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
-            },
-            {
-                id: '789012',
-                user_id: 'mock-user',
-                items: [{ name: 'Motor', quantity: 2, price: 200 }],
-                total_amount: 400,
-                status: 'Delivered',
-                created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
-                updated_at: new Date().toISOString()
-            }
-        ] as any); // Type assertion to bypass strict shape check if needed
-        setLoading(false);
-        return;
+      setOrders([
+        {
+          id: "123456",
+          user_id: "mock-user",
+          items: [
+            { id: 1, productId: 1, name: "Nucular controller P24F", quantity: 1, price: 610, image: "/miniature.svg", sku: "NUCP24F" },
+          ],
+          total_amount: 610,
+          status: "Processing",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+        {
+          id: "789012",
+          user_id: "mock-user",
+          items: [
+            { id: 2, productId: 2, name: "On-board computer", quantity: 1, price: 110, image: "/miniature.png", sku: "NUCOBC" },
+          ],
+          total_amount: 110,
+          status: "Delivered",
+          created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      ] as any);
+      setLoading(false);
+      return;
     }
 
     supabase
@@ -245,7 +248,7 @@ export default function Orders() {
                       key={order.id}
                       className="order-card"
                       style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/orders/${order.id}`)}
+                      onClick={() => navigate(`/orders/${order.id}`, { state: { order } })}
                     >
                       <div className="order-id">{order.id}</div>
                       <div className="order-date">{formatDate(order.created_at)}</div>
@@ -279,7 +282,7 @@ export default function Orders() {
                               role="menuitem"
                               onClick={() => {
                                 setOpenMenuOrderId(null);
-                                navigate(`/orders/${order.id}`);
+                            navigate(`/orders/${order.id}`, { state: { order } });
                               }}
                             >
                               Order details

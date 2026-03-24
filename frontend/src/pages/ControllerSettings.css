@@ -658,8 +658,8 @@
     flex-wrap: nowrap;
   }
   .support-page {
-    padding-top: 80px;
-    padding-bottom: 24px;
+    padding-top: calc(var(--header-h) + 12px);
+    padding-bottom: 40px;
   }
 
   .support-container {
@@ -668,6 +668,7 @@
 
   .support-inner {
     width: 100%;
+    max-width: none;
   }
 
   .support-title {
@@ -832,6 +833,7 @@
   }
 
   .controller-layout {
+    display: flex;
     flex-direction: column;
     gap: 32px;
   }
@@ -866,7 +868,12 @@
   }
 
   .controller-content-wrap {
+    display: flex;
     flex-direction: column;
+  }
+
+  .controller-content {
+    width: 100%;
   }
 
   .controller-page-toc {

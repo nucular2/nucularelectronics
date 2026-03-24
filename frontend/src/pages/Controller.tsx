@@ -51,7 +51,7 @@ export default function Controller() {
           <div className="hero-image-container">
             {isMobile ? (
               <img
-                src="/first%20screen90.png"
+                src="/controller-hero-clean.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />
@@ -64,38 +64,42 @@ export default function Controller() {
             )}
             
           </div>
-          <div className="controller-hero-overlay">
-            <div className="controller-hero-text-box">
-              <div className="controller-hero-title">Nucular<br/>controller P24F</div>
-              <div className="controller-hero-description">
-                <span className="controller-hero-desc-line">
-                  For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
-                </span>
-                <span className="controller-hero-desc-line">
-                  A powerful ARM microprocessor provides precise and smooth control of the electric motor.
-                </span>
+          {!isMobile && (
+            <div className="controller-hero-overlay">
+              <div className="controller-hero-text-box">
+                <div className="controller-hero-title">Nucular<br/>controller P24F</div>
+                <div className="controller-hero-description">
+                  <span className="controller-hero-desc-line">
+                    For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
+                  </span>
+                  <span className="controller-hero-desc-line">
+                    A powerful ARM microprocessor provides precise and smooth control of the electric motor.
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="controller-hero-actions">
-            <button 
-              type="button" 
-              className="controller-hero-tab active"
-              onClick={() => setActiveTab('overview')}
-            >
-              Overview
-            </button>
-            <button 
-              type="button" 
-              className="controller-hero-tab"
-              onClick={() => setActiveTab('specifications')}
-            >
-              Specifications
-            </button>
-            <button type="button" className="controller-hero-buy" onClick={handleBuy}>
-              Buy
-            </button>
-          </div>
+          )}
+          {!isMobile && (
+            <div className="controller-hero-actions">
+              <button 
+                type="button" 
+                className="controller-hero-tab active"
+                onClick={() => setActiveTab('overview')}
+              >
+                Overview
+              </button>
+              <button 
+                type="button" 
+                className="controller-hero-tab"
+                onClick={() => setActiveTab('specifications')}
+              >
+                Specifications
+              </button>
+              <button type="button" className="controller-hero-buy" onClick={handleBuy}>
+                Buy
+              </button>
+            </div>
+          )}
           {isMobile && (
             <div className="controller-hero-actions mobile-actions">
               <button 

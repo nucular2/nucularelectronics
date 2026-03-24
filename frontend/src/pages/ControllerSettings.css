@@ -71,7 +71,8 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 40px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .support-breadcrumb-link {
@@ -621,6 +622,11 @@
 }
 
 @media (max-width: 899.98px) {
+  .support-breadcrumb {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
   .support-inner.support-inner--narrow {
     width: 100% !important;
     margin: 0 !important;

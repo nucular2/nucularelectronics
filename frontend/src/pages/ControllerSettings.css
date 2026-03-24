@@ -8,7 +8,17 @@
 @media (min-width: 900px) {
   .support-page .support-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .support-page .support-breadcrumb {
+    width: 100%;
+  }
+
+  .support-page .controller-layout {
+    width: 100%;
   }
 }
 /* Desktop: показываем иконки внутри плашки */

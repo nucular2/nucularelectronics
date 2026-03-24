@@ -2373,7 +2373,8 @@ body.is-mobile .see-components-link {
 }
 
 body.is-mobile .page-content-white {
-  padding-top: 60px;
+  padding-top: calc(var(--header-h) + 12px);
+  padding-bottom: 40px;
   padding-left: 20px;
   padding-right: 20px;
 }

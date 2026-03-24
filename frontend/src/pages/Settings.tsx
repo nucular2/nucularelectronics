@@ -194,7 +194,7 @@ export default function Settings() {
               </div>
             </div>
 
-            <div className="support-help-banner">
+            <div className="support-help-banner support-help-banner--narrow">
               <div className="support-help-content">
                 <div className="support-help-title">I need help!</div>
                 <div className="support-help-text">
@@ -208,7 +208,6 @@ export default function Settings() {
                     <img src="/тг.png" alt="Telegram" />
                     <img src="/ватсап.png" alt="WhatsApp" />
                     <img src="/макс.png" alt="Messenger" />
-                    <img src="/вайбер.svg" alt="Viber" />
                   </div>
                 </div>
               </div>

@@ -24,7 +24,7 @@
   --header-pad-y: 24px;
   --header-logo-w: 160px;
   --header-nav-fs: 14px;
-  --header-actions-gap: 32px;
+  --header-actions-gap: 16px;
   --header-nav-actions-gap: 40px;
   --header-icon-size: 20px;
   --footer-pad-y: 40px;
@@ -959,20 +959,31 @@ body,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.cart-icon-container:hover,
+.profile-icon-container:hover {
+  opacity: 0.7;
+}
+
+.cart-icon-container:active,
+.profile-icon-container:active {
+  opacity: 0.6;
 }
 
 .cart-count {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -10px;
+  right: -10px;
   transform: none; /* stay anchored to corner by default (desktop) */
   background: #F36F25;
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1005,6 +1016,10 @@ body.is-mobile .cart-count {
   width: var(--header-icon-size);
   height: var(--header-icon-size);
   display: block;
+}
+
+.profile-icon-container {
+  transition: opacity 0.2s;
 }
 
 .dropdown-arrow {

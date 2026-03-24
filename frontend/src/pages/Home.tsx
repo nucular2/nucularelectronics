@@ -453,7 +453,7 @@ export default function Home() {
           {/* 1. Hero Image (mobile) */}
           <div style={{ position: 'relative', width: '100%' }}>
             <img 
-              src="/first%20screen90.png" 
+              src="/главнаямобилка1.png" 
               alt="Nucular Mobile Hero" 
               style={{ width: '100%', display: 'block', height: 'auto' }} 
             />

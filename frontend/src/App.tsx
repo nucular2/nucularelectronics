@@ -161,7 +161,12 @@ export default function App() {
               
               <Route path="*" element={<Home />} />
             </Routes>
-            {!isAdminRoute && location.pathname !== '/' && <Footer />}
+            {!isAdminRoute && location.pathname !== '/' && (
+              <>
+                <div className="footer-separator" />
+                <Footer />
+              </>
+            )}
             <CookieBanner />
           </CartProvider>
           </ReviewsProvider>

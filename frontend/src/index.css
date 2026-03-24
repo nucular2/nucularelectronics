@@ -164,6 +164,12 @@ body,
   background-color: #ffffff !important;
 }
 
+.footer-separator {
+  width: 100%;
+  height: 1px;
+  background: #E9E9E9;
+}
+
 .onboard-desktop-container {
   width: 100%;
   max-width: 100%;

@@ -354,7 +354,10 @@
   .orders-tabs {
     gap: 4px;
     padding: 4px;
-    width: 374px !important;
+    width: 100% !important;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .orders-tab {
     width: 181px !important;
@@ -1025,8 +1028,8 @@
   .order-card {
     min-height: 168px;
     max-width: 360px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:

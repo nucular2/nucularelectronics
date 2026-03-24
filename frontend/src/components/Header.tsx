@@ -249,8 +249,10 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
       </div>
       </div>
       {isProductsOpen && (
-        <div className="dropdown-overlay open">
-          <div className="dropdown-content">
+        <>
+          <div className="dropdown-backdrop" onClick={() => setIsProductsOpen(false)} />
+          <div className="dropdown-overlay open" onClick={() => setIsProductsOpen(false)}>
+            <div className="dropdown-content" onClick={(e) => e.stopPropagation()}>
           <div className="dropdown-column">
               <h4 className="dropdown-title">Components</h4>
               <a
@@ -298,8 +300,9 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
               <a href="#" className="dropdown-link">Electric Surfboards</a>
               <a href="#" className="dropdown-link">Electric Jet Drive</a>
             </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
       {/* Mobile Menu */}
       {isMobileMenuOpen && (

@@ -1943,8 +1943,16 @@ body.is-mobile .canbus-text {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: 90;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid #E9E9E9;
   height: auto; /* Let content dictate height, or fix if needed */
+}
+
+.dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  top: var(--header-h);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 80;
 }
 
 .dropdown-overlay.open {
@@ -1998,9 +2006,12 @@ body.is-mobile .canbus-text {
   line-height: 140%;
   color: #222;
   text-decoration: none;
-  margin-bottom: 16px;
+  margin: 0;
+  height: 44px;
   transition: color 0.2s;
-  display: block;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .dropdown-link.soon {

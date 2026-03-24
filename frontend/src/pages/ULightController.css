@@ -453,8 +453,10 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    width: 100%;
-    padding: 0 0 40px max(20px, calc((100% - 1180px) / 2 + 20px));
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 0 0 40px max(20px, calc((100vw - 1180px) / 2 + 20px));
     box-sizing: border-box;
     /* Hide scrollbar but keep functionality */
     -ms-overflow-style: none;

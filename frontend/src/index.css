@@ -313,11 +313,17 @@ body,
 }
 
 @media (min-width: 901px) {
-  .onboard-page .onboard-section,
-  .controller-page .onboard-section {
+  .onboard-page,
+  .controller-page {
+    overflow-x: hidden;
+  }
+
+  .onboard-page .onboard-section .onboard-image,
+  .controller-page .onboard-section .onboard-image {
     width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
   .mobile-only {

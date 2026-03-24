@@ -178,14 +178,14 @@
   /* Shop Grid - 2 Columns */
   .shop-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 181px) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 12px !important;
     padding: 0 !important;
     width: 100% !important;
-    max-width: 374px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    justify-content: space-between !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    justify-content: initial !important;
   }
   
   /* Card Base */
@@ -215,9 +215,9 @@
 
   /* Image Container */
   .shop-card-image-container {
-    height: 125px !important;
+    height: 110px !important;
     width: 100% !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 12px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -226,8 +226,8 @@
   }
   
   .shop-card-image {
-    width: 125px !important;
-    height: 125px !important;
+    width: 110px !important;
+    height: 110px !important;
     object-fit: contain !important;
     mix-blend-mode: darken !important;
   }

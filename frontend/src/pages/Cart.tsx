@@ -59,18 +59,18 @@ export default function Cart() {
                       <p className="cart-item-category">{item.category}</p>
                     </div>
                     <div className="cart-item-actions">
-                      <div className="quantity-controls">
-                        <span className="quantity-value">{item.quantity}</span>
-                        <button
-                          className="quantity-arrow"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          aria-label="Increase quantity"
-                        >
-                          <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M0.227806 0.234315C0.531547 -0.0781049 1.02401 -0.0781049 1.32775 0.234315L7 6.06863L12.6723 0.234315C12.976 -0.0781049 13.4685 -0.0781049 13.7722 0.234315C14.0759 0.546734 14.0759 1.05327 13.7722 1.36569L7.54997 7.76569C7.24623 8.07811 6.75377 8.07811 6.45003 7.76569L0.227806 1.36569C-0.0759353 1.05327 -0.0759353 0.546734 0.227806 0.234315Z" fill="#B0B0B0" />
-                          </svg>
-                        </button>
-                      </div>
+                      <select
+                        className="cart-qty-select"
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
+                        aria-label="Quantity"
+                      >
+                        {Array.from({ length: 10 }, (_, idx) => idx + 1).map((q) => (
+                          <option key={q} value={q}>
+                            {q}
+                          </option>
+                        ))}
+                      </select>
                       <div className="cart-price-remove">
                         <p className="cart-item-price">{item.price}</p>
                         <button

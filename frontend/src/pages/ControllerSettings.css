@@ -1,7 +1,7 @@
 .support-page {
   background-color: #fff;
   min-height: 100vh;
-  padding-top: calc(var(--header-h) + 40px);
+  padding-top: calc(var(--header-h) + 20px);
   padding-bottom: 80px;
 }
 /* Center the Support page content on desktop */

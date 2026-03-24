@@ -2,7 +2,7 @@
 .controller-hero-text {
   position: absolute;
   top: 50%;
-  left: 230px; /* As requested: 230px */
+  left: calc((100vw - var(--content-w)) / 2);
   width: 580px;
   height: 332px;
   z-index: 10;
@@ -61,7 +61,7 @@
   height: 332px;
   position: absolute;
   top: 50%;
-  left: 230px;
+  left: calc((100vw - var(--content-w)) / 2);
   transform: translateY(-50%);
   opacity: 0;
   animation: fadeInUpText 1s ease-out forwards;

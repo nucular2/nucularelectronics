@@ -24,7 +24,7 @@ export default function Reviews() {
       <div style={{ background: '#fff', minHeight: '100vh', paddingBottom: '40px' }}>
         <Header variant="white" />
         
-        <div style={{ width: '100%', maxWidth: 'var(--content-w)', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: 'var(--home-slider-gap)', alignItems: 'flex-start', paddingTop: 'calc(var(--header-h) + 40px)', paddingLeft: '0', paddingRight: '0', boxSizing: 'border-box' }}>
+        <div style={{ width: '100%', maxWidth: 'var(--content-w)', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: 'var(--home-slider-gap)', alignItems: 'flex-start', paddingTop: 'calc(var(--header-h) + 20px)', paddingLeft: '0', paddingRight: '0', boxSizing: 'border-box' }}>
           
           {/* Left Sidebar */}
           <div style={{ width: '240px', display: 'flex', flexDirection: 'column', gap: '40px', paddingTop: '0' }}>

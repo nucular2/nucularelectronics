@@ -589,8 +589,8 @@ body,
 
 /* Promo Features Styles */
 .promo-features-section {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .promo-features-container {
@@ -1114,8 +1114,8 @@ body.is-mobile .cart-count {
   background-color: #fff;
   position: relative;
   z-index: 10;
-  padding-top: 100px; /* Space from hero */
-  padding-bottom: 100px;
+  padding-top: calc(var(--header-h) + 20px);
+  padding-bottom: 80px;
 }
 
 /* Controllers Section */
@@ -3030,7 +3030,7 @@ body.is-mobile .review-card {
 /* News Page Styles */
 .news-layout {
   max-width: var(--content-w);
-  margin: 120px auto 160px;
+  margin: 0 auto 80px;
   padding: 0;
 }
 
@@ -3046,8 +3046,8 @@ body.is-mobile .review-card {
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--home-card-w), 1fr));
-  gap: var(--home-slider-gap);
+  grid-template-columns: 580px 580px;
+  gap: 20px;
 }
 
 .news-card {
@@ -3057,7 +3057,7 @@ body.is-mobile .review-card {
 .news-image-wrapper {
   display: block;
   width: 100%;
-  height: var(--home-card-img-h);
+  height: 382px;
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 16px;
@@ -3150,7 +3150,7 @@ body.is-mobile .review-card {
 
 .news-layout {
   max-width: var(--content-w);
-  margin: 120px auto 160px;
+  margin: 0 auto 80px;
   padding: 0;
 }
 
@@ -3166,8 +3166,8 @@ body.is-mobile .review-card {
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--home-card-w), 1fr));
-  gap: var(--home-slider-gap);
+  grid-template-columns: 580px 580px;
+  gap: 20px;
 }
 
 .news-card {
@@ -3177,7 +3177,7 @@ body.is-mobile .review-card {
 .news-image-wrapper {
   display: block;
   width: 100%;
-  height: var(--home-card-img-h);
+  height: 382px;
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 16px;
@@ -3270,12 +3270,12 @@ body.is-mobile .review-card {
 
 .news-detail {
   max-width: 780px;
-  margin: 140px auto 0;
+  margin: 0 auto 0;
   padding: 0 40px;
 }
 
 .news-detail-after-banner {
-  margin: 96px auto 96px;
+  margin: 64px auto 64px;
 }
 
 .news-detail-breadcrumb {

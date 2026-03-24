@@ -183,7 +183,7 @@
 
 /* Orders / Profile Layout Styles */
 .orders-page {
-  padding-top: calc(var(--header-h) + 40px);
+  padding-top: calc(var(--header-h) + 20px);
   min-height: calc(100vh - 400px);
   padding-bottom: 80px;
   display: flex;
@@ -611,7 +611,7 @@
 
 .contact-layout {
   max-width: var(--content-w);
-  margin: 140px auto 160px;
+  margin: 0 auto 80px;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -819,7 +819,7 @@
 }
 
 .cart-page {
-  padding-top: calc(var(--header-h) + 40px);
+  padding-top: calc(var(--header-h) + 20px);
   min-height: calc(100vh - 385px);
   background-color: #fff;
   display: flex;
@@ -1257,7 +1257,7 @@
     flex-direction: column;
     gap: 24px;
     position: sticky;
-    top: calc(var(--header-h) + 40px);
+    top: calc(var(--header-h) + 20px);
     height: fit-content;
     align-items: flex-start;
   }

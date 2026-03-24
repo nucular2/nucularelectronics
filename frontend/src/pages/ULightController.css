@@ -453,9 +453,8 @@
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    width: 1484px; /* 3*380 + 2*20 + 0.8*380 */
-    margin-left: calc(50% - (var(--content-w) / 2) + 20px); /* align left edge with h2 */
-    padding: 0 0 40px 0;
+    width: 100%;
+    padding: 0 0 40px max(20px, calc((100% - 1180px) / 2 + 20px));
     box-sizing: border-box;
     /* Hide scrollbar but keep functionality */
     -ms-overflow-style: none;

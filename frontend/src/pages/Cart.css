@@ -360,6 +360,11 @@
   .cart-summary {
     width: 100%;
   }
+
+  .cart-summary-column {
+    width: 100%;
+    align-items: stretch;
+  }
   
   .cart-title {
     font-size: 32px;
@@ -370,7 +375,9 @@
   .preorder-badge {
     width: 100%;
     max-width: 100%;
-    border-radius: 8px;
+    height: auto;
+    border-radius: 12px;
+    padding: 16px 20px;
     margin-left: 0;
     margin-right: 0;
   }
@@ -387,11 +394,52 @@
   }
 
   .cart-item-main {
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    column-gap: 16px;
+    row-gap: 12px;
+    align-items: start;
   }
 
   .cart-item-actions {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
     gap: 16px;
+  }
+
+  .cart-item-image {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cart-qty-select {
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-size: 18px;
+  }
+
+  .cart-price-remove {
+    min-width: 92px;
+  }
+
+  .cart-item-price {
+    font-size: 18px;
+  }
+
+  .remove-btn {
+    font-size: 16px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    height: 60px;
+    border-radius: 12px;
+    font-size: 18px;
   }
 }
 

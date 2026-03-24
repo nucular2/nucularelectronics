@@ -11,9 +11,14 @@ type ControllerSection =
   | "configs";
 
 export default function ControllerSettings() {
-  const [activeSection, setActiveSection] = useState<ControllerSection>("setup");
+  const initialIsMobile =
+    typeof window !== "undefined" && window.matchMedia("(max-width: 899.98px)").matches;
+  const [activeSection, setActiveSection] = useState<ControllerSection | null>(
+    initialIsMobile ? null : "setup"
+  );
   const navigate = useNavigate();
   const location = useLocation();
+  const [query, setQuery] = useState("");
   const setupImageRef = useRef<HTMLImageElement | null>(null);
   const diagnosticsTitleRef = useRef<HTMLDivElement | null>(null);
 
@@ -62,6 +67,18 @@ export default function ControllerSettings() {
             <span className="support-breadcrumb-separator">/</span>
             <span className="support-breadcrumb-current">Controller</span>
           </div>
+          <form className="support-search-row" onSubmit={(e) => e.preventDefault()}>
+            <div className="support-search-input">
+              <input
+                className="support-search-field"
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="What are you looking for?"
+              />
+            </div>
+            <button className="support-search-button" type="submit">Search</button>
+          </form>
           <div className="controller-layout">
             <div className="controller-list">
                 <button
@@ -121,6 +138,7 @@ export default function ControllerSettings() {
                 </button>
               </div>
 
+              {activeSection !== null && (
               <div className="controller-content-wrap">
                 <div className="controller-content">
                   {activeSection === "setup" && (
@@ -263,6 +281,25 @@ export default function ControllerSettings() {
                     <div className="controller-page-toc-item">Connecting multiple controllers</div>
                   </div>
                 )}
+              </div>
+              )}
+            </div>
+            <div className="support-help-banner support-help-banner--narrow">
+              <div className="support-help-content">
+                <div className="support-help-title">I need help!</div>
+                <div className="support-help-text">
+                  If you have questions, suggestions or you need technical support, use one of the
+                  following methods to contact us.
+                </div>
+                <div className="support-help-actions">
+                  <button className="support-help-button support-help-button--narrow">Write to us</button>
+                  <div className="support-help-icons">
+                    <img src="/social.png" alt="Email" />
+                    <img src="/тг.png" alt="Telegram" />
+                    <img src="/ватсап.png" alt="WhatsApp" />
+                    <img src="/макс.png" alt="Messenger" />
+                  </div>
+                </div>
               </div>
             </div>
         </div>

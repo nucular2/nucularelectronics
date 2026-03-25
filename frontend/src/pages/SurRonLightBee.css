@@ -36,6 +36,8 @@
   width: 100%;
   height: auto;
   display: block;
+  -webkit-clip-path: inset(12px 0 0 0);
+  clip-path: inset(12px 0 0 0);
 }
 .surron-buy-plate {
   width: 100vw;

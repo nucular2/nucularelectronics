@@ -1472,8 +1472,6 @@
     padding-bottom: 16px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    width: calc(100% + (50vw - 50%) + 20px);
-    max-width: none;
   }
   
   .product-reviews-list::-webkit-scrollbar {

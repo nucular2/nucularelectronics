@@ -200,7 +200,7 @@ export default function Home() {
   };
 
   return (
-    <div className={isMobile ? "home-mobile" : "home-desktop"}>
+    <div className={isMobile ? "home-mobile" : undefined}>
       <Header />
       
       {!isMobile ? (

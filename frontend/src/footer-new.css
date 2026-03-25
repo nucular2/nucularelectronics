@@ -24,11 +24,14 @@
 
 .footer-columns {
   display: flex;
-  gap: 100px; /* Closer gap between columns as requested */
-  padding-left: 100px; /* Shift slightly to the right */
+  gap: 20px;
+  padding-left: 0;
 }
 
 .footer-column {
+  width: 200px;
+  min-height: 208px;
+  flex: 0 0 200px;
   display: flex;
   flex-direction: column;
   gap: 24px;

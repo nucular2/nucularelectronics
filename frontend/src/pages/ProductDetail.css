@@ -128,6 +128,76 @@
   margin-bottom: 12px;
 }
 
+.product-sticky-bar {
+  position: fixed;
+  top: var(--header-h);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1680px;
+  height: 84px;
+  padding: 20px clamp(20px, calc((100% - var(--content-w)) / 2), 250px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #E9E9E9;
+  box-sizing: border-box;
+  z-index: 900;
+}
+
+.product-sticky-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  color: #222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-sticky-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.product-sticky-price {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: #222;
+  white-space: nowrap;
+}
+
+.product-sticky-cta {
+  width: 118px;
+  height: 44px;
+  padding: 0 24px;
+  border: 1px solid #f36f25;
+  border-radius: 8px;
+  background: transparent;
+  color: #f36f25;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.product-sticky-cta:hover {
+  background: rgba(243, 111, 37, 0.12);
+  border-color: rgba(243, 111, 37, 0.5);
+}
+
 .product-code {
   font-family: var(--font-family);
   font-size: var(--footer-link-fs);
@@ -248,6 +318,12 @@
   font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.product-secondary-button:hover {
+  background: rgba(243, 111, 37, 0.12);
+  border-color: rgba(243, 111, 37, 0.5);
 }
 .product-primary-button:focus,
 .product-secondary-button:focus {
@@ -390,6 +466,12 @@
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.product-specs-compare:hover {
+  background: rgba(243, 111, 37, 0.12);
+  border-color: rgba(243, 111, 37, 0.5);
 }
 
 .product-kit-section {

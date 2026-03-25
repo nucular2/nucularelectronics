@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import CollapsibleSection from "../components/CollapsibleSection";
@@ -18,6 +18,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { products } = useProducts();
+  const stickySentinelRef = useRef<HTMLDivElement | null>(null);
 
   const resolvedProductId = productId ?? Number(id);
   const product = products.find((p) => p.id === resolvedProductId) || products[0];
@@ -185,13 +186,57 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const [isCompatOpen, setIsCompatOpen] = useState(true);
   const [isDocsOpen, setIsDocsOpen] = useState(true);
   const [isReviewsOpen, setIsReviewsOpen] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+    return window.matchMedia("(min-width: 901px)").matches;
+  });
+  const [isStickyBarVisible, setIsStickyBarVisible] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 901px)");
+    const updateMatch = () => setIsDesktop(mediaQuery.matches);
+    updateMatch();
+    mediaQuery.addEventListener("change", updateMatch);
+    return () => mediaQuery.removeEventListener("change", updateMatch);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) {
+      setIsStickyBarVisible(false);
+      return;
+    }
+    const sentinel = stickySentinelRef.current;
+    if (!sentinel) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStickyBarVisible(!entry.isIntersecting),
+      { rootMargin: "-184px 0px 0px 0px", threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [isDesktop]);
 
 
   return (
     <>
+      {isDesktop && isStickyBarVisible && (
+        <div className="product-sticky-bar">
+          <div className="product-sticky-title">{displayTitle}</div>
+          <div className="product-sticky-right">
+            <div className="product-sticky-price">{displayPrice}</div>
+            <button className="product-sticky-cta" onClick={() => addToCart(product)}>
+              Add to cart
+            </button>
+          </div>
+        </div>
+      )}
       <Header variant="white" />
       <div className="product-page">
         <div className="product-container">
+          <div ref={stickySentinelRef} />
           <button className="product-back-link" onClick={() => navigate("/shop")}>
             <span className="product-back-arrow">←</span>
             <span>Back to shop</span>

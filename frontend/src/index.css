@@ -893,7 +893,7 @@ body,
   text-decoration: none;
   text-transform: none;
   letter-spacing: normal;
-  transition: color 0.2s;
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
@@ -904,6 +904,20 @@ body,
   white-space: nowrap;
   opacity: 0.8;
   transition: opacity 0.2s;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
 /* Desktop-only: show 3 reviews in a grid on very wide screens */
@@ -920,16 +934,15 @@ body,
   opacity: 1;
 }
 
+.nav-link:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 .main-header.scrolled .nav-link,
 .main-header.white-bg .nav-link,
 .main-header.dropdown-open .nav-link {
   color: #000;
-}
-
-.main-header.scrolled .nav-link:hover,
-.main-header.white-bg .nav-link:hover,
-.main-header.dropdown-open .nav-link:hover {
-  color: #666;
 }
 
 .header-actions {

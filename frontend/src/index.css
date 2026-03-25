@@ -1152,12 +1152,15 @@ body.is-mobile .cart-count {
 
 .home-main-content {
   width: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 901px) and (max-width: 1200px) {
   .home-main-content {
-    max-width: var(--content-w);
-    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
   }
 }
 

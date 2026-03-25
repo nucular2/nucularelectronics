@@ -1169,14 +1169,14 @@ body.is-mobile .cart-count {
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1440px) {
   .home-main-content img {
     width: 110%;
     margin-left: -5%;
   }
 }
 
-@media (min-width: 2560px) {
+@media (min-width: 1920px) {
   .home-main-content img {
     width: 120%;
     margin-left: -10%;

@@ -60,7 +60,7 @@
   width: 580px;
   height: 332px;
   position: absolute;
-  top: calc(50% + (var(--header-h) / 2));
+  top: 50%;
   left: calc((100vw - var(--content-w)) / 2);
   transform: translateY(-50%);
   opacity: 0;

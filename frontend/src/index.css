@@ -2041,7 +2041,7 @@ body.is-mobile .canbus-text {
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 2000;
   display: flex;
   justify-content: flex-end;

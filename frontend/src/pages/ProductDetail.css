@@ -766,6 +766,23 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
+  cursor: pointer;
+}
+
+.product-docs-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #F36F25;
+  opacity: 0;
+}
+
+.product-docs-row:hover::after {
+  opacity: 1;
 }
 
 .product-docs-icon {
@@ -908,8 +925,10 @@
   flex: 0 0 auto;
   height: 420px;
   scroll-snap-align: start;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  transform-origin: top center;
+  border: 2px solid transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
 }
 
 .product-add-grid .product-add-image {
@@ -917,8 +936,7 @@
 }
 
 .product-add-grid .product-add-card:hover {
-  transform: scaleY(1.05);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  border-color: #E0E0E0;
 }
 
 .product-add-image-placeholder {
@@ -1096,10 +1114,22 @@
   font-size: 14px;
   color: #f36f25;
   text-decoration: none;
+  position: relative;
 }
 
-.reviews-link:hover {
-  opacity: 0.8;
+.reviews-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #F36F25;
+  opacity: 0;
+}
+
+.reviews-link:hover::after {
+  opacity: 1;
 }
 
 .reviews-link-collapsible {

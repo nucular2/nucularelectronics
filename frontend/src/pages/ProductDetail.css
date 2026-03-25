@@ -377,6 +377,10 @@
   border-bottom: 1px solid #eee;
 }
 
+.product-reviews-section {
+  border-bottom: none;
+}
+
 .product-overview-title,
 .product-specs-title,
 .product-kit-title,
@@ -1071,7 +1075,7 @@
   scroll-snap-type: x mandatory;
   padding-bottom: 16px;
   margin-right: calc(50% - 50vw);
-  padding-right: calc(50vw - 50%);
+  padding-right: 0;
 }
 
 .product-review-card {

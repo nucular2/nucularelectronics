@@ -193,7 +193,7 @@ export default function Orders() {
               </nav>
             </aside>
 
-            <main className="orders-content">
+            <main className="orders-content orders-content--wide">
               <div className="orders-mobile-bar">
                 <button className="orders-mobile-link active">Orders</button>
                 <button className="orders-mobile-link" onClick={() => navigate("/profile")}>User info</button>

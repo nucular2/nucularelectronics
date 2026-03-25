@@ -8,6 +8,13 @@ export default function UpdatePassword() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(min-width: 1024px)").matches;
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [passwordUpdatedAt, setPasswordUpdatedAt] = useState<Date | null>(null);
+
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,6 +28,14 @@ export default function UpdatePassword() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const apply = () => setIsDesktop(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
     // TEMPORARY: Allow viewing without login for design review
     if (!user) {
       // navigate('/login?redirect=/update-password');
@@ -28,9 +43,58 @@ export default function UpdatePassword() {
     }
   }, [user, navigate]);
 
+  useEffect(() => {
+    if (user?.updated_at) {
+      const parsed = new Date(user.updated_at);
+      if (!Number.isNaN(parsed.getTime())) {
+        setPasswordUpdatedAt(parsed);
+        return;
+      }
+    }
+    try {
+      const raw = localStorage.getItem("design_password_updated_at_v1");
+      if (raw) {
+        const parsed = new Date(raw);
+        if (!Number.isNaN(parsed.getTime())) {
+          setPasswordUpdatedAt(parsed);
+        }
+      }
+    } catch (_) {}
+  }, [user?.updated_at]);
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const resetEditState = () => {
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setError(null);
+    setSuccess(false);
+    setShowOldPassword(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+  };
+
+  const formatRelativeTime = (date: Date) => {
+    const diffMs = date.getTime() - Date.now();
+    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+    const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+    if (Math.abs(diffDays) < 30) {
+      return rtf.format(diffDays, "day");
+    }
+
+    const diffMonths = Math.round(diffDays / 30);
+    if (Math.abs(diffMonths) < 12) {
+      return rtf.format(diffMonths, "month");
+    }
+
+    const diffYears = Math.round(diffMonths / 12);
+    return rtf.format(diffYears, "year");
   };
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
@@ -73,6 +137,13 @@ export default function UpdatePassword() {
       if (updateError) throw updateError;
 
       setSuccess(true);
+      const now = new Date();
+      setPasswordUpdatedAt(now);
+      if (!user) {
+        try {
+          localStorage.setItem("design_password_updated_at_v1", now.toISOString());
+        } catch (_) {}
+      }
       setOldPassword('');
       setNewPassword('');
       setConfirmPassword('');
@@ -130,66 +201,89 @@ export default function UpdatePassword() {
               <h1 className="orders-title">Password</h1>
 
               <div className="password-form-container">
-                <div className="password-header-row">
-                    <span className="password-label">Password</span>
-                    <button className="user-info-edit-btn cancel" onClick={() => {
-                        setOldPassword('');
-                        setNewPassword('');
-                        setConfirmPassword('');
-                        setError(null);
-                        setSuccess(false);
-                    }}>Cancel</button>
-                </div>
+                {!isDesktop || isEditing ? (
+                  <>
+                    <div className="password-header-row">
+                      <span className="password-label">Password</span>
+                      <button
+                        className="user-info-edit-btn cancel"
+                        onClick={() => {
+                          resetEditState();
+                          if (isDesktop) setIsEditing(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
 
-                {error && <div className="auth-error" style={{marginBottom: '16px'}}>{error}</div>}
-                {success && <div className="auth-success" style={{color: 'green', marginBottom: '16px'}}>Password updated successfully.</div>}
+                    {error && <div className="auth-error" style={{marginBottom: '16px'}}>{error}</div>}
+                    {success && <div className="auth-success" style={{color: 'green', marginBottom: '16px'}}>Password updated successfully.</div>}
 
-                <form noValidate onSubmit={handleUpdatePassword} className="password-form">
-                  <div className="password-input-wrapper">
-                    <input
-                      type={showOldPassword ? "text" : "password"}
-                      placeholder="Old password"
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
-                      className="user-info-input" // Reuse style
-                    />
-                    <button type="button" className="password-toggle-btn" onClick={() => setShowOldPassword(!showOldPassword)}>
-                      {showOldPassword ? toggleIconOff : toggleIcon}
+                    <form noValidate onSubmit={handleUpdatePassword} className="password-form">
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showOldPassword ? "text" : "password"}
+                          placeholder="Old password"
+                          value={oldPassword}
+                          onChange={(e) => setOldPassword(e.target.value)}
+                          className="user-info-input"
+                        />
+                        <button type="button" className="password-toggle-btn" onClick={() => setShowOldPassword(!showOldPassword)}>
+                          {showOldPassword ? toggleIconOff : toggleIcon}
+                        </button>
+                      </div>
+
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showNewPassword ? "text" : "password"}
+                          placeholder="New password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          className="user-info-input"
+                        />
+                        <button type="button" className="password-toggle-btn" onClick={() => setShowNewPassword(!showNewPassword)}>
+                          {showNewPassword ? toggleIconOff : toggleIcon}
+                        </button>
+                      </div>
+                      
+                      <div className="password-hint">Password must contain at least 7 characters</div>
+
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="New password again"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          className="user-info-input"
+                        />
+                        <button type="button" className="password-toggle-btn" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                          {showConfirmPassword ? toggleIconOff : toggleIcon}
+                        </button>
+                      </div>
+
+                      <button type="submit" className="user-info-save-btn" disabled={loading}>
+                        {loading ? "Saving..." : "Save"}
+                      </button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="password-view-row">
+                    <div className="password-view-left">
+                      <div className="password-label">Password</div>
+                      <div className="password-last-updated">
+                        last updated{" "}
+                        {passwordUpdatedAt ? formatRelativeTime(passwordUpdatedAt) : "2 months ago"}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="password-update-btn"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      Update
                     </button>
                   </div>
-
-                  <div className="password-input-wrapper">
-                    <input
-                      type={showNewPassword ? "text" : "password"}
-                      placeholder="New password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="user-info-input"
-                    />
-                    <button type="button" className="password-toggle-btn" onClick={() => setShowNewPassword(!showNewPassword)}>
-                      {showNewPassword ? toggleIconOff : toggleIcon}
-                    </button>
-                  </div>
-                  
-                  <div className="password-hint">Password must contain at least 7 characters</div>
-
-                  <div className="password-input-wrapper">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="New password again"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="user-info-input"
-                    />
-                    <button type="button" className="password-toggle-btn" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                      {showConfirmPassword ? toggleIconOff : toggleIcon}
-                    </button>
-                  </div>
-
-                  <button type="submit" className="user-info-save-btn" disabled={loading}>
-                    {loading ? "Saving..." : "Save"}
-                  </button>
-                </form>
+                )}
               </div>
             </main>
           </div>

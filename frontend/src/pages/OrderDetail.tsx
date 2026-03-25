@@ -248,6 +248,18 @@ export default function OrderDetail() {
 
                 <div className="order-status-section">
                   <span className={`status-badge-large ${getStatusStyle(order.status)}`}>
+                    {order.status === "Paid" && (
+                      <svg className="paid-check-icon" viewBox="0 0 20 20" aria-hidden="true">
+                        <circle cx="10" cy="10" r="10" fill="#27AE60" />
+                        <path
+                          d="M5.5 10.2L8.4 13.1L14.7 6.9"
+                          stroke="#fff"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
                     {order.status}
                   </span>
                 </div>

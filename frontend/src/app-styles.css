@@ -631,11 +631,15 @@
 /* Default Status Style (Dark Gray) */
 .status-new,
 .status-processing,
-.status-paid,
 .status-shipped,
 .status-default {
   border: 1px solid #474747;
   color: #111;
+}
+
+.status-paid {
+  border: 1px solid #27AE60;
+  color: #27AE60;
 }
 
 /* Specific Status Styles */
@@ -1510,6 +1514,11 @@
   color: #111;
 }
 
+.status-badge-large.status-paid {
+  border: 1px solid #27AE60;
+  color: #27AE60;
+}
+
 .status-badge-large.status-awaiting-pickup {
   border: 1px solid #F36F25;
   color: #F36F25;
@@ -1528,6 +1537,24 @@
 .status-badge-large.status-canceled {
   border: 1px solid #EB5757;
   color: #EB5757;
+}
+
+.paid-check-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.status-badge .paid-check-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.status-badge-large .paid-check-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 /* Info List */

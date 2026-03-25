@@ -274,7 +274,21 @@ export default function Orders() {
                       <div className="order-id">{order.id}</div>
                       <div className="order-date">{formatDate(order.created_at)}</div>
                       <div className="order-status">
-                        <span className={`status-badge ${getStatusStyle(order.status)}`}>{order.status}</span>
+                      <span className={`status-badge ${getStatusStyle(order.status)}`}>
+                        {order.status === "Paid" && (
+                          <svg className="paid-check-icon" viewBox="0 0 20 20" aria-hidden="true">
+                            <circle cx="10" cy="10" r="10" fill="#27AE60" />
+                            <path
+                              d="M5.5 10.2L8.4 13.1L14.7 6.9"
+                              stroke="#fff"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        )}
+                        {order.status}
+                      </span>
                       </div>
                       <div className="order-amount">${order.total_amount.toFixed(2)}</div>
                       <div

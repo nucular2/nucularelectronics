@@ -201,7 +201,7 @@ export default function Home() {
 
   return (
     <div className={isMobile ? "home-mobile" : "home-desktop"}>
-      <Header />
+      <Header variant="white" />
       
       {!isMobile ? (
         // DESKTOP VIEW

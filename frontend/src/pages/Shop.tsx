@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import { useProducts } from '../context/ProductContext';
@@ -8,6 +8,8 @@ import './Shop.css';
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTabsSticky, setIsTabsSticky] = useState(false);
+  const tabsRef = useRef<HTMLDivElement | null>(null);
   const { products } = useProducts();
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -22,6 +24,30 @@ export default function Shop() {
 
   const filteredProducts = products.filter(product => product.category === activeTab);
 
+  useEffect(() => {
+    const getHeaderHeight = () => {
+      const value = getComputedStyle(document.documentElement).getPropertyValue('--header-h').trim();
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? parsed : 100;
+    };
+
+    const update = () => {
+      const el = tabsRef.current;
+      if (!el) return;
+      const headerH = getHeaderHeight();
+      const top = el.getBoundingClientRect().top;
+      setIsTabsSticky(top <= headerH + 1);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   return (
     <>
       <Header variant="white" />
@@ -29,7 +55,7 @@ export default function Shop() {
         <div className={`shop-container grid-container ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
           <h1 className="shop-title">Shop</h1>
           
-          <div className="shop-tabs">
+          <div ref={tabsRef} className={`shop-tabs ${isTabsSticky ? 'is-sticky' : ''}`}>
             <div
               className={`shop-tabs-mobile-header ${isMobileMenuOpen ? 'open' : ''}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

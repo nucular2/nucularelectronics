@@ -165,6 +165,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
  
       const crmStatus = crmOrder?.status;
+      const crmNumber = crmOrder?.number ?? null;
+      const crmId = crmOrder?.id ?? null;
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
       const paymentStatuses: string[] = payments.map((p: any) => p?.status).filter(Boolean);
       const fullPaidAt: string | null = crmOrder?.fullPaidAt || null;
@@ -183,6 +185,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ...prevContacts,
         crm: {
           ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
+          id: crmId,
+          number: crmNumber,
           status: crmStatus || null,
           fullPaidAt,
           paidAt,

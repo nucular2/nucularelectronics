@@ -18,11 +18,17 @@ type DbOrder = {
   total_amount: number;
   status: OrderStatus;
   recipient_info?: { firstName?: string; lastName?: string; email?: string } | null;
+  contacts?: any;
 };
 
 function formatDateTime(value: string) {
   const d = new Date(value);
   return d.toLocaleString('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+
+function displayOrderNumber(order: DbOrder) {
+  const crmNumber = order?.contacts?.crm?.number;
+  return crmNumber ? String(crmNumber) : order.id;
 }
 
 const Dashboard: React.FC = () => {
@@ -80,7 +86,7 @@ const Dashboard: React.FC = () => {
 
       const { data: recent, error: recentError } = await supabase
         .from('orders')
-        .select('id,created_at,total_amount,status,recipient_info')
+        .select('id,created_at,total_amount,status,recipient_info,contacts')
         .order('created_at', { ascending: false })
         .limit(5);
 
@@ -185,7 +191,7 @@ const Dashboard: React.FC = () => {
             {recentOrders.length > 0 ? (
               recentOrders.map((o) => (
                 <tr key={o.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '12px 20px', fontWeight: 600, color: '#1e88e5' }}>{o.id}</td>
+                  <td style={{ padding: '12px 20px', fontWeight: 600, color: '#1e88e5' }}>{displayOrderNumber(o)}</td>
                   <td style={{ padding: '12px 20px', color: '#333' }}>
                     {`${o.recipient_info?.firstName || ''} ${o.recipient_info?.lastName || ''}`.trim() ||
                       o.recipient_info?.email ||

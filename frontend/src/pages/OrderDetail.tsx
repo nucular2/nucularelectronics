@@ -28,6 +28,22 @@ interface Order {
     flat?: string;
   };
   contacts?: {
+    crm?: {
+      id?: number | string;
+      number?: string | number;
+      status?: string | null;
+      fullPaidAt?: string | null;
+      paidAt?: string | null;
+      paymentStatuses?: string[];
+      syncedAt?: string;
+    };
+    payment?: {
+      provider?: string;
+      status?: string;
+      paidAt?: string;
+      amount?: number;
+      updatedAt?: string;
+    };
     telegram?: string;
     whatsapp?: string;
     comment?: string;
@@ -177,6 +193,11 @@ export default function OrderDetail() {
     return toNumber(value).toFixed(2);
   }
 
+  function displayOrderNumber(order: Order) {
+    const crmNumber = order?.contacts?.crm?.number;
+    return crmNumber ? String(crmNumber) : order.id;
+  }
+
   function getStatusStyle(status: OrderStatus) {
     switch (status) {
       case "New": return "status-new";
@@ -242,7 +263,7 @@ export default function OrderDetail() {
                   Back to orders
                 </Link>
                 
-                <h1 className="order-detail-title">Order #{order.id}</h1>
+                <h1 className="order-detail-title">Order #{displayOrderNumber(order)}</h1>
 
                 {["New", "Processing"].includes(order.status) && (
                   <div className="order-notification">

@@ -55,11 +55,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const frontendUrl = process.env.FRONTEND_URL || 'https://nucularelectronics.vercel.app';
 
     const items = asArray(order.items);
+    const crmNumber = order?.contacts?.crm?.number ? String(order.contacts.crm.number) : null;
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
     let itemsSumCents = 0;
 
     for (const raw of items) {
-      const name = String(raw?.title || raw?.name || raw?.productName || 'Item').slice(0, 120);
+      const baseName = String(raw?.title || raw?.name || raw?.productName || 'Item').slice(0, 120);
+      const name = crmNumber ? `Order ${crmNumber}: ${baseName}`.slice(0, 120) : baseName;
       const quantityRaw = raw?.quantity;
       const quantity = typeof quantityRaw === 'number' && Number.isFinite(quantityRaw) && quantityRaw > 0 ? Math.floor(quantityRaw) : 1;
 

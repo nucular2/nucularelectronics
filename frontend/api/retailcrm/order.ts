@@ -44,6 +44,30 @@ function parseMoney(value: unknown): number | undefined {
   return undefined;
 }
 
+async function fetchCrmOrderByExternalId(params: {
+  apiUrl: string;
+  apiKey: string;
+  externalId: string;
+  site?: string;
+}) {
+  const url =
+    `${params.apiUrl}/api/v5/orders/${encodeURIComponent(params.externalId)}` +
+    `?apiKey=${encodeURIComponent(params.apiKey)}` +
+    `&by=externalId` +
+    (params.site ? `&site=${encodeURIComponent(params.site)}` : '');
+
+  const r = await fetch(url, { headers: { Accept: 'application/json' } });
+  const text = await r.text();
+  let data: any = {};
+  try {
+    data = JSON.parse(text);
+  } catch {
+    data = { raw: text };
+  }
+  if (!r.ok || !data?.success) return null;
+  return data?.order ?? null;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -147,7 +171,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       try { await supabase.from('orders').update({ status: 'Error' }).eq('id', order.id); } catch {}
       return res.status(r.status).json({ message: 'RetailCRM error', details: data });
     }
-    try { await supabase.from('orders').update({ status: 'Sent' }).eq('id', order.id); } catch {}
+
+    try {
+      const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: order.id, site });
+      const crmId = crmOrder?.id ?? null;
+      const crmNumber = crmOrder?.number ?? null;
+      const prevContacts = order.contacts && typeof order.contacts === 'object' ? order.contacts : {};
+      const nextContacts = {
+        ...prevContacts,
+        crm: {
+          ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
+          id: crmId,
+          number: crmNumber,
+          syncedAt: new Date().toISOString(),
+        },
+      };
+      await supabase.from('orders').update({ status: 'Sent', contacts: nextContacts }).eq('id', order.id);
+    } catch {
+      try { await supabase.from('orders').update({ status: 'Sent' }).eq('id', order.id); } catch {}
+    }
+
     return res.status(200).json({ ok: true, data });
   } catch (e: any) {
     return res.status(500).json({ message: 'Handler exception', details: e?.message || String(e) });

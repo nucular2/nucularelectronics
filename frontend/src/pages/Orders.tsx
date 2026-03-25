@@ -14,6 +14,7 @@ interface Order {
   status: OrderStatus;
   created_at: string;
   updated_at: string;
+  contacts?: any;
   recipient_info?: {
     firstName: string;
     lastName: string;
@@ -175,6 +176,11 @@ export default function Orders() {
     return Number.isFinite(num) ? num.toFixed(2) : "0.00";
   }
 
+  function displayOrderNumber(order: Order) {
+    const crmNumber = order?.contacts?.crm?.number;
+    return crmNumber ? String(crmNumber) : order.id;
+  }
+
   function getStatusStyle(status: OrderStatus) {
     switch (status) {
       case "New":
@@ -276,7 +282,7 @@ export default function Orders() {
                       style={{ cursor: "pointer" }}
                       onClick={() => navigate(`/orders/${order.id}`, { state: { order } })}
                     >
-                      <div className="order-id">{order.id}</div>
+                      <div className="order-id">{displayOrderNumber(order)}</div>
                       <div className="order-date">{formatDate(order.created_at)}</div>
                       <div className="order-status">
                       <span className={`status-badge ${getStatusStyle(order.status)}`}>

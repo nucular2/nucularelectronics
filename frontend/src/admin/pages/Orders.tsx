@@ -51,6 +51,11 @@ function paidAt(order: DbOrder) {
   );
 }
 
+function displayOrderNumber(order: DbOrder) {
+  const crmNumber = order?.contacts?.crm?.number;
+  return crmNumber ? String(crmNumber) : order.id;
+}
+
 const Orders: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'All'>('All');
@@ -261,7 +266,7 @@ const Orders: React.FC = () => {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <tr key={order.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '16px 24px', color: '#1e88e5', fontWeight: 500 }}>{order.id}</td>
+                  <td style={{ padding: '16px 24px', color: '#1e88e5', fontWeight: 500 }}>{displayOrderNumber(order)}</td>
                   <td style={{ padding: '16px 24px', color: '#333' }}>
                     {`${order.recipient_info?.firstName || ''} ${order.recipient_info?.lastName || ''}`.trim() ||
                       order.recipient_info?.email ||

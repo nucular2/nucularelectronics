@@ -237,11 +237,13 @@ export default function Home() {
 
           {/* Main SVG Content */}
           <div style={{ width: '100%', background: '#fff' }}>
-             <img 
-               src="/content-box85.svg" 
-               alt="Main Content" 
-               style={{ width: '100%', display: 'block' }} 
-             />
+            <div className="grid-container">
+              <img 
+                src="/content-box85.svg" 
+                alt="Main Content" 
+                style={{ width: '100%', display: 'block' }} 
+              />
+            </div>
           </div>
 
           {/* Desktop News Section */}

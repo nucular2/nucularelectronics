@@ -18,7 +18,6 @@ export default function ControllerSettings() {
   );
   const navigate = useNavigate();
   const location = useLocation();
-  const [query, setQuery] = useState("");
   const setupImageRef = useRef<HTMLImageElement | null>(null);
   const diagnosticsTitleRef = useRef<HTMLDivElement | null>(null);
 
@@ -67,18 +66,6 @@ export default function ControllerSettings() {
             <span className="support-breadcrumb-separator">/</span>
             <span className="support-breadcrumb-current">Controller</span>
           </div>
-          <form className="support-search-row" onSubmit={(e) => e.preventDefault()}>
-            <div className="support-search-input">
-              <input
-                className="support-search-field"
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="What are you looking for?"
-              />
-            </div>
-            <button className="support-search-button" type="submit">Search</button>
-          </form>
           <div className="controller-layout">
             <div className="controller-list">
                 <button

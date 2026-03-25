@@ -1080,8 +1080,9 @@
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   padding-bottom: 16px;
-  margin-right: calc(50% - 50vw);
-  padding-right: 0;
+  width: calc(100% + (50vw - 50%));
+  max-width: none;
+  box-sizing: border-box;
 }
 
 .product-review-card {
@@ -1478,6 +1479,8 @@
     padding-bottom: 16px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    width: calc(100% + (50vw - 50%));
+    max-width: none;
   }
   
   .product-reviews-list::-webkit-scrollbar {

@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import Header from '../components/Header';
 
+const DESIGN_AUTH_KEY = 'design_auth_v1';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,9 +16,28 @@ export default function Login() {
 
   const params = new URLSearchParams(location.search);
   const isJustRegistered = params.get('registered') === '1';
+  const allowDesignLogin =
+    import.meta.env.DEV &&
+    (typeof window === 'undefined' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost');
+
+  const designLogin = () => {
+    try {
+      localStorage.setItem(DESIGN_AUTH_KEY, '1');
+    } catch (_) {}
+    const params = new URLSearchParams(location.search);
+    const redirectTo = params.get('redirect') || '/orders';
+    navigate(redirectTo);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (allowDesignLogin && !email.trim() && !password) {
+      setError(null);
+      designLogin();
+      return;
+    }
     if (!email.trim() || !password) {
       setError('Please fill out this field.');
       return;
@@ -34,7 +55,7 @@ export default function Login() {
       setLoading(false);
     } else {
       const params = new URLSearchParams(location.search);
-      const redirectTo = params.get('redirect') || '/profile';
+      const redirectTo = params.get('redirect') || '/orders';
       navigate(redirectTo);
     }
   };
@@ -57,6 +78,15 @@ export default function Login() {
           {error && <div className="auth-error">{error}</div>}
           
           <form noValidate onSubmit={handleLogin} className="auth-form">
+            {allowDesignLogin && (
+              <button
+                type="button"
+                className="auth-button"
+                onClick={designLogin}
+              >
+                Enter without login
+              </button>
+            )}
             <div className="form-group">
               <input
                 type="email"

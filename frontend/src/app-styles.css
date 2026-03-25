@@ -428,7 +428,7 @@
   .orders-list-header {
     display: grid;
     width: 780px;
-    grid-template-columns: 240px 140px 120px 120px 56px;
+    grid-template-columns: minmax(0, 240px) 140px 120px 120px 56px;
     column-gap: 16px;
     padding: 0 20px 8px 20px;
     font-size: 14px;
@@ -448,13 +448,14 @@
   .orders-list .order-card {
     display: grid;
     width: 780px;
-    grid-template-columns: 240px 140px 120px 120px 56px;
+    grid-template-columns: minmax(0, 240px) 140px 120px 120px 56px;
     column-gap: 16px;
     align-items: center;
     padding: 12px 20px;
     background: #F6F6F6;
     border-radius: 8px;
     box-sizing: border-box;
+    overflow: hidden;
   }
   .orders-list .status-badge {
     height: 24px;
@@ -475,6 +476,7 @@
     font-weight: 600;
     font-size: var(--footer-link-fs);
     color: #111;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -894,20 +896,19 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    position: relative;
   }
   .orders-layout {
-    display: flex;
-    flex-direction: row;
-    gap: 60px;
-    align-items: flex-start;
+    position: relative;
+    width: 100%;
     height: auto;
-    width: fit-content;
-    margin: 0 auto;
   }
   .orders-sidebar {
     width: 180px; /* per spec */
     height: auto;
-    flex-shrink: 0;
+    position: absolute;
+    top: 0;
+    left: calc((100vw - var(--content-w)) / 2);
   }
   .orders-sidebar-title {
     display: none;
@@ -947,6 +948,8 @@
     min-height: 416px;
     height: auto;
     overflow: visible;
+    margin-left: auto;
+    margin-right: auto;
   }
   .orders-title {
     margin-bottom: 40px;
@@ -995,22 +998,22 @@
   .orders-tabs {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     background: #F6F6F6;
     border-radius: 8px;
-    padding: 12px 20px;
-    width: 580px;
-    height: 68px;
+    padding: 4px;
+    width: 197px;
+    height: 44px;
     box-sizing: border-box;
   }
   .orders-tab {
-    height: 44px;
-    padding: 0 16px;
+    height: 36px;
+    padding: 0 8px;
     border-radius: 6px;
     background: transparent;
     border: none;
     font-family: var(--font-family);
-    font-size: 16px;
+    font-size: 14px;
     color: #999;
     cursor: pointer;
     display: flex;
@@ -1018,6 +1021,16 @@
     justify-content: center;
     transition: all 0.2s;
     box-sizing: border-box;
+  }
+  .orders-tabs .orders-tab:first-child {
+    width: 77px;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
+  .orders-tabs .orders-tab:last-child {
+    width: 112px;
+    padding: 0 16px;
+    border-radius: 4px;
   }
   .orders-tab.active {
     background: #fff;

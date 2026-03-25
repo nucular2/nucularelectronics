@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ShoppingCart, Users, Package, CreditCard } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { useAuth } from '../context/AuthContext';
 
 type OrderStatus =
   | 'New'
@@ -32,6 +33,7 @@ function displayOrderNumber(order: DbOrder) {
 }
 
 const Dashboard: React.FC = () => {
+  const { logout } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalOrders, setTotalOrders] = useState(0);
@@ -51,65 +53,46 @@ const Dashboard: React.FC = () => {
     const load = async () => {
       setLoading(true);
       setError(null);
-
-      const [{ count: totalCount, error: totalError }, { count: paidCount, error: paidError }, { count: awaitingCount, error: awaitingError }] =
-        await Promise.all([
-          supabase.from('orders').select('id', { count: 'exact', head: true }),
-          supabase.from('orders').select('id', { count: 'exact', head: true }).eq('status', 'Paid'),
-          supabase.from('orders').select('id', { count: 'exact', head: true }).eq('status', 'Awaiting payment'),
-        ]);
-
-      if (!isMounted) return;
-      if (totalError || paidError || awaitingError) {
-        setError(totalError?.message || paidError?.message || awaitingError?.message || 'Ошибка загрузки');
-        setLoading(false);
-        return;
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData?.session?.access_token;
+        if (!token) {
+          await logout();
+          return;
+        }
+        const r = await fetch('/api/admin/stats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({}),
+        });
+        if (r.status === 401 || r.status === 403) {
+          await logout();
+          return;
+        }
+        const payload = await r.json();
+        if (!r.ok) {
+          setError(payload?.message || 'Ошибка загрузки');
+          return;
+        }
+        if (!isMounted) return;
+        setTotalOrders(payload?.totalOrders || 0);
+        setPaidOrders(payload?.paidOrders || 0);
+        setAwaitingPaymentOrders(payload?.awaitingPaymentOrders || 0);
+        setPaidRevenue(payload?.paidRevenue || 0);
+        setRecentOrders((payload?.recentOrders ?? []) as DbOrder[]);
+      } catch (e: any) {
+        setError(e?.message || 'Ошибка загрузки');
+      } finally {
+        if (isMounted) setLoading(false);
       }
-
-      setTotalOrders(totalCount || 0);
-      setPaidOrders(paidCount || 0);
-      setAwaitingPaymentOrders(awaitingCount || 0);
-
-      const { data: paidRows, error: paidRowsError } = await supabase
-        .from('orders')
-        .select('total_amount')
-        .eq('status', 'Paid')
-        .limit(1000);
-
-      if (!isMounted) return;
-      if (paidRowsError) {
-        setError(paidRowsError.message);
-      } else {
-        const sum = (paidRows || []).reduce((acc, row: any) => acc + Number(row.total_amount || 0), 0);
-        setPaidRevenue(sum);
-      }
-
-      const { data: recent, error: recentError } = await supabase
-        .from('orders')
-        .select('id,created_at,total_amount,status,recipient_info,contacts')
-        .order('created_at', { ascending: false })
-        .limit(5);
-
-      if (!isMounted) return;
-      if (recentError) {
-        setError(recentError.message);
-      } else {
-        setRecentOrders((recent ?? []) as DbOrder[]);
-      }
-
-      setLoading(false);
     };
 
     load();
-
-    const channel = supabase
-      .channel('admin-dashboard-realtime')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => load())
-      .subscribe();
+    const t = window.setInterval(() => load(), 15000);
 
     return () => {
       isMounted = false;
-      supabase.removeChannel(channel);
+      window.clearInterval(t);
     };
   }, []);
 

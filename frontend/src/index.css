@@ -852,16 +852,6 @@ body,
   .header-inner {
     gap: 20px;
   }
-  .main-nav {
-    margin-left: 0;
-    margin-right: 0;
-    flex: 1;
-    justify-content: center;
-    gap: 24px;
-  }
-  .header-actions {
-    flex-shrink: 0;
-  }
   .header-user-name {
     max-width: 140px;
     overflow: hidden;

@@ -22,7 +22,7 @@ const AdminLayout: React.FC = () => {
 
         <nav className="admin-nav">
           <NavLink
-            to="/admin/dashboard-3"
+            to="/admin/dashboard"
             className={({ isActive }) => (isActive ? 'admin-nav-link active' : 'admin-nav-link')}
           >
             <LayoutDashboard size={18} /> Dashboard

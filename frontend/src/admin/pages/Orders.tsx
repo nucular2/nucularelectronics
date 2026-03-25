@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { Search, Calendar, Download, Eye, Edit2, Trash } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { useAuth } from '../context/AuthContext';
 
 type OrderStatus =
   | 'New'
@@ -57,6 +58,7 @@ function displayOrderNumber(order: DbOrder) {
 }
 
 const Orders: React.FC = () => {
+  const { logout } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'All'>('All');
   const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>('All');
@@ -99,43 +101,58 @@ const Orders: React.FC = () => {
     });
   }, [orders, searchTerm, statusFilter, paymentFilter, dateRange.start, dateRange.end]);
 
-  useEffect(() => {
-    let isMounted = true;
-    const load = async () => {
-      setLoading(true);
-      setError(null);
-      const { data, error } = await supabase
-        .from('orders')
-        .select('id,user_id,created_at,total_amount,status,recipient_info,contacts')
-        .order('created_at', { ascending: false })
-        .limit(500);
-      if (!isMounted) return;
-      if (error) {
-        setError(error.message);
+  const load = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      if (!token) {
+        await logout();
+        return;
+      }
+      const r = await fetch('/api/admin/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          searchTerm,
+          statusFilter,
+          paymentFilter,
+          dateRange,
+          limit: 500,
+        }),
+      });
+      if (r.status === 401 || r.status === 403) {
+        await logout();
+        return;
+      }
+      const payload = await r.json();
+      if (!r.ok) {
+        setError(payload?.message || 'Ошибка загрузки');
         setOrders([]);
       } else {
-        setOrders((data ?? []) as DbOrder[]);
+        setOrders((payload?.orders ?? []) as DbOrder[]);
       }
+    } catch (e: any) {
+      setError(e?.message || 'Ошибка загрузки');
+      setOrders([]);
+    } finally {
       setLoading(false);
-    };
+    }
+  };
+
+  useEffect(() => {
     load();
-
-    const channel = supabase
-      .channel('admin-orders-realtime')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'orders' },
-        () => {
-          load();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      isMounted = false;
-      supabase.removeChannel(channel);
-    };
+    const t = window.setInterval(() => load(), 15000);
+    return () => window.clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [searchTerm, statusFilter, paymentFilter, dateRange.start, dateRange.end]);
 
   const exportToExcel = () => {
     if (filteredOrders.length === 0) return;

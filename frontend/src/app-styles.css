@@ -873,11 +873,11 @@
     flex-direction: row;
     gap: 60px;
     align-items: flex-start;
-    height: 670px;
+    height: auto;
   }
   .orders-sidebar {
     width: 180px; /* per spec */
-    height: 188px; /* per spec */
+    height: auto;
     flex-shrink: 0;
   }
   .orders-sidebar-title {
@@ -894,20 +894,21 @@
     padding: 0;
     font-size: 16px;
     font-weight: 400;
-    color: #999;
+    color: #111;
   }
   .orders-nav-item.active {
-    color: #111;
-    font-weight: 600;
+    color: #F36F25;
+    font-weight: 400;
   }
   .orders-nav-item.active::after {
     display: none;
   }
   .orders-content {
-    width: calc(1180px - 180px - 60px);
-    max-width: calc(1180px - 180px - 60px);
-    height: 670px;
-    overflow: auto;
+    width: 580px;
+    max-width: 580px;
+    min-height: 416px;
+    height: auto;
+    overflow: visible;
   }
   .orders-title {
     margin-bottom: 40px;
@@ -921,7 +922,7 @@
     background: #F6F6F6;
     border-radius: 8px;
     padding: 12px 20px;
-    width: 780px;
+    width: 580px;
     height: 68px;
     box-sizing: border-box;
   }
@@ -949,6 +950,31 @@
   }
   .orders-tab.active::after {
     display: none;
+  }
+
+  .user-info-edit-btn {
+    color: #F36F25;
+  }
+
+  .user-info-edit-btn:hover {
+    color: #F36F25;
+    opacity: 0.8;
+  }
+
+  .user-info-edit-btn.cancel {
+    color: #F36F25;
+  }
+
+  .user-info-edit-form {
+    max-width: 580px;
+  }
+
+  .user-info-save-btn {
+    width: 84px;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 14px;
+    margin-top: 0;
   }
 }
 

@@ -19,14 +19,14 @@ export default function AuthConfirm() {
           setStatus('success');
           setMessage('Your email has been confirmed. Welcome!');
           // Optionally redirect after a short delay
-          setTimeout(() => navigate('/profile'), 2000);
+          setTimeout(() => navigate('/orders'), 2000);
         } else {
           // If no session, try to refresh (in case hash params exist)
           const { data, error } = await supabase.auth.refreshSession();
           if (data?.session?.user) {
             setStatus('success');
             setMessage('Your email has been confirmed. Welcome!');
-            setTimeout(() => navigate('/profile'), 2000);
+            setTimeout(() => navigate('/orders'), 2000);
           } else {
             setStatus('error');
             setMessage('Confirmation link is invalid or expired. Please log in or request a new link.');

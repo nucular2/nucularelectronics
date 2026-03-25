@@ -101,12 +101,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   };
 
   const handleProfileClick = () => {
-    // TEMPORARY: Always navigate to profile for design review
-    // if (user) {
-      navigate('/profile');
-    // } else {
-    //   navigate('/login');
-    // }
+    if (user) {
+      navigate('/orders');
+    } else {
+      navigate('/login');
+    }
   };
 
   const toggleMobileMenu = () => {

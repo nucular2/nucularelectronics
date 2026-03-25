@@ -53,15 +53,18 @@
   --home-review-min-h: 280px;
 }
 
-@media (min-width: 1440px) {
-  :root {
-    --content-w: 1320px;
-  }
-}
-
 @media (min-width: 1920px) {
-  :root {
+  .home-desktop {
     --content-w: 1480px;
+    --home-card-w: 420px;
+    --home-card-img-h: 260px;
+    --home-section-title-fs: 36px;
+    --home-section-header-mb: 28px;
+    --home-card-pad: 36px;
+    --home-review-min-h: 320px;
+    --home-review-title-fs: 20px;
+    --home-review-text-fs: 15px;
+    --home-review-author-fs: 14px;
   }
 }
 

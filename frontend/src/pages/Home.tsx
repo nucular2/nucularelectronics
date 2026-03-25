@@ -255,7 +255,7 @@ export default function Home() {
           }}>
             <div style={{ 
               width: '100%',
-              maxWidth: 'var(--content-w)',
+              maxWidth: '1180px',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
@@ -336,7 +336,7 @@ export default function Home() {
           }}>
             <div style={{ 
               width: '100%',
-              maxWidth: 'var(--content-w)',
+              maxWidth: '1180px',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'

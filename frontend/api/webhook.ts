@@ -29,28 +29,81 @@ async function pushPaymentToRetailCrm(params: {
   const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
  
   if (!apiUrl || !apiKey) return;
- 
-  const url = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
-    site ? `&site=${encodeURIComponent(site)}` : ''
-  }`;
- 
-  const payment = {
-    externalId: params.paymentExternalId,
+
+  const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
+
+  const fetchOrderUrl =
+    `${apiUrl}/api/v5/orders/${encodeURIComponent(params.orderExternalId)}` +
+    `?apiKey=${encodeURIComponent(apiKey)}` +
+    `&by=externalId` +
+    (site ? `&site=${encodeURIComponent(site)}` : '');
+
+  let crmOrder: any = null;
+  try {
+    const r = await fetch(fetchOrderUrl, { headers: { Accept: 'application/json' } });
+    const text = await r.text();
+    const data = JSON.parse(text);
+    crmOrder = data?.success ? data?.order : null;
+  } catch {
+    crmOrder = null;
+  }
+
+  const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const normalizedAmount = Math.round(params.amount * 100) / 100;
+  const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
+
+  const candidate =
+    payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
+    payments.find((p: any) => {
+      const status = String(p?.status || '').toLowerCase();
+      const isPaid = paidCodes.includes(status);
+      if (isPaid) return false;
+      if (!exactMatch(p?.amount)) return false;
+      return true;
+    }) ||
+    null;
+
+  const paymentBase = {
+    externalId: candidate?.externalId || params.paymentExternalId,
     order: { externalId: params.orderExternalId },
-    amount: Math.round(params.amount * 100) / 100,
+    amount: normalizedAmount,
     paidAt: params.paidAtIso,
-    type: paymentType,
+    type: candidate?.type || paymentType,
     status: paymentStatusPaid,
   };
- 
+
+  if (candidate?.id) {
+    const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+      site ? `&site=${encodeURIComponent(site)}` : ''
+    }`;
+    const form = new URLSearchParams();
+    form.set('payment', JSON.stringify(paymentBase));
+    const r = await fetch(editUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body: form.toString(),
+    });
+    if (!r.ok) {
+      const text = await r.text();
+      throw new Error(text || 'RetailCRM payments edit failed');
+    }
+    return;
+  }
+
+  const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
+    site ? `&site=${encodeURIComponent(site)}` : ''
+  }`;
   const form = new URLSearchParams();
-  form.set('payment', JSON.stringify(payment));
- 
-  await fetch(url, {
+  form.set('payment', JSON.stringify(paymentBase));
+  const r = await fetch(createUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
     body: form.toString(),
   });
+  if (!r.ok) {
+    const text = await r.text();
+    throw new Error(text || 'RetailCRM payments create failed');
+  }
 }
 
 async function buffer(readable: any) {

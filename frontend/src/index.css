@@ -53,12 +53,6 @@
   --home-review-min-h: 280px;
 }
 
-@media (min-width: 1440px) {
-  :root {
-    --content-w: 1320px;
-  }
-}
-
 @media (min-width: 1920px) {
   :root {
     --content-w: 1480px;

@@ -102,13 +102,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const orderTotal = parseMoney(order.total_amount);
 
     const addr = order.shipping_address || {};
+    const phoneRaw = order?.recipient_info?.phone || order?.customer_phone || order?.contacts?.phone || undefined;
     const payload = {
       order: {
         externalId: order.id,
         ...(site ? { site } : {}),
         firstName: order.recipient_info?.firstName,
         lastName: order.recipient_info?.lastName,
-        phone: normalizePhoneE164(order.customer_phone),
+        phone: normalizePhoneE164(phoneRaw),
         email: order.recipient_info?.email,
         items: itemsArray.map((i: any) => {
             const article = i.article ?? i.sku;

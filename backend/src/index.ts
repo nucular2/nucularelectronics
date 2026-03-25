@@ -214,6 +214,94 @@ function parseMoney(value: unknown): number | undefined {
   return undefined;
 }
 
+async function upsertRetailCrmPayment(params: {
+  orderExternalId: string;
+  amount: number;
+  paidAtIso: string;
+  paymentExternalId: string;
+}) {
+  const apiUrl = process.env.RETAILCRM_URL;
+  const apiKey = process.env.RETAILCRM_API_KEY;
+  const site = process.env.RETAILCRM_SITE || undefined;
+  const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || "bank-card";
+  const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || "paid";
+  if (!apiUrl || !apiKey) return;
+
+  const paidCodes = ["paid", "payment-paid", "payment_paid"];
+  const fetchOrderUrl =
+    `${apiUrl}/api/v5/orders/${encodeURIComponent(params.orderExternalId)}` +
+    `?apiKey=${encodeURIComponent(apiKey)}` +
+    `&by=externalId` +
+    (site ? `&site=${encodeURIComponent(site)}` : "");
+
+  let crmOrder: any = null;
+  try {
+    const r = await fetch(fetchOrderUrl, { headers: { Accept: "application/json" } });
+    const text = await r.text();
+    const data = JSON.parse(text);
+    crmOrder = data?.success ? data?.order : null;
+  } catch {
+    crmOrder = null;
+  }
+
+  const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const normalizedAmount = Math.round(params.amount * 100) / 100;
+  const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
+
+  const candidate =
+    payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
+    payments.find((p: any) => {
+      const status = String(p?.status || "").toLowerCase();
+      const isPaid = paidCodes.includes(status);
+      if (isPaid) return false;
+      if (!exactMatch(p?.amount)) return false;
+      return true;
+    }) ||
+    null;
+
+  const paymentBase = {
+    externalId: candidate?.externalId || params.paymentExternalId,
+    order: { externalId: params.orderExternalId },
+    amount: normalizedAmount,
+    paidAt: params.paidAtIso,
+    type: candidate?.type || paymentType,
+    status: paymentStatusPaid,
+  };
+
+  if (candidate?.id) {
+    const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+      site ? `&site=${encodeURIComponent(site)}` : ""
+    }`;
+    const form = new URLSearchParams();
+    form.set("payment", JSON.stringify(paymentBase));
+    const r = await fetch(editUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+      body: form.toString(),
+    });
+    if (!r.ok) {
+      const text = await r.text();
+      throw new Error(text || "RetailCRM payments edit failed");
+    }
+    return;
+  }
+
+  const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
+    site ? `&site=${encodeURIComponent(site)}` : ""
+  }`;
+  const form = new URLSearchParams();
+  form.set("payment", JSON.stringify(paymentBase));
+  const r = await fetch(createUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+    body: form.toString(),
+  });
+  if (!r.ok) {
+    const text = await r.text();
+    throw new Error(text || "RetailCRM payments create failed");
+  }
+}
+
 app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   httpRequests.inc();
   const { order } = req.body as { order: any };
@@ -238,13 +326,14 @@ app.post("/api/retailcrm/order", async (req: Request, res: Response) => {
   const itemsArray = Array.isArray(order.items) ? order.items : [];
   const orderTotal = parseMoney(order.total_amount);
   const addr = order.shipping_address || {};
+  const phoneRaw = order?.recipient_info?.phone || order?.customer_phone || order?.contacts?.phone || undefined;
   const payload = {
     order: {
       externalId: order.id,
       ...(site ? { site } : {}),
       firstName: order.recipient_info?.firstName,
       lastName: order.recipient_info?.lastName,
-      phone: normalizePhoneE164(order.customer_phone),
+      phone: normalizePhoneE164(phoneRaw),
       email: order.recipient_info?.email,
       items: itemsArray.map((i: any) => {
             const article = i.article ?? i.sku;
@@ -358,12 +447,46 @@ app.post(
 
       if (orderId) {
         try {
-          await supabase
+          const paidAtIso = new Date(((session.created as number) || Math.floor(Date.now() / 1000)) * 1000).toISOString();
+          const amountTotal = typeof session.amount_total === "number" ? session.amount_total / 100 : undefined;
+          const { data: existingOrder } = await supabase
             .from("orders")
-            .update({ status: "Paid" })
-            .eq("id", orderId);
+            .select("id,contacts,total_amount")
+            .eq("id", orderId)
+            .single();
+
+          const prevContacts =
+            existingOrder?.contacts && typeof existingOrder.contacts === "object" ? existingOrder.contacts : {};
+          const nextContacts = {
+            ...prevContacts,
+            payment: {
+              ...(prevContacts?.payment && typeof prevContacts.payment === "object" ? prevContacts.payment : {}),
+              provider: "stripe",
+              status: "paid",
+              paidAt: paidAtIso,
+              amount: typeof amountTotal === "number" ? amountTotal : existingOrder?.total_amount,
+              updatedAt: new Date().toISOString(),
+            },
+          };
+
+          await supabase.from("orders").update({ status: "Paid", contacts: nextContacts }).eq("id", orderId);
+
+          const amount =
+            typeof amountTotal === "number"
+              ? amountTotal
+              : typeof existingOrder?.total_amount === "number"
+              ? existingOrder.total_amount
+              : Number(existingOrder?.total_amount);
+          if (Number.isFinite(amount) && amount > 0) {
+            await upsertRetailCrmPayment({
+              orderExternalId: orderId,
+              amount,
+              paidAtIso,
+              paymentExternalId: `stripe_${session.id}`,
+            });
+          }
         } catch (err) {
-          logger.error({ err, orderId }, "failed to update order status to Paid");
+          logger.error({ err, orderId }, "failed to process paid checkout session");
         }
       }
     }

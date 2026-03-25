@@ -455,7 +455,7 @@
     background: #F6F6F6;
     border-radius: 8px;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
   }
   .orders-list .status-badge {
     height: 24px;

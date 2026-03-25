@@ -1135,6 +1135,17 @@ body.is-mobile .cart-count {
   z-index: 2;
 }
 
+.home-main-content {
+  width: 100%;
+}
+
+@media (min-width: 1920px) {
+  .home-main-content {
+    max-width: var(--content-w);
+    margin: 0 auto;
+  }
+}
+
 .see-components-link {
   display: flex;
   align-items: center;

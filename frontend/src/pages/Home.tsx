@@ -237,7 +237,7 @@ export default function Home() {
 
           {/* Main SVG Content */}
           <div style={{ width: '100%', background: '#fff' }}>
-            <div className="grid-container">
+            <div className="home-main-content">
               <img 
                 src="/content-box85.svg" 
                 alt="Main Content" 

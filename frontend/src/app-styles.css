@@ -372,24 +372,25 @@
   .orders-tabs {
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: flex-start;
+    gap: 8px;
     background: #F6F6F6;
     border-radius: 8px;
-    padding: 4px;
-    width: 197px !important;
-    height: 44px !important;
+    padding: 12px 20px;
+    width: 780px;
+    height: 68px;
     box-sizing: border-box;
     margin-left: 0;
-    margin-top: 12px;
+    margin-top: 0;
   }
   .orders-tab {
-    height: 36px;
-    padding: 0 8px;
+    height: 44px;
+    padding: 0 16px;
     border-radius: 6px;
     background: transparent;
     border: none;
     font-family: var(--font-family);
-    font-size: 14px;
+    font-size: 16px;
     color: #999;
     cursor: pointer;
     display: flex;
@@ -397,18 +398,6 @@
     justify-content: center;
     transition: all 0.2s;
     box-sizing: border-box;
-  }
-  .orders-tabs .orders-tab:first-child {
-    width: 77px;
-    height: 36px;
-    padding: 0 16px;
-    border-radius: 4px;
-  }
-  .orders-tabs .orders-tab:last-child {
-    width: 112px;
-    height: 36px;
-    padding: 0 16px;
-    border-radius: 4px;
   }
   .orders-tab.active {
     background: #fff;
@@ -427,18 +416,22 @@
 
   .orders-content--wide .orders-tabs {
     width: 780px;
-    height: 68px;
-    border-radius: 8px;
-    padding: 12px 20px;
   }
 
   .orders-list-header {
     display: grid;
-    grid-template-columns: 260px 200px 1fr 160px 40px;
+    grid-template-columns: 200px 140px 120px 140px 44px;
+    column-gap: 24px;
     padding: 0 20px 8px 20px;
     font-size: 14px;
     color: #999;
     margin-bottom: 12px;
+  }
+  .orders-list-header > div:nth-child(4) {
+    text-align: right;
+  }
+  .orders-list-header > div:nth-child(5) {
+    text-align: right;
   }
   .orders-list {
     display: flex;
@@ -448,7 +441,8 @@
   }
   .orders-list .order-card {
     display: grid;
-    grid-template-columns: 260px 200px 1fr 160px 40px;
+    grid-template-columns: 200px 140px 120px 140px 44px;
+    column-gap: 24px;
     align-items: center;
     padding: 12px 20px;
     background: #F6F6F6;
@@ -474,6 +468,9 @@
     font-weight: 600;
     font-size: var(--footer-link-fs);
     color: #111;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .orders-list .order-card .order-date {
     grid-column: 2;

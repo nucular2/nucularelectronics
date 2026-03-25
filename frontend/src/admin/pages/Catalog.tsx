@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useProducts } from '../../context/ProductContext';
 import { Product } from '../../data/products';
-import { Check, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
+import { Check, Eye, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type EditorMode = 'add' | 'edit';
 
@@ -12,6 +13,7 @@ function normalizeQuery(value: string) {
 }
 
 export default function Catalog() {
+  const navigate = useNavigate();
   const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<string>('All');
@@ -254,6 +256,27 @@ export default function Catalog() {
                     </td>
                     <td style={{ padding: '12px 12px', textAlign: 'right' }}>
                       <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/admin/catalog/${p.id}`)}
+                          style={{
+                            height: 34,
+                            padding: '0 10px',
+                            borderRadius: 10,
+                            border: '1px solid #eaeaea',
+                            background: '#fff',
+                            cursor: 'pointer',
+                            fontFamily: 'var(--font-family)',
+                            fontSize: 13,
+                            fontWeight: 600,
+                            color: '#111',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 8,
+                          }}
+                        >
+                          <Eye size={14} /> Details
+                        </button>
                         <button
                           type="button"
                           onClick={() => openEdit(p)}

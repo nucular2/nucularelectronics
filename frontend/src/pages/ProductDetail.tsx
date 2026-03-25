@@ -5,6 +5,7 @@ import CardBase from "../components/cards/CardBase";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
+import { useProductContent } from "../context/ProductContentContext";
 import "./ProductDetail.css";
 
 
@@ -18,10 +19,12 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { products } = useProducts();
+  const { getContent } = useProductContent();
   const stickySentinelRef = useRef<HTMLDivElement | null>(null);
 
   const resolvedProductId = productId ?? Number(id);
   const product = products.find((p) => p.id === resolvedProductId) ?? products[0];
+  const productContent = Number.isFinite(resolvedProductId) ? getContent(resolvedProductId) : undefined;
 
   const isP24F = product?.id === 1;
   const isOnBoardComputer = product?.id === 2;
@@ -31,7 +34,9 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const isBaseballCap = product?.id === 18;
 
   const displayTitle = isP24F ? "Nucular controller P24F" : product?.title ?? "Product not found";
-  const displayCode = !product
+  const displayCode = productContent?.code
+    ? productContent.code
+    : !product
     ? ""
     : isP24F
     ? "NUCP24F"
@@ -103,15 +108,18 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const baseballCapOverviewText =
     "The ultrasoft design is flexible and abrasion resistant, while the inner sweatband includes quilted padding for extra comfort and moisture wicking. The visor is fully made from recycled plastic bottles. 100% Cotton.";
 
-  const specs = isOnBoardComputer
-    ? onBoardSpecs
-    : isULight
-    ? uLightSpecs
-    : isAdapter
-    ? adapterSpecs
-    : isBaseballCap
-    ? baseballCapSpecs
-    : controllerSpecs;
+  const specs =
+    productContent?.specs && productContent.specs.length > 0
+      ? productContent.specs
+      : isOnBoardComputer
+      ? onBoardSpecs
+      : isULight
+      ? uLightSpecs
+      : isAdapter
+      ? adapterSpecs
+      : isBaseballCap
+      ? baseballCapSpecs
+      : controllerSpecs;
 
   const controllerKitItems = [
     { title: "Controller P24F with compound potting and the latest firmware", quantity: "1 pcs" },
@@ -141,15 +149,18 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     { title: "Plastic adapter for mounting", quantity: "1 pcs" },
   ];
 
-  const kitItems = isOnBoardComputer
-    ? onBoardKitItems
-    : isULight
-    ? uLightKitItems
-    : isAdapter
-    ? adapterKitItems
-    : isKitSurRon
-    ? kitSurRonKitItems
-    : controllerKitItems;
+  const kitItems =
+    productContent?.kitItems && productContent.kitItems.length > 0
+      ? productContent.kitItems
+      : isOnBoardComputer
+      ? onBoardKitItems
+      : isULight
+      ? uLightKitItems
+      : isAdapter
+      ? adapterKitItems
+      : isKitSurRon
+      ? kitSurRonKitItems
+      : controllerKitItems;
 
   const recommendedControllers = products.filter((p) =>
     [1, 4, 5].includes(p.id)
@@ -164,6 +175,9 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     if (imagesOverride) {
       return imagesOverride;
     }
+    if (productContent?.images && productContent.images.length > 0) {
+      return productContent.images;
+    }
     if (isP24F) {
       return ["/miniature.svg", "/miniature11.png", "/miniature12.png", "/miniature13.png"];
     }
@@ -171,7 +185,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
       return [product.image];
     }
     return ["/miniature.svg"];
-  }, [imagesOverride, isP24F, product?.image]);
+  }, [imagesOverride, productContent?.images, isP24F, product?.image]);
 
   const [mainImage, setMainImage] = useState<string>(() => images[0] ?? "");
 
@@ -462,7 +476,9 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
             onToggle={() => setIsOverviewOpen(!isOverviewOpen)}
           >
             <p className="product-overview-text">
-              {isOnBoardComputer
+              {productContent?.overview
+                ? productContent.overview
+                : isOnBoardComputer
                 ? "The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the charging state of the devices via USB."
                 : isULight
                 ? uLightOverviewText

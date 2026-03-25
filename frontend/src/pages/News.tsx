@@ -1,7 +1,43 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import { useNews } from "../context/NewsContext";
 
 export default function News() {
+  const { news } = useNews();
+  const top = news.slice(0, 2);
+  const rest = news.slice(2);
+  const chunks: typeof rest[] = [];
+  for (let i = 0; i < rest.length; i += 3) chunks.push(rest.slice(i, i + 3));
+
+  const renderCard = (item: any, small?: boolean) => {
+    const cardClass = small ? "news-card news-card--small" : "news-card";
+    const wrapperClass = small ? "news-image-wrapper news-image-wrapper--small" : "news-image-wrapper";
+    const imageEl = <img src={item.image} alt={item.title} className="news-image" />;
+    const hasLink = typeof item.link === "string" && item.link.trim().length > 0;
+    const isInternal = hasLink && item.link.startsWith("/");
+
+    return (
+      <article key={item.id} className={cardClass}>
+        {hasLink ? (
+          isInternal ? (
+            <Link to={item.link} className={wrapperClass}>
+              {imageEl}
+            </Link>
+          ) : (
+            <a href={item.link} className={wrapperClass}>
+              {imageEl}
+            </a>
+          )
+        ) : (
+          <div className={wrapperClass}>{imageEl}</div>
+        )}
+        <div className="news-meta">{item.date}</div>
+        <h2 className="news-card-title">{item.title}</h2>
+        <p className="news-card-text">{item.text}</p>
+      </article>
+    );
+  };
+
   return (
     <>
       <Header variant="white" />
@@ -11,230 +47,14 @@ export default function News() {
 
           {/* Large Grid (Top 2) */}
           <div className="news-grid">
-            <article className="news-card">
-              <Link to="/news/protection-of-controllers" className="news-image-wrapper">
-                <img
-                  src="/new1.png"
-                  alt="Protection of controllers"
-                  className="news-image"
-                />
-              </Link>
-              <div className="news-meta">June 20, 2022</div>
-              <h2 className="news-card-title">Protection of controllers</h2>
-              <p className="news-card-text">
-                New circuit engineering and improved protection of controllers
-                from our users.
-              </p>
-            </article>
-
-            <article className="news-card">
-              <Link to="/news/price-increase" className="news-image-wrapper">
-                <img
-                  src="/new2.png"
-                  alt="Price increase"
-                  className="news-image"
-                />
-              </Link>
-              <div className="news-meta">June 5, 2022</div>
-              <h2 className="news-card-title">Price increase</h2>
-              <p className="news-card-text">
-                Updating the cost of controllers. The sadness and grief news
-                about the reasons for the price ...
-              </p>
-            </article>
+            {top.map((n) => renderCard(n))}
           </div>
 
-          {/* Row 2 */}
-          <div className="news-grid-small">
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new3.png"
-                  alt="Big/Bug update!"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 28, 2022</div>
-              <h2 className="news-card-title">Big/Bug update!</h2>
-              <p className="news-card-text">
-                The big update of the Controller (v0.8.1) and the On-board Computer (v0.70).
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new4.png"
-                  alt="Discount on pre-order"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 24, 2022</div>
-              <h2 className="news-card-title">Discount on pre-order</h2>
-              <p className="news-card-text">
-                Until the end of spring, you can order a controller with a 15% discount.
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new9.png"
-                  alt="Protection of controllers"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 15, 2022</div>
-              <h2 className="news-card-title">Protection of controllers</h2>
-              <p className="news-card-text">
-                New circuit engineering and improved protection of controllers from our users.
-              </p>
-            </article>
-          </div>
-
-          {/* Row 3 */}
-          <div className="news-grid-small">
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new6.png"
-                  alt="Protection of controllers"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">June 20, 2022</div>
-              <h2 className="news-card-title">Protection of controllers</h2>
-              <p className="news-card-text">
-                New circuit engineering and improved protection of controllers from our users.
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new7.png"
-                  alt="Price increase"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">June 5, 2022</div>
-              <h2 className="news-card-title">Price increase</h2>
-              <p className="news-card-text">
-                Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new8.png"
-                  alt="Brief news for the year"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">April 3, 2022</div>
-              <h2 className="news-card-title">Brief news for the year</h2>
-              <p className="news-card-text">
-                The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ...
-              </p>
-            </article>
-          </div>
-
-          {/* Row 4 */}
-          <div className="news-grid-small">
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new9.png"
-                  alt="Protection of controllers"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 15, 2022</div>
-              <h2 className="news-card-title">Protection of controllers</h2>
-              <p className="news-card-text">
-                New circuit engineering and improved protection of controllers from our users.
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new10.png"
-                  alt="Price increase"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">April 29, 2022</div>
-              <h2 className="news-card-title">Price increase</h2>
-              <p className="news-card-text">
-                Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new11.png"
-                  alt="Brief news for the year"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">May 20, 2022</div>
-              <h2 className="news-card-title">Brief news for the year</h2>
-              <p className="news-card-text">
-                The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ...
-              </p>
-            </article>
-          </div>
-
-          {/* Row 5 */}
-          <div className="news-grid-small">
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new12.png"
-                  alt="Big/Bug update!"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">April 25, 2022</div>
-              <h2 className="news-card-title">Big/Bug update!</h2>
-              <p className="news-card-text">
-                The big update of the Controller (v0.8.1) and the On-board Computer (v0.70).
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new13.png"
-                  alt="Brief news for the year"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">April 3, 2022</div>
-              <h2 className="news-card-title">Brief news for the year</h2>
-              <p className="news-card-text">
-                The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ...
-              </p>
-            </article>
-
-            <article className="news-card news-card--small">
-              <div className="news-image-wrapper news-image-wrapper--small">
-                <img
-                  src="/new14.png"
-                  alt="Price increase"
-                  className="news-image"
-                />
-              </div>
-              <div className="news-meta">June 5, 2022</div>
-              <h2 className="news-card-title">Price increase</h2>
-              <p className="news-card-text">
-                Updating the cost of controllers. The sadness and grief news about the reasons for the price ...
-              </p>
-            </article>
-          </div>
+          {chunks.map((chunk, idx) => (
+            <div key={idx} className="news-grid-small">
+              {chunk.map((n) => renderCard(n, true))}
+            </div>
+          ))}
 
           <div className="news-show-more">
             <a href="#" className="news-show-more-link">Show more</a>

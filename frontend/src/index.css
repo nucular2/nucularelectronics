@@ -53,6 +53,18 @@
   --home-review-min-h: 280px;
 }
 
+@media (min-width: 1440px) {
+  :root {
+    --content-w: 1320px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --content-w: 1480px;
+  }
+}
+
 /* Grid */
 .grid-container {
   width: 100%;
@@ -1213,7 +1225,7 @@ body.is-mobile .cart-count {
 
 /* Controllers Section */
 .controllers-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 100px;
   text-align: center;
 }
@@ -1243,7 +1255,7 @@ body.is-mobile .cart-count {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--content-w);
   margin: 0 auto;
 }
 

@@ -4,6 +4,7 @@ import { saveAs } from 'file-saver';
 import { Search, Calendar, Download, Eye, Edit2, Trash } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 type OrderStatus =
   | 'New'
@@ -59,6 +60,7 @@ function displayOrderNumber(order: DbOrder) {
 
 const Orders: React.FC = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'All'>('All');
   const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>('All');
@@ -358,7 +360,11 @@ const Orders: React.FC = () => {
                   </td>
                   <td style={{ padding: '16px 24px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                      <button title="Просмотр" style={{ background: '#3498db', color: '#fff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}>
+                      <button
+                        title="Просмотр"
+                        onClick={() => navigate(`/admin/orders/${order.id}`)}
+                        style={{ background: '#3498db', color: '#fff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}
+                      >
                         <Eye size={16} />
                       </button>
                       <button title="Редактировать" style={{ background: '#f39c12', color: '#fff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}>

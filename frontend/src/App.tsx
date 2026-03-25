@@ -39,9 +39,14 @@ import AdminLogin from './admin/pages/Login';
 import AdminCatalog from './admin/pages/Catalog';
 import AdminOrders from './admin/pages/Orders';
 import AdminReviews from './admin/pages/ReviewsManager';
+import AdminOrderDetail from './admin/pages/OrderDetail';
+import AdminProductEditor from './admin/pages/ProductEditor';
+import AdminNewsManager from './admin/pages/NewsManager';
 import { AuthProvider as AdminAuthProvider, ProtectedRoute as AdminProtectedRoute } from './admin/context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
 import { ReviewsProvider } from './context/ReviewsContext';
+import { NewsProvider } from './context/NewsContext';
+import { ProductContentProvider } from './context/ProductContentContext';
 import CookieBanner from './components/CookieBanner';
 
 export default function App() {
@@ -99,8 +104,10 @@ export default function App() {
     <AdminAuthProvider>
       <AuthProvider>
         <ProductProvider>
-          <ReviewsProvider>
-            <CartProvider>
+          <ProductContentProvider>
+            <ReviewsProvider>
+              <NewsProvider>
+                <CartProvider>
               <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
@@ -147,8 +154,11 @@ export default function App() {
                   <Route path="dashboard" element={<AdminDashboard3 />} />
                   <Route path="dashboard-3" element={<AdminDashboard3 />} />
                   <Route path="catalog" element={<AdminCatalog />} />
+                  <Route path="catalog/:id" element={<AdminProductEditor />} />
                   <Route path="orders" element={<AdminOrders />} />
+                  <Route path="orders/:id" element={<AdminOrderDetail />} />
                   <Route path="reviews" element={<AdminReviews />} />
+                  <Route path="news" element={<AdminNewsManager />} />
                   <Route path="*" element={<AdminDashboard />} />
                 </Route>
               </>
@@ -168,8 +178,10 @@ export default function App() {
               </>
             )}
             <CookieBanner />
-          </CartProvider>
-          </ReviewsProvider>
+                </CartProvider>
+              </NewsProvider>
+            </ReviewsProvider>
+          </ProductContentProvider>
         </ProductProvider>
       </AuthProvider>
     </AdminAuthProvider>

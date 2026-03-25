@@ -848,6 +848,38 @@ body,
   }
 }
 
+@media (min-width: 901px) {
+  .header-inner {
+    gap: 20px;
+  }
+  .main-nav {
+    margin-left: 0;
+    margin-right: 0;
+    flex: 1;
+    justify-content: center;
+    gap: 24px;
+  }
+  .header-actions {
+    flex-shrink: 0;
+  }
+  .header-user-name {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-family);
+    font-size: var(--header-nav-fs);
+    font-weight: 500;
+    opacity: 0.9;
+    color: #fff;
+  }
+  .main-header.scrolled .header-user-name,
+  .main-header.white-bg .header-user-name,
+  .main-header.dropdown-open .header-user-name {
+    color: #000;
+  }
+}
+
 .home-mobile .main-header {
   background-color: #111;
 }

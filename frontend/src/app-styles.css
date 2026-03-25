@@ -636,6 +636,11 @@
   color: #F36F25;
 }
 
+.status-awaiting-pickup {
+  border: 1px solid #F36F25;
+  color: #F36F25;
+}
+
 .status-canceled {
   border: 1px solid #F44336;
   color: #F44336;
@@ -913,6 +918,15 @@
   }
   .orders-nav-item.active::after {
     display: none;
+  }
+
+  .orders-nav-item.logout {
+    margin-left: 0;
+  }
+
+  .order-detail-container {
+    max-width: 780px;
+    padding: 0;
   }
   .orders-content {
     width: 580px;
@@ -1466,6 +1480,11 @@
 }
 
 .status-badge-large.status-processing {
+  border: 1px solid #474747;
+  color: #111;
+}
+
+.status-badge-large.status-awaiting-pickup {
   border: 1px solid #F36F25;
   color: #F36F25;
 }
@@ -1641,17 +1660,18 @@
 }
 
 .action-btn {
-  flex: 1;
-  height: 48px;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 500;
+  flex: 0 0 auto;
+  height: 44px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
   background: transparent;
+  padding: 0 24px;
 }
 
 .action-btn.primary {

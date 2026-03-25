@@ -179,8 +179,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .slice(-1)[0] ||
         null;
  
-      const nextStatus = deriveUiStatus({ crmStatus, fullPaidAt, paymentStatuses });
       const prevContacts = row.contacts && typeof row.contacts === 'object' ? row.contacts : {};
+      const stripePaid =
+        Boolean(prevContacts?.payment?.paidAt) || String(prevContacts?.payment?.status || '').toLowerCase() === 'paid';
+      const dbPaid = row.status === 'Paid';
+      const keepPaid = stripePaid || dbPaid;
+
+      let nextStatus = deriveUiStatus({ crmStatus, fullPaidAt, paymentStatuses });
+      if (keepPaid && !['Canceled', 'Delivered', 'Shipped', 'Awaiting pickup'].includes(nextStatus)) {
+        nextStatus = 'Paid';
+      }
       const nextContacts = {
         ...prevContacts,
         crm: {

@@ -104,22 +104,62 @@ app.post("/api/checkout/session", async (req: Request, res: Response) => {
 
   try {
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+    const items = Array.isArray(order.items) ? order.items : [];
+    const lineItems: any[] = [];
+    let itemsSum = 0;
+
+    for (const raw of items) {
+      const name = String(raw?.title || raw?.name || raw?.productName || "Item").slice(0, 120);
+      const quantityRaw = raw?.quantity;
+      const quantity =
+        typeof quantityRaw === "number" && Number.isFinite(quantityRaw) && quantityRaw > 0 ? Math.floor(quantityRaw) : 1;
+      const unit =
+        parseMoney(raw?.price) ??
+        parseMoney(raw?.unitPrice) ??
+        parseMoney(raw?.initialPrice) ??
+        (parseMoney(raw?.total) && quantity > 0 ? (parseMoney(raw.total) as number) / quantity : undefined);
+      if (!unit) continue;
+      const unitCents = Math.round(unit * 100);
+      if (!unitCents) continue;
+
+      itemsSum += unitCents * quantity;
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: { name },
+          unit_amount: unitCents,
+        },
+        quantity,
+      });
+    }
+
+    if (lineItems.length === 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: { name: `Order #${String(order.id).slice(0, 8)}` },
+          unit_amount: amount,
+        },
+        quantity: 1,
+      });
+    } else if (itemsSum !== amount) {
+      const diff = amount - itemsSum;
+      if (diff !== 0) {
+        lineItems.push({
+          price_data: {
+            currency: "usd",
+            product_data: { name: diff > 0 ? "Adjustment" : "Discount" },
+            unit_amount: Math.abs(diff),
+          },
+          quantity: 1,
+        });
+      }
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "Nucular shop order",
-            },
-            unit_amount: amount,
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
       success_url: `${frontendUrl}/orders?payment=success`,
       cancel_url: `${frontendUrl}/cart?payment=canceled`,
       metadata: {

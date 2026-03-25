@@ -421,14 +421,14 @@
 /* Desktop Orders grid header and rows aligned by columns */
 @media (min-width: 1024px) {
   .orders-content--wide {
-    width: 780px;
-    max-width: 780px;
+    width: 100%;
+    max-width: none;
   }
 
   .orders-list-header {
     display: grid;
-    width: 780px;
-    grid-template-columns: minmax(0, 240px) 140px 120px 120px 56px;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) 140px 120px 120px 56px;
     column-gap: 16px;
     padding: 0 20px 8px 20px;
     font-size: 14px;
@@ -447,8 +447,8 @@
   }
   .orders-list .order-card {
     display: grid;
-    width: 780px;
-    grid-template-columns: minmax(0, 240px) 140px 120px 120px 56px;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) 140px 120px 120px 56px;
     column-gap: 16px;
     align-items: center;
     padding: 12px 20px;
@@ -896,23 +896,23 @@
     justify-content: center;
   }
   .orders-container {
-    max-width: none;
     width: 100%;
+    max-width: var(--content-w);
     padding: 0;
-    margin: 0;
-    position: relative;
+    margin: 0 auto;
+    position: static;
   }
   .orders-layout {
-    position: relative;
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    column-gap: 40px;
+    align-items: start;
     width: 100%;
-    height: auto;
   }
   .orders-sidebar {
     width: 180px; /* per spec */
     height: auto;
-    position: absolute;
-    top: 0;
-    left: calc((100vw - var(--content-w)) / 2);
+    position: static;
   }
   .orders-sidebar-title {
     display: none;
@@ -947,13 +947,12 @@
     padding: 0;
   }
   .orders-content {
-    width: 580px;
-    max-width: 580px;
+    width: 100%;
+    max-width: none;
     min-height: 416px;
     height: auto;
     overflow: visible;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
   }
   .orders-title {
     margin-bottom: 40px;

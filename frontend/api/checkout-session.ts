@@ -13,7 +13,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 function toNumber(value: unknown): number {
   if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
   if (typeof value === 'string') {
-    const n = Number(value);
+    const cleaned = value.replace(/[^\d.-]/g, '');
+    const n = Number(cleaned);
     return Number.isFinite(n) ? n : 0;
   }
   return 0;

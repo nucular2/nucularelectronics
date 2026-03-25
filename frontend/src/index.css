@@ -53,21 +53,8 @@
   --home-review-min-h: 280px;
 }
 
-@media (min-width: 1440px) {
-  .home-desktop {
-    --content-w: 1320px;
-  }
-}
-
-@media (min-width: 1680px) {
-  .home-desktop {
-    --content-w: 1440px;
-  }
-}
-
 @media (min-width: 1920px) {
   .home-desktop {
-    --content-w: 1560px;
     --home-card-w: 420px;
     --home-card-img-h: 260px;
     --home-section-title-fs: 36px;
@@ -85,10 +72,6 @@
   width: 100%;
   max-width: var(--content-w);
   margin: 0 auto;
-}
-
-.home-desktop .main-header {
-  --content-w: 1180px;
 }
 
 @media (min-width: 901px) and (max-width: 1200px) {

@@ -143,7 +143,6 @@
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   background: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid #E9E9E9;
   box-sizing: border-box;
   z-index: 900;
 }
@@ -437,6 +436,10 @@
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #eee;
+}
+
+.product-specs-row:last-child {
+  border-bottom: none;
 }
 
 .product-specs-label {
@@ -766,23 +769,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  position: relative;
   cursor: pointer;
-}
-
-.product-docs-row::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1px;
-  background: #F36F25;
-  opacity: 0;
-}
-
-.product-docs-row:hover::after {
-  opacity: 1;
 }
 
 .product-docs-icon {
@@ -798,6 +785,23 @@
   font-weight: 400;
   font-size: 14px;
   color: #f36f25;
+  position: relative;
+  width: fit-content;
+}
+
+.product-docs-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #F36F25;
+  opacity: 0;
+}
+
+.product-docs-row:hover .product-docs-text::after {
+  opacity: 1;
 }
 
 .product-apparel-section {
@@ -915,16 +919,12 @@
   margin-top: 24px;
   display: flex;
   gap: 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .product-add-grid .product-add-card {
   flex: 0 0 auto;
   height: 420px;
-  scroll-snap-align: start;
   border: 2px solid transparent;
   box-shadow: none;
   box-sizing: border-box;
@@ -1058,20 +1058,16 @@
   margin-top: 24px;
   display: flex;
   gap: 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .product-review-card {
   flex: 0 0 auto;
-  width: 380px;
-  height: 218px;
-  padding: 32px;
+  width: 280px;
+  height: 213px;
+  padding: 20px;
   border-radius: 20px;
   background: #f6f6f6;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1114,10 +1110,13 @@
   font-size: 14px;
   color: #f36f25;
   text-decoration: none;
+}
+
+.reviews-link-text {
   position: relative;
 }
 
-.reviews-link::after {
+.reviews-link-text::after {
   content: "";
   position: absolute;
   left: 0;
@@ -1128,7 +1127,7 @@
   opacity: 0;
 }
 
-.reviews-link:hover::after {
+.reviews-link:hover .reviews-link-text::after {
   opacity: 1;
 }
 

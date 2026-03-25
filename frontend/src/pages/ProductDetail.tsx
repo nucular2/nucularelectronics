@@ -215,16 +215,12 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
       setIsStickyBarVisible(false);
       return;
     }
-    const sentinel = stickySentinelRef.current;
-    if (!sentinel) {
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsStickyBarVisible(!entry.isIntersecting),
-      { rootMargin: "-184px 0px 0px 0px", threshold: 0 }
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      setIsStickyBarVisible(window.scrollY > 260);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isDesktop]);
 
   if (!product) {
@@ -743,7 +739,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                   onClick={(e) => e.stopPropagation()} 
                   className="reviews-link reviews-link-collapsible"
                 >
-                  All reviews
+                  <span className="reviews-link-text">All reviews</span>
                   <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -751,7 +747,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
               }
             >
               <div className="product-reviews-list">
-                <CardBase className="product-review-card" height={218}>
+                <CardBase className="product-review-card">
                   <div className="product-review-text">
                     A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
                   </div>
@@ -760,7 +756,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                     <span>USA, Alex Smith</span>
                   </div>
                 </CardBase>
-                <CardBase className="product-review-card" height={218}>
+                <CardBase className="product-review-card">
                   <div className="product-review-text">
                     Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
                   </div>
@@ -769,7 +765,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                     <span>Germany, Max Stoun</span>
                   </div>
                 </CardBase>
-                <CardBase className="product-review-card" height={218}>
+                <CardBase className="product-review-card">
                   <div className="product-review-text">
                     A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
                   </div>
@@ -778,7 +774,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                     <span>Norway, Anna Orlova</span>
                   </div>
                 </CardBase>
-                <CardBase className="product-review-card" height={218}>
+                <CardBase className="product-review-card">
                   <div className="product-review-text">
                     The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
                   </div>

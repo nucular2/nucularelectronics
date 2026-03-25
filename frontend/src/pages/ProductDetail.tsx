@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import CollapsibleSection from "../components/CollapsibleSection";
@@ -21,29 +21,19 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const stickySentinelRef = useRef<HTMLDivElement | null>(null);
 
   const resolvedProductId = productId ?? Number(id);
-  const product = products.find((p) => p.id === resolvedProductId) || products[0];
-  if (!product) {
-    return (
-      <>
-        <Header variant="white" />
-        <div className="product-page">
-          <div className="product-container">
-            <div className="product-title">Product not found</div>
-          </div>
-        </div>
-      </>
-    );
-  }
+  const product = products.find((p) => p.id === resolvedProductId) ?? products[0];
 
-  const isP24F = product.id === 1;
-  const isOnBoardComputer = product.id === 2;
-  const isULight = product.id === 3;
-  const isAdapter = product.id === 6;
-  const isKitSurRon = product.id === 15;
-  const isBaseballCap = product.id === 18;
+  const isP24F = product?.id === 1;
+  const isOnBoardComputer = product?.id === 2;
+  const isULight = product?.id === 3;
+  const isAdapter = product?.id === 6;
+  const isKitSurRon = product?.id === 15;
+  const isBaseballCap = product?.id === 18;
 
-  const displayTitle = isP24F ? "Nucular controller P24F" : product.title;
-  const displayCode = isP24F
+  const displayTitle = isP24F ? "Nucular controller P24F" : product?.title ?? "Product not found";
+  const displayCode = !product
+    ? ""
+    : isP24F
     ? "NUCP24F"
     : isOnBoardComputer
     ? "NUCD"
@@ -56,7 +46,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     : isBaseballCap
     ? "7459066"
     : product.title.toUpperCase();
-  const displayPrice = isP24F ? "$610.00" : product.price;
+  const displayPrice = !product ? "" : isP24F ? "$610.00" : product.price;
 
   const controllerSpecs = [
     { label: "Maximum power", value: "27 kW" },
@@ -170,15 +160,33 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
 
   const colorOptions = ["#C1121C", "#F3752C", "#48A43F", "#13447C", "#0A0A0D", "#E2E4E5"];
 
-  const images = imagesOverride
-    ? imagesOverride
-    : isP24F
-    ? ["/miniature.svg", "/miniature11.png", "/miniature12.png", "/miniature13.png"]
-    : product.image
-    ? [product.image]
-    : ["/miniature.svg"];
+  const images = useMemo(() => {
+    if (imagesOverride) {
+      return imagesOverride;
+    }
+    if (isP24F) {
+      return ["/miniature.svg", "/miniature11.png", "/miniature12.png", "/miniature13.png"];
+    }
+    if (product?.image) {
+      return [product.image];
+    }
+    return ["/miniature.svg"];
+  }, [imagesOverride, isP24F, product?.image]);
 
-  const [mainImage, setMainImage] = useState<string>(images[0]);
+  const [mainImage, setMainImage] = useState<string>(() => images[0] ?? "");
+
+  useEffect(() => {
+    setMainImage((prev) => {
+      const next = images[0] ?? "";
+      if (!next) {
+        return prev;
+      }
+      if (prev && images.includes(prev)) {
+        return prev;
+      }
+      return next;
+    });
+  }, [images]);
 
   const [isOverviewOpen, setIsOverviewOpen] = useState(true);
   const [isSpecsOpen, setIsSpecsOpen] = useState(true);
@@ -219,6 +227,18 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     return () => observer.disconnect();
   }, [isDesktop]);
 
+  if (!product) {
+    return (
+      <>
+        <Header variant="white" />
+        <div className="product-page">
+          <div className="product-container">
+            <div className="product-title">Product not found</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

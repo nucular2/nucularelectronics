@@ -1948,8 +1948,8 @@ body.is-mobile .canbus-text {
 
 /* Dropdown Menu Styles */
 .dropdown-overlay {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: var(--header-h);
   left: 0;
   width: 100%;
   background-color: #fff;
@@ -1959,7 +1959,7 @@ body.is-mobile .canbus-text {
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.3s ease;
-  z-index: 90;
+  z-index: 950;
   border-top: 1px solid #E9E9E9;
   height: auto; /* Let content dictate height, or fix if needed */
 }
@@ -1967,9 +1967,8 @@ body.is-mobile .canbus-text {
 .dropdown-backdrop {
   position: fixed;
   inset: 0;
-  top: var(--header-h);
   background: rgba(0, 0, 0, 0.5);
-  z-index: 80;
+  z-index: 900;
 }
 
 .dropdown-overlay.open {

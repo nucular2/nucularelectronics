@@ -159,10 +159,11 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
   const mobileMenuButtonStyle = isCompact ? { width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : undefined;
 
   return (
-    <header className={`main-header ${isWhite ? 'dropdown-open' : 'black-divider'}`} style={headerStyle}>
-      <div className="header-inner">
-        <div className="logo-container" onClick={handleLogoClick} style={logoWrapStyle}>
-          <svg width={logoSize.width} height={logoSize.height} viewBox="0 0 119 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <>
+      <header className={`main-header ${isWhite ? 'dropdown-open' : 'black-divider'}`} style={headerStyle}>
+        <div className="header-inner">
+          <div className="logo-container" onClick={handleLogoClick} style={logoWrapStyle}>
+            <svg width={logoSize.width} height={logoSize.height} viewBox="0 0 119 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 3.73333L0 18.6667H5.91111L5.91111 4.66667L14.3111 13.084V0H3.73334C1.67147 -1.80253e-07 1.48577e-06 1.67147 1.30551e-06 3.73333Z" fill={logoColor}/>
             <path d="M24.8889 24.2667V9.33333H18.9778V23.3333L10.5778 14.9161V28H21.1556C23.2174 28 24.8889 26.3285 24.8889 24.2667Z" fill={logoColor}/>
             <path d="M86.7544 23.3333V4.66668H82.2889V23.3333H86.7544Z" fill={logoColor}/>
@@ -171,8 +172,8 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
             <path d="M78.4293 9.3268V23.3333H73.9637V21.2446C73.5106 21.8878 72.8926 22.4094 72.1091 22.8092C71.3431 23.1917 70.4899 23.383 69.5499 23.383C68.4357 23.383 67.452 23.1396 66.5989 22.6528C65.7458 22.1486 65.0843 21.4272 64.6141 20.4883C64.144 19.5495 63.909 18.4455 63.909 17.1764V9.3268H68.3487V16.4889C68.3487 17.4625 68.6011 18.3064 69.106 18.8454C69.6109 19.3843 70.2899 19.6538 71.143 19.6538C72.0135 19.6538 72.7013 19.3843 73.2062 18.8454C73.7111 18.3064 73.9637 17.4625 73.9637 16.4889V9.3268H78.4293Z" fill={logoColor}/>
             <path fillRule="evenodd" clipRule="evenodd" d="M89.8863 16.3218C89.8863 14.8266 90.165 13.6728 90.7221 12.5428C91.2968 11.4127 92.071 10.5435 93.0461 9.93498C94.0212 9.32644 95.109 9.02222 96.311 9.02222C97.3378 9.02222 98.2346 9.23081 99.0003 9.64808C99.7838 10.0654 100.385 10.5188 100.802 11.1968V9.33333H105.268V23.3333H100.802V21.3079C100.368 21.9859 99.7579 22.5981 98.9744 23.0153C98.2085 23.4326 97.3117 23.6412 96.2842 23.6412C95.1005 23.6412 94.0212 23.337 93.0461 22.7284C92.071 22.1026 91.2968 21.2246 90.7221 20.0946C90.165 18.9471 89.8863 17.817 89.8863 16.3218ZM100.802 16.3218C100.802 15.2091 100.489 14.5161 99.8622 13.8727C99.2531 13.2295 98.5041 12.9079 97.6165 12.9079C96.7289 12.9079 95.9715 13.2295 95.3442 13.8727C94.7352 14.4987 94.4307 15.2091 94.4307 16.3218C94.4307 17.4345 94.7352 18.13 95.3442 18.7907C95.9715 19.434 96.7289 19.7556 97.6165 19.7556C98.5041 19.7556 99.2531 19.434 99.8622 18.7907C100.489 18.1474 100.802 17.4345 100.802 16.3218Z" fill={logoColor}/>
             <path d="M115.706 9.88191C114.923 10.3339 114.27 10.9598 113.748 11.7595V9.33333H109.282V23.3333H113.748V16.6377C113.748 15.4381 114.027 14.6036 114.584 14.1342C115.141 13.6474 115.977 13.4039 117.091 13.4039H118.222V9.17778C117.265 9.17778 116.49 9.41249 115.706 9.88191Z" fill={logoColor}/>
-          </svg>
-        </div>
+            </svg>
+          </div>
 
         <nav className="main-nav">
           <a href="#" className={`nav-link ${isProductsOpen ? 'active' : ''}`} onClick={toggleProducts}>
@@ -248,12 +249,13 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
       </button>
       </div>
       </div>
+      </header>
       {isProductsOpen && (
         <>
           <div className="dropdown-backdrop" onClick={() => setIsProductsOpen(false)} />
           <div className="dropdown-overlay open" onClick={() => setIsProductsOpen(false)}>
             <div className="dropdown-content" onClick={(e) => e.stopPropagation()}>
-          <div className="dropdown-column">
+              <div className="dropdown-column">
               <h4 className="dropdown-title">Components</h4>
               <a
                 href="/controller"
@@ -393,6 +395,6 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

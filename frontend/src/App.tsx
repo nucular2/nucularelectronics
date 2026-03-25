@@ -143,8 +143,8 @@ export default function App() {
                     </AdminProtectedRoute>
                   }
                 >
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route index element={<AdminDashboard3 />} />
+                  <Route path="dashboard" element={<AdminDashboard3 />} />
                   <Route path="dashboard-3" element={<AdminDashboard3 />} />
                   <Route path="catalog" element={<AdminCatalog />} />
                   <Route path="orders" element={<AdminOrders />} />

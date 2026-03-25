@@ -10,22 +10,35 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../context/AuthContext';
 
 type Period = '6m' | '30d';
 
 type ChartPoint = {
   name: string;
-  value: number;
+  paidOrders: number;
+  awaitingOrders: number;
+  paidRevenue: number;
 };
 
-type DualChartPoint = {
-  name: string;
-  desktop: number;
-  mobile: number;
-};
+type OrderStatus =
+  | 'New'
+  | 'Processing'
+  | 'Awaiting payment'
+  | 'Paid'
+  | 'Shipped'
+  | 'Awaiting pickup'
+  | 'Delivered'
+  | 'Canceled';
 
 function formatNumber(value: number) {
   return value.toLocaleString('en-US');
+}
+
+function formatMoney(value: number) {
+  if (!Number.isFinite(value)) return '$0.00';
+  return `$${value.toFixed(2)}`;
 }
 
 function Card({
@@ -49,82 +62,109 @@ function Card({
 }
 
 export default function Dashboard3() {
+  const { logout } = useAuth();
   const [period, setPeriod] = useState<Period>('6m');
-  const [analytics, setAnalytics] = useState<{
-    total: number;
-    desktop: number;
-    mobile: number;
-    series: Array<{ name: string; value: number; desktop: number; mobile: number }>;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState<{
+    totalOrders: number;
+    paidOrders: number;
+    awaitingPaymentOrders: number;
+    paidRevenue: number;
+    countsByStatus: Record<OrderStatus, number>;
+    series: ChartPoint[];
   } | null>(null);
 
   useEffect(() => {
-    const days = period === '30d' ? 30 : 180;
     let cancelled = false;
-    fetch(`/api/analytics/summary?days=${days}`)
-      .then(async (r) => {
-        if (!r.ok) throw new Error(await r.text());
-        return r.json();
-      })
-      .then((data) => {
-        if (cancelled) return;
-        setAnalytics({
-          total: typeof data.total === 'number' ? data.total : 0,
-          desktop: typeof data.desktop === 'number' ? data.desktop : 0,
-          mobile: typeof data.mobile === 'number' ? data.mobile : 0,
-          series: Array.isArray(data.series) ? data.series : [],
+    const load = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData?.session?.access_token;
+        if (!token) {
+          await logout();
+          return;
+        }
+        const r = await fetch('/api/admin/stats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ period }),
         });
-      })
-      .catch(() => {
+        if (r.status === 401 || r.status === 403) {
+          await logout();
+          return;
+        }
+        const payload = await r.json();
+        if (!r.ok) {
+          setError(payload?.message || 'Ошибка загрузки');
+          setStats(null);
+          return;
+        }
         if (cancelled) return;
-        setAnalytics(null);
-      });
+        setStats({
+          totalOrders: payload?.totalOrders || 0,
+          paidOrders: payload?.paidOrders || 0,
+          awaitingPaymentOrders: payload?.awaitingPaymentOrders || 0,
+          paidRevenue: payload?.paidRevenue || 0,
+          countsByStatus: (payload?.countsByStatus || {}) as Record<OrderStatus, number>,
+          series: (Array.isArray(payload?.series) ? payload.series : []).map((p: any) => ({
+            name: String(p?.name || ''),
+            paidOrders: Number(p?.paidOrders || 0),
+            awaitingOrders: Number(p?.awaitingOrders || 0),
+            paidRevenue: Number(p?.paidRevenue || 0),
+          })),
+        });
+      } catch (e: any) {
+        setError(e?.message || 'Ошибка загрузки');
+        setStats(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    load();
     return () => {
       cancelled = true;
     };
   }, [period]);
 
-  const visitors = useMemo<ChartPoint[]>(
-    () => [
-      { name: 'Jan', value: 180 },
-      { name: 'Feb', value: 210 },
-      { name: 'Mar', value: 195 },
-      { name: 'Apr', value: 230 },
-      { name: 'May', value: 205 },
-      { name: 'Jun', value: 240 },
-    ],
-    []
+  const chartSeries = useMemo<ChartPoint[]>(
+    () =>
+      stats?.series?.length
+        ? stats.series
+        : period === '30d'
+        ? Array.from({ length: 30 }).map((_, i) => ({ name: String(i + 1), paidOrders: 0, awaitingOrders: 0, paidRevenue: 0 }))
+        : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((name) => ({ name, paidOrders: 0, awaitingOrders: 0, paidRevenue: 0 })),
+    [stats, period]
   );
 
-  const salesByMonth = useMemo<DualChartPoint[]>(
-    () => [
-      { name: 'Jan', desktop: 32, mobile: 18 },
-      { name: 'Feb', desktop: 28, mobile: 20 },
-      { name: 'Mar', desktop: 36, mobile: 22 },
-      { name: 'Apr', desktop: 40, mobile: 24 },
-      { name: 'May', desktop: 38, mobile: 26 },
-      { name: 'Jun', desktop: 44, mobile: 28 },
-    ],
-    []
-  );
+  const paidOrders = stats?.paidOrders || 0;
+  const awaitingOrders = stats?.awaitingPaymentOrders || 0;
+  const totalOrders = stats?.totalOrders || 0;
+  const paidRevenue = stats?.paidRevenue || 0;
+  const averagePaid = paidOrders > 0 ? paidRevenue / paidOrders : 0;
 
   const kpis = useMemo(
     () => [
-      { label: 'Session', value: 6132, delta: '+90%' },
-      { label: 'Page Views', value: 11236, delta: '+40%' },
-      { label: 'Average', value: 46, delta: '+22%' },
-      { label: 'Bounce Rate', value: 6132, delta: '+30%' },
+      { label: 'Paid orders', value: paidOrders, hint: 'Статус Paid' },
+      { label: 'Awaiting payment', value: awaitingOrders, hint: 'Ожидают оплату' },
+      { label: 'Paid revenue', value: paidRevenue, hint: 'Сумма Paid' },
+      { label: 'Avg paid check', value: averagePaid, hint: 'Paid revenue / paid orders' },
     ],
-    []
+    [paidOrders, awaitingOrders, paidRevenue, averagePaid]
   );
 
-  const budgets = useMemo(
-    () => [
-      { name: 'Marketing', spent: 7200, limit: 10000 },
-      { name: 'Operations', spent: 5400, limit: 8000 },
-      { name: 'R&D', spent: 9800, limit: 12000 },
-    ],
-    []
-  );
+  const statusBars = useMemo(() => {
+    const c = stats?.countsByStatus;
+    if (!c) return [];
+    const rows: Array<{ name: string; count: number; percent: number }> = [
+      { name: 'Paid', count: c['Paid'] || 0, percent: totalOrders ? Math.round(((c['Paid'] || 0) / totalOrders) * 100) : 0 },
+      { name: 'Awaiting payment', count: c['Awaiting payment'] || 0, percent: totalOrders ? Math.round(((c['Awaiting payment'] || 0) / totalOrders) * 100) : 0 },
+      { name: 'Processing', count: c['Processing'] || 0, percent: totalOrders ? Math.round(((c['Processing'] || 0) / totalOrders) * 100) : 0 },
+    ];
+    return rows;
+  }, [stats, totalOrders]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
@@ -158,10 +198,10 @@ export default function Dashboard3() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 18, alignItems: 'start' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
-          <Card title="Budgets - Consolidated" subtitle="Showing total budgets for the last 3 months">
+          <Card title="Orders by status" subtitle="Сводка по статусам">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {budgets.map((b) => {
-                const percent = Math.min(100, Math.round((b.spent / b.limit) * 100));
+              {statusBars.map((b) => {
+                const percent = Math.min(100, Math.max(0, b.percent));
                 return (
                   <div key={b.name} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
@@ -169,7 +209,7 @@ export default function Dashboard3() {
                         {b.name}
                       </div>
                       <div style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">
-                        ${formatNumber(b.spent)} / ${formatNumber(b.limit)}
+                        {formatNumber(b.count)} ({percent}%)
                       </div>
                     </div>
                     <div style={{ width: '100%', height: 8, borderRadius: 999, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
@@ -181,25 +221,25 @@ export default function Dashboard3() {
             </div>
           </Card>
 
-          <Card title="Visitors" subtitle={period === '30d' ? 'Last 30 days' : 'Last 6 months'}>
+          <Card title="Paid orders" subtitle={period === '30d' ? 'Last 30 days' : 'Last 6 months'}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
               <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 14 }}>
-                <div className="admin-muted" style={{ fontSize: 12, fontWeight: 600, marginBottom: 6 }}>Desktop</div>
+                <div className="admin-muted" style={{ fontSize: 12, fontWeight: 600, marginBottom: 6 }}>Paid</div>
                 <div style={{ fontFamily: 'var(--font-family)', fontWeight: 800, fontSize: 28, color: 'rgba(231, 233, 238, 0.96)' }}>
-                  {formatNumber(analytics?.desktop || 0)}
+                  {loading ? '…' : formatNumber(paidOrders)}
                 </div>
               </div>
               <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 14 }}>
-                <div className="admin-muted" style={{ fontSize: 12, fontWeight: 600, marginBottom: 6 }}>Mobile</div>
+                <div className="admin-muted" style={{ fontSize: 12, fontWeight: 600, marginBottom: 6 }}>Awaiting</div>
                 <div style={{ fontFamily: 'var(--font-family)', fontWeight: 800, fontSize: 28, color: 'rgba(231, 233, 238, 0.96)' }}>
-                  {formatNumber(analytics?.mobile || 0)}
+                  {loading ? '…' : formatNumber(awaitingOrders)}
                 </div>
               </div>
             </div>
 
             <div style={{ height: 220 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={analytics?.series || visitors} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <AreaChart data={chartSeries} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="visitorsFill" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.22} />
@@ -225,16 +265,16 @@ export default function Dashboard3() {
                     }}
                     labelStyle={{ color: 'rgba(231,233,238,0.72)' }}
                   />
-                  <Area type="monotone" dataKey="value" stroke="#60a5fa" strokeWidth={2} fill="url(#visitorsFill)" />
+                  <Area type="monotone" dataKey="paidOrders" stroke="#60a5fa" strokeWidth={2} fill="url(#visitorsFill)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
           </Card>
 
-          <Card title="Sales By Month" subtitle="Showing total sales for the last 6 months">
+          <Card title="Orders trend" subtitle={period === '30d' ? 'Paid vs Awaiting (daily)' : 'Paid vs Awaiting (monthly)'}>
             <div style={{ height: 260 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={salesByMonth} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <BarChart data={chartSeries} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                   <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'rgba(231,233,238,0.62)' }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'rgba(231,233,238,0.62)' }} width={30} />
@@ -248,32 +288,32 @@ export default function Dashboard3() {
                     }}
                     labelStyle={{ color: 'rgba(231,233,238,0.72)' }}
                   />
-                  <Bar dataKey="desktop" fill="#60a5fa" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="mobile" fill="rgba(52, 211, 153, 0.75)" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="paidOrders" fill="#60a5fa" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="awaitingOrders" fill="rgba(52, 211, 153, 0.75)" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div style={{ display: 'flex', gap: 16, marginTop: 12, alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: '#60a5fa', display: 'inline-block' }} />
-                <span style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">Desktop</span>
+                <span style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">Paid</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: 'rgba(52, 211, 153, 0.75)', display: 'inline-block' }} />
-                <span style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">Mobile</span>
+                <span style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">Awaiting</span>
               </div>
             </div>
           </Card>
 
-          <Card title="Page Views" subtitle="vs Previous 30 Days">
+          <Card title="Total orders" subtitle="All time">
             <div style={{ fontFamily: 'var(--font-family)', fontWeight: 800, fontSize: 40, color: 'rgba(231, 233, 238, 0.96)' }}>
-              {formatNumber(analytics?.total || 0)}
+              {loading ? '…' : formatNumber(totalOrders)}
             </div>
           </Card>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <Card title="KPIs" subtitle="vs Previous 30 Days">
+          <Card title="KPIs" subtitle="Orders & revenue">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {kpis.map((k) => (
                 <div
@@ -290,22 +330,21 @@ export default function Dashboard3() {
                 >
                   <div style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">{k.label}</div>
                   <div style={{ fontFamily: 'var(--font-family)', fontSize: 22, fontWeight: 800, color: 'rgba(231, 233, 238, 0.96)' }}>
-                    {formatNumber(k.value)}
-                    {k.label === 'Average' ? '%' : ''}
+                    {k.label === 'Paid revenue' || k.label === 'Avg paid check' ? formatMoney(Number(k.value)) : formatNumber(Number(k.value))}
                   </div>
-                  <div style={{ fontFamily: 'var(--font-family)', fontSize: 12, fontWeight: 700 }} className="admin-positive">
-                    {k.delta}
+                  <div style={{ fontFamily: 'var(--font-family)', fontSize: 12 }} className="admin-muted">
+                    {'hint' in k ? (k as any).hint : ''}
                   </div>
                 </div>
               ))}
             </div>
           </Card>
 
-          <Card title="Notes" subtitle="Подключение данных">
-            <div style={{ fontFamily: 'var(--font-family)', fontSize: 14, lineHeight: 1.5 }} className="admin-muted">
-              Теперь подключены базовые счётчики посещений (desktop/mobile) через /api/analytics. Остальные блоки можно подключить к заказам и выручке.
-            </div>
-          </Card>
+          {error ? (
+            <Card title="Ошибка" subtitle="Данные не загрузились">
+              <div style={{ fontFamily: 'var(--font-family)', fontSize: 14, lineHeight: 1.5, color: '#fca5a5' }}>{error}</div>
+            </Card>
+          ) : null}
         </div>
       </div>
     </div>

@@ -1042,10 +1042,6 @@ body.is-mobile .cart-count {
 .main-header.black-divider {
   border-bottom: 1px solid #474747;
 }
-
-.main-header.dropdown-open {
-  border-bottom: 1px solid #E9E9E9;
-}
 .main-header.dropdown-open .dropdown-arrow {
   color: #000;
 }

@@ -16,6 +16,43 @@ export const config = {
   },
 };
 
+async function pushPaymentToRetailCrm(params: {
+  orderExternalId: string;
+  amount: number;
+  paidAtIso: string;
+  paymentExternalId: string;
+}) {
+  const apiUrl = process.env.RETAILCRM_URL;
+  const apiKey = process.env.RETAILCRM_API_KEY;
+  const site = process.env.RETAILCRM_SITE || undefined;
+  const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || 'bank-card';
+  const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
+ 
+  if (!apiUrl || !apiKey) return;
+ 
+  const url = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
+    site ? `&site=${encodeURIComponent(site)}` : ''
+  }`;
+ 
+  const payment = {
+    externalId: params.paymentExternalId,
+    order: { externalId: params.orderExternalId },
+    amount: Math.round(params.amount * 100) / 100,
+    paidAt: params.paidAtIso,
+    type: paymentType,
+    status: paymentStatusPaid,
+  };
+ 
+  const form = new URLSearchParams();
+  form.set('payment', JSON.stringify(payment));
+ 
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: form.toString(),
+  });
+}
+
 async function buffer(readable: any) {
   const chunks = [];
   for await (const chunk of readable) {
@@ -53,14 +90,56 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (orderId) {
       try {
+        const paidAtIso = new Date(((session.created as number) || Math.floor(Date.now() / 1000)) * 1000).toISOString();
+        const amountTotal = typeof session.amount_total === 'number' ? session.amount_total / 100 : undefined;
+
+        const { data: existingOrder } = await supabase
+          .from('orders')
+          .select('id,contacts,total_amount')
+          .eq('id', orderId)
+          .single();
+
+        const prevContacts =
+          existingOrder?.contacts && typeof existingOrder.contacts === 'object' ? existingOrder.contacts : {};
+        const nextContacts = {
+          ...prevContacts,
+          payment: {
+            ...(prevContacts?.payment && typeof prevContacts.payment === 'object' ? prevContacts.payment : {}),
+            provider: 'stripe',
+            status: 'paid',
+            paidAt: paidAtIso,
+            amount: typeof amountTotal === 'number' ? amountTotal : existingOrder?.total_amount,
+            updatedAt: new Date().toISOString(),
+          },
+        };
+
         const { error } = await supabase
           .from('orders')
-          .update({ status: 'Paid' })
+          .update({ status: 'Paid', contacts: nextContacts })
           .eq('id', orderId);
 
         if (error) {
           console.error('Error updating order:', error);
           return res.status(500).send('Database update failed');
+        }
+
+        try {
+          const amount =
+            typeof amountTotal === 'number'
+              ? amountTotal
+              : typeof existingOrder?.total_amount === 'number'
+              ? existingOrder.total_amount
+              : Number(existingOrder?.total_amount);
+          if (Number.isFinite(amount) && amount > 0) {
+            await pushPaymentToRetailCrm({
+              orderExternalId: orderId,
+              amount,
+              paidAtIso,
+              paymentExternalId: `stripe_${session.id}`,
+            });
+          }
+        } catch (e) {
+          console.error('RetailCRM payment push failed:', e);
         }
       } catch (err) {
         console.error('Error updating order:', err);

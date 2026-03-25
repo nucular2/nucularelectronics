@@ -92,11 +92,32 @@ export default function OrderDetail() {
       .eq("id", id)
       .eq("user_id", user.id)
       .single()
-      .then(({ data, error }) => {
+      .then(async ({ data, error }) => {
         if (error) {
           setError(error.message);
         } else if (data) {
           setOrder(data as Order);
+          try {
+            const { data: sessionData } = await supabase.auth.getSession();
+            const token = sessionData?.session?.access_token;
+            if (token) {
+              const r = await fetch("/api/retailcrm/sync", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ orderIds: [id] }),
+              });
+              if (r.ok) {
+                const payload = await r.json();
+                const updatedStatus = payload?.updates?.[id]?.status;
+                if (updatedStatus) {
+                  setOrder((prev) => (prev ? { ...prev, status: updatedStatus } : prev));
+                }
+              }
+            }
+          } catch (_) {}
         }
         setLoading(false);
       });

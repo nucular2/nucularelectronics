@@ -81,11 +81,32 @@ export default function Orders() {
       .select("*")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
-      .then(({ data, error }) => {
+      .then(async ({ data, error }) => {
         if (error) {
           setError(error.message);
         } else if (data) {
           setOrders(data as Order[]);
+          try {
+            const { data: sessionData } = await supabase.auth.getSession();
+            const token = sessionData?.session?.access_token;
+            if (token) {
+              const r = await fetch("/api/retailcrm/sync", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ orderIds: (data as any[]).map((o) => o.id) }),
+              });
+              if (r.ok) {
+                const payload = await r.json();
+                const updates = payload?.updates || {};
+                setOrders((prev) =>
+                  prev.map((o) => (updates[o.id]?.status ? { ...o, status: updates[o.id].status } : o))
+                );
+              }
+            }
+          } catch (_) {}
         }
         setLoading(false);
       });

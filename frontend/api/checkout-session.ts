@@ -10,6 +10,23 @@ const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+function toNumber(value: unknown): number {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
+  if (typeof value === 'string') {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : 0;
+  }
+  return 0;
+}
+
+function cents(value: unknown): number {
+  return Math.max(0, Math.round(toNumber(value) * 100));
+}
+
+function asArray(value: unknown): any[] {
+  return Array.isArray(value) ? value : [];
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -34,25 +51,66 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // 2. Create Stripe Checkout Session
-    const amount = Math.round(Number(order.total_amount) * 100);
+    const totalCents = cents(order.total_amount);
     const frontendUrl = process.env.FRONTEND_URL || 'https://nucularelectronics.vercel.app';
+
+    const items = asArray(order.items);
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+    let itemsSumCents = 0;
+
+    for (const raw of items) {
+      const name = String(raw?.title || raw?.name || raw?.productName || 'Item').slice(0, 120);
+      const quantityRaw = raw?.quantity;
+      const quantity = typeof quantityRaw === 'number' && Number.isFinite(quantityRaw) && quantityRaw > 0 ? Math.floor(quantityRaw) : 1;
+
+      const unitCents =
+        cents(raw?.price) ||
+        cents(raw?.unitPrice) ||
+        cents(raw?.initialPrice) ||
+        (cents(raw?.total) && quantity > 0 ? Math.floor(cents(raw.total) / quantity) : 0);
+
+      if (!unitCents) continue;
+
+      itemsSumCents += unitCents * quantity;
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name,
+          },
+          unit_amount: unitCents,
+        },
+        quantity,
+      });
+    }
+
+    if (lineItems.length === 0) {
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: { name: `Order #${String(order.id).slice(0, 8)}` },
+          unit_amount: totalCents,
+        },
+        quantity: 1,
+      });
+    } else if (itemsSumCents !== totalCents) {
+      const diff = totalCents - itemsSumCents;
+      if (diff !== 0) {
+        lineItems.push({
+          price_data: {
+            currency: 'usd',
+            product_data: { name: diff > 0 ? 'Adjustment' : 'Discount' },
+            unit_amount: Math.abs(diff),
+          },
+          quantity: 1,
+        });
+      }
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: `Order #${order.id.slice(0, 8)}`,
-            },
-            unit_amount: amount,
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
       success_url: `${frontendUrl}/orders?payment=success`,
       cancel_url: `${frontendUrl}/cart?payment=canceled`,
       metadata: {

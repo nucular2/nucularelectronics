@@ -170,6 +170,11 @@ export default function Orders() {
     });
   }
 
+  function formatMoney(value: unknown) {
+    const num = typeof value === "number" ? value : Number(value);
+    return Number.isFinite(num) ? num.toFixed(2) : "0.00";
+  }
+
   function getStatusStyle(status: OrderStatus) {
     switch (status) {
       case "New":
@@ -290,7 +295,7 @@ export default function Orders() {
                         {order.status}
                       </span>
                       </div>
-                      <div className="order-amount">${order.total_amount.toFixed(2)}</div>
+                      <div className="order-amount">${formatMoney(order.total_amount)}</div>
                       <div
                         className="order-menu-wrap"
                         onClick={(e) => e.stopPropagation()}

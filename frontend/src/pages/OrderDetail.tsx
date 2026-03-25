@@ -164,6 +164,19 @@ export default function OrderDetail() {
     });
   }
 
+  function toNumber(value: unknown) {
+    if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+    if (typeof value === "string") {
+      const num = Number(value);
+      return Number.isFinite(num) ? num : 0;
+    }
+    return 0;
+  }
+
+  function formatMoney(value: unknown) {
+    return toNumber(value).toFixed(2);
+  }
+
   function getStatusStyle(status: OrderStatus) {
     switch (status) {
       case "New": return "status-new";
@@ -336,10 +349,10 @@ export default function OrderDetail() {
                         <div className="product-sku">{item.sku || "NUC" + item.id?.toString().slice(0, 4).toUpperCase()}</div>
                       </div>
                       <div className="product-price-qty">
-                        ${item.price.toFixed(2)} x {item.quantity}
+                        ${formatMoney(item.price)} x {toNumber(item.quantity) || 1}
                       </div>
                       <div className="product-total">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ${formatMoney(toNumber(item.price) * (toNumber(item.quantity) || 1))}
                       </div>
                     </div>
                   ))}
@@ -351,13 +364,13 @@ export default function OrderDetail() {
                   <div className="summary-row">
                     <div className="summary-label">Quantity</div>
                     <div className="summary-value">
-                      {Array.isArray(order.items) ? order.items.reduce((acc: number, item: any) => acc + item.quantity, 0) : 0}
+                      {Array.isArray(order.items) ? order.items.reduce((acc: number, item: any) => acc + toNumber(item.quantity), 0) : 0}
                     </div>
                   </div>
 
                   <div className="summary-row">
                     <div className="summary-label">Subtotal</div>
-                    <div className="summary-value">${order.total_amount.toFixed(2)}</div>
+                    <div className="summary-value">${formatMoney(order.total_amount)}</div>
                   </div>
                   
                   <div className="summary-row">
@@ -367,7 +380,7 @@ export default function OrderDetail() {
 
                   <div className="summary-row total-row">
                     <div className="summary-label">Total</div>
-                    <div className="summary-value">${(order.total_amount + 100).toFixed(2)}</div>
+                    <div className="summary-value">${formatMoney(toNumber(order.total_amount) + 100)}</div>
                   </div>
 
                   <div className="order-actions">

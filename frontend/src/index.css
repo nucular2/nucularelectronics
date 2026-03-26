@@ -2018,6 +2018,8 @@ body.is-mobile .cart-count {
   align-items: flex-start;
   text-align: left;
   gap: 12px;
+  height: 100%;
+  justify-content: flex-end;
 }
 
 .solution-card-title {
@@ -2041,7 +2043,7 @@ body.is-mobile .cart-count {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-top: 12px;
+  margin-top: auto;
 }
 
 .solution-card-link {
@@ -2074,11 +2076,16 @@ body.is-mobile .cart-count {
 
 .home-bottom-row {
   display: grid;
-  grid-template-columns: 780px 380px;
+  grid-template-columns: minmax(0, 780px) minmax(0, 380px);
   gap: 20px;
   justify-content: center;
   margin: 0 auto 96px;
   width: 100%;
+  max-width: var(--content-w);
+}
+
+.home-bottom-row--last {
+  margin-bottom: 0;
 }
 
 @media (max-width: 1240px) {
@@ -2102,11 +2109,13 @@ body.is-mobile .cart-count {
 }
 
 .home-plate--lg {
-  width: 780px;
+  width: 100%;
+  max-width: 780px;
 }
 
 .home-plate--sm {
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
 }
 
 @media (max-width: 1240px) {
@@ -2138,7 +2147,7 @@ body.is-mobile .cart-count {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-top: 12px;
+  margin-top: auto;
 }
 
 /* uLight Section */

@@ -168,6 +168,17 @@ export default function Checkout() {
     }
   };
 
+  const ensureSupabaseSession = async () => {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError) throw sessionError;
+    if (sessionData?.session) return sessionData.session;
+    const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+    if (refreshError || !refreshed.session) {
+      throw new Error("Session expired. Please log in again.");
+    }
+    return refreshed.session;
+  };
+
   const createOrder = async () => {
     if (!contacts.termsAccepted) {
       setError("Please accept the Terms and Conditions.");
@@ -180,16 +191,9 @@ export default function Checkout() {
     
     if (!user) throw new Error("User not logged in");
 
+    await ensureSupabaseSession();
+
     const isProduction = import.meta.env.PROD;
-    if (!isProduction) {
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session) {
-        const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
-        if (refreshError || !refreshed.session) {
-          throw new Error("Session expired. Please log in again.");
-        }
-      }
-    }
 
     const country = countries.find((c) => c.code === recipient.countryCode);
     const dialCode = country ? country.dial_code : "";
@@ -362,6 +366,7 @@ export default function Checkout() {
 
   const handlePayPalApprove = async (data: any, actions: any) => {
     try {
+      await ensureSupabaseSession();
       const details = await actions.order.capture();
       // Update order status in Supabase
       // We need the order ID. Since createOrder returned it to PayPal createOrder, 

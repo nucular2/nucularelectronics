@@ -1,13 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useReviews } from "../context/ReviewsContext";
+import { useCart } from "../context/CartContext";
+import { products as productsData } from "../data/products";
 import AnimatedSpecsText from "../components/AnimatedSpecsText";
 import NewsletterBanner from "../components/NewsletterBanner";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const { reviews } = useReviews();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const p24fProduct = useMemo(() => {
+    return (
+      productsData.find((p) => p.id === 1) ?? {
+        id: 1,
+        category: "Components",
+        title: "Nucular controller P24F",
+        price: "$610.00",
+        image: "/мото2.png",
+      }
+    );
+  }, []);
+
+  const onBoardProduct = useMemo(() => {
+    return (
+      productsData.find((p) => p.id === 2) ?? {
+        id: 2,
+        category: "Components",
+        title: "On-board computer",
+        price: "$110.00",
+        image: "/miniature.png",
+      }
+    );
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 900px)");
@@ -235,15 +264,137 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Main SVG Content */}
-          <div style={{ width: '100%', background: '#fff' }}>
-            <div className="home-main-content">
-              <img 
-                src="/content-box85.svg" 
-                alt="Main Content" 
-                style={{ width: '100%', display: 'block' }} 
-              />
-            </div>
+          <div className="page-content-white">
+            <section className="controllers-section" id="components">
+              <h2 className="controllers-title">Controllers</h2>
+              <p className="controllers-description">
+                For controlling 3-phase permanent magnet electric motors (BLDC, PMSM or PMAC).
+              </p>
+              <div className="controllers-grid">
+                <div className="controller-card">
+                  <div className="card-image-container">
+                    <img src={p24fProduct.image || "/мото2.png"} alt="Nucular controller P24F" className="card-image" />
+                  </div>
+                  <h3 className="card-title">Nucular controller P24F</h3>
+                  <p className="card-power">27 kW</p>
+                  <div className="card-actions">
+                    <button
+                      type="button"
+                      className="card-button buy-button"
+                      onClick={() => {
+                        addToCart(p24fProduct as any);
+                        navigate("/cart");
+                      }}
+                    >
+                      Buy
+                    </button>
+                    <a
+                      href="/product/1"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/product/1");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+
+                <div className="controller-card">
+                  <div className="card-image-container">
+                    <svg className="card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 12L0 60H19.2375L19.2375 15L46.575 42.0556V0H12.15C5.43975 0 0 5.37258 0 12Z" fill="#E9E9E9" />
+                      <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
+                    </svg>
+                  </div>
+                  <h3 className="card-title">Nucular controller 12F HE</h3>
+                  <p className="card-power">12 kW</p>
+                  <div className="card-actions">
+                    <button type="button" className="card-button preorder-button" disabled>
+                      Preorder
+                    </button>
+                    <span className="status-text">In development</span>
+                  </div>
+                </div>
+
+                <div className="controller-card">
+                  <div className="card-image-container">
+                    <svg className="card-image" width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 12L0 60H19.2375L19.2375 15L46.575 42.0556V0H12.15C5.43975 0 0 5.37258 0 12Z" fill="#E9E9E9" />
+                      <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
+                    </svg>
+                  </div>
+                  <h3 className="card-title">Nucular controller 6F HE</h3>
+                  <p className="card-power">4 kW</p>
+                  <div className="card-actions">
+                    <button type="button" className="card-button preorder-button" disabled>
+                      Preorder
+                    </button>
+                    <span className="status-text">In development</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="accessories-section">
+              <div className="accessories-grid">
+                <div className="accessory-card">
+                  <h3 className="accessory-title">On-board computer</h3>
+                  <p className="accessory-description">
+                    For displaying basic parameters,
+                    <br />
+                    setting devices and power modes.
+                  </p>
+                  <div className="accessory-actions">
+                    <a
+                      href="/product/2"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/product/2");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                    <button
+                      type="button"
+                      className="card-button buy-button"
+                      onClick={() => {
+                        addToCart(onBoardProduct as any);
+                        navigate("/cart");
+                      }}
+                    >
+                      Buy
+                    </button>
+                  </div>
+                  <div className="accessory-image-container">
+                    <img src="/3экран.png" alt="On-board computer" className="accessory-image" />
+                  </div>
+                </div>
+
+                <div className="accessory-card">
+                  <h3 className="accessory-title">
+                    Bluetooth module
+                    <br />
+                    with App
+                  </h3>
+                  <p className="accessory-description">
+                    Change all settings through your smartphone
+                    <br />
+                    instead an On-board computer.
+                  </p>
+                  <div className="accessory-actions">
+                    <button type="button" className="card-button buy-button" disabled>
+                      Buy
+                    </button>
+                  </div>
+                  <div className="accessory-image-container">
+                    <img src="/3(2)экран.png" alt="Bluetooth module" className="accessory-image" />
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
           {/* Desktop News Section */}
@@ -255,7 +406,7 @@ export default function Home() {
           }}>
             <div style={{ 
               width: '100%',
-              maxWidth: '1180px',
+              maxWidth: 'var(--content-w)',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'
@@ -336,7 +487,7 @@ export default function Home() {
           }}>
             <div style={{ 
               width: '100%',
-              maxWidth: '1180px',
+              maxWidth: 'var(--content-w)',
               margin: '0 auto',
               display: 'flex', 
               flexDirection: 'column'

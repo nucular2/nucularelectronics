@@ -1224,6 +1224,14 @@ body.is-mobile .cart-count {
   text-align: center;
 }
 
+@media (min-width: 901px) and (max-width: 1200px) {
+  .controllers-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+}
+
 .controllers-title {
   font-family: var(--font-family);
   font-weight: 700;
@@ -1246,27 +1254,42 @@ body.is-mobile .cart-count {
 
 .controllers-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 380px);
   gap: 20px;
   width: 100%;
   max-width: var(--content-w);
   margin: 0 auto;
+  justify-content: center;
+}
+
+@media (max-width: 1240px) {
+  .controllers-grid {
+    grid-template-columns: repeat(2, 380px);
+  }
+}
+
+@media (max-width: 900px) {
+  .controllers-grid {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
 }
 
 .controller-card {
-  background: #f9f9f9;
+  background: #F6F6F6;
   border-radius: 20px;
-  padding: 40px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 500px;
+  width: 380px;
+  height: 526px;
   justify-content: space-between;
 }
 
 .card-image-container {
-  height: 220px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1274,8 +1297,8 @@ body.is-mobile .cart-count {
 }
 
 .card-image {
-  max-width: 100%;
-  max-height: 100%;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
 }
 
@@ -1295,21 +1318,28 @@ body.is-mobile .cart-count {
 .card-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   margin-top: auto;
   gap: 20px;
 }
 
 .card-button {
-  flex: 1;
-  height: 48px;
-  border-radius: 8px; /* Changed from 24px to 8px as requested */
+  flex: 0 0 auto;
+  height: 44px;
+  width: 110px;
+  padding: 0 24px;
+  border-radius: 8px;
   border: none;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s;
+}
+
+.card-button:disabled {
+  opacity: 1;
+  cursor: default;
 }
 
 .buy-button {
@@ -1318,8 +1348,17 @@ body.is-mobile .cart-count {
 }
 
 .preorder-button {
-  background: #E0E0E0;
-  color: #888;
+  background: #F36F25;
+  color: #fff;
+}
+
+.controllers-section .buy-button {
+  width: 75px;
+}
+
+.controller-card svg.card-image {
+  width: 89px;
+  height: 90px;
 }
 
 .card-link {
@@ -1362,13 +1401,13 @@ body.is-mobile .cart-count {
 .controller-card:first-child .card-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
 }
 
 .controller-card:first-child .buy-button {
   flex: 0 0 auto;
-  width: 140px; /* Fixed width for Buy button */
+  width: 75px;
   margin: 0;
 }
 
@@ -1422,28 +1461,27 @@ body.is-mobile .cart-count {
 .controller-card:nth-child(3) .card-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
+  gap: 24px;
 }
 
 .controller-card:nth-child(2) .preorder-button,
 .controller-card:nth-child(3) .preorder-button {
-  width: 140px;
-  background-color: #E0E0E0;
-  color: #888;
+  width: 110px;
 }
 
 .preorder-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   flex-direction: row; /* Force row direction */
 }
 
 .preorder-actions .preorder-button {
   flex: 0 0 auto;
-  width: 140px;
+  width: 110px;
   height: 48px;
   background-color: #F36F25; /* Orange as requested */
   color: white;
@@ -1455,8 +1493,8 @@ body.is-mobile .cart-count {
   display: block;
   font-size: 14px;
   color: #999;
-  text-align: right; /* Align text to the right */
-  flex: 1; /* Take remaining space */
+  text-align: left;
+  flex: 0 0 auto;
 }
 
 .preorder-actions .card-link {
@@ -1465,15 +1503,6 @@ body.is-mobile .cart-count {
 
 .buy-button:hover {
   background-color: #d65a15;
-}
-
-.preorder-button {
-  background-color: #e0e0e0;
-  color: #666;
-}
-
-.preorder-button:hover {
-  background-color: #d0d0d0;
 }
 
 .preorder-button-orange {
@@ -1510,14 +1539,32 @@ body.is-mobile .cart-count {
 
 /* Accessories Section */
 .accessories-section {
-  max-width: 1200px;
+  max-width: var(--content-w);
   margin: 0 auto 40px;
 }
 
 .accessories-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 580px));
   gap: 20px;
   justify-content: center;
+  width: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+}
+
+@media (max-width: 1240px) {
+  .accessories-grid {
+    grid-template-columns: minmax(0, 580px);
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .accessories-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
 }
 
 /* More specific selector to ensure white background wins */
@@ -1529,29 +1576,59 @@ body.is-mobile .cart-count {
   padding: 72px 48px 0px; /* Exact padding from request */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1); /* Exact shadow from request */
+  overflow: hidden;
+}
+
+.accessory-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  margin: 0 0 16px;
+  color: #111;
+}
+
+.accessory-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #666;
+  margin: 0 0 40px;
+}
+
+.accessory-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  margin: 0 0 40px;
 }
 
 .accessory-actions .buy-button {
   flex: 0 0 auto;
-  width: 140px;
-  height: 48px;
+  width: 75px;
+  height: 44px;
   background-color: #F36F25; /* Orange as requested */
   color: white;
   border-radius: 8px;
   margin: 0;
+  padding: 0 24px;
 }
 
 .accessory-image-container {
   width: 100%;
-  height: 220px;
+  height: 300px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   margin-top: auto;
+  overflow: hidden;
 }
 
 .accessory-image {
@@ -1559,6 +1636,7 @@ body.is-mobile .cart-count {
   height: 300px; /* Exact height from request */
   max-width: 100%;
   object-fit: contain;
+  display: block;
 }
 
 /* BMS Section */

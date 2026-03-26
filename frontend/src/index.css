@@ -1633,7 +1633,8 @@ body.is-mobile .cart-count {
   background-color: #101010;
   border-radius: 20px;
   padding: 72px; /* Exact padding from request */
-  width: 1180px; /* Exact width from request */
+  width: 100%;
+  max-width: var(--content-w);
   height: 444px; /* Exact height from request */
   box-sizing: border-box; /* Ensure padding doesn't add to width/height */
   display: flex;
@@ -1683,15 +1684,15 @@ body.is-mobile .cart-count {
 }
 
 .bms-placeholder {
-  width: 200px;
-  height: 200px;
+  width: 81px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.2;
-  align-self: flex-end;
+  align-self: center;
   margin-left: auto;
-  margin-top: -60px; /* Pull image up as requested */
+  margin-top: 0;
 }
 
 .preorder-button-orange {
@@ -1704,6 +1705,68 @@ body.is-mobile .cart-count {
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
+}
+
+/* uLight banner (Home) */
+.home-ulight-section {
+  max-width: 1180px;
+  margin: 0 auto 100px;
+}
+
+.home-ulight-banner {
+  width: 100%;
+  max-width: var(--content-w);
+  height: 444px;
+  padding: 72px;
+  border-radius: 20px;
+  background: #F6F6F6;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  overflow: hidden;
+}
+
+.home-ulight-image {
+  width: 484px;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.home-ulight-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  max-width: 520px;
+}
+
+.home-ulight-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  margin: 0;
+  color: #111;
+}
+
+.home-ulight-description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  margin: 0;
+  color: #666;
+}
+
+.home-ulight-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 /* uLight Section */

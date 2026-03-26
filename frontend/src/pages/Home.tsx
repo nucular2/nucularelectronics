@@ -395,6 +395,66 @@ export default function Home() {
                 </div>
               </div>
             </section>
+
+            <section className="bms-section">
+              <div className="bms-banner">
+                <div className="bms-content-left">
+                  <div className="bms-title">Battery Management System</div>
+                  <div className="bms-description">BMS for monitor and regulate the charging and discharge of batteries.</div>
+                  <div className="bms-actions">
+                    <button type="button" className="card-button preorder-button" disabled>
+                      Preorder
+                    </button>
+                    <span className="status-text bms-status">In development</span>
+                  </div>
+                </div>
+                <div className="bms-content-right">
+                  <div className="bms-placeholder">
+                    <svg width="81" height="90" viewBox="0 0 81 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 12L0 60H19.2375L19.2375 15L46.575 42.0556V0H12.15C5.43975 0 0 5.37258 0 12Z" fill="#E9E9E9" />
+                      <path d="M81 78V30H61.7625V75L34.425 47.9445V90H68.85C75.5602 90 81 84.6274 81 78Z" fill="#E9E9E9" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="home-ulight-section">
+              <div className="home-ulight-banner">
+                <img src="/4экран.png" alt="uLight controller" className="home-ulight-image" />
+                <div className="home-ulight-content">
+                  <div className="home-ulight-title">uLight controller</div>
+                  <div className="home-ulight-description">Designed to connect and control lightning equipment.</div>
+                  <div className="home-ulight-actions">
+                    <button
+                      type="button"
+                      className="card-button buy-button"
+                      onClick={() => {
+                        const product = productsData.find((p) => p.id === 3);
+                        if (product) {
+                          addToCart(product);
+                          navigate("/cart");
+                        } else {
+                          navigate("/shop");
+                        }
+                      }}
+                    >
+                      Buy
+                    </button>
+                    <a
+                      href="/product/3"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/product/3");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
           {/* Desktop News Section */}

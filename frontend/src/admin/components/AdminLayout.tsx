@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, ShoppingCart, Users, FolderTree, LogOut, MessageSquare, Newspaper } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Users, FolderTree, LogOut, MessageSquare, Newspaper, Home as HomeIcon } from 'lucide-react';
 import '../admin.css';
 
 const AdminLayout: React.FC = () => {
@@ -50,6 +50,12 @@ const AdminLayout: React.FC = () => {
             className={({ isActive }) => (isActive ? 'admin-nav-link active' : 'admin-nav-link')}
           >
             <Newspaper size={18} /> News
+          </NavLink>
+          <NavLink
+            to="/admin/home"
+            className={({ isActive }) => (isActive ? 'admin-nav-link active' : 'admin-nav-link')}
+          >
+            <HomeIcon size={18} /> Home
           </NavLink>
           <NavLink
             to="/admin/customers"

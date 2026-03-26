@@ -115,48 +115,38 @@ const initialNews: NewsItem[] = [
 
 interface NewsContextType {
   news: NewsItem[];
-  addNews: (item: Omit<NewsItem, 'id'>) => void;
-  updateNews: (id: number, updated: Partial<NewsItem>) => void;
-  deleteNews: (id: number) => void;
+  refresh: () => Promise<void>;
 }
-
-const STORAGE_KEY = 'site_news_v1';
 
 const NewsContext = createContext<NewsContextType | undefined>(undefined);
 
 export const NewsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [news, setNews] = useState<NewsItem[]>([]);
 
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setNews(JSON.parse(stored));
-        return;
-      } catch {
-        setNews(initialNews);
+  const refresh = async () => {
+    try {
+      const r = await fetch('/api/content/news');
+      if (!r.ok) throw new Error(`Failed to load news: ${r.status}`);
+      const payload = await r.json().catch(() => null);
+      const items = Array.isArray(payload?.news) ? payload.news : null;
+      if (items) {
+        setNews(items);
         return;
       }
+      setNews(initialNews);
+    } catch {
+      setNews(initialNews);
     }
-    setNews(initialNews);
-  }, []);
+  };
 
   useEffect(() => {
-    if (news.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(news));
-    }
-  }, [news]);
+    void refresh();
+  }, []);
 
   const value = useMemo<NewsContextType>(
     () => ({
       news,
-      addNews: (item) =>
-        setNews((prev) => {
-          const nextId = Math.max(...prev.map((n) => n.id), 0) + 1;
-          return [{ id: nextId, ...item }, ...prev];
-        }),
-      updateNews: (id, updated) => setNews((prev) => prev.map((n) => (n.id === id ? { ...n, ...updated } : n))),
-      deleteNews: (id) => setNews((prev) => prev.filter((n) => n.id !== id)),
+      refresh,
     }),
     [news]
   );
@@ -171,4 +161,3 @@ export const useNews = () => {
   }
   return ctx;
 };
-

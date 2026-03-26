@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Plus, Search, Trash2, X } from 'lucide-react';
-import { useNews, NewsItem } from '../../context/NewsContext';
+import { supabase } from '../../lib/supabase';
+import type { NewsItem } from '../../context/NewsContext';
 
 type EditorMode = 'add' | 'edit';
 
@@ -8,13 +9,36 @@ function normalizeQuery(value: string) {
   return value.trim().toLowerCase();
 }
 
+function arrayBufferToBase64(buf: ArrayBuffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buf);
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
 export default function NewsManager() {
-  const { news, addNews, updateNews, deleteNews } = useNews();
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [query, setQuery] = useState('');
   const [editorOpen, setEditorOpen] = useState(false);
   const [editorMode, setEditorMode] = useState<EditorMode>('add');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState<Partial<NewsItem>>({});
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const loadNews = async () => {
+    const r = await fetch('/api/content/news');
+    const payload = await r.json().catch(() => null);
+    const items = Array.isArray(payload?.news) ? payload.news : [];
+    setNews(items);
+  };
+
+  useEffect(() => {
+    void loadNews();
+  }, []);
 
   const filtered = useMemo(() => {
     const q = normalizeQuery(query);
@@ -57,25 +81,111 @@ export default function NewsManager() {
 
     if (!title || !date || !text) return;
 
-    if (editorMode === 'add') {
-      addNews({
-        title,
-        date,
-        image: image || '/new1.png',
-        text,
-        link: link || undefined,
-      });
-    } else if (editingId != null) {
-      updateNews(editingId, {
-        title,
-        date,
-        image: image || '/new1.png',
-        text,
-        link: link || undefined,
-      });
-    }
+    const run = async () => {
+      setSaving(true);
+      try {
+        const next = [...news];
+        if (editorMode === 'add') {
+          const nextId = Math.max(...next.map((n) => n.id), 0) + 1;
+          next.unshift({
+            id: nextId,
+            title,
+            date,
+            image: image || '/new1.png',
+            text,
+            link: link || undefined,
+          });
+        } else if (editingId != null) {
+          const idx = next.findIndex((n) => n.id === editingId);
+          if (idx !== -1) {
+            next[idx] = {
+              ...next[idx],
+              title,
+              date,
+              image: image || '/new1.png',
+              text,
+              link: link || undefined,
+            };
+          }
+        }
 
-    closeEditor();
+        const { data } = await supabase.auth.getSession();
+        const token = data?.session?.access_token;
+        if (!token) throw new Error('Not authenticated');
+
+        const r = await fetch('/api/admin/news', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ news: next }),
+        });
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({}));
+          throw new Error(err?.message || `Failed to save: ${r.status}`);
+        }
+        setNews(next);
+        closeEditor();
+      } catch (e: any) {
+        alert(e?.message || String(e));
+      } finally {
+        setSaving(false);
+      }
+    };
+
+    void run();
+  };
+
+  const remove = (id: number) => {
+    const run = async () => {
+      setSaving(true);
+      try {
+        const next = news.filter((n) => n.id !== id);
+        const { data } = await supabase.auth.getSession();
+        const token = data?.session?.access_token;
+        if (!token) throw new Error('Not authenticated');
+
+        const r = await fetch('/api/admin/news', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ news: next }),
+        });
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({}));
+          throw new Error(err?.message || `Failed to delete: ${r.status}`);
+        }
+        setNews(next);
+      } catch (e: any) {
+        alert(e?.message || String(e));
+      } finally {
+        setSaving(false);
+      }
+    };
+    void run();
+  };
+
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    try {
+      const buf = await file.arrayBuffer();
+      const base64 = arrayBufferToBase64(buf);
+      const { data } = await supabase.auth.getSession();
+      const token = data?.session?.access_token;
+      if (!token) throw new Error('Not authenticated');
+
+      const r = await fetch('/api/admin/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ filename: file.name, contentType: file.type || 'application/octet-stream', base64, folder: 'news' }),
+      });
+      const payload = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(payload?.message || `Upload failed: ${r.status}`);
+      const url = String(payload?.url || '');
+      if (!url) throw new Error('Upload failed: missing url');
+      setFormData((p) => ({ ...p, image: url }));
+    } catch (e: any) {
+      alert(e?.message || String(e));
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -143,7 +253,7 @@ export default function NewsManager() {
                       <button type="button" className="admin-button" onClick={() => openEdit(n)}>
                         Edit
                       </button>
-                      <button type="button" className="admin-button" onClick={() => deleteNews(n.id)} style={{ color: '#fca5a5' }}>
+                      <button type="button" className="admin-button" onClick={() => remove(n.id)} style={{ color: '#fca5a5' }} disabled={saving}>
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -197,6 +307,19 @@ export default function NewsManager() {
               <div>
                 <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Image URL</div>
                 <input className="admin-input" value={String(formData.image || '')} onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))} placeholder="/new1.png" />
+                <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) void uploadImage(file);
+                    }}
+                  />
+                  <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                    {uploading ? 'Uploading…' : 'Upload image'}
+                  </div>
+                </div>
               </div>
               <div style={{ gridColumn: '1 / -1' }}>
                 <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Link (optional)</div>
@@ -217,7 +340,7 @@ export default function NewsManager() {
               <button type="button" className="admin-button" onClick={closeEditor}>
                 Cancel
               </button>
-              <button type="button" className="admin-button active" onClick={save}>
+              <button type="button" className="admin-button active" onClick={save} disabled={saving}>
                 Save
               </button>
             </div>
@@ -227,4 +350,3 @@ export default function NewsManager() {
     </div>
   );
 }
-

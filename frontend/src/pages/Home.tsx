@@ -7,12 +7,15 @@ import { useCart } from "../context/CartContext";
 import { products as productsData } from "../data/products";
 import AnimatedSpecsText from "../components/AnimatedSpecsText";
 import NewsletterBanner from "../components/NewsletterBanner";
+import HomeCmsSections from "../components/home/HomeCmsSections";
+import { defaultHomeCmsConfig, type HomeCmsConfig } from "../cms/homeConfig";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const { reviews } = useReviews();
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const [homeCms, setHomeCms] = useState<HomeCmsConfig>(defaultHomeCmsConfig);
 
   const p24fProduct = useMemo(() => {
     return (
@@ -44,6 +47,20 @@ export default function Home() {
     updateMatch();
     mediaQuery.addEventListener("change", updateMatch);
     return () => mediaQuery.removeEventListener("change", updateMatch);
+  }, []);
+
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const r = await fetch("/api/content/home");
+        if (!r.ok) return;
+        const payload = await r.json().catch(() => null);
+        if (payload?.config && typeof payload.config === "object") {
+          setHomeCms(payload.config as HomeCmsConfig);
+        }
+      } catch {}
+    };
+    void run();
   }, []);
 
   // Reviews Data
@@ -511,174 +528,7 @@ export default function Home() {
               </div>
             </section>
 
-            <section className="home-category-section">
-              <div className="home-category-grid">
-                <img src="/category-card210.svg" alt="Accessories" className="home-category-card" width={580} height={380} />
-                <img src="/category-card211.svg" alt="Spare parts" className="home-category-card" width={580} height={380} />
-              </div>
-            </section>
-
-            <section className="advantages-section">
-              <div className="advantages-title">Our advantages</div>
-              <div className="advantages-subtitle">
-                We work hard every day to make you happier and your e-bike more
-                <br />
-                powerful and faster.
-              </div>
-              <div className="advantages-grid">
-                <div className="adv-card">
-                  <div className="adv-number">01.</div>
-                  <div className="adv-title">
-                    Worldwide courier <span className="adv-accent">shipping</span>
-                  </div>
-                  <div className="adv-text">We guarantee delivery of your order.</div>
-                </div>
-                <div className="adv-card">
-                  <div className="adv-number">02.</div>
-                  <div className="adv-title">
-                    Faster and friendly technical <span className="adv-accent">support</span>
-                  </div>
-                  <div className="adv-text">Be sure we'll help you in any situation.</div>
-                </div>
-                <div className="adv-card">
-                  <div className="adv-number">03.</div>
-                  <div className="adv-title">
-                    Regularly updated <span className="adv-accent">firmware</span>
-                  </div>
-                  <div className="adv-text">You can suggest new features and vote on other user's ideas.</div>
-                </div>
-                <div className="adv-card">
-                  <div className="adv-number">04.</div>
-                  <div className="adv-title">
-                    The worldwide <span className="adv-accent">warranty</span> is up to 3 years
-                  </div>
-                  <div className="adv-text">We'll repair your device if stuff happens.</div>
-                </div>
-              </div>
-            </section>
-
-            <section className="solutions-section">
-              <div className="solutions-title">Complete solutions</div>
-              <div className="solutions-grid">
-                {[
-                  { title: "For Sur-Ron Light Bee", desc: "Up to 30% more power on standard battery.", img: "/kit1.png" },
-                  { title: "For Talaria Sting", desc: "Up to 12 kW of power on standard battery.", img: "/kit2.png" },
-                  { title: "For Talaria XXX", desc: "Up to 30kW on 74V battery.", img: "/kit3.png" },
-                  { title: "For Apollo RFN", desc: "Up to 12kW on stock battery.", img: "/kit4.png" },
-                  { title: "For E Ride SS Pro", desc: "Up to 12kW on stock battery.", img: "/kit5.png" },
-                  { title: "For Arctic Leopard EXT 650", desc: "Up to 25 kW of power on a custom battery.", img: "/kit6.png" },
-                ].map((card) => (
-                  <div key={card.title} className="solution-card">
-                    <div className="solution-card-content">
-                      <div className="solution-card-actions">
-                        <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
-                          Buy
-                        </button>
-                        <a
-                          href="/shop"
-                          className="card-link solution-card-link"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate("/shop");
-                          }}
-                        >
-                          Learn more
-                        </a>
-                      </div>
-                    </div>
-                    <img src={card.img} alt={card.title} className="solution-card-image" width={580} height={500} />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="home-bottom-plates">
-              <div className="home-bottom-title">Electric Watersports</div>
-              <div className="home-bottom-subtitle">Electric surfboards and an electric jet propulsion unit.</div>
-              <div className="home-bottom-row">
-                <div className="home-plate home-plate--lg">
-                  <div className="home-plate-title">Electric surfboards</div>
-                  <div className="home-plate-text">Nucular jetboards. Each model has its own strengths and personality.</div>
-                  <div className="home-plate-actions">
-                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
-                      Buy
-                    </button>
-                    <a
-                      href="/shop"
-                      className="card-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/shop");
-                      }}
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-                <div className="home-plate home-plate--sm">
-                  <div className="home-plate-title">Electric jet drive</div>
-                  <div className="home-plate-text">Propulsion unit for your custom jetboard project.</div>
-                  <div className="home-plate-actions">
-                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
-                      Buy
-                    </button>
-                    <a
-                      href="/shop"
-                      className="card-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/shop");
-                      }}
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="home-bottom-title">E-go karts solutions</div>
-              <div className="home-bottom-subtitle">Ready made go-kart and conversion kits.</div>
-              <div className="home-bottom-row home-bottom-row--reverse home-bottom-row--last">
-                <div className="home-plate home-plate--sm">
-                  <div className="home-plate-title">Go-kart conversion kit</div>
-                  <div className="home-plate-text">Ready made go-kart and conversion kits.</div>
-                  <div className="home-plate-actions">
-                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
-                      Buy
-                    </button>
-                    <a
-                      href="/shop"
-                      className="card-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/shop");
-                      }}
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-                <div className="home-plate home-plate--lg">
-                  <div className="home-plate-title">Ready made go-karts</div>
-                  <div className="home-plate-text">Ready made go-kart and conversion kits.</div>
-                  <div className="home-plate-actions">
-                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
-                      Buy
-                    </button>
-                    <a
-                      href="/shop"
-                      className="card-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/shop");
-                      }}
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <HomeCmsSections config={homeCms} />
           </div>
 
           {/* Desktop News Section */}
@@ -1290,6 +1140,8 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          <HomeCmsSections config={homeCms} />
 
           <NewsletterBanner />
 

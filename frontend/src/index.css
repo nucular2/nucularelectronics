@@ -1681,6 +1681,7 @@ body.is-mobile .cart-count {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 480px;
 }
 
 .bms-placeholder {
@@ -1691,7 +1692,7 @@ body.is-mobile .cart-count {
   justify-content: center;
   opacity: 0.2;
   align-self: center;
-  margin-left: auto;
+  margin: 0;
   margin-top: 0;
 }
 
@@ -1724,7 +1725,7 @@ body.is-mobile .cart-count {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 60px;
+  gap: 40px;
   overflow: hidden;
 }
 

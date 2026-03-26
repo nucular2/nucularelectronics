@@ -3,21 +3,7 @@
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
     { "src": "api/webhook.ts", "use": "@vercel/node" },
-    { "src": "api/checkout-session.ts", "use": "@vercel/node" },
-    { "src": "api/orders/create.ts", "use": "@vercel/node" },
-    { "src": "api/analytics/track.ts", "use": "@vercel/node" },
-    { "src": "api/analytics/summary.ts", "use": "@vercel/node" },
-    { "src": "api/retailcrm/order.ts", "use": "@vercel/node" },
-    { "src": "api/retailcrm/sync.ts", "use": "@vercel/node" },
-    { "src": "api/admin/news.ts", "use": "@vercel/node" },
-    { "src": "api/admin/home.ts", "use": "@vercel/node" },
-    { "src": "api/admin/upload.ts", "use": "@vercel/node" },
-    { "src": "api/admin/orders.ts", "use": "@vercel/node" },
-    { "src": "api/admin/order.ts", "use": "@vercel/node" },
-    { "src": "api/admin/stats.ts", "use": "@vercel/node" },
-    { "src": "api/content/news.ts", "use": "@vercel/node" },
-    { "src": "api/content/home.ts", "use": "@vercel/node" },
-    { "src": "api/debug/env.ts", "use": "@vercel/node" }
+    { "src": "api/[...path].ts", "use": "@vercel/node" }
   ],
   "headers": [
     {
@@ -37,6 +23,8 @@
     }
   ],
   "routes": [
+    { "src": "/api/webhook", "dest": "/api/webhook.ts" },
+    { "src": "/api/(.*)", "dest": "/api/[...path].ts?path=$1" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]

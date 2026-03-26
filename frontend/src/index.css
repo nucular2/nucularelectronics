@@ -2084,6 +2084,10 @@ body.is-mobile .cart-count {
   max-width: var(--content-w);
 }
 
+.home-bottom-row--reverse {
+  grid-template-columns: minmax(0, 380px) minmax(0, 780px);
+}
+
 .home-bottom-row--last {
   margin-bottom: 0;
 }

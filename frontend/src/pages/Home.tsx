@@ -638,7 +638,7 @@ export default function Home() {
 
               <div className="home-bottom-title">E-go karts solutions</div>
               <div className="home-bottom-subtitle">Ready made go-kart and conversion kits.</div>
-              <div className="home-bottom-row home-bottom-row--last">
+              <div className="home-bottom-row home-bottom-row--reverse home-bottom-row--last">
                 <div className="home-plate home-plate--sm">
                   <div className="home-plate-title">Go-kart conversion kit</div>
                   <div className="home-plate-text">Ready made go-kart and conversion kits.</div>

@@ -256,7 +256,7 @@ export default function OrderDetail() {
               </nav>
             </aside>
 
-            <main className="orders-content orders-content--wide">
+            <main className="orders-content">
               <div className="order-detail-container">
                 <Link to="/orders" className="back-link">
                   <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">

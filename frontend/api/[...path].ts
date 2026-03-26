@@ -495,6 +495,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(404).json({ message: 'Not Found' });
   }
 
+  if (route === 'ping') {
+    return res.status(200).json({
+      ok: true,
+      commit: process.env.VERCEL_GIT_COMMIT_SHA || null,
+      now: new Date().toISOString(),
+    });
+  }
+
   if (route === 'content/news') {
     if (req.method !== 'GET') {
       res.setHeader('Allow', 'GET');

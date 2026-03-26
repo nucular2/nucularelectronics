@@ -467,13 +467,7 @@ export default function Home() {
                   using our open <strong>LEVCAN protocol</strong>.
                 </div>
               </div>
-              <div className="levcan-title">
-                For LEVs
-                <br />
-                development
-                <br />
-                companies:
-              </div>
+              <div className="levcan-title">For LEVs development companies:</div>
               <div className="levcan-grid">
                 <div className="levcan-item">
                   <div className="levcan-icon">
@@ -576,8 +570,6 @@ export default function Home() {
                 ].map((card) => (
                   <div key={card.title} className="solution-card">
                     <div className="solution-card-content">
-                      <div className="solution-card-title">{card.title}</div>
-                      <div className="solution-card-desc">{card.desc}</div>
                       <div className="solution-card-actions">
                         <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
                           Buy
@@ -597,6 +589,94 @@ export default function Home() {
                     <img src={card.img} alt={card.title} className="solution-card-image" width={580} height={500} />
                   </div>
                 ))}
+              </div>
+            </section>
+
+            <section className="home-bottom-plates">
+              <div className="home-bottom-title">Electric Watersports</div>
+              <div className="home-bottom-subtitle">Electric surfboards and an electric jet propulsion unit.</div>
+              <div className="home-bottom-row">
+                <div className="home-plate home-plate--lg">
+                  <div className="home-plate-title">Electric surfboards</div>
+                  <div className="home-plate-text">Nucular jetboards. Each model has its own strengths and personality.</div>
+                  <div className="home-plate-actions">
+                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
+                      Buy
+                    </button>
+                    <a
+                      href="/shop"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/shop");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+                <div className="home-plate home-plate--sm">
+                  <div className="home-plate-title">Electric jet drive</div>
+                  <div className="home-plate-text">Propulsion unit for your custom jetboard project.</div>
+                  <div className="home-plate-actions">
+                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
+                      Buy
+                    </button>
+                    <a
+                      href="/shop"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/shop");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="home-bottom-title">E-go karts solutions</div>
+              <div className="home-bottom-subtitle">Ready made go-kart and conversion kits.</div>
+              <div className="home-bottom-row">
+                <div className="home-plate home-plate--sm">
+                  <div className="home-plate-title">Go-kart conversion kit</div>
+                  <div className="home-plate-text">Ready made go-kart and conversion kits.</div>
+                  <div className="home-plate-actions">
+                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
+                      Buy
+                    </button>
+                    <a
+                      href="/shop"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/shop");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+                <div className="home-plate home-plate--lg">
+                  <div className="home-plate-title">Ready made go-karts</div>
+                  <div className="home-plate-text">Ready made go-kart and conversion kits.</div>
+                  <div className="home-plate-actions">
+                    <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
+                      Buy
+                    </button>
+                    <a
+                      href="/shop"
+                      className="card-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/shop");
+                      }}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
               </div>
             </section>
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
-import { supabase } from "../lib/supabase";
+import { refreshSupabaseSessionIfNeeded, supabase } from "../lib/supabase";
 
 type OrderStatus = "New" | "Processing" | "Awaiting payment" | "Paid" | "Shipped" | "Awaiting pickup" | "Delivered" | "Canceled";
 
@@ -102,41 +102,50 @@ export default function OrderDetail() {
     }
 
     setLoading(true);
-    supabase
-      .from("orders")
-      .select("*")
-      .eq("id", id)
-      .eq("user_id", user.id)
-      .single()
-      .then(async ({ data, error }) => {
+    const run = async () => {
+      try {
+        await refreshSupabaseSessionIfNeeded();
+        const { data, error } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("id", id)
+          .eq("user_id", user.id)
+          .single();
+
         if (error) {
           setError(error.message);
-        } else if (data) {
-          setOrder(data as Order);
-          try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const token = sessionData?.session?.access_token;
-            if (token) {
-              const r = await fetch("/api/retailcrm/sync", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ orderIds: [id] }),
-              });
-              if (r.ok) {
-                const payload = await r.json();
-                const updatedStatus = payload?.updates?.[id]?.status;
-                if (updatedStatus) {
-                  setOrder((prev) => (prev ? { ...prev, status: updatedStatus } : prev));
-                }
+          return;
+        }
+        if (!data) return;
+        setOrder(data as Order);
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const token = sessionData?.session?.access_token;
+          if (token) {
+            const r = await fetch("/api/retailcrm/sync", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ orderIds: [id] }),
+            });
+            if (r.ok) {
+              const payload = await r.json();
+              const updatedStatus = payload?.updates?.[id]?.status;
+              if (updatedStatus) {
+                setOrder((prev) => (prev ? { ...prev, status: updatedStatus } : prev));
               }
             }
-          } catch (_) {}
-        }
+          }
+        } catch (_) {}
+      } catch (e: any) {
+        setError(e?.message || "Session expired");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    void run();
   }, [user, id, location.state]);
 
   useEffect(() => {
@@ -159,6 +168,13 @@ export default function OrderDetail() {
     if (!order) return;
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     
+    try {
+      await refreshSupabaseSessionIfNeeded();
+    } catch (e: any) {
+      alert(e?.message || "Session expired");
+      return;
+    }
+
     const { error } = await supabase
       .from("orders")
       .update({ status: "Canceled" })

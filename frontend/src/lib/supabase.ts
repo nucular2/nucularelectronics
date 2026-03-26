@@ -10,5 +10,25 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key'
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  }
 );
+
+export async function refreshSupabaseSessionIfNeeded() {
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError) throw sessionError;
+  const session = sessionData?.session || null;
+  if (!session) return null;
+  const expiresAt = typeof (session as any)?.expires_at === 'number' ? (session as any).expires_at : null;
+  const needsRefresh = expiresAt ? expiresAt * 1000 - Date.now() < 60_000 : true;
+  if (!needsRefresh) return session;
+  const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+  if (refreshError) throw refreshError;
+  return refreshed.session || null;
+}

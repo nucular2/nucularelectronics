@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { supabase } from '../lib/supabase';
+import { refreshSupabaseSessionIfNeeded, supabase } from '../lib/supabase';
 import { Session, User } from '@supabase/supabase-js';
 
 interface AuthContextType {
@@ -24,6 +24,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
+    const onVisibleOrFocus = async () => {
+      try {
+        await refreshSupabaseSessionIfNeeded();
+      } catch {}
+    };
+    window.addEventListener('focus', onVisibleOrFocus);
+    const onVisibilityChange = () => {
+      if (!document.hidden) void onVisibleOrFocus();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
     // Listen for changes on auth state (logged in, signed out, etc.)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
@@ -31,7 +42,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('focus', onVisibleOrFocus);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
   }, []);
 
   const signOut = async () => {

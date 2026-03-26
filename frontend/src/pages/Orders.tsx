@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
-import { supabase } from "../lib/supabase";
+import { refreshSupabaseSessionIfNeeded, supabase } from "../lib/supabase";
 
 type OrderStatus = "New" | "Processing" | "Awaiting payment" | "Paid" | "Shipped" | "Awaiting pickup" | "Delivered" | "Canceled";
 
@@ -77,40 +77,53 @@ export default function Orders() {
       return;
     }
 
-    supabase
-      .from("orders")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .then(async ({ data, error }) => {
+    const run = async () => {
+      try {
+        await refreshSupabaseSessionIfNeeded();
+        const { data, error } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false });
+
         if (error) {
+          if (String((error as any)?.message || "").toLowerCase().includes("jwt expired")) {
+            await refreshSupabaseSessionIfNeeded();
+          }
           setError(error.message);
-        } else if (data) {
-          setOrders(data as Order[]);
-          try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const token = sessionData?.session?.access_token;
-            if (token) {
-              const r = await fetch("/api/retailcrm/sync", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ orderIds: (data as any[]).map((o) => o.id) }),
-              });
-              if (r.ok) {
-                const payload = await r.json();
-                const updates = payload?.updates || {};
-                setOrders((prev) =>
-                  prev.map((o) => (updates[o.id]?.status ? { ...o, status: updates[o.id].status } : o))
-                );
-              }
-            }
-          } catch (_) {}
+          return;
         }
+        if (!data) return;
+        setOrders(data as Order[]);
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const token = sessionData?.session?.access_token;
+          if (token) {
+            const r = await fetch("/api/retailcrm/sync", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ orderIds: (data as any[]).map((o) => o.id) }),
+            });
+            if (r.ok) {
+              const payload = await r.json();
+              const updates = payload?.updates || {};
+              setOrders((prev) =>
+                prev.map((o) => (updates[o.id]?.status ? { ...o, status: updates[o.id].status } : o))
+              );
+            }
+          }
+        } catch (_) {}
+      } catch (e: any) {
+        const msg = e?.message || "Session expired";
+        setError(msg);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    void run();
   }, [user, navigate]);
 
   useEffect(() => {
@@ -135,6 +148,13 @@ export default function Orders() {
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status: "Canceled" as OrderStatus } : o))
       );
+      return;
+    }
+
+    try {
+      await refreshSupabaseSessionIfNeeded();
+    } catch (e: any) {
+      setError(e?.message || "Session expired");
       return;
     }
 

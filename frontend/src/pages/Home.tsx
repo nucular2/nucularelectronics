@@ -458,10 +458,13 @@ export default function Home() {
 
             <section className="levcan-section">
               <div className="levcan-lead">
-                <div>All devices are connected by CAN-bus.</div>
                 <div>
-                  Components can be used separately with devices from other manufacturers using our open{" "}
-                  <strong>LEVCAN protocol</strong>.
+                  All devices are connected by <strong>CAN-bus.</strong>
+                </div>
+                <div>
+                  Components can be used separately with devices from other manufacturers
+                  <br />
+                  using our open <strong>LEVCAN protocol</strong>.
                 </div>
               </div>
               <div className="levcan-title">
@@ -511,6 +514,84 @@ export default function Home() {
                   </div>
                   <div className="levcan-item-text">Own proprietary software, not VESC.</div>
                 </div>
+              </div>
+            </section>
+
+            <section className="home-category-section">
+              <div className="home-category-grid">
+                <img src="/category-card210.svg" alt="Accessories" className="home-category-card" width={580} height={380} />
+                <img src="/category-card211.svg" alt="Spare parts" className="home-category-card" width={580} height={380} />
+              </div>
+            </section>
+
+            <section className="advantages-section">
+              <div className="advantages-title">Our advantages</div>
+              <div className="advantages-subtitle">
+                We work hard every day to make you happier and your e-bike more
+                <br />
+                powerful and faster.
+              </div>
+              <div className="advantages-grid">
+                <div className="adv-card">
+                  <div className="adv-number">01.</div>
+                  <div className="adv-title">Worldwide courier shipping</div>
+                  <div className="adv-text">We guarantee delivery of your order.</div>
+                </div>
+                <div className="adv-card">
+                  <div className="adv-number">02.</div>
+                  <div className="adv-title">Faster and friendly technical support</div>
+                  <div className="adv-text">Be sure we'll help you in any situation.</div>
+                </div>
+                <div className="adv-card">
+                  <div className="adv-number">03.</div>
+                  <div className="adv-title">Regularly updated firmware</div>
+                  <div className="adv-text">You can suggest new features and vote on other user's ideas.</div>
+                </div>
+                <div className="adv-card">
+                  <div className="adv-number">04.</div>
+                  <div className="adv-title">The worldwide warranty is up to 3 years</div>
+                  <div className="adv-text">We'll repair your device if stuff happens.</div>
+                </div>
+              </div>
+            </section>
+
+            <section className="solutions-section">
+              <div className="solutions-title">Complete solutions</div>
+              <div className="solutions-subtitle">
+                Plug and Ride kits so as not to bother with diagrams, custom wiring harnesses, connectors and soldering.
+              </div>
+              <div className="solutions-grid">
+                {[
+                  { title: "For Sur-Ron Light Bee", desc: "Up to 30% more power on standard battery.", img: "/kit1.png" },
+                  { title: "For Talaria Sting", desc: "Up to 12 kW of power on standard battery.", img: "/kit2.png" },
+                  { title: "For Talaria XXX", desc: "Up to 30kW on 74V battery.", img: "/kit3.png" },
+                  { title: "For Apollo RFN", desc: "Up to 12kW on stock battery.", img: "/kit4.png" },
+                  { title: "For E Ride SS Pro", desc: "Up to 12kW on stock battery.", img: "/kit5.png" },
+                  { title: "For Arctic Leopard EXT 650", desc: "Up to 25 kW of power on a custom battery.", img: "/kit6.png" },
+                ].map((card) => (
+                  <div key={card.title} className="solution-card">
+                    <div className="solution-card-content">
+                      <div className="solution-card-title">{card.title}</div>
+                      <div className="solution-card-desc">{card.desc}</div>
+                      <div className="solution-card-actions">
+                        <button type="button" className="card-button buy-button" onClick={() => navigate("/shop")}>
+                          Buy
+                        </button>
+                        <a
+                          href="/shop"
+                          className="card-link solution-card-link"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate("/shop");
+                          }}
+                        >
+                          Learn more
+                        </a>
+                      </div>
+                    </div>
+                    <img src={card.img} alt={card.title} className="solution-card-image" width={580} height={500} />
+                  </div>
+                ))}
               </div>
             </section>
           </div>

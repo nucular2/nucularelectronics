@@ -1220,7 +1220,7 @@ body.is-mobile .cart-count {
 /* Controllers Section */
 .controllers-section {
   max-width: var(--content-w);
-  margin: 0 auto 100px;
+  margin: 0 auto 96px;
   text-align: center;
 }
 
@@ -1532,7 +1532,7 @@ body.is-mobile .cart-count {
 /* Accessories Section */
 .accessories-section {
   max-width: var(--content-w);
-  margin: 0 auto 40px;
+  margin: 0 auto 96px;
 }
 
 .accessories-grid {
@@ -1626,7 +1626,7 @@ body.is-mobile .cart-count {
 /* BMS Section */
 .bms-section {
   max-width: 1180px;
-  margin: 0 auto 100px;
+  margin: 0 auto 96px;
 }
 
 .bms-banner {
@@ -1711,7 +1711,7 @@ body.is-mobile .cart-count {
 /* uLight banner (Home) */
 .home-ulight-section {
   max-width: 1180px;
-  margin: 0 auto 100px;
+  margin: 0 auto 96px;
 }
 
 .home-ulight-banner {

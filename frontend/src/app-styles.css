@@ -948,7 +948,7 @@
   .orders-layout {
     display: grid;
     grid-template-columns: 180px minmax(0, 1fr);
-    column-gap: 40px;
+    column-gap: 70px;
     align-items: start;
     width: 100%;
   }
@@ -1473,6 +1473,17 @@
   max-width: 600px;
   padding: 0 20px;
   box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .order-detail-page {
+    max-width: var(--content-w);
+    margin: 0 auto;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 250px;
+    box-sizing: border-box;
+  }
 }
 
 .back-link {

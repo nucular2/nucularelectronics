@@ -1794,8 +1794,9 @@ body.is-mobile .cart-count {
   font-weight: 700;
   font-size: 40px;
   line-height: 120%;
-  color: #111;
+  color: #222;
   margin: 0 0 48px;
+  text-align: center;
 }
 
 .levcan-grid {

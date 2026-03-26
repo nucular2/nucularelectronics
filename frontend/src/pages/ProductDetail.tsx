@@ -883,8 +883,12 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
               onToggle={() => setIsReviewsOpen(!isReviewsOpen)}
               headerContent={
                 <a 
-                  href="#" 
-                  onClick={(e) => e.stopPropagation()} 
+                  href="/reviews" 
+                  onClick={(e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navigate("/reviews");
+                  }} 
                   className="reviews-link reviews-link-collapsible"
                 >
                   <span className="reviews-link-text">All reviews</span>

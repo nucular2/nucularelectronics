@@ -411,31 +411,43 @@
   color: #F36F25;
 }
 .product-primary-button {
-  flex: 1;
-  height: 54px;
+  width: 128px;
+  height: 44px;
+  padding: 0 24px;
   background: #f36f25;
   color: #ffffff;
   border: none;
   outline: none;
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.2s;
   white-space: nowrap;
 }
 .product-secondary-button {
-  flex: 1;
-  height: 54px;
+  width: 128px;
+  height: 44px;
+  padding: 0 24px;
   background: transparent;
   color: #f36f25;
   border: 1px solid #f36f25;
   outline: none;
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.2s, border-color 0.2s;

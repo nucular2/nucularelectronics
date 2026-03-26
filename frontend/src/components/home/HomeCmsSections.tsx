@@ -94,17 +94,19 @@ export default function HomeCmsSections({ config }: { config: HomeCmsConfig }) {
       </section>
 
       <section className="solutions-section">
-        <div className="solutions-title">{config.solutions.title}</div>
-        {solutionsSubtitleParts ? (
-          <div className="solutions-subtitle">
-            {solutionsSubtitleParts.map((p, idx) => (
-              <React.Fragment key={idx}>
-                {p}
-                {idx < solutionsSubtitleParts.length - 1 ? <br /> : null}
-              </React.Fragment>
-            ))}
-          </div>
-        ) : null}
+        <div className="solutions-header">
+          <div className="solutions-title">{config.solutions.title}</div>
+          {solutionsSubtitleParts ? (
+            <div className="solutions-subtitle">
+              {solutionsSubtitleParts.map((p, idx) => (
+                <React.Fragment key={idx}>
+                  {p}
+                  {idx < solutionsSubtitleParts.length - 1 ? <br /> : null}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : null}
+        </div>
         <div className="solutions-grid">
           {config.solutions.cards.map((card) => (
             <div key={card.id} className="solution-card">

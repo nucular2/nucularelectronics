@@ -1412,14 +1412,6 @@
   display: block;
 }
 
-.chevron {
-  transition: transform 0.3s ease;
-}
-
-.chevron.open {
-  transform: rotate(180deg);
-}
-
 :root {
   --bg-color: #FFFFFF;
 }

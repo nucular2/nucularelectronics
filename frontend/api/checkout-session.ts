@@ -2,12 +2,25 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET!, {
-  apiVersion: '2024-04-10',
-} as any);
+let stripe: Stripe | null = null;
+function getStripe() {
+  if (stripe) return stripe;
+  const secret = process.env.STRIPE_SECRET || '';
+  if (!secret) {
+    throw new Error('Stripe is not configured (STRIPE_SECRET is missing)');
+  }
+  stripe = new Stripe(secret, { apiVersion: '2024-04-10' } as any);
+  return stripe;
+}
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl =
+  process.env.VITE_SUPABASE_URL ||
+  process.env.SUPABASE_URL ||
+  'https://placeholder.supabase.co';
+const supabaseKey =
+  process.env.SUPABASE_SERVICE_ROLE ||
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  'placeholder-key';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function toNumber(value: unknown): number {
@@ -110,7 +123,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
       line_items: lineItems,

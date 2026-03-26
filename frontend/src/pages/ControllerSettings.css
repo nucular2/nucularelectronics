@@ -489,9 +489,10 @@
 
 .controller-layout {
   display: grid;
-  grid-template-columns: repeat(12, 80px);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: 20px;
   row-gap: 24px;
+  width: 100%;
 }
 
 .controller-list {

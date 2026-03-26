@@ -1253,17 +1253,15 @@ body.is-mobile .cart-count {
 
 .controllers-grid {
   display: grid;
-  grid-template-columns: repeat(3, 380px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: var(--content-w);
   margin: 0 auto;
-  justify-content: center;
 }
 
 @media (max-width: 1240px) {
   .controllers-grid {
-    grid-template-columns: repeat(2, 380px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1282,9 +1280,10 @@ body.is-mobile .cart-count {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 380px;
+  width: 100%;
   height: 526px;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .card-image-container {
@@ -1296,7 +1295,7 @@ body.is-mobile .cart-count {
 }
 
 .card-image {
-  width: 300px;
+  width: min(300px, 100%);
   height: 300px;
   object-fit: contain;
 }
@@ -1632,7 +1631,7 @@ body.is-mobile .cart-count {
 
 /* BMS Section */
 .bms-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 96px;
 }
 
@@ -1717,7 +1716,7 @@ body.is-mobile .cart-count {
 
 /* uLight banner (Home) */
 .home-ulight-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 96px;
 }
 
@@ -1861,20 +1860,19 @@ body.is-mobile .cart-count {
 
 .home-category-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 580px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  justify-content: center;
   width: 100%;
 }
 
 @media (max-width: 1240px) {
   .home-category-grid {
-    grid-template-columns: minmax(0, 580px);
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .home-category-card {
-  width: 580px;
+  width: 100%;
   height: 380px;
   display: block;
   border-radius: 20px;
@@ -1906,19 +1904,18 @@ body.is-mobile .cart-count {
 
 .advantages-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 480px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  justify-content: center;
 }
 
 @media (max-width: 1040px) {
   .advantages-grid {
-    grid-template-columns: minmax(0, 480px);
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .adv-card {
-  width: 480px;
+  width: 100%;
   height: 160px;
   padding: 32px;
   border-radius: 20px;
@@ -1994,20 +1991,19 @@ body.is-mobile .cart-count {
 
 .solutions-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 580px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  justify-content: center;
   width: 100%;
 }
 
 @media (max-width: 1240px) {
   .solutions-grid {
-    grid-template-columns: minmax(0, 580px);
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .solution-card {
-  width: 580px;
+  width: 100%;
   height: 500px;
   border-radius: 20px;
   overflow: hidden;
@@ -2018,7 +2014,7 @@ body.is-mobile .cart-count {
 .solution-card-image {
   position: absolute;
   inset: 0;
-  width: 580px;
+  width: 100%;
   height: 500px;
   object-fit: cover;
   display: block;
@@ -2193,7 +2189,7 @@ body.is-mobile .cart-count {
 
 /* uLight Section */
 .ulight-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 100px;
   display: flex;
   align-items: center;
@@ -2231,7 +2227,7 @@ body.is-mobile .cart-count {
 
 /* OEM Section */
 .oem-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 100px;
   text-align: center;
 }
@@ -3696,7 +3692,7 @@ body.is-mobile .review-card {
 
 /* Electric Watersports Styles */
 .watersports-section {
-  max-width: 1180px;
+  max-width: var(--content-w);
   margin: 0 auto 100px;
   text-align: center;
   padding: 0 20px;

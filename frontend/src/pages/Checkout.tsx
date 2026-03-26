@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Header from "../components/Header";
@@ -191,9 +191,10 @@ export default function Checkout() {
       }
     }
 
-    const country = countries.find(c => c.code === recipient.countryCode);
+    const country = countries.find((c) => c.code === recipient.countryCode);
     const dialCode = country ? country.dial_code : "";
-    const fullPhone = `${dialCode}${recipient.phone}`;
+    const rawPhone = String(recipient.phone || "").trim();
+    const fullPhone = rawPhone.startsWith("+") ? rawPhone : `${dialCode}${rawPhone}`;
 
     if (isProduction) {
       const payload = {
@@ -389,6 +390,25 @@ export default function Checkout() {
   };
   
   const currentOrderId = React.useRef<string | null>(null);
+  const selectedCountry = useMemo(() => {
+    return countries.find((c) => c.code === recipient.countryCode) ?? countries[0];
+  }, [recipient.countryCode]);
+  const sortedCountries = useMemo(() => {
+    return [...countries].sort((a, b) => a.name.localeCompare(b.name));
+  }, []);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const countryDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!countryOpen) return;
+    const onMouseDown = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest?.(".country-dropdown")) return;
+      setCountryOpen(false);
+    };
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, [countryOpen]);
 
   return (
     <>
@@ -452,31 +472,51 @@ export default function Checkout() {
                     className="checkout-input"
                   />
                   <div className="phone-input-group">
-                    <div style={{ position: 'relative' }}>
-                      <select
-                        name="countryCode"
-                        value={recipient.countryCode}
-                        onChange={handleRecipientChange}
-                        className="country-select"
-                        style={{ paddingRight: '24px' }}
+                    <div className="country-dropdown" ref={countryDropdownRef}>
+                      <button
+                        type="button"
+                        className="country-dropdown-trigger"
+                        aria-haspopup="listbox"
+                        aria-expanded={countryOpen}
+                        onClick={() => setCountryOpen((v) => !v)}
                       >
-                        {countries.map((country) => (
-                          <option key={country.code} value={country.code}>
-                            {country.flag}
-                          </option>
-                        ))}
-                      </select>
-                      <div style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '10px', color: '#666' }}>▼</div>
+                        <span className="country-dropdown-flag">{selectedCountry?.flag}</span>
+                        <span className="country-dropdown-caret">▾</span>
+                      </button>
+                      {countryOpen ? (
+                        <div className="country-dropdown-menu" role="listbox">
+                          {sortedCountries.map((c) => (
+                            <button
+                              key={c.code}
+                              type="button"
+                              className="country-dropdown-item"
+                              role="option"
+                              aria-selected={c.code === recipient.countryCode}
+                              onClick={() => {
+                                setRecipient((prev) => ({ ...prev, countryCode: c.code }));
+                                setCountryOpen(false);
+                              }}
+                            >
+                              <span className="country-dropdown-name">{c.name}</span>
+                              <span className="country-dropdown-dial">{c.dial_code}</span>
+                              <span className="country-dropdown-flag-right">{c.flag}</span>
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
+                    <div className="phone-input-wrap">
+                      <div className="phone-prefix">{selectedCountry?.dial_code}</div>
                     <input
                       name="phone"
-                      placeholder="Phone number"
+                      placeholder="(999) 999-9999"
                       value={recipient.phone}
                       onChange={handleRecipientChange}
                       required
-                      className="phone-input"
+                      className="phone-input phone-input--with-prefix"
                       type="tel"
                     />
+                    </div>
                   </div>
                   <input
                     name="email"

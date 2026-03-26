@@ -195,7 +195,9 @@ export default function OrderDetail() {
 
   function displayOrderNumber(order: Order) {
     const crmNumber = order?.contacts?.crm?.number;
-    return crmNumber ? String(crmNumber) : order.id;
+    if (crmNumber) return String(crmNumber);
+    const id = typeof order?.id === "string" ? order.id : "";
+    return id.includes("-") ? id.split("-")[0].toUpperCase() : id;
   }
 
   function getStatusStyle(status: OrderStatus) {

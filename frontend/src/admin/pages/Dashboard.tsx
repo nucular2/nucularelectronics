@@ -29,7 +29,9 @@ function formatDateTime(value: string) {
 
 function displayOrderNumber(order: DbOrder) {
   const crmNumber = order?.contacts?.crm?.number;
-  return crmNumber ? String(crmNumber) : order.id;
+  if (crmNumber) return String(crmNumber);
+  const id = typeof order?.id === 'string' ? order.id : '';
+  return id.includes('-') ? id.split('-')[0].toUpperCase() : id;
 }
 
 const Dashboard: React.FC = () => {

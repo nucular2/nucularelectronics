@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Moon, Sun } from 'lucide-react';
 import '../admin.css';
 
 const Login: React.FC = () => {
@@ -9,6 +10,15 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const { login, loading } = useAuth();
   const navigate = useNavigate();
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return window.localStorage.getItem('admin_theme') === 'light' ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('admin_theme', theme);
+  }, [theme]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +36,20 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="admin-login-shell">
+    <div className={theme === 'light' ? 'admin-login-shell admin-login-shell--light' : 'admin-login-shell'}>
       <div className="admin-login-card">
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button
+            type="button"
+            className="admin-button"
+            onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
+            style={{ width: 44, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+            aria-label="Toggle theme"
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 10 }}>
           <h2 className="admin-login-title">Административная панель</h2>
           <p className="admin-login-subtitle">Вход в систему</p>
         </div>

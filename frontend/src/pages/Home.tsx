@@ -9,11 +9,13 @@ import AnimatedSpecsText from "../components/AnimatedSpecsText";
 import NewsletterBanner from "../components/NewsletterBanner";
 import HomeCmsSections from "../components/home/HomeCmsSections";
 import { defaultHomeCmsConfig, type HomeCmsConfig } from "../cms/homeConfig";
+import { useNews } from "../context/NewsContext";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const { reviews } = useReviews();
   const { addToCart } = useCart();
+  const { news: newsData } = useNews();
   const navigate = useNavigate();
   const [homeCms, setHomeCms] = useState<HomeCmsConfig>(defaultHomeCmsConfig);
 
@@ -88,108 +90,6 @@ export default function Home() {
       author: "France, Hans Muller",
       flag: "/flag3.png",
       link: "#"
-    }
-  ];
-
-  // News Data
-  const newsData = [
-    {
-      id: 1,
-      title: "Protection of controllers",
-      date: "June 20, 2022",
-      image: "/new1.png",
-      text: "New circuit engineering and improved protection of controllers from our users."
-    },
-    {
-      id: 2,
-      title: "Price increase",
-      date: "June 5, 2022",
-      image: "/new2.png",
-      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
-    },
-    {
-      id: 3,
-      title: "Big/Bug update!",
-      date: "May 28, 2022",
-      image: "/new3.png",
-      text: "The big update of the Controller (v0.8.1) and the On-board Computer (v0.70)."
-    },
-    {
-      id: 4,
-      title: "Discount on pre-order",
-      date: "May 24, 2022",
-      image: "/new4.png",
-      text: "Until the end of spring, you can order a controller with a 15% discount."
-    },
-    {
-      id: 5,
-      title: "Protection of controllers",
-      date: "May 15, 2022",
-      image: "/new5.png",
-      text: "New circuit engineering and improved protection of controllers from our users."
-    },
-    {
-      id: 6,
-      title: "Protection of controllers",
-      date: "June 20, 2022",
-      image: "/new6.png",
-      text: "New circuit engineering and improved protection of controllers from our users."
-    },
-    {
-      id: 7,
-      title: "Price increase",
-      date: "June 5, 2022",
-      image: "/new7.png",
-      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
-    },
-    {
-      id: 8,
-      title: "Brief news for the year",
-      date: "April 3, 2022",
-      image: "/new8.png",
-      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
-    },
-    {
-      id: 9,
-      title: "Protection of controllers",
-      date: "May 15, 2022",
-      image: "/new9.png",
-      text: "New circuit engineering and improved protection of controllers from our users."
-    },
-    {
-      id: 10,
-      title: "Price increase",
-      date: "April 29, 2022",
-      image: "/new10.png",
-      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
-    },
-    {
-      id: 11,
-      title: "Brief news for the year",
-      date: "May 20, 2022",
-      image: "/new11.png",
-      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
-    },
-    {
-      id: 12,
-      title: "Big/Bug update!",
-      date: "April 25, 2022",
-      image: "/new12.png",
-      text: "The big update of the Controller (v0.8.1) and the On-board Computer (v0.70)."
-    },
-    {
-      id: 13,
-      title: "Brief news for the year",
-      date: "April 3, 2022",
-      image: "/new13.png",
-      text: "The uLight controller, rules of sales and guarantees. New casing for 24f, waiting time and a ..."
-    },
-    {
-      id: 14,
-      title: "Price increase",
-      date: "June 5, 2022",
-      image: "/new14.png",
-      text: "Updating the cost of controllers. The sadness and grief news about the reasons for the price ..."
     }
   ];
 
@@ -535,7 +435,7 @@ export default function Home() {
           <div style={{ 
             width: '100%',
             margin: '0',
-            padding: '40px 0',
+            padding: '0 0 40px',
             background: '#ffffff'
           }}>
             <div className="grid-container" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1140,8 +1040,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-
-          <HomeCmsSections config={homeCms} />
 
           <NewsletterBanner />
 

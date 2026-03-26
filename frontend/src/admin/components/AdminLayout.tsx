@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, ShoppingCart, Users, FolderTree, LogOut, MessageSquare, Newspaper, Home as HomeIcon } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Users, FolderTree, LogOut, MessageSquare, Newspaper, Home as HomeIcon, Moon, Sun } from 'lucide-react';
 import '../admin.css';
 
 const AdminLayout: React.FC = () => {
   const { user, logout } = useAuth();
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return window.localStorage.getItem('admin_theme') === 'light' ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('admin_theme', theme);
+  }, [theme]);
 
   return (
-    <div className="admin-shell">
+    <div className={theme === 'light' ? 'admin-shell admin-shell--light' : 'admin-shell'}>
       <aside className="admin-sidebar">
         <div className="admin-brand">
           <div className="admin-brand-left">
@@ -79,6 +88,15 @@ const AdminLayout: React.FC = () => {
             {user?.email ? `Welcome, ${user.email}` : 'Welcome'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <button
+              type="button"
+              className="admin-button"
+              onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
+              style={{ width: 44, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
             <div className="admin-badge">v1</div>
           </div>
         </header>

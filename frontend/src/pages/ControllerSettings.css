@@ -293,7 +293,7 @@
 
 .support-topic {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding-left: 8px;
   font-family: var(--font-family);
@@ -304,6 +304,8 @@
 .support-topic span {
   font-weight: 700;
   font-size: var(--footer-title-fs);
+  display: inline-block;
+  margin-top: 3px;
 }
 
 .support-topic-link {
@@ -333,6 +335,10 @@
   order: 2;
   margin-left: auto;
   margin-right: auto;
+}
+
+.support-help-banner--compact {
+  margin-top: 32px;
 }
 
 .support-help-content {
@@ -601,38 +607,6 @@
   max-width: 100%;
   border-radius: 12px;
   margin-bottom: 32px;
-}
-
-.controller-page-toc {
-  grid-column: 8 / span 2;
-  display: none; /* Hidden by default, visible on large screens if needed */
-}
-
-@media (min-width: 1200px) {
-  .controller-page-toc {
-    display: block;
-  }
-}
-
-.controller-page-toc-title {
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: var(--footer-link-fs);
-  color: #222;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.controller-page-toc-item {
-  font-family: var(--font-family);
-  font-size: var(--footer-link-fs);
-  color: #666;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-.controller-page-toc-item:hover {
-  color: #F36F25;
 }
 
 @media (max-width: 899.98px) {

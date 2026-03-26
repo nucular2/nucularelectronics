@@ -299,3 +299,140 @@
   background: rgba(37, 99, 235, 0.30);
 }
 
+.admin-shell--light {
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(59, 130, 246, 0.10), transparent 55%),
+    radial-gradient(900px 520px at 85% 25%, rgba(34, 197, 94, 0.08), transparent 55%),
+    radial-gradient(900px 520px at 50% 110%, rgba(99, 102, 241, 0.06), transparent 60%),
+    #f5f6fa;
+  color: #111;
+}
+
+.admin-shell--light .admin-sidebar {
+  background: rgba(255, 255, 255, 0.85);
+  border-right: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+.admin-shell--light .admin-brand-title {
+  color: #111827;
+}
+
+.admin-shell--light .admin-brand-subtitle {
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.admin-shell--light .admin-nav-link {
+  color: rgba(17, 24, 39, 0.75);
+}
+
+.admin-shell--light .admin-nav-link:hover {
+  background: rgba(17, 24, 39, 0.05);
+  border-color: rgba(17, 24, 39, 0.08);
+}
+
+.admin-shell--light .admin-nav-link.active {
+  background: rgba(37, 99, 235, 0.10);
+  border-color: rgba(37, 99, 235, 0.25);
+  color: #111827;
+}
+
+.admin-shell--light .admin-logout {
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.75);
+  color: #111827;
+}
+
+.admin-shell--light .admin-logout:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.admin-shell--light .admin-topbar {
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+.admin-shell--light .admin-topbar-text {
+  color: rgba(17, 24, 39, 0.80);
+}
+
+.admin-shell--light .admin-badge {
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.7);
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.admin-shell--light .admin-card {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+.admin-shell--light .admin-card-title {
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.admin-shell--light .admin-card-subtitle,
+.admin-shell--light .admin-muted {
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.admin-shell--light .admin-button {
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.75);
+  color: rgba(17, 24, 39, 0.80);
+}
+
+.admin-shell--light .admin-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.admin-shell--light .admin-button.active {
+  background: rgba(37, 99, 235, 0.16);
+  border-color: rgba(37, 99, 235, 0.28);
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.admin-shell--light .admin-input {
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.admin-shell--light .admin-input:focus {
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.admin-login-shell--light {
+  background:
+    radial-gradient(900px 520px at 20% 15%, rgba(59, 130, 246, 0.10), transparent 58%),
+    radial-gradient(900px 520px at 85% 30%, rgba(34, 197, 94, 0.08), transparent 58%),
+    #f5f6fa;
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.admin-login-shell--light .admin-login-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+.admin-login-shell--light .admin-login-title {
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.admin-login-shell--light .admin-login-subtitle {
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.admin-login-shell--light .admin-alert {
+  background: rgba(239, 68, 68, 0.10);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: rgba(127, 29, 29, 0.92);
+}
+
+.admin-modal-card {
+  background: rgba(11, 16, 26, 0.86);
+}
+
+.admin-shell--light .admin-modal-card {
+  background: rgba(255, 255, 255, 0.92);
+}

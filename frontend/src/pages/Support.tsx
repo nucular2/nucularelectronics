@@ -141,7 +141,7 @@ export default function Support() {
                 <span>For developers</span>
               </div>
             </div>
-              <div className="support-help-banner support-help-banner--narrow">
+              <div className="support-help-banner support-help-banner--narrow support-help-banner--compact">
               <div className="support-help-content">
                 <div className="support-help-title">I need help!</div>
                 <div className="support-help-text">

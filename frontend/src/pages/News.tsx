@@ -2,6 +2,14 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { useNews } from "../context/NewsContext";
 
+function excerptFromBlocks(blocks: any) {
+  const list = Array.isArray(blocks) ? blocks : [];
+  const firstText = list.find((b) => b?.type === "paragraph" && typeof b?.text === "string" && b.text.trim().length > 0)?.text;
+  if (typeof firstText !== "string") return "";
+  const t = firstText.trim();
+  return t.length > 120 ? `${t.slice(0, 120)}...` : t;
+}
+
 export default function News() {
   const { news } = useNews();
   const top = news.slice(0, 2);
@@ -33,7 +41,7 @@ export default function News() {
         )}
         <div className="news-meta">{item.date}</div>
         <h2 className="news-card-title">{item.title}</h2>
-        <p className="news-card-text">{item.text}</p>
+        <p className="news-card-text">{item.text || excerptFromBlocks(item.blocks)}</p>
       </article>
     );
   };

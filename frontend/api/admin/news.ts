@@ -4,6 +4,36 @@ import { readJson, writeJson } from '../_utils/cmsStorage';
 
 const PATH = 'news.json';
 
+function sanitizeBlocks(blocks: any) {
+  const list = Array.isArray(blocks) ? blocks : [];
+  const out = [];
+  for (const b of list) {
+    const type = String(b?.type || '').trim();
+    const id = String(b?.id || '').trim() || `${type}-${Math.random().toString(16).slice(2)}`;
+    if (type === 'heading') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      out.push({ id, type: 'heading', text });
+      continue;
+    }
+    if (type === 'paragraph') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      out.push({ id, type: 'paragraph', text });
+      continue;
+    }
+    if (type === 'image') {
+      const url = String(b?.url || '').trim();
+      if (!url) continue;
+      const alt = String(b?.alt || '').trim() || undefined;
+      const caption = String(b?.caption || '').trim() || undefined;
+      out.push({ id, type: 'image', url, alt, caption });
+      continue;
+    }
+  }
+  return out;
+}
+
 function sanitizeNews(items: any[]) {
   const normalized = (items || [])
     .map((x) => ({
@@ -13,6 +43,7 @@ function sanitizeNews(items: any[]) {
       image: String(x?.image || '').trim(),
       text: String(x?.text || '').trim(),
       link: String(x?.link || '').trim() || undefined,
+      blocks: sanitizeBlocks(x?.blocks),
     }))
     .filter((x) => x.id && x.title && x.date && x.text);
 
@@ -44,4 +75,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ message: e?.message || String(e) });
   }
 }
-

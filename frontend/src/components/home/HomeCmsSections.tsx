@@ -43,6 +43,13 @@ function renderAccentTitle(title: string, accentWords: string[]) {
 
 export default function HomeCmsSections({ config }: { config: HomeCmsConfig }) {
   const navigate = useNavigate();
+  const solutionsSubtitleParts = React.useMemo(() => {
+    const raw = String(config.solutions.subtitle || '');
+    if (!raw) return null;
+    const parts = raw.split('\n');
+    if (parts.length <= 1) return [raw];
+    return parts;
+  }, [config.solutions.subtitle]);
 
   return (
     <>
@@ -88,6 +95,16 @@ export default function HomeCmsSections({ config }: { config: HomeCmsConfig }) {
 
       <section className="solutions-section">
         <div className="solutions-title">{config.solutions.title}</div>
+        {solutionsSubtitleParts ? (
+          <div className="solutions-subtitle">
+            {solutionsSubtitleParts.map((p, idx) => (
+              <React.Fragment key={idx}>
+                {p}
+                {idx < solutionsSubtitleParts.length - 1 ? <br /> : null}
+              </React.Fragment>
+            ))}
+          </div>
+        ) : null}
         <div className="solutions-grid">
           {config.solutions.cards.map((card) => (
             <div key={card.id} className="solution-card">
@@ -115,11 +132,15 @@ export default function HomeCmsSections({ config }: { config: HomeCmsConfig }) {
       </section>
 
       <section className="home-bottom-plates">
-        {config.bottomPlates.sections.map((s) => (
+        {config.bottomPlates.sections.map((s, idx) => (
           <React.Fragment key={s.id}>
             <div className="home-bottom-title">{s.title}</div>
             <div className="home-bottom-subtitle">{s.subtitle}</div>
-            <div className={`home-bottom-row ${s.layout === 'sm-lg' ? 'home-bottom-row--reverse' : ''}`}>
+            <div
+              className={`home-bottom-row ${s.layout === 'sm-lg' ? 'home-bottom-row--reverse' : ''} ${
+                idx === config.bottomPlates.sections.length - 1 ? 'home-bottom-row--last' : ''
+              }`}
+            >
               <div className={`home-plate ${s.layout === 'lg-sm' ? 'home-plate--lg' : 'home-plate--sm'}`}>
                 <div className="home-plate-title">{s.left.title}</div>
                 <div className="home-plate-text">{s.left.text}</div>
@@ -165,4 +186,3 @@ export default function HomeCmsSections({ config }: { config: HomeCmsConfig }) {
     </>
   );
 }
-

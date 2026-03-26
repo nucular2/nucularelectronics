@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
+export type NewsBlock =
+  | { id: string; type: 'heading'; text: string }
+  | { id: string; type: 'paragraph'; text: string }
+  | { id: string; type: 'image'; url: string; alt?: string; caption?: string };
+
 export type NewsItem = {
   id: number;
   title: string;
@@ -7,6 +12,7 @@ export type NewsItem = {
   image: string;
   text: string;
   link?: string;
+  blocks?: NewsBlock[];
 };
 
 const initialNews: NewsItem[] = [

@@ -19,6 +19,7 @@ export type HomeCmsConfigV1 = {
   };
   solutions: {
     title: string;
+    subtitle?: string;
     cards: Array<{
       id: string;
       imageUrl: string;
@@ -85,6 +86,7 @@ export const defaultHomeCmsConfig: HomeCmsConfig = {
   },
   solutions: {
     title: 'Complete solutions',
+    subtitle: 'Plug and Ride kits so as not to bother with diagrams, custom\nharnesses, connectors and soldering.',
     cards: [
       { id: 'kit1', imageUrl: '/kit1.png', alt: 'Kit 1', buyHref: '/shop', learnHref: '/shop' },
       { id: 'kit2', imageUrl: '/kit2.png', alt: 'Kit 2', buyHref: '/shop', learnHref: '/shop' },
@@ -115,4 +117,3 @@ export const defaultHomeCmsConfig: HomeCmsConfig = {
     ],
   },
 };
-

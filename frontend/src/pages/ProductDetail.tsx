@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
@@ -17,6 +17,7 @@ type ProductDetailProps = {
 export default function ProductDetail({ productId, imagesOverride }: ProductDetailProps) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToCart } = useCart();
   const { products } = useProducts();
   const { getContent } = useProductContent();
@@ -187,20 +188,89 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     return ["/miniature.svg"];
   }, [imagesOverride, productContent?.images, isP24F, product?.image]);
 
-  const [mainImage, setMainImage] = useState<string>(() => images[0] ?? "");
+  const urlColor = useMemo(() => {
+    const p = new URLSearchParams(location.search);
+    return p.get("color") === "blue" ? "blue" : "black";
+  }, [location.search]);
+
+  const [selectedColor, setSelectedColor] = useState<"black" | "blue">(() =>
+    isP24F && urlColor === "blue" ? "blue" : "black"
+  );
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useEffect(() => {
-    setMainImage((prev) => {
-      const next = images[0] ?? "";
-      if (!next) {
-        return prev;
-      }
-      if (prev && images.includes(prev)) {
-        return prev;
-      }
-      return next;
+    setSelectedColor(isP24F && urlColor === "blue" ? "blue" : "black");
+    setActiveImageIndex(0);
+  }, [isP24F, urlColor]);
+
+  const galleryItems = useMemo(() => {
+    const base = images.map((src) => ({ full: src, thumb: src, key: src }));
+    if (isP24F && selectedColor === "blue" && base.length > 0) {
+      base[0] = { full: "/синяякарточка.svg", thumb: "/coverсиний.svg", key: "blue-0" };
+    }
+    return base;
+  }, [images, isP24F, selectedColor]);
+
+  useEffect(() => {
+    setActiveImageIndex((prev) => {
+      if (galleryItems.length === 0) return 0;
+      if (prev < 0) return 0;
+      if (prev >= galleryItems.length) return 0;
+      return prev;
     });
-  }, [images]);
+  }, [galleryItems]);
+
+  const mainImage = galleryItems[activeImageIndex]?.full ?? images[0] ?? "";
+
+  useEffect(() => {
+    if (!isGalleryOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isGalleryOpen]);
+
+  useEffect(() => {
+    if (!isGalleryOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsGalleryOpen(false);
+      }
+      if (e.key === "ArrowLeft") {
+        setActiveImageIndex((idx) => {
+          if (galleryItems.length === 0) return 0;
+          return (idx - 1 + galleryItems.length) % galleryItems.length;
+        });
+      }
+      if (e.key === "ArrowRight") {
+        setActiveImageIndex((idx) => {
+          if (galleryItems.length === 0) return 0;
+          return (idx + 1) % galleryItems.length;
+        });
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isGalleryOpen, galleryItems.length]);
+
+  const openGalleryAt = (index: number) => {
+    if (galleryItems.length === 0) return;
+    const safeIndex = Math.max(0, Math.min(index, galleryItems.length - 1));
+    setActiveImageIndex(safeIndex);
+    setIsGalleryOpen(true);
+  };
+
+  const goPrev = () => {
+    if (galleryItems.length === 0) return;
+    setActiveImageIndex((idx) => (idx - 1 + galleryItems.length) % galleryItems.length);
+  };
+
+  const goNext = () => {
+    if (galleryItems.length === 0) return;
+    setActiveImageIndex((idx) => (idx + 1) % galleryItems.length);
+  };
 
   const [isOverviewOpen, setIsOverviewOpen] = useState(true);
   const [isSpecsOpen, setIsSpecsOpen] = useState(true);
@@ -274,19 +344,19 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
 
           <div className="product-main">
             <div className="product-gallery">
-              <div className="product-main-image">
+              <button type="button" className="product-main-image" onClick={() => openGalleryAt(activeImageIndex)}>
                 <img src={mainImage} alt={displayTitle} />
-              </div>
+              </button>
               <img src="/точки.svg" alt="Pagination" className="product-mobile-dots" />
               <div className="product-thumbnails">
-                {images.map((src) => (
+                {galleryItems.map((item, idx) => (
                   <button
-                    key={src}
-                    className={`product-thumbnail${mainImage === src ? " active" : ""}`}
-                    onClick={() => setMainImage(src)}
+                    key={item.key}
+                    className={`product-thumbnail${activeImageIndex === idx ? " active" : ""}`}
+                    onClick={() => setActiveImageIndex(idx)}
                     aria-label="Select image"
                   >
-                    <img src={src} alt={displayTitle} />
+                    <img src={item.thumb} alt={displayTitle} />
                   </button>
                 ))}
               </div>
@@ -377,17 +447,36 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
 
               {!isOnBoardComputer && !isULight && !isAdapter && !isBaseballCap && (
                 <div className="product-color-section">
-                  <span className="product-color-label">Color — Black</span>
+                  <span className="product-color-label">Color — {selectedColor === "blue" ? "Blue" : "Black"}</span>
                   <div className="product-color-dots">
-                    <button className="product-color-dot" aria-label="Black">
+                    <button
+                      type="button"
+                      className="product-color-dot"
+                      aria-label="Black"
+                      onClick={() => {
+                        navigate({ pathname: location.pathname, search: "" });
+                      }}
+                    >
                       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16" cy="16" r="11" fill="#0A0A0D" />
-                        <circle cx="16" cy="16" r="15" stroke="#B0B0B0" strokeWidth="2" />
+                        {selectedColor === "black" ? (
+                          <circle cx="16" cy="16" r="15" stroke="#B0B0B0" strokeWidth="2" />
+                        ) : null}
                       </svg>
                     </button>
-                    <button className="product-color-dot" aria-label="Blue">
-                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="11" cy="11" r="11" fill="#13447C" />
+                    <button
+                      type="button"
+                      className="product-color-dot"
+                      aria-label="Blue"
+                      onClick={() => {
+                        navigate({ pathname: location.pathname, search: "?color=blue" });
+                      }}
+                    >
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="11" fill="#13447C" />
+                        {selectedColor === "blue" ? (
+                          <circle cx="16" cy="16" r="15" stroke="#B0B0B0" strokeWidth="2" />
+                        ) : null}
                       </svg>
                     </button>
                     <button className="product-color-dot" aria-label="Green">
@@ -466,6 +555,49 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
  
             </div>
           </div>
+
+          {isGalleryOpen && (
+            <div className="product-gallery-modal" role="dialog" aria-modal="true">
+              <button
+                type="button"
+                className="product-gallery-modal-backdrop"
+                aria-label="Close"
+                onClick={() => setIsGalleryOpen(false)}
+              />
+              <div className="product-gallery-modal-content">
+                <button
+                  type="button"
+                  className="product-gallery-modal-close"
+                  aria-label="Close"
+                  onClick={() => setIsGalleryOpen(false)}
+                >
+                  ×
+                </button>
+                <button type="button" className="product-gallery-modal-nav product-gallery-modal-nav--left" aria-label="Previous" onClick={goPrev}>
+                  ‹
+                </button>
+                <button type="button" className="product-gallery-modal-nav product-gallery-modal-nav--right" aria-label="Next" onClick={goNext}>
+                  ›
+                </button>
+                <div className="product-gallery-modal-image-wrap">
+                  <img src={mainImage} alt={displayTitle} className="product-gallery-modal-image" />
+                </div>
+                <div className="product-gallery-modal-thumbs">
+                  {galleryItems.map((item, idx) => (
+                    <button
+                      key={`modal-${item.key}`}
+                      type="button"
+                      className={`product-gallery-modal-thumb${activeImageIndex === idx ? " active" : ""}`}
+                      onClick={() => setActiveImageIndex(idx)}
+                      aria-label="Select image"
+                    >
+                      <img src={item.thumb} alt={displayTitle} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
 
           <CollapsibleSection

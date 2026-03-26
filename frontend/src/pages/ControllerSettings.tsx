@@ -261,33 +261,8 @@ export default function ControllerSettings() {
                     </>
                   )}
                 </div>
-                {activeSection === "setup" && (
-                  <div className="controller-page-toc">
-                    <div className="controller-page-toc-title">On this page</div>
-                    <div className="controller-page-toc-item">Controller (v.0.8.13)</div>
-                    <div className="controller-page-toc-item">Connecting multiple controllers</div>
-                  </div>
-                )}
               </div>
               )}
-            </div>
-            <div className="support-help-banner support-help-banner--narrow">
-              <div className="support-help-content">
-                <div className="support-help-title">I need help!</div>
-                <div className="support-help-text">
-                  If you have questions, suggestions or you need technical support, use one of the
-                  following methods to contact us.
-                </div>
-                <div className="support-help-actions">
-                  <button className="support-help-button support-help-button--narrow">Write to us</button>
-                  <div className="support-help-icons">
-                    <img src="/social.png" alt="Email" />
-                    <img src="/тг.png" alt="Telegram" />
-                    <img src="/ватсап.png" alt="WhatsApp" />
-                    <img src="/макс.png" alt="Messenger" />
-                  </div>
-                </div>
-              </div>
             </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Plus, Search, Trash2, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Plus, Search, Trash2, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
-import type { NewsItem } from '../../context/NewsContext';
+import type { NewsBlock, NewsItem } from '../../context/NewsContext';
+import NewsBlocks from '../../components/news/NewsBlocks';
 
 type EditorMode = 'add' | 'edit';
 
@@ -19,6 +20,48 @@ function arrayBufferToBase64(buf: ArrayBuffer) {
   return btoa(binary);
 }
 
+function createId(prefix: string) {
+  return `${prefix}-${Math.random().toString(16).slice(2)}${Date.now().toString(16)}`;
+}
+
+function normalizeBlocks(blocks: any): NewsBlock[] {
+  const list = Array.isArray(blocks) ? blocks : [];
+  const out: NewsBlock[] = [];
+  for (const b of list) {
+    const type = String(b?.type || '').trim();
+    const id = String(b?.id || '').trim() || createId(type || 'b');
+    if (type === 'heading') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      out.push({ id, type: 'heading', text });
+      continue;
+    }
+    if (type === 'paragraph') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      out.push({ id, type: 'paragraph', text });
+      continue;
+    }
+    if (type === 'image') {
+      const url = String(b?.url || '').trim();
+      if (!url) continue;
+      const alt = String(b?.alt || '').trim() || undefined;
+      const caption = String(b?.caption || '').trim() || undefined;
+      out.push({ id, type: 'image', url, alt, caption });
+      continue;
+    }
+  }
+  return out;
+}
+
+function blocksToExcerpt(blocks: NewsBlock[]) {
+  const firstPara = blocks.find((b) => b.type === 'paragraph') as NewsBlock | undefined;
+  const firstText = firstPara && firstPara.type === 'paragraph' ? firstPara.text : '';
+  const t = String(firstText || '').trim();
+  if (!t) return '';
+  return t.length > 140 ? `${t.slice(0, 140)}...` : t;
+}
+
 export default function NewsManager() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [query, setQuery] = useState('');
@@ -28,6 +71,7 @@ export default function NewsManager() {
   const [formData, setFormData] = useState<Partial<NewsItem>>({});
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
 
   const loadNews = async () => {
     const r = await fetch('/api/content/news');
@@ -47,7 +91,8 @@ export default function NewsManager() {
       return (
         normalizeQuery(n.title).includes(q) ||
         normalizeQuery(n.date).includes(q) ||
-        normalizeQuery(n.text).includes(q)
+        normalizeQuery(n.text).includes(q) ||
+        normalizeQuery(JSON.stringify(n.blocks || '')).includes(q)
       );
     });
   }, [news, query]);
@@ -55,14 +100,22 @@ export default function NewsManager() {
   const openAdd = () => {
     setEditorMode('add');
     setEditingId(null);
-    setFormData({ title: '', date: '', image: '', text: '', link: '' });
+    setFormData({
+      title: '',
+      date: '',
+      image: '',
+      text: '',
+      link: '',
+      blocks: [{ id: createId('p'), type: 'paragraph', text: '' }],
+    });
     setEditorOpen(true);
   };
 
   const openEdit = (item: NewsItem) => {
     setEditorMode('edit');
     setEditingId(item.id);
-    setFormData({ ...item });
+    const blocks = normalizeBlocks(item.blocks?.length ? item.blocks : [{ id: createId('p'), type: 'paragraph', text: item.text }]);
+    setFormData({ ...item, blocks, text: item.text || blocksToExcerpt(blocks) });
     setEditorOpen(true);
   };
 
@@ -76,10 +129,12 @@ export default function NewsManager() {
     const title = String(formData.title || '').trim();
     const date = String(formData.date || '').trim();
     const image = String(formData.image || '').trim();
-    const text = String(formData.text || '').trim();
+    const manualText = String(formData.text || '').trim();
     const link = String(formData.link || '').trim();
+    const blocks = normalizeBlocks(formData.blocks);
+    const excerpt = manualText || blocksToExcerpt(blocks);
 
-    if (!title || !date || !text) return;
+    if (!title || !date || !excerpt) return;
 
     const run = async () => {
       setSaving(true);
@@ -92,8 +147,9 @@ export default function NewsManager() {
             title,
             date,
             image: image || '/new1.png',
-            text,
-            link: link || undefined,
+            text: excerpt,
+            link: link || `/news/${nextId}`,
+            blocks,
           });
         } else if (editingId != null) {
           const idx = next.findIndex((n) => n.id === editingId);
@@ -103,8 +159,9 @@ export default function NewsManager() {
               title,
               date,
               image: image || '/new1.png',
-              text,
-              link: link || undefined,
+              text: excerpt,
+              link: link || next[idx].link || `/news/${editingId}`,
+              blocks,
             };
           }
         }
@@ -185,6 +242,37 @@ export default function NewsManager() {
       alert(e?.message || String(e));
     } finally {
       setUploading(false);
+    }
+  };
+
+  const uploadBlockImage = async (blockId: string, file: File) => {
+    setUploadingBlockId(blockId);
+    try {
+      const buf = await file.arrayBuffer();
+      const base64 = arrayBufferToBase64(buf);
+      const { data } = await supabase.auth.getSession();
+      const token = data?.session?.access_token;
+      if (!token) throw new Error('Not authenticated');
+
+      const r = await fetch('/api/admin/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ filename: file.name, contentType: file.type || 'application/octet-stream', base64, folder: 'news' }),
+      });
+      const payload = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(payload?.message || `Upload failed: ${r.status}`);
+      const url = String(payload?.url || '');
+      if (!url) throw new Error('Upload failed: missing url');
+      setFormData((p) => {
+        const nextBlocks = Array.isArray(p.blocks) ? [...p.blocks] : [];
+        const idx = nextBlocks.findIndex((b: any) => String(b?.id) === blockId);
+        if (idx !== -1) nextBlocks[idx] = { ...nextBlocks[idx], type: 'image', url };
+        return { ...p, blocks: nextBlocks };
+      });
+    } catch (e: any) {
+      alert(e?.message || String(e));
+    } finally {
+      setUploadingBlockId(null);
     }
   };
 
@@ -281,14 +369,14 @@ export default function NewsManager() {
           onMouseDown={closeEditor}
         >
           <div
-            className="admin-card"
-            style={{ width: 720, maxWidth: '100%', background: 'rgba(11, 16, 26, 0.86)' }}
+            className="admin-card admin-modal-card"
+            style={{ width: 720, maxWidth: '100%' }}
             onMouseDown={(e) => e.stopPropagation()}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
               <div>
                 <div className="admin-card-title">{editorMode === 'add' ? 'Add news' : 'Edit news'}</div>
-                <div className="admin-card-subtitle">Поля можно оставить пустыми, кроме title/date/text</div>
+                <div className="admin-card-subtitle">Мини-конструктор: заголовки, текст, картинки</div>
               </div>
               <button type="button" className="admin-button" onClick={closeEditor} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 36, padding: 0 }}>
                 <X size={18} />
@@ -326,13 +414,226 @@ export default function NewsManager() {
                 <input className="admin-input" value={String(formData.link || '')} onChange={(e) => setFormData((p) => ({ ...p, link: e.target.value }))} placeholder="/news/..." />
               </div>
               <div style={{ gridColumn: '1 / -1' }}>
-                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Text</div>
+                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Card text (optional)</div>
                 <textarea
                   className="admin-input"
                   value={String(formData.text || '')}
                   onChange={(e) => setFormData((p) => ({ ...p, text: e.target.value }))}
                   style={{ height: 140, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
                 />
+              </div>
+
+              <div style={{ gridColumn: '1 / -1' }}>
+                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 10 }}>Content blocks</div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('h'), type: 'heading', text: '' }],
+                      }))
+                    }
+                  >
+                    + Heading
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('p'), type: 'paragraph', text: '' }],
+                      }))
+                    }
+                  >
+                    + Text
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('img'), type: 'image', url: '', alt: '', caption: '' }],
+                      }))
+                    }
+                  >
+                    + Image
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {(Array.isArray(formData.blocks) ? formData.blocks : []).map((block: any, idx: number) => (
+                    <div
+                      key={String(block?.id || idx)}
+                      style={{
+                        borderRadius: 14,
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        background: 'rgba(255,255,255,0.04)',
+                        padding: 12,
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
+                        <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                          {String(block?.type || 'block')}
+                        </div>
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                          <button
+                            type="button"
+                            className="admin-button"
+                            onClick={() =>
+                              setFormData((p) => {
+                                const nextBlocks = Array.isArray(p.blocks) ? [...p.blocks] : [];
+                                if (idx <= 0) return p;
+                                const t = nextBlocks[idx - 1];
+                                nextBlocks[idx - 1] = nextBlocks[idx];
+                                nextBlocks[idx] = t;
+                                return { ...p, blocks: nextBlocks };
+                              })
+                            }
+                            style={{ width: 36, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                            disabled={idx === 0}
+                          >
+                            <ArrowUp size={16} />
+                          </button>
+                          <button
+                            type="button"
+                            className="admin-button"
+                            onClick={() =>
+                              setFormData((p) => {
+                                const nextBlocks = Array.isArray(p.blocks) ? [...p.blocks] : [];
+                                if (idx >= nextBlocks.length - 1) return p;
+                                const t = nextBlocks[idx + 1];
+                                nextBlocks[idx + 1] = nextBlocks[idx];
+                                nextBlocks[idx] = t;
+                                return { ...p, blocks: nextBlocks };
+                              })
+                            }
+                            style={{ width: 36, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                            disabled={idx === (Array.isArray(formData.blocks) ? formData.blocks.length : 0) - 1}
+                          >
+                            <ArrowDown size={16} />
+                          </button>
+                          <button
+                            type="button"
+                            className="admin-button"
+                            onClick={() =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).filter((b: any) => String(b?.id) !== String(block?.id)),
+                              }))
+                            }
+                            style={{ width: 36, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fca5a5' }}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {block?.type === 'heading' ? (
+                        <input
+                          className="admin-input"
+                          value={String(block?.text || '')}
+                          onChange={(e) =>
+                            setFormData((p) => ({
+                              ...p,
+                              blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                              ),
+                            }))
+                          }
+                          placeholder="Heading"
+                        />
+                      ) : null}
+
+                      {block?.type === 'paragraph' ? (
+                        <textarea
+                          className="admin-input"
+                          value={String(block?.text || '')}
+                          onChange={(e) =>
+                            setFormData((p) => ({
+                              ...p,
+                              blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                              ),
+                            }))
+                          }
+                          style={{ height: 120, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
+                          placeholder="Text"
+                        />
+                      ) : null}
+
+                      {block?.type === 'image' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+                          <input
+                            className="admin-input"
+                            value={String(block?.url || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, url: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Image URL"
+                          />
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              disabled={uploadingBlockId === String(block?.id)}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) void uploadBlockImage(String(block?.id), file);
+                              }}
+                            />
+                            <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                              {uploadingBlockId === String(block?.id) ? 'Uploading…' : 'Upload image'}
+                            </div>
+                          </div>
+                          <input
+                            className="admin-input"
+                            value={String(block?.caption || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, caption: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Caption (optional)"
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ gridColumn: '1 / -1' }}>
+                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 10 }}>Preview</div>
+                <div style={{ background: '#fff', borderRadius: 14, padding: 16, boxSizing: 'border-box' }}>
+                  <div style={{ fontFamily: 'var(--font-family)', fontWeight: 700, fontSize: 22, color: '#111', marginBottom: 6 }}>
+                    {String(formData.title || '').trim() || 'Untitled'}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-family)', fontSize: 12, color: '#999', marginBottom: 12 }}>
+                    {String(formData.date || '').trim()}
+                  </div>
+                  {String(formData.image || '').trim() ? (
+                    <div style={{ width: '100%', height: 220, borderRadius: 14, overflow: 'hidden', marginBottom: 16 }}>
+                      <img
+                        src={String(formData.image || '')}
+                        alt=""
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    </div>
+                  ) : null}
+                  <NewsBlocks blocks={normalizeBlocks(formData.blocks)} />
+                </div>
               </div>
             </div>
 

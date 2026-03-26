@@ -534,22 +534,30 @@ export default function Home() {
               <div className="advantages-grid">
                 <div className="adv-card">
                   <div className="adv-number">01.</div>
-                  <div className="adv-title">Worldwide courier shipping</div>
+                  <div className="adv-title">
+                    Worldwide courier <span className="adv-accent">shipping</span>
+                  </div>
                   <div className="adv-text">We guarantee delivery of your order.</div>
                 </div>
                 <div className="adv-card">
                   <div className="adv-number">02.</div>
-                  <div className="adv-title">Faster and friendly technical support</div>
+                  <div className="adv-title">
+                    Faster and friendly technical <span className="adv-accent">support</span>
+                  </div>
                   <div className="adv-text">Be sure we'll help you in any situation.</div>
                 </div>
                 <div className="adv-card">
                   <div className="adv-number">03.</div>
-                  <div className="adv-title">Regularly updated firmware</div>
+                  <div className="adv-title">
+                    Regularly updated <span className="adv-accent">firmware</span>
+                  </div>
                   <div className="adv-text">You can suggest new features and vote on other user's ideas.</div>
                 </div>
                 <div className="adv-card">
                   <div className="adv-number">04.</div>
-                  <div className="adv-title">The worldwide warranty is up to 3 years</div>
+                  <div className="adv-title">
+                    The worldwide <span className="adv-accent">warranty</span> is up to 3 years
+                  </div>
                   <div className="adv-text">We'll repair your device if stuff happens.</div>
                 </div>
               </div>
@@ -557,9 +565,6 @@ export default function Home() {
 
             <section className="solutions-section">
               <div className="solutions-title">Complete solutions</div>
-              <div className="solutions-subtitle">
-                Plug and Ride kits so as not to bother with diagrams, custom wiring harnesses, connectors and soldering.
-              </div>
               <div className="solutions-grid">
                 {[
                   { title: "For Sur-Ron Light Bee", desc: "Up to 30% more power on standard battery.", img: "/kit1.png" },

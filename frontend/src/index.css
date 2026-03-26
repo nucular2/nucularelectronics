@@ -1948,6 +1948,10 @@ body.is-mobile .cart-count {
   color: #666;
 }
 
+.adv-accent {
+  color: #F36F25;
+}
+
 .solutions-section {
   max-width: var(--content-w);
   margin: 0 auto 96px;

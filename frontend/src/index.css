@@ -1224,14 +1224,6 @@ body.is-mobile .cart-count {
   text-align: center;
 }
 
-@media (min-width: 901px) and (max-width: 1200px) {
-  .controllers-section {
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-  }
-}
-
 .controllers-title {
   font-family: var(--font-family);
   font-weight: 700;
@@ -1556,14 +1548,6 @@ body.is-mobile .cart-count {
 @media (max-width: 1240px) {
   .accessories-grid {
     grid-template-columns: minmax(0, 580px);
-  }
-}
-
-@media (min-width: 901px) and (max-width: 1200px) {
-  .accessories-section {
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
   }
 }
 

@@ -404,13 +404,7 @@ export default function Home() {
             padding: '40px 0',
             background: '#ffffff'
           }}>
-            <div style={{ 
-              width: '100%',
-              maxWidth: 'var(--content-w)',
-              margin: '0 auto',
-              display: 'flex', 
-              flexDirection: 'column'
-            }}>
+            <div className="grid-container" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 
@@ -485,13 +479,7 @@ export default function Home() {
             padding: '40px 0',
             background: '#ffffff'
           }}>
-            <div style={{ 
-              width: '100%',
-              maxWidth: 'var(--content-w)',
-              margin: '0 auto',
-              display: 'flex', 
-              flexDirection: 'column'
-            }}>
+            <div className="grid-container" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 import { defaultHomeCmsConfig } from '../src/cms/homeConfig';
 
 const supabaseUrl =
@@ -87,15 +87,17 @@ async function requireAdmin(req: VercelRequest) {
   return { ok: true as const, user: authData.user, token };
 }
 
-let stripe: Stripe | null = null;
-function getStripe() {
+let stripe: Stripe | undefined;
+async function getStripe(): Promise<Stripe> {
   if (stripe) return stripe;
   const secret = process.env.STRIPE_SECRET || '';
   if (!secret) {
     throw new Error('Stripe is not configured (STRIPE_SECRET is missing)');
   }
-  stripe = new Stripe(secret, { apiVersion: '2024-04-10' } as any);
-  return stripe;
+  const mod: any = await import('stripe');
+  const StripeCtor = mod?.default || mod;
+  stripe = new StripeCtor(secret, { apiVersion: '2024-04-10' } as any);
+  return stripe!;
 }
 
 function sanitizeBlocks(blocks: any) {
@@ -1073,7 +1075,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
 
-      const session = await getStripe().checkout.sessions.create({
+      const stripeClient = await getStripe();
+      const session = await stripeClient.checkout.sessions.create({
         mode: 'payment',
         payment_method_types: ['card'],
         line_items: lineItems,

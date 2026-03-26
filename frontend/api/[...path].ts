@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
-import { defaultHomeCmsConfig } from '../src/cms/homeConfig';
 
 const supabaseUrl =
   process.env.VITE_SUPABASE_URL ||
@@ -549,6 +548,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
+      const { defaultHomeCmsConfig } = await import('../src/cms/homeConfig');
       const stored = await readJson<any>(HOME_PATH);
       if (stored && typeof stored === 'object') {
         return res.status(200).json({ ok: true, config: stored });
@@ -556,7 +556,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       await writeJson(HOME_PATH, defaultHomeCmsConfig);
       return res.status(200).json({ ok: true, config: defaultHomeCmsConfig });
     } catch (e: any) {
-      return res.status(200).json({ ok: true, config: defaultHomeCmsConfig, warning: e?.message || String(e) });
+      return res.status(200).json({ ok: true, config: null, warning: e?.message || String(e) });
     }
   }
 

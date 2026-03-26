@@ -1962,14 +1962,14 @@ body.is-mobile .cart-count {
 .solutions-section {
   max-width: var(--content-w);
   margin: 0 auto 96px;
-  text-align: left;
+  text-align: center;
 }
 
 .solutions-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 40px;
 }
 
@@ -2062,19 +2062,24 @@ body.is-mobile .cart-count {
   margin-top: 0;
 }
 
+@media (min-width: 901px) {
+  .solution-card-content {
+    align-items: flex-start;
+    text-align: left;
+    justify-content: flex-start;
+    padding-top: 64px;
+  }
+
+  .solution-card-actions {
+    margin-top: 48px;
+  }
+}
+
 .solution-card-link {
   color: #F36F25;
 }
 
 @media (max-width: 900px) {
-  .solutions-section {
-    text-align: center;
-  }
-  .solutions-header {
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 32px;
-  }
   .solution-card-content {
     align-items: flex-start;
     text-align: left;

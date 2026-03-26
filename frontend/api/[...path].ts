@@ -160,7 +160,24 @@ function formatDateIsoRange(input?: string) {
   if (!input) return null;
   const trimmed = String(input).trim();
   if (!trimmed) return null;
-  return trimmed;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;
+  const m = trimmed.match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
+  if (m) {
+    const dd = Number(m[1]);
+    const mm = Number(m[2]);
+    const yyyy = Number(m[3]);
+    if (yyyy >= 1900 && yyyy <= 2100 && mm >= 1 && mm <= 12 && dd >= 1 && dd <= 31) {
+      return `${String(yyyy).padStart(4, '0')}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+    }
+  }
+  const d = new Date(trimmed);
+  if (!Number.isNaN(d.getTime())) {
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  }
+  return null;
 }
 
 type Period = '6m' | '30d';
@@ -1317,4 +1334,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   return res.status(404).json({ message: 'Not Found' });
 }
-

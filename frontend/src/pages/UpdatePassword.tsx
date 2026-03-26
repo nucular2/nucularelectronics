@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 
 export default function UpdatePassword() {
-  const { user, signOut } = useAuth();
+  const { session, user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   
   const [isDesktop, setIsDesktop] = useState(() => {
@@ -36,12 +36,11 @@ export default function UpdatePassword() {
   }, []);
 
   useEffect(() => {
-    // TEMPORARY: Allow viewing without login for design review
-    if (!user) {
-      // navigate('/login?redirect=/update-password');
-      console.log('Viewing UpdatePassword in design mode (not logged in)');
+    if (authLoading) return;
+    if (!session?.user) {
+      navigate('/login?redirect=/update-password');
     }
-  }, [user, navigate]);
+  }, [authLoading, session?.user, navigate]);
 
   useEffect(() => {
     if (user?.updated_at) {

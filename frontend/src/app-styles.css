@@ -217,6 +217,48 @@
   max-width: 100%;
 }
 
+.orders-empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 0;
+}
+
+.orders-empty-illustration {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.orders-empty-illustration svg {
+  width: 250px;
+  height: 250px;
+}
+
+.orders-empty-title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 120%;
+  color: #111;
+  margin: 0 0 12px;
+}
+
+.orders-empty-text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: #666;
+  margin: 0;
+}
+
 .orders-mobile-bar {
   display: none;
 }
@@ -550,8 +592,8 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 138px;
-  height: 156px;
+  width: 240px;
+  height: auto;
   border-radius: 8px;
   padding: 12px 0px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
@@ -575,6 +617,7 @@
   line-height: 44px;
   color: #111;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .order-menu-item:hover {
@@ -948,7 +991,7 @@
   }
   .orders-content {
     width: 100%;
-    max-width: none;
+    max-width: 780px;
     min-height: 416px;
     height: auto;
     overflow: visible;
@@ -959,13 +1002,13 @@
   }
 
   .password-form-container {
-    width: 580px;
-    max-width: 580px;
+    width: 780px;
+    max-width: 780px;
     padding-top: 0;
   }
 
   .password-view-row {
-    width: 580px;
+    width: 780px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;

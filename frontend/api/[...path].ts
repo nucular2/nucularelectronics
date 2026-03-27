@@ -1018,7 +1018,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const totalCents = cents(order.total_amount);
-      const frontendUrl = process.env.FRONTEND_URL || 'https://nucularelectronics.vercel.app';
+      const origin = String(req.headers.origin || '').trim();
+      const forwardedProto = String((req.headers['x-forwarded-proto'] as any) || '').trim() || 'https';
+      const forwardedHost = String((req.headers['x-forwarded-host'] as any) || '').trim();
+      const host = String(req.headers.host || '').trim();
+      const inferred = (forwardedHost || host) ? `${forwardedProto}://${forwardedHost || host}` : '';
+      const frontendUrl = process.env.FRONTEND_URL || origin || inferred || 'https://nucularelectronics.vercel.app';
 
       const items = asArray(order.items);
       const crmNumber = order?.contacts?.crm?.number ? String(order.contacts.crm.number) : null;

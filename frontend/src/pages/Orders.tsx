@@ -154,7 +154,11 @@ export default function Orders() {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ orderId, provider: "stripe", paymentId: sessionId }),
         });
-        if (!r.ok) return;
+        if (!r.ok) {
+          const text = await r.text();
+          setError(text || "Failed to sync payment with CRM");
+          return;
+        }
 
         setOrders((prev) =>
           prev.map((o) => (o.id === orderId ? { ...o, status: "Paid" as OrderStatus } : o))

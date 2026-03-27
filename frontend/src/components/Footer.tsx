@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import ChevronDown from './icons/ChevronDown';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -57,9 +58,7 @@ export default function Footer() {
                 <path d="M12 2A15.3 15.3 0 0 1 16 12C16 16.2 14.5 20.3 12 22A15.3 15.3 0 0 1 8 12C8 7.8 9.5 3.7 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               <span>English</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="chevron-icon">
-                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <ChevronDown className="chevron-icon" />
             </div>
           </div>
         </div>
@@ -79,11 +78,11 @@ export default function Footer() {
           </a>
           {/* LinkedIn */}
           <a href="https://www.linkedin.com/company/nucular" target="_blank" rel="noopener noreferrer" className="social-icon">
-             <img src="/social3.png" alt="LinkedIn" />
+             <img src="/social4.png" alt="LinkedIn" />
           </a>
           {/* Youtube */}
           <a href="https://www.youtube.com/@NucularElectronics" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <img src="/social4.png" alt="YouTube" />
+            <img src="/social3.png" alt="YouTube" />
           </a>
           {/* TikTok */}
            <a href="https://www.tiktok.com/@nuculartech" target="_blank" rel="noopener noreferrer" className="social-icon">

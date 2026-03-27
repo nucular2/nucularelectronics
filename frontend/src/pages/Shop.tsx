@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
+import ChevronDown from '../components/icons/ChevronDown';
 import './Shop.css';
 
 export default function Shop() {
@@ -61,15 +62,7 @@ export default function Shop() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <span className="current-tab">{activeTab}</span>
-              <svg
-                className={`shop-tabs-chevron ${isMobileMenuOpen ? 'open' : ''}`}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <ChevronDown className={`shop-tabs-chevron ${isMobileMenuOpen ? 'open' : ''}`} />
             </div>
             
             <div className={`shop-tabs-list ${isMobileMenuOpen ? 'open' : ''}`}>

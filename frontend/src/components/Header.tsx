@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import ChevronDown from './icons/ChevronDown';
 
 export default function Header({ variant = 'transparent' }: { variant?: 'transparent' | 'white' }) {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
@@ -177,9 +178,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
         <nav className="main-nav">
           <a href="#" className={`nav-link ${isProductsOpen ? 'active' : ''}`} onClick={toggleProducts}>
             Products
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" className={`dropdown-arrow ${isProductsOpen ? 'open' : ''}`}>
-              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <ChevronDown className={`dropdown-arrow ${isProductsOpen ? 'open' : ''}`} />
           </a>
           <a href="/shop" className="nav-link" onClick={handleShopClick}>Shop</a>
           <a href="/support" className="nav-link" onClick={handleSupportClick}>Support</a>
@@ -327,12 +326,7 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
                   onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
                 >
                   <span className="mobile-menu-link">Products</span>
-                  <svg 
-                    className={`mobile-chevron ${isMobileProductsOpen ? 'open' : ''}`}
-                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  >
-                    <path d="M6 9L12 15L18 9" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ChevronDown className={`mobile-chevron ${isMobileProductsOpen ? 'open' : ''}`} />
                 </button>
                 <div className={`mobile-products-list ${isMobileProductsOpen ? 'open' : ''}`}>
                   <div className="mobile-products-section-title">Components</div>

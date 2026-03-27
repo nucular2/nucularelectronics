@@ -1246,7 +1246,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const site = process.env.RETAILCRM_SITE || undefined;
       const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || 'stripe-payment';
       const paymentTypePayPal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || 'paypal';
-      const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
+      const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'payed';
 
       if (!apiUrl || !apiKey) {
         return res.status(500).json({ message: 'RetailCRM credentials are missing' });
@@ -1309,16 +1309,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (Number.isFinite(sessionAmountTotal) && sessionAmountTotal > 0) {
           amount = Math.round((sessionAmountTotal / 100) * 100) / 100;
         }
-        const created = Number((session as any)?.created);
-        if (Number.isFinite(created) && created > 0) {
-          paidAtIso = new Date(created * 1000).toISOString();
-        }
+        paidAtIso = new Date().toISOString();
       }
 
       const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
 
-      const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
+      const paidCodes = ['paid', 'payed', 'payment-paid', 'payment_paid'];
       const exactMatch = (value: unknown) => Math.abs(Number(value) - amount) < 0.01;
 
       const candidate =
@@ -1332,31 +1329,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }) ||
         null;
 
-      const paymentBase = {
-        externalId: candidate?.externalId || paymentExternalId,
-        order: { externalId: orderId },
-        amount,
-        paidAt: paidAtIso,
-        type: candidate?.type || paymentType,
-        status: paymentStatusPaid,
-      };
+      const statusCandidates = Array.from(new Set([paymentStatusPaid, 'paid'].filter(Boolean)));
+      let lastPaymentErrorText = '';
+      let lastPaymentErrorStatus = 500;
 
-      if (candidate?.id) {
-        const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
-          site ? `&site=${encodeURIComponent(site)}` : ''
-        }`;
-        const form = new URLSearchParams();
-        form.set('payment', JSON.stringify(paymentBase));
-        const r = await fetch(editUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-          body: form.toString(),
-        });
-        if (!r.ok) {
-          const text = await r.text();
-          return res.status(r.status).json({ message: text || 'RetailCRM payments edit failed' });
+      for (const statusCandidate of statusCandidates) {
+        const paymentBase = {
+          externalId: candidate?.externalId || paymentExternalId,
+          order: { externalId: orderId },
+          amount,
+          paidAt: paidAtIso,
+          type: candidate?.type || paymentType,
+          status: statusCandidate,
+        };
+
+        if (candidate?.id) {
+          const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+            site ? `&site=${encodeURIComponent(site)}` : ''
+          }`;
+          const form = new URLSearchParams();
+          form.set('payment', JSON.stringify(paymentBase));
+          const r = await fetch(editUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+            body: form.toString(),
+          });
+          if (r.ok) {
+            lastPaymentErrorText = '';
+            lastPaymentErrorStatus = 200;
+            break;
+          }
+          lastPaymentErrorStatus = r.status;
+          lastPaymentErrorText = (await r.text()) || 'RetailCRM payments edit failed';
+          continue;
         }
-      } else {
+
         const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
           site ? `&site=${encodeURIComponent(site)}` : ''
         }`;
@@ -1367,10 +1374,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
           body: form.toString(),
         });
-        if (!r.ok) {
-          const text = await r.text();
-          return res.status(r.status).json({ message: text || 'RetailCRM payments create failed' });
+        if (r.ok) {
+          lastPaymentErrorText = '';
+          lastPaymentErrorStatus = 200;
+          break;
         }
+        lastPaymentErrorStatus = r.status;
+        lastPaymentErrorText = (await r.text()) || 'RetailCRM payments create failed';
+      }
+
+      if (lastPaymentErrorText) {
+        return res.status(lastPaymentErrorStatus).json({ message: lastPaymentErrorText });
       }
 
       const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};

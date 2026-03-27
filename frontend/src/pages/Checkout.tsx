@@ -762,7 +762,7 @@ export default function Checkout() {
                   />
                   <div className="checkout-field-hint">Optional</div>
 
-                  <button type="submit" className="checkout-next-btn">
+                  <button type="submit" className="checkout-next-btn checkout-next-btn--small">
                     Continue
                   </button>
                 </form>
@@ -816,6 +816,29 @@ export default function Checkout() {
                 </button>
               </div>
 
+              <div className="checkout-summary-rows">
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Quantity</div>
+                  <div className="checkout-summary-value">{totalQty}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Subtotal</div>
+                  <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Tax</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Shipping</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
+                </div>
+                <div className="checkout-summary-row checkout-summary-row-total">
+                  <div className="checkout-summary-label">Total</div>
+                  <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
+                </div>
+              </div>
+
               {showPaymentMethods ? (
                 <div className="checkout-payment-block">
                   <div className="payment-method-section">
@@ -856,8 +879,12 @@ export default function Checkout() {
                     </div>
 
                     {paymentMethod === 'card' ? (
-                      <form onSubmit={handleCardCheckout}>
-                        <button type="submit" className="checkout-next-btn" disabled={loading || !items.length || totalPrice <= 0}>
+                      <form onSubmit={handleCardCheckout} className="checkout-payment-action">
+                        <button
+                          type="submit"
+                          className="checkout-next-btn checkout-next-btn--small"
+                          disabled={loading || !items.length || totalPrice <= 0}
+                        >
                           {loading ? 'Completing...' : 'Complete checkout'}
                         </button>
                       </form>
@@ -901,29 +928,6 @@ export default function Checkout() {
                   </div>
                 </div>
               ) : null}
-
-              <div className="checkout-summary-rows">
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Quantity</div>
-                  <div className="checkout-summary-value">{totalQty}</div>
-                </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Subtotal</div>
-                  <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
-                </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Tax</div>
-                  <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
-                </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Shipping</div>
-                  <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
-                </div>
-                <div className="checkout-summary-row checkout-summary-row-total">
-                  <div className="checkout-summary-label">Total</div>
-                  <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
-                </div>
-              </div>
             </div>
           </aside>
           </div>

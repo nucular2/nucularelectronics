@@ -73,15 +73,15 @@
 .checkout-right-panel {
   width: 380px;
   height: 652px;
-  padding: 97px 0 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .checkout-form-grid--two-col {
   display: grid;
   grid-template-columns: 330px 330px;
-  column-gap: 20px;
-  row-gap: 16px;
+  column-gap: 24px;
+  row-gap: 24px;
 }
 
 .checkout-form-grid--two-col .phone-input-group {
@@ -102,6 +102,11 @@
   height: 44px;
   margin-top: 0;
   align-self: flex-end;
+}
+
+.checkout-payment-action {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .checkout-page .checkout-input,
@@ -182,7 +187,7 @@
 
 .checkout-comment-textarea {
   width: 680px;
-  height: 120px;
+  height: 160px;
   padding: 16px;
   resize: none;
 }

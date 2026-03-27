@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useCart } from '../context/CartContext';
@@ -6,9 +6,10 @@ import { useAuth } from '../context/AuthContext';
 import './Cart.css';
 
 export default function Cart() {
-  const { items, removeFromCart, updateQuantity, totalPrice, totalItems } = useCart();
+  const { items, addToCart, removeFromCart, updateQuantity, totalPrice, totalItems } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [removedItems, setRemovedItems] = useState<any[]>([]);
 
   const getSku = (item: any) => {
     const raw = typeof item?.sku === 'string' ? item.sku : '';
@@ -23,7 +24,7 @@ export default function Cart() {
     return String(item?.title || '').replace(/\s+/g, ' ').trim().toUpperCase();
   };
 
-  if (items.length === 0) {
+  if (items.length === 0 && removedItems.length === 0) {
     return (
       <>
         <Header variant="white" />
@@ -48,6 +49,23 @@ export default function Cart() {
     );
   }
 
+  const handleRemove = (item: any) => {
+    setRemovedItems((prev) => {
+      if (prev.some((x) => x?.id === item?.id)) return prev;
+      return [...prev, item];
+    });
+    removeFromCart(item.id);
+  };
+
+  const handleReturn = (item: any) => {
+    setRemovedItems((prev) => prev.filter((x) => x?.id !== item?.id));
+    addToCart(item);
+    const qty = Number(item?.quantity);
+    if (Number.isFinite(qty) && qty > 1) {
+      window.setTimeout(() => updateQuantity(item.id, qty), 0);
+    }
+  };
+
   return (
     <>
       <Header variant="white" />
@@ -68,7 +86,13 @@ export default function Cart() {
                       )}
                     </div>
                     <div className="cart-item-details">
-                      <h3 className="cart-item-title">{item.title}</h3>
+                      <button
+                        type="button"
+                        className="cart-item-title cart-item-title-link"
+                        onClick={() => navigate(`/product/${item.id}`)}
+                      >
+                        {item.title}
+                      </button>
                       <p className="cart-item-sku">{getSku(item)}</p>
                     </div>
                     <div className="cart-item-actions">
@@ -90,7 +114,7 @@ export default function Cart() {
                         <p className="cart-item-price">{item.price}</p>
                         <button
                           className="remove-btn"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => handleRemove(item)}
                         >
                           Remove
                         </button>
@@ -108,6 +132,37 @@ export default function Cart() {
               </svg>
               <span>Waiting time after pre-order ~ 7 months</span>
             </div>
+            {removedItems.length > 0 ? (
+              <div className="cart-items cart-items-removed">
+                {removedItems.map((item, index) => (
+                  <div
+                    key={`removed-${item.id}`}
+                    className={`cart-item cart-item--removed${index < removedItems.length - 1 ? ' cart-item--divider' : ''}`}
+                  >
+                    <div className="cart-item-main">
+                      <div className="cart-item-image">
+                        {item.image ? <img src={item.image} alt={item.title} /> : <div className="cart-item-placeholder" />}
+                      </div>
+                      <div className="cart-item-details">
+                        <div className="cart-item-title">{item.title}</div>
+                        <p className="cart-item-sku">{getSku(item)}</p>
+                      </div>
+                      <div className="cart-item-actions">
+                        <div className="cart-qty-select-wrap cart-qty-select-wrap--removed">
+                          <div className="cart-item-removed-label">Item removed</div>
+                        </div>
+                        <div className="cart-price-remove">
+                          <p className="cart-item-price">{item.price}</p>
+                          <button className="remove-btn" onClick={() => handleReturn(item)}>
+                            Return
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
             </div>
             <div className="cart-summary-column">
               <aside className="cart-summary">

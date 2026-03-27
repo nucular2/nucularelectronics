@@ -6,7 +6,7 @@ export default function NewsDetailBrief() {
     <>
       <Header variant="white" />
       <div className="page-content-white">
-        <div className="news-detail">
+        <div className="news-detail-shell">
           <div className="news-detail-breadcrumb">
             <Link to="/news" className="news-detail-back">
               <svg
@@ -27,38 +27,40 @@ export default function NewsDetailBrief() {
             </Link>
           </div>
 
-          <h1 className="news-detail-title">Brief news for the year</h1>
-          <div className="news-detail-date">May 20, 2022</div>
+          <div className="news-detail">
+            <h1 className="news-detail-title">Brief news for the year</h1>
+            <div className="news-detail-date">May 20, 2022</div>
 
-          <div className="news-detail-image">
-            <img src="/new4.png" alt="Brief news for the year" />
+            <div className="news-detail-image">
+              <img src="/new4.png" alt="Brief news for the year" />
+            </div>
+
+            <h2 className="news-detail-subtitle">Hello comrades!</h2>
+            <p className="news-detail-text">
+              How are you? For a long time we had no news, well, the last mailing was almost yesterday — April 7,
+              2020. We decided to correct this misunderstanding and now we will tell you about the most important and
+              unimportant events that have happened to us recently.
+            </p>
+            <p className="news-detail-text">
+              The previous year 2020 was difficult for all of us, we hope you already have immunity. While everyone
+              sat on self-isolation and went out for a walk with passes, we didn&apos;t waste our time. But, despite
+              our heroic efforts due to restrictions in connection with the COVID-19 epidemic and the closure of
+              borders, our production plans are f....d up, or rather, they have undergone major adjustments.
+            </p>
+
+            <div className="news-detail-image">
+              <img src="/плашка.png" alt="uLight controller video preview" />
+            </div>
+            <p className="news-detail-note">
+              The uLight controllers are probably still in stock and you can{" "}
+              <span className="news-detail-accent">order</span> them on our website.
+            </p>
+            <p className="news-detail-note">
+              In the photo below, the new casing for the 24F controller, it has become smaller in length, changed its
+              shape and significantly increased the number of cooling fins, now the whole surface of the casing is one
+              large heat sink.
+            </p>
           </div>
-
-          <h2 className="news-detail-subtitle">Hello comrades!</h2>
-          <p className="news-detail-text">
-            How are you? For a long time we had no news, well, the last mailing was almost yesterday — April 7,
-            2020. We decided to correct this misunderstanding and now we will tell you about the most important and
-            unimportant events that have happened to us recently.
-          </p>
-          <p className="news-detail-text">
-            The previous year 2020 was difficult for all of us, we hope you already have immunity. While everyone
-            sat on self-isolation and went out for a walk with passes, we didn&apos;t waste our time. But, despite
-            our heroic efforts due to restrictions in connection with the COVID-19 epidemic and the closure of
-            borders, our production plans are f....d up, or rather, they have undergone major adjustments.
-          </p>
-
-          <div className="news-detail-image">
-            <img src="/плашка.png" alt="uLight controller video preview" />
-          </div>
-          <p className="news-detail-note">
-            The uLight controllers are probably still in stock and you can{" "}
-            <span className="news-detail-accent">order</span> them on our website.
-          </p>
-          <p className="news-detail-note">
-            In the photo below, the new casing for the 24F controller, it has become smaller in length, changed its
-            shape and significantly increased the number of cooling fins, now the whole surface of the casing is one
-            large heat sink.
-          </p>
         </div>
 
         <div className="news-detail-banner">
@@ -71,6 +73,7 @@ export default function NewsDetailBrief() {
           </div>
         </div>
 
+        <div className="news-detail-shell">
         <div className="news-detail news-detail-after-banner">
           <p className="news-detail-text">
             With the new casings, we also prepare an update on controller boards. Thanks for your work on destroying
@@ -102,7 +105,9 @@ export default function NewsDetailBrief() {
             Thanks for your attention,<br />Nucular Team
           </p>
         </div>
+        </div>
 
+        <div className="news-detail-shell">
         <div className="news-detail-latest">
           <h2 className="news-detail-latest-title">Latest news</h2>
 
@@ -155,6 +160,7 @@ export default function NewsDetailBrief() {
               </p>
             </article>
           </div>
+        </div>
         </div>
       </div>
     </>

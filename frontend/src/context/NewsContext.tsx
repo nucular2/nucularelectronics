@@ -1,9 +1,15 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 export type NewsBlock =
-  | { id: string; type: 'heading'; text: string }
-  | { id: string; type: 'paragraph'; text: string }
-  | { id: string; type: 'image'; url: string; alt?: string; caption?: string };
+  | { id: string; type: 'heading'; text: string; level?: 2 | 3 | 4 }
+  | { id: string; type: 'paragraph'; text: string; bold?: boolean }
+  | { id: string; type: 'list'; items: string[]; ordered?: boolean }
+  | { id: string; type: 'link'; href: string; text: string }
+  | { id: string; type: 'image'; url: string; alt?: string; caption?: string }
+  | { id: string; type: 'video'; url: string; title?: string }
+  | { id: string; type: 'quote'; text: string; author?: string }
+  | { id: string; type: 'slider'; images: Array<{ url: string; alt?: string }>; caption?: string }
+  | { id: string; type: 'divider' };
 
 export type NewsItem = {
   id: number;

@@ -1206,6 +1206,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: order.id, site });
         const crmId = crmOrder?.id ?? null;
         const crmNumber = crmOrder?.number ?? null;
+        try {
+          const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || 'bank-card';
+          const paymentStatusNotPaid = process.env.RETAILCRM_PAYMENT_STATUS_NOT_PAID || 'not-paid';
+          const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+          if (payments.length === 0) {
+            const amount = parseMoney(order.total_amount) ?? parseMoney(order.total) ?? parseMoney(order.sum) ?? 0;
+            const payment = {
+              externalId: `init_${order.id}`,
+              order: { externalId: order.id },
+              amount: Math.round(Number(amount) * 100) / 100,
+              type: paymentType,
+              status: paymentStatusNotPaid,
+            };
+            const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
+              site ? `&site=${encodeURIComponent(site)}` : ''
+            }`;
+            const form = new URLSearchParams();
+            form.set('payment', JSON.stringify(payment));
+            await fetch(createUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+              body: form.toString(),
+            });
+          }
+        } catch {}
         const prevContacts = order.contacts && typeof order.contacts === 'object' ? order.contacts : {};
         const nextContacts = {
           ...prevContacts,
@@ -1224,6 +1249,129 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       return res.status(200).json({ ok: true, data });
+    } catch (e: any) {
+      return res.status(500).json({ message: 'Handler exception', details: e?.message || String(e) });
+    }
+  }
+
+  if (route === 'retailcrm/payment') {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).end('Method Not Allowed');
+    }
+
+    try {
+      const apiUrl = process.env.RETAILCRM_URL;
+      const apiKey = process.env.RETAILCRM_API_KEY;
+      const site = process.env.RETAILCRM_SITE || undefined;
+      const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || 'bank-card';
+      const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
+
+      if (!apiUrl || !apiKey) {
+        return res.status(500).json({ message: 'RetailCRM credentials are missing' });
+      }
+
+      const authHeader = req.headers.authorization || '';
+      const token = authHeader.startsWith('Bearer ') ? authHeader.slice('Bearer '.length) : '';
+      if (!token) return res.status(401).json({ message: 'Missing Authorization token' });
+
+      const { data: authData, error: authError } = await supabaseAnon.auth.getUser(token);
+      if (authError || !authData?.user) return res.status(401).json({ message: 'Invalid user token' });
+
+      const body = (req.body || {}) as { orderId?: string; provider?: string; paymentId?: string; amount?: number; paidAt?: string };
+      const orderId = String(body.orderId || '').trim();
+      if (!orderId) return res.status(400).json({ message: 'Missing orderId' });
+
+      const { data: orderRow, error: orderError } = await supabaseService
+        .from('orders')
+        .select('id,user_id,total_amount,contacts')
+        .eq('id', orderId)
+        .single();
+      if (orderError || !orderRow) return res.status(404).json({ message: 'Order not found' });
+      if (String(orderRow.user_id) !== authData.user.id) return res.status(403).json({ message: 'Forbidden' });
+
+      const provider = String(body.provider || 'paypal').trim().toLowerCase();
+      const paidAtIso = String(body.paidAt || '').trim() || new Date().toISOString();
+      const amount =
+        typeof body.amount === 'number' && Number.isFinite(body.amount) && body.amount > 0
+          ? Math.round(body.amount * 100) / 100
+          : Math.round(Number(orderRow.total_amount || 0) * 100) / 100;
+
+      const paymentExternalId = `${provider}_${String(body.paymentId || '').trim() || String(orderId)}`;
+
+      const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
+      const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+
+      const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
+      const exactMatch = (value: unknown) => Math.abs(Number(value) - amount) < 0.01;
+
+      const candidate =
+        payments.find((p: any) => p?.externalId && String(p.externalId) === paymentExternalId) ||
+        payments.find((p: any) => {
+          const status = String(p?.status || '').toLowerCase();
+          const isPaid = paidCodes.includes(status);
+          if (isPaid) return false;
+          if (!exactMatch(p?.amount)) return false;
+          return true;
+        }) ||
+        null;
+
+      const paymentBase = {
+        externalId: candidate?.externalId || paymentExternalId,
+        order: { externalId: orderId },
+        amount,
+        paidAt: paidAtIso,
+        type: candidate?.type || paymentType,
+        status: paymentStatusPaid,
+      };
+
+      if (candidate?.id) {
+        const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+          site ? `&site=${encodeURIComponent(site)}` : ''
+        }`;
+        const form = new URLSearchParams();
+        form.set('payment', JSON.stringify(paymentBase));
+        const r = await fetch(editUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+          body: form.toString(),
+        });
+        if (!r.ok) {
+          const text = await r.text();
+          return res.status(r.status).json({ message: text || 'RetailCRM payments edit failed' });
+        }
+      } else {
+        const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
+          site ? `&site=${encodeURIComponent(site)}` : ''
+        }`;
+        const form = new URLSearchParams();
+        form.set('payment', JSON.stringify(paymentBase));
+        const r = await fetch(createUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+          body: form.toString(),
+        });
+        if (!r.ok) {
+          const text = await r.text();
+          return res.status(r.status).json({ message: text || 'RetailCRM payments create failed' });
+        }
+      }
+
+      const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
+      const nextContacts = {
+        ...prevContacts,
+        payment: {
+          ...(prevContacts?.payment && typeof prevContacts.payment === 'object' ? prevContacts.payment : {}),
+          provider,
+          status: 'paid',
+          paidAt: paidAtIso,
+          amount,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+      await supabaseService.from('orders').update({ status: 'Paid', contacts: nextContacts }).eq('id', orderId);
+
+      return res.status(200).json({ ok: true });
     } catch (e: any) {
       return res.status(500).json({ message: 'Handler exception', details: e?.message || String(e) });
     }

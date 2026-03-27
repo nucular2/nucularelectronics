@@ -21,13 +21,15 @@ export default function NewsDetailDynamic() {
       <>
         <Header variant="white" />
         <div className="page-content-white">
-          <div className="news-detail">
+          <div className="news-detail-shell">
             <div className="news-detail-breadcrumb">
               <Link to="/news" className="news-detail-back">
                 <span>Back to news</span>
               </Link>
             </div>
-            <h1 className="news-detail-title">News not found</h1>
+            <div className="news-detail">
+              <h1 className="news-detail-title">News not found</h1>
+            </div>
           </div>
         </div>
       </>
@@ -40,26 +42,27 @@ export default function NewsDetailDynamic() {
     <>
       <Header variant="white" />
       <div className="page-content-white">
-        <div className="news-detail">
+        <div className="news-detail-shell">
           <div className="news-detail-breadcrumb">
             <Link to="/news" className="news-detail-back">
               <span>Back to news</span>
             </Link>
           </div>
 
-          <h1 className="news-detail-title">{item.title}</h1>
-          <div className="news-detail-date">{item.date}</div>
+          <div className="news-detail">
+            <h1 className="news-detail-title">{item.title}</h1>
+            <div className="news-detail-date">{item.date}</div>
 
-          {item.image ? (
-            <div className="news-detail-image">
-              <img src={item.image} alt={item.title} />
-            </div>
-          ) : null}
+            {item.image ? (
+              <div className="news-detail-image">
+                <img src={item.image} alt={item.title} />
+              </div>
+            ) : null}
 
-          <NewsBlocks blocks={blocks} />
+            <NewsBlocks blocks={blocks} />
+          </div>
         </div>
       </div>
     </>
   );
 }
-

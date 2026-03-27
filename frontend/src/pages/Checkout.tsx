@@ -270,6 +270,30 @@ export default function Checkout() {
     return data;
   };
 
+  const sendOrderToCrm = async (order: any) => {
+    const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+    const resSrv = await fetch('/api/retailcrm/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order }),
+    });
+    if (resSrv.ok) return;
+    if (apiBase) {
+      const resApi = await fetch(`${apiBase}/api/retailcrm/order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order }),
+      });
+      if (!resApi.ok) {
+        const text = await resApi.text();
+        throw new Error(text || 'RetailCRM request failed');
+      }
+      return;
+    }
+    const text = await resSrv.text();
+    throw new Error(text || 'RetailCRM request failed');
+  };
+
   const handleCardCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -279,32 +303,7 @@ export default function Checkout() {
       const order = await createOrder();
 
       try {
-        const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-        // Try serverless first
-        const resSrv = await fetch('/api/retailcrm/order', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ order }),
-        });
-        if (!resSrv.ok) {
-          // Fallback to backend Express if configured
-          if (apiBase) {
-            const resApi = await fetch(`${apiBase}/api/retailcrm/order`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ order }),
-            });
-            if (!resApi.ok) {
-              const text = await resApi.text();
-              setError(text || 'Не удалось отправить заказ в CRM');
-              throw new Error(text || 'RetailCRM request failed');
-            }
-          } else {
-            const text = await resSrv.text();
-            setError(text || 'Не удалось отправить заказ в CRM');
-            throw new Error(text || 'RetailCRM request failed');
-          }
-        }
+        await sendOrderToCrm(order);
       } catch (crmErr) {
         console.error('RetailCRM send error:', crmErr);
         if (!error) setError('Ошибка отправки заказа в CRM');
@@ -366,7 +365,7 @@ export default function Checkout() {
 
   const handlePayPalApprove = async (data: any, actions: any) => {
     try {
-      await ensureSupabaseSession();
+      const session = await ensureSupabaseSession();
       const details = await actions.order.capture();
       // Update order status in Supabase
       // We need the order ID. Since createOrder returned it to PayPal createOrder, 
@@ -377,10 +376,29 @@ export default function Checkout() {
       // Alternative: We can search for the order by some reference or rely on webhooks.
       // But for client-side, let's use a ref to store the current order ID.
       if (currentOrderId.current) {
+          const paidAtIso = new Date().toISOString();
           await supabase
             .from("orders")
-            .update({ status: "Paid", payment_details: details })
+            .update({
+              status: "Paid",
+              payment_details: details,
+              contacts: { ...contacts, paymentMethod, payment: { provider: "paypal", status: "paid", paidAt: paidAtIso } },
+            })
             .eq("id", currentOrderId.current);
+
+          try {
+            await fetch('/api/retailcrm/payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+              body: JSON.stringify({
+                orderId: currentOrderId.current,
+                provider: 'paypal',
+                paymentId: String(details?.id || ''),
+                amount: Number(totalPrice.toFixed(2)),
+                paidAt: paidAtIso,
+              }),
+            });
+          } catch (_) {}
             
           clearCart();
           localStorage.removeItem('checkout_recipient');
@@ -696,6 +714,11 @@ export default function Checkout() {
                               try {
                                 const order = await createOrder();
                                 currentOrderId.current = order.id;
+                                try {
+                                  await sendOrderToCrm(order);
+                                } catch (e) {
+                                  console.error('RetailCRM send error:', e);
+                                }
                                 return actions.order.create({
                                   intent: "CAPTURE",
                                   purchase_units: [{

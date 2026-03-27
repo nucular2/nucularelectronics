@@ -33,13 +33,15 @@ function normalizeBlocks(blocks: any): NewsBlock[] {
     if (type === 'heading') {
       const text = String(b?.text || '').trim();
       if (!text) continue;
-      out.push({ id, type: 'heading', text });
+      const levelRaw = Number(b?.level);
+      const level = levelRaw === 3 || levelRaw === 4 ? (levelRaw as 3 | 4) : (2 as const);
+      out.push({ id, type: 'heading', text, level });
       continue;
     }
     if (type === 'paragraph') {
       const text = String(b?.text || '').trim();
       if (!text) continue;
-      out.push({ id, type: 'paragraph', text });
+      out.push({ id, type: 'paragraph', text, bold: Boolean(b?.bold) || undefined });
       continue;
     }
     if (type === 'image') {
@@ -48,6 +50,48 @@ function normalizeBlocks(blocks: any): NewsBlock[] {
       const alt = String(b?.alt || '').trim() || undefined;
       const caption = String(b?.caption || '').trim() || undefined;
       out.push({ id, type: 'image', url, alt, caption });
+      continue;
+    }
+    if (type === 'list') {
+      const items = Array.isArray(b?.items) ? b.items : [];
+      const cleaned = items.map((x: any) => String(x || '').trim()).filter(Boolean);
+      if (cleaned.length === 0) continue;
+      out.push({ id, type: 'list', items: cleaned, ordered: Boolean(b?.ordered) || undefined });
+      continue;
+    }
+    if (type === 'link') {
+      const href = String(b?.href || '').trim();
+      const text = String(b?.text || '').trim();
+      if (!href || !text) continue;
+      out.push({ id, type: 'link', href, text });
+      continue;
+    }
+    if (type === 'video') {
+      const url = String(b?.url || '').trim();
+      if (!url) continue;
+      const title = String(b?.title || '').trim() || undefined;
+      out.push({ id, type: 'video', url, title });
+      continue;
+    }
+    if (type === 'quote') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      const author = String(b?.author || '').trim() || undefined;
+      out.push({ id, type: 'quote', text, author });
+      continue;
+    }
+    if (type === 'slider') {
+      const rawImages = Array.isArray(b?.images) ? b.images : [];
+      const images = rawImages
+        .map((img: any) => ({ url: String(img?.url || img || '').trim(), alt: String(img?.alt || '').trim() || undefined }))
+        .filter((img: any) => Boolean(img.url));
+      if (images.length === 0) continue;
+      const caption = String(b?.caption || '').trim() || undefined;
+      out.push({ id, type: 'slider', images, caption });
+      continue;
+    }
+    if (type === 'divider') {
+      out.push({ id, type: 'divider' });
       continue;
     }
   }
@@ -276,6 +320,41 @@ export default function NewsManager() {
     }
   };
 
+  const uploadSliderImage = async (blockId: string, file: File) => {
+    setUploadingBlockId(blockId);
+    try {
+      const buf = await file.arrayBuffer();
+      const base64 = arrayBufferToBase64(buf);
+      const { data } = await supabase.auth.getSession();
+      const token = data?.session?.access_token;
+      if (!token) throw new Error('Not authenticated');
+
+      const r = await fetch('/api/admin/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ filename: file.name, contentType: file.type || 'application/octet-stream', base64, folder: 'news' }),
+      });
+      const payload = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(payload?.message || `Upload failed: ${r.status}`);
+      const url = String(payload?.url || '');
+      if (!url) throw new Error('Upload failed: missing url');
+      setFormData((p) => {
+        const nextBlocks = Array.isArray(p.blocks) ? [...p.blocks] : [];
+        const idx = nextBlocks.findIndex((b: any) => String(b?.id) === blockId);
+        if (idx === -1) return p;
+        const prev: any = nextBlocks[idx] as any;
+        const images = Array.isArray(prev?.images) ? [...prev.images] : [];
+        images.push({ url });
+        nextBlocks[idx] = { ...prev, type: 'slider', images };
+        return { ...p, blocks: nextBlocks };
+      });
+    } catch (e: any) {
+      alert(e?.message || String(e));
+    } finally {
+      setUploadingBlockId(null);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
@@ -393,8 +472,8 @@ export default function NewsManager() {
                 <input className="admin-input" value={String(formData.date || '')} onChange={(e) => setFormData((p) => ({ ...p, date: e.target.value }))} placeholder="June 20, 2022" />
               </div>
               <div>
-                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Image URL</div>
-                <input className="admin-input" value={String(formData.image || '')} onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))} placeholder="/new1.png" />
+                <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12, marginBottom: 6 }}>Image</div>
+                <input className="admin-input" value={String(formData.image || '')} onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))} placeholder="" />
                 <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 10 }}>
                   <input
                     type="file"
@@ -432,11 +511,35 @@ export default function NewsManager() {
                     onClick={() =>
                       setFormData((p) => ({
                         ...p,
-                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('h'), type: 'heading', text: '' }],
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('h2'), type: 'heading', level: 2, text: '' }],
                       }))
                     }
                   >
-                    + Heading
+                    + H2
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('h3'), type: 'heading', level: 3, text: '' }],
+                      }))
+                    }
+                  >
+                    + H3
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('h4'), type: 'heading', level: 4, text: '' }],
+                      }))
+                    }
+                  >
+                    + H4
                   </button>
                   <button
                     type="button"
@@ -456,11 +559,107 @@ export default function NewsManager() {
                     onClick={() =>
                       setFormData((p) => ({
                         ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('pb'), type: 'paragraph', bold: true, text: '' }],
+                      }))
+                    }
+                  >
+                    + Bold text
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('ul'), type: 'list', ordered: false, items: [''] }],
+                      }))
+                    }
+                  >
+                    + List
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('ol'), type: 'list', ordered: true, items: [''] }],
+                      }))
+                    }
+                  >
+                    + Numbered
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('a'), type: 'link', href: '', text: '' }],
+                      }))
+                    }
+                  >
+                    + Link
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
                         blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('img'), type: 'image', url: '', alt: '', caption: '' }],
                       }))
                     }
                   >
                     + Image
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('vid'), type: 'video', url: '', title: '' }],
+                      }))
+                    }
+                  >
+                    + Video
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('q'), type: 'quote', text: '', author: '' }],
+                      }))
+                    }
+                  >
+                    + Quote
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('sl'), type: 'slider', images: [], caption: '' }],
+                      }))
+                    }
+                  >
+                    + Slider
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-button"
+                    onClick={() =>
+                      setFormData((p) => ({
+                        ...p,
+                        blocks: [...(Array.isArray(p.blocks) ? p.blocks : []), { id: createId('hr'), type: 'divider' }],
+                      }))
+                    }
+                  >
+                    + Divider
                   </button>
                 </div>
 
@@ -533,53 +732,144 @@ export default function NewsManager() {
                       </div>
 
                       {block?.type === 'heading' ? (
-                        <input
-                          className="admin-input"
-                          value={String(block?.text || '')}
-                          onChange={(e) =>
-                            setFormData((p) => ({
-                              ...p,
-                              blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
-                                String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
-                              ),
-                            }))
-                          }
-                          placeholder="Heading"
-                        />
-                      ) : null}
-
-                      {block?.type === 'paragraph' ? (
-                        <textarea
-                          className="admin-input"
-                          value={String(block?.text || '')}
-                          onChange={(e) =>
-                            setFormData((p) => ({
-                              ...p,
-                              blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
-                                String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
-                              ),
-                            }))
-                          }
-                          style={{ height: 120, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
-                          placeholder="Text"
-                        />
-                      ) : null}
-
-                      {block?.type === 'image' ? (
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
-                          <input
+                        <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: 10 }}>
+                          <select
                             className="admin-input"
-                            value={String(block?.url || '')}
+                            value={String(block?.level || 2)}
                             onChange={(e) =>
                               setFormData((p) => ({
                                 ...p,
                                 blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
-                                  String(b?.id) === String(block?.id) ? { ...b, url: e.target.value } : b
+                                  String(b?.id) === String(block?.id)
+                                    ? { ...b, level: Number(e.target.value) }
+                                    : b
                                 ),
                               }))
                             }
-                            placeholder="Image URL"
+                          >
+                            <option value="2">H2</option>
+                            <option value="3">H3</option>
+                            <option value="4">H4</option>
+                          </select>
+                          <input
+                            className="admin-input"
+                            value={String(block?.text || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Heading text"
                           />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'paragraph' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                            <input
+                              type="checkbox"
+                              checked={Boolean(block?.bold)}
+                              onChange={(e) =>
+                                setFormData((p) => ({
+                                  ...p,
+                                  blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                    String(b?.id) === String(block?.id) ? { ...b, bold: e.target.checked } : b
+                                  ),
+                                }))
+                              }
+                            />
+                            Bold
+                          </label>
+                          <textarea
+                            className="admin-input"
+                            value={String(block?.text || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            style={{ height: 120, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
+                            placeholder="Text"
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'list' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                            <input
+                              type="checkbox"
+                              checked={Boolean(block?.ordered)}
+                              onChange={(e) =>
+                                setFormData((p) => ({
+                                  ...p,
+                                  blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                    String(b?.id) === String(block?.id) ? { ...b, ordered: e.target.checked } : b
+                                  ),
+                                }))
+                              }
+                            />
+                            Numbered
+                          </label>
+                          <textarea
+                            className="admin-input"
+                            value={Array.isArray(block?.items) ? block.items.join('\n') : ''}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id)
+                                    ? { ...b, items: e.target.value.split('\n').map((x) => x.trim()).filter((x) => x.length > 0) }
+                                    : b
+                                ),
+                              }))
+                            }
+                            style={{ height: 120, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
+                            placeholder="One item per line"
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'link' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                          <input
+                            className="admin-input"
+                            value={String(block?.text || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Link text"
+                          />
+                          <input
+                            className="admin-input"
+                            value={String(block?.href || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, href: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="https://..."
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'image' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                             <input
                               type="file"
@@ -596,6 +886,19 @@ export default function NewsManager() {
                           </div>
                           <input
                             className="admin-input"
+                            value={String(block?.url || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, url: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Image URL"
+                          />
+                          <input
+                            className="admin-input"
                             value={String(block?.caption || '')}
                             onChange={(e) =>
                               setFormData((p) => ({
@@ -607,6 +910,164 @@ export default function NewsManager() {
                             }
                             placeholder="Caption (optional)"
                           />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'video' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                          <input
+                            className="admin-input"
+                            value={String(block?.url || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, url: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Video URL (YouTube/Vimeo/embed)"
+                          />
+                          <input
+                            className="admin-input"
+                            value={String(block?.title || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, title: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Title (optional)"
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'quote' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+                          <textarea
+                            className="admin-input"
+                            value={String(block?.text || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, text: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            style={{ height: 120, paddingTop: 12, paddingBottom: 12, resize: 'vertical' }}
+                            placeholder="Quote"
+                          />
+                          <input
+                            className="admin-input"
+                            value={String(block?.author || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, author: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Author (optional)"
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'slider' ? (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              disabled={uploadingBlockId === String(block?.id)}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) void uploadSliderImage(String(block?.id), file);
+                              }}
+                            />
+                            <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                              {uploadingBlockId === String(block?.id) ? 'Uploading…' : 'Add image'}
+                            </div>
+                          </div>
+                          <div style={{ display: 'grid', gap: 8 }}>
+                            {(Array.isArray(block?.images) ? block.images : []).map((img: any, imgIdx: number) => (
+                              <div key={`${String(block?.id)}-${imgIdx}`} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 8 }}>
+                                <input
+                                  className="admin-input"
+                                  value={String(img?.url || '')}
+                                  onChange={(e) =>
+                                    setFormData((p) => ({
+                                      ...p,
+                                      blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) => {
+                                        if (String(b?.id) !== String(block?.id)) return b;
+                                        const images = Array.isArray(b?.images) ? [...b.images] : [];
+                                        images[imgIdx] = { ...(images[imgIdx] || {}), url: e.target.value };
+                                        return { ...b, images };
+                                      }),
+                                    }))
+                                  }
+                                  placeholder="Image URL"
+                                />
+                                <button
+                                  type="button"
+                                  className="admin-button"
+                                  onClick={() =>
+                                    setFormData((p) => ({
+                                      ...p,
+                                      blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) => {
+                                        if (String(b?.id) !== String(block?.id)) return b;
+                                        const images = Array.isArray(b?.images) ? [...b.images] : [];
+                                        images.splice(imgIdx, 1);
+                                        return { ...b, images };
+                                      }),
+                                    }))
+                                  }
+                                  style={{ width: 36, padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fca5a5' }}
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                          <button
+                            type="button"
+                            className="admin-button"
+                            onClick={() =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) => {
+                                  if (String(b?.id) !== String(block?.id)) return b;
+                                  const images = Array.isArray(b?.images) ? [...b.images] : [];
+                                  images.push({ url: '' });
+                                  return { ...b, images };
+                                }),
+                              }))
+                            }
+                          >
+                            + URL
+                          </button>
+                          <input
+                            className="admin-input"
+                            value={String(block?.caption || '')}
+                            onChange={(e) =>
+                              setFormData((p) => ({
+                                ...p,
+                                blocks: (Array.isArray(p.blocks) ? p.blocks : []).map((b: any) =>
+                                  String(b?.id) === String(block?.id) ? { ...b, caption: e.target.value } : b
+                                ),
+                              }))
+                            }
+                            placeholder="Caption (optional)"
+                          />
+                        </div>
+                      ) : null}
+
+                      {block?.type === 'divider' ? (
+                        <div className="admin-muted" style={{ fontFamily: 'var(--font-family)', fontSize: 12 }}>
+                          Divider
                         </div>
                       ) : null}
                     </div>

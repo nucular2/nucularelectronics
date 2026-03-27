@@ -6,7 +6,7 @@ export default function NewsDetailPrice() {
     <>
       <Header variant="white" />
       <div className="page-content-white">
-        <div className="news-detail">
+        <div className="news-detail-shell">
           <div className="news-detail-breadcrumb">
             <Link to="/news" className="news-detail-back">
               <svg
@@ -27,37 +27,38 @@ export default function NewsDetailPrice() {
             </Link>
           </div>
 
-          <h1 className="news-detail-title">Price increase</h1>
-          <div className="news-detail-date">June 5, 2022</div>
+          <div className="news-detail">
+            <h1 className="news-detail-title">Price increase</h1>
+            <div className="news-detail-date">June 5, 2022</div>
 
-          <div className="news-detail-image">
-            <img src="/new2.png" alt="Price increase" />
+            <div className="news-detail-image">
+              <img src="/new2.png" alt="Price increase" />
+            </div>
+
+            <h2 className="news-detail-subtitle">Hello comrades!</h2>
+            <p className="news-detail-text">
+              Our previous mailing about price increases caused a huge stir. We closely followed your reactions and, apparently, no one remained indifferent! Our team was in shock... As one of the clients said: "You cheered me up and left no hope". We had not many options, we chose as best we could:
+            </p>
+
+            <div className="news-detail-image">
+              <img src="/new5.png" alt="Protection of controllers" />
+            </div>
+            <p className="news-detail-text">
+              But! Thanks to an operator error and a change in the component supply chain, we were able to correct this misunderstanding and provide a stock of vital components by the end of this year. So, please disregard to those strange numbers that were previously published. And if you haven't been paying attention, then keep it up.
+            </p>
+
+            <div className="footer-separator" />
+
+            <p className="news-detail-text">
+              We also want to answer a few popuar questions and clarify some points. The price increase will affect not only new pre-orders but all pre-orders placed earlier. We cannot fix the cost at the time of pre-order, therefore, payment for the order always takes place at the actual cost indicated on the website at the time you receive a notification about the readiness of the order for shipment. It's hard to believe, but in our entire history, there have even been a couple of cases when this cost was lower than the pre-order price. Yes, we wrote this to make it a little easier for you.
+            </p>
+            <p className="news-detail-sign">
+              Thanks for your attention,<br />Nucular Team
+            </p>
           </div>
 
-          <h2 className="news-detail-subtitle">Hello comrades!</h2>
-          <p className="news-detail-text">
-            Our previous mailing about price increases caused a huge stir. We closely followed your reactions and, apparently, no one remained indifferent! Our team was in shock... As one of the clients said: "You cheered me up and left no hope". We had not many options, we chose as best we could:
-          </p>
-
-          <div className="news-detail-image">
-            <img src="/new5.png" alt="Protection of controllers" />
-          </div>
-          <p className="news-detail-text">
-            But! Thanks to an operator error and a change in the component supply chain, we were able to correct this misunderstanding and provide a stock of vital components by the end of this year. So, please disregard to those strange numbers that were previously published. And if you haven't been paying attention, then keep it up.
-          </p>
-
-          <div className="footer-separator" />
-
-          <p className="news-detail-text">
-            We also want to answer a few popuar questions and clarify some points. The price increase will affect not only new pre-orders but all pre-orders placed earlier. We cannot fix the cost at the time of pre-order, therefore, payment for the order always takes place at the actual cost indicated on the website at the time you receive a notification about the readiness of the order for shipment. It's hard to believe, but in our entire history, there have even been a couple of cases when this cost was lower than the pre-order price. Yes, we wrote this to make it a little easier for you.
-          </p>
-          <p className="news-detail-sign">
-            Thanks for your attention,<br />Nucular Team
-          </p>
-        </div>
-
-        <div className="news-detail-latest">
-          <h2 className="news-detail-latest-title">Latest news</h2>
+          <div className="news-detail-latest">
+            <h2 className="news-detail-latest-title">Latest news</h2>
 
           <div className="news-grid-small">
             <article className="news-card news-card--small">
@@ -96,6 +97,7 @@ export default function NewsDetailPrice() {
               </p>
             </article>
           </div>
+        </div>
         </div>
       </div>
     </>

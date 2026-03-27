@@ -6,10 +6,14 @@ export default function Contact() {
       <Header variant="white" />
       <div className="page-content-white contact-page">
         <div className="contact-layout">
-          <div className="contact-left">
+          <div className="contact-title-row">
             <h1 className="contact-title">Contact us</h1>
+          </div>
+          <div className="contact-left">
             <p className="contact-subtitle">
-              If you have questions, suggestions or you need technical support, write to us.
+              If you have questions, suggestions or
+              <br />
+              you need technical support, write to us.
             </p>
             <div className="contact-company">Nucular Limited</div>
             <div className="contact-address">

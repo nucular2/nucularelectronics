@@ -714,26 +714,37 @@
 }
 
 .contact-layout {
-  max-width: var(--content-w);
+  width: 780px;
+  max-width: 100%;
   margin: 0 auto 80px;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 36px;
+  display: grid;
+  grid-template-columns: 380px 380px;
+  column-gap: 20px;
+  row-gap: 0;
+  align-items: start;
 }
 
 .contact-page {
   background-color: #ffffff;
 }
 
+.contact-title-row {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+
 .contact-left {
-  max-width: 420px;
+  width: 380px;
+  max-width: 100%;
+  grid-column: 1 / 2;
+  grid-row: 2;
 }
 
 .contact-title {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: var(--home-section-title-fs);
+  font-size: 54px;
   line-height: 120%;
   color: #222222;
   margin-bottom: 24px;
@@ -750,8 +761,8 @@
 
 .contact-company {
   font-family: var(--font-family);
-  font-weight: 700;
-  font-size: var(--footer-link-fs);
+  font-weight: 600;
+  font-size: 16px;
   line-height: 160%;
   color: #222222;
   margin-bottom: 16px;
@@ -760,7 +771,7 @@
 .contact-address {
   font-family: var(--font-family);
   font-weight: 600;
-  font-size: var(--footer-link-fs);
+  font-size: 16px;
   line-height: 160%;
   color: #222222;
   margin-bottom: 32px;
@@ -796,12 +807,14 @@
 }
 
 .contact-form {
-  flex: 1;
+  width: 380px;
   max-width: 380px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 0;
+  grid-column: 2 / 3;
+  grid-row: 2;
 }
 
 .contact-input,
@@ -849,7 +862,8 @@
 
 .contact-send-button {
   margin-top: 8px;
-  height: var(--newsletter-control-h);
+  width: 380px;
+  height: 44px;
   border: none;
   border-radius: 8px;
   background: #f36f25;
@@ -868,11 +882,18 @@
 @media (max-width: 900px) {
   .contact-layout {
     margin: 0 auto 20px;
+    display: flex;
     flex-direction: column;
     padding: 0 20px;
   }
 
+  .contact-title-row {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
   .contact-left {
+    width: 100%;
     max-width: 100%;
   }
 

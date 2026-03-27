@@ -4783,9 +4783,9 @@ body.is-mobile .review-card {
 .footer-title {
   font-family: var(--font-family);
   font-weight: 600;
-  font-size: var(--footer-title-fs);
+  font-size: 14px;
   line-height: 140%;
-  color: #888;
+  color: #B0B0B0;
   margin: 0;
   margin-bottom: 0;
 }
@@ -4801,7 +4801,7 @@ body.is-mobile .review-card {
 
 .footer-links li a {
   font-family: var(--font-family);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--footer-link-fs);
   line-height: 44px;
   color: #222;

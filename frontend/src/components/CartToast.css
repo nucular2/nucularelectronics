@@ -1,0 +1,82 @@
+.cart-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  height: 90px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  z-index: 2000;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cart-toast-image {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-toast-image img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  display: block;
+}
+
+.cart-toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-toast-title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  color: #222222;
+}
+
+.cart-toast-subtitle {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-toast-close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 24px;
+}
+
+@media (max-width: 900px) {
+  .cart-toast {
+    left: 20px;
+    right: 20px;
+    width: auto;
+    top: 12px;
+  }
+}

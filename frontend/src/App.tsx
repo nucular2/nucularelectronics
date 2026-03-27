@@ -50,6 +50,7 @@ import { ReviewsProvider } from './context/ReviewsContext';
 import { NewsProvider } from './context/NewsContext';
 import { ProductContentProvider } from './context/ProductContentContext';
 import CookieBanner from './components/CookieBanner';
+import CartToast from './components/CartToast';
 
 export default function App() {
   const location = useLocation();
@@ -81,6 +82,15 @@ export default function App() {
     document.body.classList.toggle('is-home', isHome);
     document.documentElement.classList.toggle('is-home', isHome);
   }, [location.pathname]);
+
+  useLayoutEffect(() => {
+    try {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+    } catch {}
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     if (isAdminRoute) return;
@@ -182,6 +192,7 @@ export default function App() {
               </>
             )}
             <CookieBanner />
+            <CartToast />
                 </CartProvider>
               </NewsProvider>
             </ReviewsProvider>

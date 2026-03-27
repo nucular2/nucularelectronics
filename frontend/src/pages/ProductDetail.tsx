@@ -18,7 +18,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
   const { products } = useProducts();
   const { getContent } = useProductContent();
   const stickySentinelRef = useRef<HTMLDivElement | null>(null);
@@ -26,6 +26,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const resolvedProductId = productId ?? Number(id);
   const product = products.find((p) => p.id === resolvedProductId) ?? products[0];
   const productContent = Number.isFinite(resolvedProductId) ? getContent(resolvedProductId) : undefined;
+  const inCart = items.some((i) => i.id === product.id);
 
   const isP24F = product?.id === 1;
   const isOnBoardComputer = product?.id === 2;
@@ -327,9 +328,15 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
           <div className="product-sticky-title">{displayTitle}</div>
           <div className="product-sticky-right">
             <div className="product-sticky-price">{displayPrice}</div>
-            <button className="product-sticky-cta" onClick={() => addToCart(product)}>
-              Add to cart
-            </button>
+            {inCart ? (
+              <button className="product-sticky-cta" onClick={() => navigate("/cart")}>
+                Go to cart
+              </button>
+            ) : (
+              <button className="product-sticky-cta" onClick={() => addToCart(product)}>
+                Add to cart
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -394,28 +401,14 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                 <span className="product-line2">{displayCode}</span>
                 
                 <div className="product-actions">
-                  {isBaseballCap ? (
-                    <button
-                      className="product-primary-button"
-                      onClick={() => {
-                        addToCart(product);
-                        navigate("/cart");
-                      }}
-                    >
+                  {inCart ? (
+                    <button className="product-secondary-button" onClick={() => navigate("/cart")}>
                       Go to cart
                     </button>
                   ) : (
-                    <>
-                      <button
-                        className="product-primary-button"
-                        onClick={() => addToCart(product)}
-                      >
-                        Add to cart
-                      </button>
-                      <button className="product-secondary-button">
-                        Learn more
-                      </button>
-                    </>
+                    <button className="product-primary-button" onClick={() => addToCart(product)}>
+                      Add to cart
+                    </button>
                   )}
                 </div>
 
@@ -504,28 +497,14 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
               )}
 
               <div className="product-actions">
-                {isBaseballCap ? (
-                  <button
-                    className="product-primary-button"
-                    onClick={() => {
-                      addToCart(product);
-                      navigate("/cart");
-                    }}
-                  >
+                {inCart ? (
+                  <button className="product-secondary-button" onClick={() => navigate("/cart")}>
                     Go to cart
                   </button>
                 ) : (
-                  <>
-                    <button
-                      className="product-primary-button"
-                      onClick={() => addToCart(product)}
-                    >
-                      Add to cart
-                    </button>
-                    <button className="product-secondary-button">
-                      Learn more
-                    </button>
-                  </>
+                  <button className="product-primary-button" onClick={() => addToCart(product)}>
+                    Add to cart
+                  </button>
                 )}
               </div>
               <div className="product-info-separator" />

@@ -181,11 +181,11 @@ export default function Cart() {
               <button
                 className="checkout-btn"
                 onClick={() => {
-                  if (!user) {
+                  if (import.meta.env.PROD && !user) {
                     navigate('/login?redirect=/checkout');
-                  } else {
-                    navigate('/checkout');
+                    return;
                   }
+                  navigate('/checkout');
                 }}
               >
                 Go to checkout

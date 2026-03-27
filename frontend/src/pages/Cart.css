@@ -292,7 +292,7 @@
 }
 
 .cart-summary-row-total {
-  margin-top: 12px;
+  margin-top: 24px;
   margin-bottom: 0;
   align-items: center;
 }
@@ -397,6 +397,7 @@
 @media (min-width: 901px) {
   .cart-summary-title {
     font-size: 20px;
+    margin-bottom: 32px;
   }
 
   .cart-summary-row-total .cart-summary-value {

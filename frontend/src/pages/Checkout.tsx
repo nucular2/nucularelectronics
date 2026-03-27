@@ -19,6 +19,7 @@ interface RecipientInfo {
 
 interface ShippingAddress {
   country: string;
+  region?: string;
   zipCode: string;
   city: string;
   street: string;
@@ -69,6 +70,8 @@ export default function Checkout() {
   });
 
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
+  const [promoCode, setPromoCode] = useState('');
+  const [showPaymentMethods, setShowPaymentMethods] = useState(false);
 
   // Load saved data from localStorage
   useEffect(() => {
@@ -100,9 +103,8 @@ export default function Checkout() {
   }, [contacts]);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login?redirect=/checkout");
-    }
+    if (!import.meta.env.PROD) return;
+    if (!user) navigate("/login?redirect=/checkout");
   }, [user, navigate]);
 
   // Handlers
@@ -164,8 +166,15 @@ export default function Checkout() {
     e.preventDefault();
     if (shipping.country && shipping.zipCode && shipping.city && shipping.street) {
       setStep(3);
+      setShowPaymentMethods(false);
       window.scrollTo(0, 0);
     }
+  };
+
+  const goToPaymentMethods = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowPaymentMethods(true);
+    window.scrollTo(0, 0);
   };
 
   const ensureSupabaseSession = async () => {
@@ -433,18 +442,30 @@ export default function Checkout() {
     return () => document.removeEventListener("mousedown", onMouseDown);
   }, [countryOpen]);
 
+  const totalQty = useMemo(() => items.reduce((acc, it) => acc + (typeof it.quantity === 'number' ? it.quantity : 1), 0), [items]);
+
+  const parseMoney = (value: unknown) => {
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    const s = String(value || '').trim();
+    if (!s) return null;
+    const normalized = s.replace(/[^0-9.,-]/g, '').replace(/,/g, '');
+    const n = Number.parseFloat(normalized);
+    return Number.isFinite(n) ? n : null;
+  };
+
   return (
     <>
       <Header variant="white" />
       <div className="checkout-page">
         <div className="checkout-container">
           {/* Desktop Title & Order Summary Row */}
-          <div className="checkout-header-desktop" style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', marginBottom: '40px' }}>
-            <div></div> {/* Left spacer */}
-            <h1 className="checkout-title" style={{ margin: 0 }}>Checkout</h1>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', fontFamily: 'var(--font-family)', fontSize: '16px', color: '#222' }}>
-              <span>Order summary: <span style={{ color: '#F36F25', fontWeight: 700 }}>${totalPrice.toFixed(2)} ({items.length})</span></span>
-            </div>
+          <div className="checkout-header-desktop">
+            <Link to="/cart" className="checkout-back-link">
+              <span className="checkout-back-icon">‹</span> Back to cart
+            </Link>
+            <h1 className="checkout-title" style={{ margin: 0 }}>
+              Checkout
+            </h1>
           </div>
 
           {/* Mobile Header Row: Back to cart + Order Summary */}
@@ -468,16 +489,36 @@ export default function Checkout() {
           
           {error && <div className="auth-error" style={{marginBottom: '20px', maxWidth: '480px', margin: '0 auto 20px auto', textAlign: 'center'}}>{error}</div>}
 
+          <div className="checkout-grid">
+            <div className="checkout-left-panel">
           <div className="checkout-content">
             {/* Step 1: Recipient Information */}
             <div className={`checkout-step ${step === 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
               <div className="checkout-step-header" onClick={() => setStep(1)}>
                 <div className="step-number">1</div>
-                <h2 className="step-title">Recipient information</h2>
+                <div className="checkout-step-header-main">
+                  <h2 className="step-title">Contact</h2>
+                  {step > 1 ? (
+                    <div className="checkout-step-header-summary">
+                      <div className="checkout-step-header-summary-line">
+                        {`${recipient.firstName} ${recipient.lastName}`.trim()}
+                      </div>
+                      <div className="checkout-step-header-summary-line">
+                        {`${selectedCountry?.dial_code || ''} ${recipient.phone}`.trim()}
+                      </div>
+                      <div className="checkout-step-header-summary-line">{recipient.email}</div>
+                    </div>
+                  ) : null}
+                </div>
+                {step > 1 ? (
+                  <button type="button" className="checkout-step-change" onClick={() => setStep(1)}>
+                    Change
+                  </button>
+                ) : null}
               </div>
               
               <div className="checkout-step-content">
-                <form onSubmit={goToStep2} className="checkout-form-grid">
+                <form onSubmit={goToStep2} className="checkout-form-grid checkout-form-grid--two-col">
                   <input
                     name="firstName"
                     placeholder="First name"
@@ -550,8 +591,8 @@ export default function Checkout() {
                     className="checkout-input"
                     type="email"
                   />
-                  <button type="submit" className="checkout-next-btn">
-                    Next
+                  <button type="submit" className="checkout-next-btn checkout-next-btn--small">
+                    Continue
                   </button>
                 </form>
               </div>
@@ -561,25 +602,86 @@ export default function Checkout() {
             <div className={`checkout-step ${step === 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
               <div className="checkout-step-header" onClick={() => step > 1 && setStep(2)}>
                 <div className="step-number">2</div>
-                <h2 className="step-title">Shipping address</h2>
+                <div className="checkout-step-header-main">
+                  <div className="checkout-step-header-top">
+                    <h2 className="step-title">Shipping address</h2>
+                    <div className="checkout-step-header-actions">
+                      {step > 2 ? (
+                        <button type="button" className="checkout-step-change" onClick={() => setStep(2)}>
+                          Change
+                        </button>
+                      ) : null}
+                      {step === 2 ? (
+                        <div className="checkout-shipping-logos" aria-hidden="true">
+                          <svg width="35" height="20" viewBox="0 0 35 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M18.9278 16.2903L21.6004 19.2876H27.3728L21.8764 13.141L27.2975 7.04397H21.7501L19.1523 10.0183L16.4526 7.04397H10.7042H4.5341V4.29916H10.7042V0H0V19.2876H10.7042H16.2786L18.9278 16.2903ZM16.1523 13.1667L10.7042 19.2876V14.9776H4.5341V11.1808H10.7042V7.04397L16.1523 13.1667Z"
+                              fill="#FF5A00"
+                            />
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M31.4622 18.7509V17.4933L31.4645 17.4942V17.4928H31.859C32.1282 17.4928 32.2536 17.5785 32.3249 17.8134C32.3622 17.9475 32.3813 18.0928 32.4 18.2357C32.4244 18.4221 32.4482 18.6043 32.5115 18.7518H32.9922C32.9159 18.6646 32.8689 18.3323 32.8337 18.0834C32.8281 18.0439 32.8228 18.0066 32.8177 17.9726C32.7695 17.5898 32.6833 17.3805 32.4489 17.3431V17.3314C32.719 17.2958 32.9286 17.05 32.9286 16.7398C32.9286 16.2361 32.6572 15.9777 32.0656 15.9777H31.0559V18.7509H31.4622ZM32.4732 16.7393C32.4732 16.9246 32.3605 17.1348 31.9659 17.1348V17.1357H31.4622V16.347H31.9659C32.3605 16.347 32.4732 16.5202 32.4732 16.7393Z"
+                              fill="#FF5A00"
+                            />
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M31.9528 15.0993C30.7218 15.0993 29.6346 16.025 29.6346 17.3945C29.6346 18.7613 30.7218 19.6879 31.9528 19.6879C33.1879 19.6879 34.2733 18.7613 34.2733 17.3945C34.2733 16.025 33.1875 15.0993 31.9528 15.0993ZM31.9546 15.469C33.0405 15.469 33.8287 16.283 33.8287 17.3945C33.8287 18.5029 33.0405 19.3168 31.9546 19.3168C30.8706 19.3168 30.0815 18.5043 30.0815 17.3945C30.0815 16.283 30.8706 15.469 31.9546 15.469Z"
+                              fill="#FF5A00"
+                            />
+                          </svg>
+                          <svg width="44" height="28" viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clipPath="url(#clip0_2459_91784)">
+                              <path d="M0 0.000976562H43.9972V28.001H0V0.000976562Z" fill="#FFCB01" />
+                              <path d="M8.9984 12.9662L6.26134 16.676H12.9359C15.1383 16.676 16.3668 15.1816 16.7442 14.6642H12.1952C11.6184 14.6642 11.7926 14.4279 11.889 14.298L12.582 13.3566C12.7655 13.1081 12.7702 12.9662 12.3947 12.9662H8.9984Z" fill="#D80613" />
+                              <path d="M20.4504 16.676L21.9346 14.6632H18.0196L16.5354 16.676H20.4504Z" fill="#D80613" />
+                              <path d="M18.3567 14.2074H27.9313L30.5494 10.6602H26.6362L25.1343 12.6944H23.3879L24.888 10.6602H20.9748L18.3567 14.2074Z" fill="#D80613" />
+                              <path d="M26.1109 16.676L27.5951 14.6632H23.6819L22.1977 16.676H26.1109Z" fill="#D80613" />
+                              <path d="M6.44206 15.4571H0.675781V15.8839H6.12744L6.44206 15.4571Z" fill="#D80613" />
+                              <path d="M7.02824 14.6632H0.675781V15.0901H6.71268L7.02824 14.6632Z" fill="#D80613" />
+                              <path d="M5.85682 16.251H0.675781V16.676H5.54313L5.85682 16.251Z" fill="#D80613" />
+                              <path d="M37.5761 15.8839H43.3217V15.4571H37.8916L37.5761 15.8839Z" fill="#D80613" />
+                              <path d="M36.9927 16.676H43.3217V16.251H37.3054L36.9927 16.676Z" fill="#D80613" />
+                              <path d="M43.3217 14.6632H38.4769L38.1622 15.091H43.3217V14.6632Z" fill="#D80613" />
+                              <path d="M33.3511 14.2074L35.9692 10.6602H31.8238L29.2038 14.2074H33.3511Z" fill="#D80613" />
+                              <path d="M28.4435 15.2404C28.583 15.0536 28.8686 14.6632 28.8686 14.6632H37.7596L36.2754 16.675H29.9904C28.3863 16.675 27.9528 15.9036 28.4435 15.2404Z" fill="#D80613" />
+                              <path d="M6.81344 12.5066L8.17588 10.6602L16.0341 10.6611C18.0295 10.6611 18.5389 12.233 17.9808 12.9886L17.0809 14.2084H14.0442C13.4674 14.2084 13.6416 13.9721 13.738 13.8423C13.8353 13.7109 13.9644 13.5326 14.0922 13.356C14.2143 13.1873 14.3353 13.0202 14.4263 12.8971C14.6098 12.6477 14.6145 12.5066 14.239 12.5066H6.81344Z" fill="#D80613" />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_2459_91784">
+                                <rect width="44" height="28" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="checkout-step-desc">We ship by DHL or FedEx</div>
+                </div>
               </div>
               
               <div className="checkout-step-content">
-                <form onSubmit={goToStep3} className="checkout-form-grid">
-                  <input
+                <form onSubmit={goToStep3} className="checkout-form-grid checkout-form-grid--two-col">
+                  <select
                     name="country"
-                    placeholder="Country"
                     value={shipping.country}
                     onChange={handleShippingChange}
                     required
-                    className="checkout-input"
-                    list="shipping-country-list"
-                  />
-                  <datalist id="shipping-country-list">
-                    {countries.map((c) => (
-                      <option key={c.code} value={c.name} />
+                    className="checkout-input checkout-select"
+                  >
+                    <option value="" disabled>
+                      Country
+                    </option>
+                    {sortedCountries.map((c) => (
+                      <option key={c.code} value={c.name}>
+                        {c.name}
+                      </option>
                     ))}
-                  </datalist>
+                  </select>
                   <input
                     name="zipCode"
                     placeholder="Postcode"
@@ -588,6 +690,17 @@ export default function Checkout() {
                     required
                     className="checkout-input"
                   />
+                  <select
+                    name="region"
+                    value={(shipping as any).region || ''}
+                    onChange={handleShippingChange}
+                    className="checkout-input checkout-select"
+                  >
+                    <option value="" disabled>
+                      State
+                    </option>
+                    <option value="">State</option>
+                  </select>
                   <input
                     name="city"
                     placeholder="City"
@@ -598,29 +711,25 @@ export default function Checkout() {
                   />
                   <input
                     name="street"
-                    placeholder="Street name and number"
+                    placeholder="Street address"
                     value={shipping.street}
                     onChange={handleShippingChange}
                     required
                     className="checkout-input"
                   />
-                  <input
-                    name="buildingName"
-                    placeholder="Building name (if applicable)"
-                    value={shipping.buildingName}
-                    onChange={handleShippingChange}
-                    className="checkout-input"
-                  />
-                  <input
-                    name="flat"
-                    placeholder="Flat / office"
-                    value={shipping.flat}
-                    onChange={handleShippingChange}
-                    className="checkout-input"
-                  />
+                  <div className="checkout-field-group">
+                    <input
+                      name="buildingName"
+                      placeholder="Apt, office, building"
+                      value={shipping.buildingName}
+                      onChange={handleShippingChange}
+                      className="checkout-input"
+                    />
+                    <div className="checkout-field-hint">Optional</div>
+                  </div>
                   
                   <button type="submit" className="checkout-next-btn">
-                    Next
+                    Continue
                   </button>
                 </form>
               </div>
@@ -630,85 +739,132 @@ export default function Checkout() {
             <div className={`checkout-step ${step === 3 ? 'active' : ''}`}>
               <div className="checkout-step-header" onClick={() => step > 2 && setStep(3)}>
                 <div className="step-number">3</div>
-                <h2 className="step-title">Contacts</h2>
+                <h2 className="step-title">Payment</h2>
               </div>
               
               <div className="checkout-step-content">
-                <form onSubmit={handleCardCheckout} className="checkout-form-grid">
-                  <input
-                    name="telegram"
-                    placeholder="Telegram (Optional)"
-                    value={contacts.telegram}
-                    onChange={handleContactsChange}
-                    className="checkout-input"
-                  />
-
-                  <input
-                    name="whatsapp"
-                    placeholder="WhatsApp (Optional)"
-                    value={contacts.whatsapp}
-                    onChange={handleContactsChange}
-                    className="checkout-input"
-                  />
+                <form onSubmit={goToPaymentMethods} className="checkout-form-grid">
+                  <div className="checkout-preorder-note">
+                    <div className="checkout-preorder-note-icon" aria-hidden="true">
+                      i
+                    </div>
+                    <div className="checkout-preorder-note-text">
+                      All goods in the cart, are available only for pre-order. We don&apos;t charge pre-payment for pre-orders. We&nbsp;will contact you for confirmation when the goods will be in stock and agree on payment and delivery methods.
+                    </div>
+                  </div>
 
                   <textarea
                     name="comment"
-                    placeholder="Comment (Optional)"
+                    placeholder="Comment"
                     value={contacts.comment}
                     onChange={handleContactsChange}
-                    className="checkout-input checkout-textarea"
+                    className="checkout-input checkout-textarea checkout-comment-textarea"
                   />
+                  <div className="checkout-field-hint">Optional</div>
 
-                  <div className="terms-checkbox">
-                    <label className="checkbox-container">
-                      <input
-                        type="checkbox"
-                        checked={contacts.termsAccepted}
-                        onChange={handleTermsChange}
-                        id="terms"
-                      />
-                      <span className="checkmark"></span>
-                      <span style={{ fontSize: '14px', color: '#222' }}>
-                        By placing an order you agree to the <Link to="/terms" className="terms-link" onClick={(e) => e.stopPropagation()}>Terms and Conditions</Link>
-                      </span>
-                    </label>
-                  </div>
+                  <button type="submit" className="checkout-next-btn">
+                    Continue
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          </div>
+          <aside className="checkout-right-panel">
+            <div className="checkout-summary">
+              <div className="checkout-summary-head">
+                <div className="checkout-summary-title">Order summary</div>
+                <button type="button" className="checkout-summary-edit" onClick={() => navigate('/cart')}>
+                  Edit
+                </button>
+              </div>
 
+              <div className="checkout-summary-items">
+                {items.map((it: any) => {
+                  const unit = parseMoney(it?.price);
+                  const qty = typeof it?.quantity === 'number' && it.quantity > 0 ? it.quantity : 1;
+                  const lineTotal = unit != null ? unit * qty : null;
+                  return (
+                    <div key={it.id} className="checkout-summary-item">
+                      <div className="checkout-summary-item-img">
+                        {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
+                      </div>
+                      <div className="checkout-summary-item-main">
+                        <div className="checkout-summary-item-title">{it.title}</div>
+                        <div className="checkout-summary-item-meta">
+                          {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                        </div>
+                        {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
+                      </div>
+                      <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="checkout-summary-sep" />
+
+              <div className="checkout-summary-promo">
+                <input
+                  className="checkout-summary-input"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  placeholder="Promo code"
+                />
+                <button type="button" className="checkout-summary-activate">
+                  Activate
+                </button>
+              </div>
+
+              {showPaymentMethods ? (
+                <div className="checkout-payment-block">
                   <div className="payment-method-section">
                     <h3 className="step-subtitle">Payment Method</h3>
                     <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
                       <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                        <input 
-                          type="radio" 
-                          name="paymentMethod" 
-                          value="card" 
-                          checked={paymentMethod === 'card'} 
-                          onChange={() => setPaymentMethod('card')} 
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="card"
+                          checked={paymentMethod === 'card'}
+                          onChange={() => setPaymentMethod('card')}
                           style={{ accentColor: '#F36F25' }}
                         />
                         <span style={{ fontSize: '16px', fontWeight: 500 }}>Credit Card (Stripe)</span>
                       </label>
                       <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                        <input 
-                          type="radio" 
-                          name="paymentMethod" 
-                          value="paypal" 
-                          checked={paymentMethod === 'paypal'} 
-                          onChange={() => setPaymentMethod('paypal')} 
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="paypal"
+                          checked={paymentMethod === 'paypal'}
+                          onChange={() => setPaymentMethod('paypal')}
                           style={{ accentColor: '#F36F25' }}
                         />
                         <span style={{ fontSize: '16px', fontWeight: 500 }}>PayPal</span>
                       </label>
                     </div>
-                  
+
+                    <div className="terms-checkbox">
+                      <label className="checkbox-container">
+                        <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
+                        <span className="checkmark"></span>
+                        <span style={{ fontSize: '14px', color: '#222' }}>
+                          By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
+                        </span>
+                      </label>
+                    </div>
+
                     {paymentMethod === 'card' ? (
-                      <button type="submit" className="checkout-next-btn" disabled={loading || !items.length || totalPrice <= 0}>
-                        {loading ? "Completing..." : "Complete checkout"}
-                      </button>
+                      <form onSubmit={handleCardCheckout}>
+                        <button type="submit" className="checkout-next-btn" disabled={loading || !items.length || totalPrice <= 0}>
+                          {loading ? 'Completing...' : 'Complete checkout'}
+                        </button>
+                      </form>
                     ) : (
                       <div style={{ marginTop: '16px' }}>
                         <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
-                          <PayPalButtons 
+                          <PayPalButtons
                             style={{ layout: "vertical", color: "gold", shape: "rect", label: "paypal" }}
                             createOrder={async (data, actions) => {
                               try {
@@ -721,13 +877,12 @@ export default function Checkout() {
                                 }
                                 return actions.order.create({
                                   intent: "CAPTURE",
-                                  purchase_units: [{
-                                    description: `Order #${order.id}`,
-                                    amount: {
-                                      currency_code: "USD",
-                                      value: totalPrice.toFixed(2)
-                                    }
-                                  }]
+                                  purchase_units: [
+                                    {
+                                      description: `Order #${order.id}`,
+                                      amount: { currency_code: "USD", value: totalPrice.toFixed(2) },
+                                    },
+                                  ],
                                 });
                               } catch (err) {
                                 console.error("Create order error", err);
@@ -744,9 +899,33 @@ export default function Checkout() {
                       </div>
                     )}
                   </div>
-                </form>
+                </div>
+              ) : null}
+
+              <div className="checkout-summary-rows">
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Quantity</div>
+                  <div className="checkout-summary-value">{totalQty}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Subtotal</div>
+                  <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Tax</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Shipping</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
+                </div>
+                <div className="checkout-summary-row checkout-summary-row-total">
+                  <div className="checkout-summary-label">Total</div>
+                  <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
+                </div>
               </div>
             </div>
+          </aside>
           </div>
         </div>
       </div>

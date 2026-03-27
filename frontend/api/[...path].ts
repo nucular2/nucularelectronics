@@ -266,6 +266,45 @@ function isoDate(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
+function crmDatetime(input?: string) {
+  const d = input ? new Date(input) : new Date();
+  if (!Number.isFinite(d.getTime())) {
+    const now = new Date();
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(now.getUTCDate()).padStart(2, '0');
+    const hh = String(now.getUTCHours()).padStart(2, '0');
+    const mm = String(now.getUTCMinutes()).padStart(2, '0');
+    const ss = String(now.getUTCSeconds()).padStart(2, '0');
+    return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+  }
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const hh = String(d.getUTCHours()).padStart(2, '0');
+  const mm = String(d.getUTCMinutes()).padStart(2, '0');
+  const ss = String(d.getUTCSeconds()).padStart(2, '0');
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+}
+
+async function parseCrmApiResult(r: Response) {
+  const text = await r.text();
+  let data: any = null;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    data = null;
+  }
+  if (data && typeof data === 'object') {
+    const msg =
+      String(data?.errorMsg || data?.message || '').trim() ||
+      (Array.isArray(data?.errors) && data.errors.length ? String(data.errors[0]) : '') ||
+      text;
+    return { ok: Boolean(r.ok && data?.success !== false), success: data?.success, message: msg, data };
+  }
+  return { ok: r.ok, success: undefined, message: text, data: null };
+}
+
 function normalizePhoneE164(phone?: string): string | undefined {
   if (!phone) return undefined;
   const digits = phone.replace(/[^\d+]/g, '');
@@ -1338,7 +1377,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           externalId: candidate?.externalId || paymentExternalId,
           order: { externalId: orderId },
           amount,
-          paidAt: paidAtIso,
+          paidAt: crmDatetime(paidAtIso),
           type: candidate?.type || paymentType,
           status: statusCandidate,
         };
@@ -1354,13 +1393,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
             body: form.toString(),
           });
-          if (r.ok) {
+          const parsed = await parseCrmApiResult(r);
+          if (parsed.ok) {
             lastPaymentErrorText = '';
             lastPaymentErrorStatus = 200;
             break;
           }
           lastPaymentErrorStatus = r.status;
-          lastPaymentErrorText = (await r.text()) || 'RetailCRM payments edit failed';
+          lastPaymentErrorText = parsed.message || 'RetailCRM payments edit failed';
           continue;
         }
 
@@ -1374,13 +1414,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
           body: form.toString(),
         });
-        if (r.ok) {
+        const parsed = await parseCrmApiResult(r);
+        if (parsed.ok) {
           lastPaymentErrorText = '';
           lastPaymentErrorStatus = 200;
           break;
         }
         lastPaymentErrorStatus = r.status;
-        lastPaymentErrorText = (await r.text()) || 'RetailCRM payments create failed';
+        lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
       }
 
       if (lastPaymentErrorText) {

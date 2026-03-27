@@ -89,6 +89,62 @@ export default function Checkout() {
     }
   }, []);
 
+  useEffect(() => {
+    const designStorageKey = "design_profile_v1";
+    const applyFromProfile = async () => {
+      try {
+        if (!user) {
+          let nextEmail = "";
+          let nextProfile: any = null;
+          try {
+            const raw = localStorage.getItem(designStorageKey);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              nextProfile = parsed?.profile || null;
+              if (typeof parsed?.email === "string") nextEmail = parsed.email;
+            }
+          } catch (_) {}
+
+          setRecipient((prev) => ({
+            ...prev,
+            firstName: prev.firstName || nextProfile?.first_name || "",
+            lastName: prev.lastName || nextProfile?.last_name || "",
+            phone: prev.phone || nextProfile?.phone || "",
+            email: prev.email || nextEmail || "",
+          }));
+          setShipping((prev) => ({
+            ...prev,
+            country: prev.country || nextProfile?.country || "",
+            city: prev.city || nextProfile?.city || "",
+            street: prev.street || nextProfile?.street || "",
+            zipCode: prev.zipCode || nextProfile?.zip_code || "",
+            flat: prev.flat || nextProfile?.flat || "",
+          }));
+          return;
+        }
+
+        const { data } = await supabase.from("profiles").select("*").eq("id", user.id).single();
+        const profile: any = data || null;
+        setRecipient((prev) => ({
+          ...prev,
+          firstName: prev.firstName || profile?.first_name || "",
+          lastName: prev.lastName || profile?.last_name || "",
+          phone: prev.phone || profile?.phone || "",
+          email: prev.email || user.email || "",
+        }));
+        setShipping((prev) => ({
+          ...prev,
+          country: prev.country || profile?.country || "",
+          city: prev.city || profile?.city || "",
+          street: prev.street || profile?.street || "",
+          zipCode: prev.zipCode || profile?.zip_code || "",
+          flat: prev.flat || profile?.flat || "",
+        }));
+      } catch (_) {}
+    };
+    void applyFromProfile();
+  }, [user]);
+
   // Save data to localStorage
   useEffect(() => {
     localStorage.setItem('checkout_recipient', JSON.stringify(recipient));

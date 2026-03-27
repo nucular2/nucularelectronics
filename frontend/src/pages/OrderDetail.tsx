@@ -58,6 +58,16 @@ export default function OrderDetail() {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const designStorageKey = "design_profile_v1";
+
+  const [editingRecipient, setEditingRecipient] = useState(false);
+  const [editingPhone, setEditingPhone] = useState(false);
+  const [editingEmail, setEditingEmail] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(false);
+  const [recipientForm, setRecipientForm] = useState({ firstName: "", lastName: "" });
+  const [phoneForm, setPhoneForm] = useState("");
+  const [emailForm, setEmailForm] = useState("");
+  const [addressForm, setAddressForm] = useState({ country: "", city: "", street: "", zipCode: "", flat: "" });
 
   useEffect(() => {
     if (!id) return;
@@ -149,6 +159,23 @@ export default function OrderDetail() {
   }, [user, id, location.state]);
 
   useEffect(() => {
+    if (!order) return;
+    setRecipientForm({
+      firstName: order.recipient_info?.firstName || "",
+      lastName: order.recipient_info?.lastName || "",
+    });
+    setPhoneForm(order.recipient_info?.phone || "");
+    setEmailForm(order.recipient_info?.email || "");
+    setAddressForm({
+      country: order.shipping_address?.country || "",
+      city: order.shipping_address?.city || "",
+      street: order.shipping_address?.street || "",
+      zipCode: order.shipping_address?.zipCode || "",
+      flat: order.shipping_address?.flat || "",
+    });
+  }, [order]);
+
+  useEffect(() => {
     // @ts-ignore
     const action = location.state?.action;
     if (loading || !order) return;
@@ -167,7 +194,13 @@ export default function OrderDetail() {
   const handleCancelOrder = async () => {
     if (!order) return;
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
-    
+
+    if (!user && !import.meta.env.PROD) {
+      setOrder({ ...order, status: "Canceled" });
+      navigate("/orders", { state: { tab: "completed", cancelOrderId: order.id } });
+      return;
+    }
+
     try {
       await refreshSupabaseSessionIfNeeded();
     } catch (e: any) {
@@ -175,15 +208,147 @@ export default function OrderDetail() {
       return;
     }
 
-    const { error } = await supabase
-      .from("orders")
-      .update({ status: "Canceled" })
-      .eq("id", order.id);
-      
+    const q = supabase.from("orders").update({ status: "Canceled" }).eq("id", order.id);
+    const { error } = user ? await q.eq("user_id", user.id) : await q;
+
     if (error) {
       alert("Error canceling order: " + error.message);
-    } else {
-      setOrder({ ...order, status: "Canceled" });
+      return;
+    }
+
+    setOrder({ ...order, status: "Canceled" });
+    navigate("/orders", { state: { tab: "completed" } });
+  };
+
+  const saveToDesignProfile = (payload: {
+    profile?: {
+      first_name?: string;
+      last_name?: string;
+      phone?: string;
+      country?: string;
+      city?: string;
+      street?: string;
+      flat?: string;
+      zip_code?: string;
+    };
+    email?: string;
+  }) => {
+    try {
+      const raw = localStorage.getItem(designStorageKey);
+      const parsed = raw ? JSON.parse(raw) : {};
+      const next = {
+        profile: { ...(parsed?.profile || {}), ...(payload.profile || {}) },
+        email: typeof payload.email === "string" ? payload.email : parsed?.email,
+      };
+      localStorage.setItem(designStorageKey, JSON.stringify(next));
+    } catch (_) {}
+  };
+
+  const saveToCheckoutCache = (payload: { recipient?: any; shipping?: any }) => {
+    try {
+      if (payload.recipient) {
+        localStorage.setItem("checkout_recipient", JSON.stringify(payload.recipient));
+      }
+      if (payload.shipping) {
+        localStorage.setItem("checkout_shipping", JSON.stringify(payload.shipping));
+      }
+    } catch (_) {}
+  };
+
+  const updateOrderAndProfile = async (next: { recipient?: any; shipping?: any; email?: string }) => {
+    if (!order) return;
+
+    const recipientNext = next.recipient
+      ? { ...order.recipient_info, ...next.recipient }
+      : order.recipient_info || { firstName: "", lastName: "", phone: "", email: "" };
+    const shippingNext = next.shipping ? { ...order.shipping_address, ...next.shipping } : order.shipping_address;
+    const emailNext = typeof next.email === "string" ? next.email : recipientNext.email;
+
+    const derivedRecipient = { ...recipientNext, email: emailNext };
+    const orderPatch: any = { recipient_info: derivedRecipient };
+    if (shippingNext) orderPatch.shipping_address = shippingNext;
+    orderPatch.customer_name = `${derivedRecipient.firstName || ""} ${derivedRecipient.lastName || ""}`.trim();
+    orderPatch.customer_phone = derivedRecipient.phone || "";
+    if (shippingNext) {
+      orderPatch.customer_address = `${shippingNext.street || ""}${shippingNext.flat ? `, ${shippingNext.flat}` : ""}, ${shippingNext.city || ""}, ${shippingNext.zipCode || ""}, ${shippingNext.country || ""}`;
+    }
+
+    setOrder((prev) => (prev ? { ...prev, ...orderPatch } : prev));
+    saveToCheckoutCache({
+      recipient: {
+        firstName: derivedRecipient.firstName || "",
+        lastName: derivedRecipient.lastName || "",
+        countryCode: "US",
+        phone: derivedRecipient.phone || "",
+        email: derivedRecipient.email || "",
+      },
+      shipping: shippingNext
+        ? {
+            country: shippingNext.country || "",
+            zipCode: shippingNext.zipCode || "",
+            city: shippingNext.city || "",
+            street: shippingNext.street || "",
+            buildingName: "",
+            flat: shippingNext.flat || "",
+            region: "",
+          }
+        : undefined,
+    });
+
+    if (!user) {
+      saveToDesignProfile({
+        profile: {
+          first_name: derivedRecipient.firstName || "",
+          last_name: derivedRecipient.lastName || "",
+          phone: derivedRecipient.phone || "",
+          country: shippingNext?.country || "",
+          city: shippingNext?.city || "",
+          street: shippingNext?.street || "",
+          flat: shippingNext?.flat || "",
+          zip_code: shippingNext?.zipCode || "",
+        },
+        email: derivedRecipient.email || "",
+      });
+      return;
+    }
+
+    try {
+      await refreshSupabaseSessionIfNeeded();
+    } catch (e: any) {
+      setError(e?.message || "Session expired");
+      return;
+    }
+
+    try {
+      const { error: orderErr } = await supabase
+        .from("orders")
+        .update(orderPatch)
+        .eq("id", order.id)
+        .eq("user_id", user.id);
+      if (orderErr) throw orderErr;
+
+      const profilePatch: any = {
+        id: user.id,
+        first_name: derivedRecipient.firstName || "",
+        last_name: derivedRecipient.lastName || "",
+        phone: derivedRecipient.phone || "",
+        country: shippingNext?.country || "",
+        city: shippingNext?.city || "",
+        street: shippingNext?.street || "",
+        flat: shippingNext?.flat || "",
+        zip_code: shippingNext?.zipCode || "",
+        updated_at: new Date(),
+      };
+      await supabase.from("profiles").upsert(profilePatch);
+
+      if (typeof next.email === "string" && next.email && next.email !== user.email) {
+        const { error: emailErr } = await supabase.auth.updateUser({ email: next.email });
+        if (emailErr) {
+          setError(emailErr.message);
+        }
+      }
+    } catch (e: any) {
+      setError(e?.message || "Failed to save changes");
     }
   };
 
@@ -323,39 +488,246 @@ export default function OrderDetail() {
                   </div>
 
                   <div className="info-item">
-                    <div className="info-label">Recipient name</div>
-                    <div className="info-value">
-                      {order.recipient_info?.firstName} {order.recipient_info?.lastName}
+                    <div className="info-header">
+                      <div className="info-label">Recipient name</div>
+                      {editingRecipient ? (
+                        <button
+                          className="edit-link"
+                          onClick={() => {
+                            setEditingRecipient(false);
+                            setRecipientForm({
+                              firstName: order.recipient_info?.firstName || "",
+                              lastName: order.recipient_info?.lastName || "",
+                            });
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <button className="edit-link" onClick={() => setEditingRecipient(true)}>
+                          Edit
+                        </button>
+                      )}
                     </div>
+                    {editingRecipient ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <input
+                            className="user-info-input"
+                            value={recipientForm.firstName}
+                            placeholder="First name"
+                            onChange={(e) => setRecipientForm((p) => ({ ...p, firstName: e.target.value }))}
+                          />
+                          <input
+                            className="user-info-input"
+                            value={recipientForm.lastName}
+                            placeholder="Last name"
+                            onChange={(e) => setRecipientForm((p) => ({ ...p, lastName: e.target.value }))}
+                          />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <button
+                            className="action-btn primary"
+                            style={{ width: 180 }}
+                            onClick={async () => {
+                              await updateOrderAndProfile({ recipient: { firstName: recipientForm.firstName, lastName: recipientForm.lastName } });
+                              setEditingRecipient(false);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="info-value">
+                        {order.recipient_info?.firstName} {order.recipient_info?.lastName}
+                      </div>
+                    )}
                   </div>
 
                   <div className="info-item">
                     <div className="info-header">
                       <div className="info-label">Phone number</div>
-                      <button className="edit-link">Edit</button>
+                      {editingPhone ? (
+                        <button
+                          className="edit-link"
+                          onClick={() => {
+                            setEditingPhone(false);
+                            setPhoneForm(order.recipient_info?.phone || "");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <button className="edit-link" onClick={() => setEditingPhone(true)}>
+                          Edit
+                        </button>
+                      )}
                     </div>
-                    <div className="info-value">{order.recipient_info?.phone}</div>
+                    {editingPhone ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                        <input
+                          className="user-info-input"
+                          value={phoneForm}
+                          placeholder="Phone number"
+                          onChange={(e) => setPhoneForm(e.target.value)}
+                        />
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <button
+                            className="action-btn primary"
+                            style={{ width: 180 }}
+                            onClick={async () => {
+                              await updateOrderAndProfile({ recipient: { phone: phoneForm } });
+                              setEditingPhone(false);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="info-value">{order.recipient_info?.phone}</div>
+                    )}
                   </div>
 
                   <div className="info-item">
-                    <div className="info-label">E-mail</div>
-                    <div className="info-value">{order.recipient_info?.email}</div>
+                    <div className="info-header">
+                      <div className="info-label">E-mail</div>
+                      {editingEmail ? (
+                        <button
+                          className="edit-link"
+                          onClick={() => {
+                            setEditingEmail(false);
+                            setEmailForm(order.recipient_info?.email || "");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <button className="edit-link" onClick={() => setEditingEmail(true)}>
+                          Edit
+                        </button>
+                      )}
+                    </div>
+                    {editingEmail ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                        <input
+                          className="user-info-input"
+                          value={emailForm}
+                          placeholder="E-mail"
+                          onChange={(e) => setEmailForm(e.target.value)}
+                        />
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <button
+                            className="action-btn primary"
+                            style={{ width: 180 }}
+                            onClick={async () => {
+                              await updateOrderAndProfile({ email: emailForm });
+                              setEditingEmail(false);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="info-value">{order.recipient_info?.email}</div>
+                    )}
                   </div>
 
                   <div className="info-item">
                     <div className="info-header">
                       <div className="info-label">Shipping address</div>
-                      <button className="edit-link">Edit</button>
+                      {editingAddress ? (
+                        <button
+                          className="edit-link"
+                          onClick={() => {
+                            setEditingAddress(false);
+                            setAddressForm({
+                              country: order.shipping_address?.country || "",
+                              city: order.shipping_address?.city || "",
+                              street: order.shipping_address?.street || "",
+                              zipCode: order.shipping_address?.zipCode || "",
+                              flat: order.shipping_address?.flat || "",
+                            });
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <button className="edit-link" onClick={() => setEditingAddress(true)}>
+                          Edit
+                        </button>
+                      )}
                     </div>
-                    <div className="info-value address-value">
-                      {order.shipping_address ? (
-                        <>
-                          {order.shipping_address.street} {order.shipping_address.flat ? `APT ${order.shipping_address.flat}` : ""}
-                          <br />
-                          {order.shipping_address.city}, {order.shipping_address.zipCode}, {order.shipping_address.country}
-                        </>
-                      ) : "N/A"}
-                    </div>
+                    {editingAddress ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                        <input
+                          className="user-info-input"
+                          value={addressForm.street}
+                          placeholder="Street address"
+                          onChange={(e) => setAddressForm((p) => ({ ...p, street: e.target.value }))}
+                        />
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <input
+                            className="user-info-input"
+                            value={addressForm.flat}
+                            placeholder="Apt / office"
+                            onChange={(e) => setAddressForm((p) => ({ ...p, flat: e.target.value }))}
+                          />
+                          <input
+                            className="user-info-input"
+                            value={addressForm.zipCode}
+                            placeholder="Postcode"
+                            onChange={(e) => setAddressForm((p) => ({ ...p, zipCode: e.target.value }))}
+                          />
+                        </div>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <input
+                            className="user-info-input"
+                            value={addressForm.city}
+                            placeholder="City"
+                            onChange={(e) => setAddressForm((p) => ({ ...p, city: e.target.value }))}
+                          />
+                          <input
+                            className="user-info-input"
+                            value={addressForm.country}
+                            placeholder="Country"
+                            onChange={(e) => setAddressForm((p) => ({ ...p, country: e.target.value }))}
+                          />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <button
+                            className="action-btn primary"
+                            style={{ width: 180 }}
+                            onClick={async () => {
+                              await updateOrderAndProfile({
+                                shipping: {
+                                  street: addressForm.street,
+                                  flat: addressForm.flat,
+                                  city: addressForm.city,
+                                  zipCode: addressForm.zipCode,
+                                  country: addressForm.country,
+                                },
+                              });
+                              setEditingAddress(false);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="info-value address-value">
+                        {order.shipping_address ? (
+                          <>
+                            {order.shipping_address.street} {order.shipping_address.flat ? `APT ${order.shipping_address.flat}` : ""}
+                            <br />
+                            {order.shipping_address.city}, {order.shipping_address.zipCode}, {order.shipping_address.country}
+                          </>
+                        ) : "N/A"}
+                      </div>
+                    )}
                   </div>
 
                   {order.status === "Awaiting payment" && (

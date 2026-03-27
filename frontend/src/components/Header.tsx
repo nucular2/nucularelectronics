@@ -105,6 +105,10 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
     if (user) {
       navigate('/orders');
     } else {
+      if (!import.meta.env.PROD) {
+        navigate('/orders');
+        return;
+      }
       navigate('/login');
     }
   };

@@ -1080,8 +1080,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         mode: 'payment',
         payment_method_types: ['card'],
         line_items: lineItems,
-        success_url: `${frontendUrl}/orders?payment=success`,
-        cancel_url: `${frontendUrl}/cart?payment=canceled`,
+        success_url: `${frontendUrl}/orders?payment=success&orderId=${encodeURIComponent(String(orderId))}&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${frontendUrl}/cart?payment=canceled&orderId=${encodeURIComponent(String(orderId))}`,
         metadata: {
           order_id: order.id,
           user_id: order.user_id,
@@ -1206,31 +1206,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: order.id, site });
         const crmId = crmOrder?.id ?? null;
         const crmNumber = crmOrder?.number ?? null;
-        try {
-          const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || 'bank-card';
-          const paymentStatusNotPaid = process.env.RETAILCRM_PAYMENT_STATUS_NOT_PAID || 'not-paid';
-          const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
-          if (payments.length === 0) {
-            const amount = parseMoney(order.total_amount) ?? parseMoney(order.total) ?? parseMoney(order.sum) ?? 0;
-            const payment = {
-              externalId: `init_${order.id}`,
-              order: { externalId: order.id },
-              amount: Math.round(Number(amount) * 100) / 100,
-              type: paymentType,
-              status: paymentStatusNotPaid,
-            };
-            const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
-              site ? `&site=${encodeURIComponent(site)}` : ''
-            }`;
-            const form = new URLSearchParams();
-            form.set('payment', JSON.stringify(payment));
-            await fetch(createUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-              body: form.toString(),
-            });
-          }
-        } catch {}
         const prevContacts = order.contacts && typeof order.contacts === 'object' ? order.contacts : {};
         const nextContacts = {
           ...prevContacts,
@@ -1264,7 +1239,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const apiUrl = process.env.RETAILCRM_URL;
       const apiKey = process.env.RETAILCRM_API_KEY;
       const site = process.env.RETAILCRM_SITE || undefined;
-      const paymentType = process.env.RETAILCRM_PAYMENT_TYPE || 'bank-card';
+      const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || 'stripe-payment';
+      const paymentTypePayPal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || 'paypal';
       const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
 
       if (!apiUrl || !apiKey) {
@@ -1291,13 +1267,48 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (String(orderRow.user_id) !== authData.user.id) return res.status(403).json({ message: 'Forbidden' });
 
       const provider = String(body.provider || 'paypal').trim().toLowerCase();
-      const paidAtIso = String(body.paidAt || '').trim() || new Date().toISOString();
-      const amount =
+      let paidAtIso = String(body.paidAt || '').trim() || new Date().toISOString();
+      let amount =
         typeof body.amount === 'number' && Number.isFinite(body.amount) && body.amount > 0
           ? Math.round(body.amount * 100) / 100
           : Math.round(Number(orderRow.total_amount || 0) * 100) / 100;
 
-      const paymentExternalId = `${provider}_${String(body.paymentId || '').trim() || String(orderId)}`;
+      const paymentIdRaw = String(body.paymentId || '').trim();
+      const paymentExternalId = `${provider}_${paymentIdRaw || String(orderId)}`;
+
+      const paymentType =
+        provider === 'stripe'
+          ? paymentTypeStripe
+          : provider === 'paypal'
+          ? paymentTypePayPal
+          : paymentTypeStripe;
+
+      if (provider === 'stripe') {
+        if (!paymentIdRaw) return res.status(400).json({ message: 'Missing paymentId (Stripe session id)' });
+        const stripeClient = await getStripe();
+        const session = await stripeClient.checkout.sessions.retrieve(paymentIdRaw);
+        const sessionOrderId = String((session as any)?.metadata?.order_id || '');
+        const sessionUserId = String((session as any)?.metadata?.user_id || '');
+        const status = String((session as any)?.status || '').toLowerCase();
+        const paymentStatus = String((session as any)?.payment_status || '').toLowerCase();
+        if (!sessionOrderId || sessionOrderId !== orderId) {
+          return res.status(400).json({ message: 'Stripe session does not match orderId' });
+        }
+        if (sessionUserId && sessionUserId !== authData.user.id) {
+          return res.status(403).json({ message: 'Forbidden' });
+        }
+        if (!(status === 'complete' || paymentStatus === 'paid')) {
+          return res.status(400).json({ message: 'Stripe session is not paid' });
+        }
+        const sessionAmountTotal = Number((session as any)?.amount_total);
+        if (Number.isFinite(sessionAmountTotal) && sessionAmountTotal > 0) {
+          amount = Math.round((sessionAmountTotal / 100) * 100) / 100;
+        }
+        const created = Number((session as any)?.created);
+        if (Number.isFinite(created) && created > 0) {
+          paidAtIso = new Date(created * 1000).toISOString();
+        }
+      }
 
       const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];

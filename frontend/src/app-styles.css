@@ -481,6 +481,10 @@
   .orders-list-header > div:nth-child(5) {
     text-align: right;
   }
+  .orders-list-header > div:nth-child(4),
+  .orders-list .order-card .order-amount {
+    transform: translateX(6px);
+  }
   .orders-list {
     display: flex;
     flex-direction: column;

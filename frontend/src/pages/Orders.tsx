@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { refreshSupabaseSessionIfNeeded, supabase } from "../lib/supabase";
@@ -33,13 +33,21 @@ interface Order {
 export default function Orders() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
   const [openMenuOrderId, setOpenMenuOrderId] = useState<string | null>(null);
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
   useEffect(() => {
+    const state = location.state as any;
+    const tab = state?.tab;
+    if (tab === "active" || tab === "completed") {
+      setActiveTab(tab);
+    }
+
     // TEMPORARY: Allow viewing orders without login for design review
     if (!user) {
       // navigate("/login?redirect=/orders");
@@ -49,6 +57,8 @@ export default function Orders() {
     setLoading(true);
     
     if (!user) {
+      const state = location.state as any;
+      const canceledId = state?.cancelOrderId;
       setOrders([
         {
           id: "123456",
@@ -72,7 +82,7 @@ export default function Orders() {
           created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
           updated_at: new Date().toISOString(),
         },
-      ] as any);
+      ].map((o: any) => (canceledId && o.id === canceledId ? { ...o, status: "Canceled" } : o)) as any);
       setLoading(false);
       return;
     }
@@ -124,7 +134,37 @@ export default function Orders() {
       }
     };
     void run();
-  }, [user, navigate]);
+  }, [user, navigate, location.state]);
+
+  useEffect(() => {
+    const payment = searchParams.get("payment");
+    const orderId = searchParams.get("orderId");
+    const sessionId = searchParams.get("session_id");
+    if (payment !== "success" || !orderId || !sessionId) return;
+    if (!user) return;
+
+    const run = async () => {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData?.session?.access_token;
+        if (!token) return;
+
+        const r = await fetch("/api/retailcrm/payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ orderId, provider: "stripe", paymentId: sessionId }),
+        });
+        if (!r.ok) return;
+
+        setOrders((prev) =>
+          prev.map((o) => (o.id === orderId ? { ...o, status: "Paid" as OrderStatus } : o))
+        );
+        navigate("/orders", { replace: true });
+      } catch (_) {}
+    };
+
+    void run();
+  }, [searchParams, user, navigate]);
 
   useEffect(() => {
     if (!openMenuOrderId) return;
@@ -148,6 +188,7 @@ export default function Orders() {
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status: "Canceled" as OrderStatus } : o))
       );
+      setActiveTab("completed");
       return;
     }
 
@@ -170,11 +211,45 @@ export default function Orders() {
     }
 
     setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: "Canceled" } : o)));
+    setActiveTab("completed");
   };
 
-  const handleGoToPayment = (orderId: string) => {
+  const handleGoToPayment = async (orderId: string) => {
     setOpenMenuOrderId(null);
-    navigate(`/orders/${orderId}`, { state: { action: "pay" } });
+    setError(null);
+
+    if (!import.meta.env.PROD && !user) {
+      setError("Payment is not available for mock orders in local design mode.");
+      return;
+    }
+
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || "";
+      let r = await fetch("/api/checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+
+      if (!r.ok && apiBase) {
+        r = await fetch(`${apiBase}/api/checkout/session`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId }),
+        });
+      }
+
+      if (!r.ok) {
+        const text = await r.text();
+        throw new Error(text || "Failed to open payment page");
+      }
+
+      const { url } = await r.json();
+      if (!url) throw new Error("Payment page URL is empty");
+      window.location.href = url;
+    } catch (e: any) {
+      setError(e?.message || "Failed to open payment page");
+    }
   };
 
   const filteredOrders = orders.filter((order) => {

@@ -54,7 +54,7 @@ export const products: Product[] = [
     id: 999,
     category: 'Components',
     title: 'test',
-    price: '$1.00',
+    price: '0.50',
     image: '/miniature.png',
     sku: 'TEST',
   },

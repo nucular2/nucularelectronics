@@ -340,6 +340,11 @@ function flattenCrmErrors(errors: any): string[] {
   return out.filter(Boolean);
 }
 
+function isIntegrationPaymentError(msg: string, details: string[]) {
+  const hay = `${msg} ${details.join(' ')}`.toLowerCase();
+  return hay.includes('integration payment');
+}
+
 function normalizePhoneE164(phone?: string): string | undefined {
   if (!phone) return undefined;
   const digits = phone.replace(/[^\d+]/g, '');
@@ -1415,9 +1420,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       let lastPaymentErrorStatus = 500;
       let lastPaymentErrorDetails: string[] = [];
       let lastPaymentErrorExternalId = paymentExternalId;
-      const isIntegrationPaymentError = (msg: string, details: string[]) => {
-        const hay = `${msg} ${details.join(' ')}`.toLowerCase();
-        return hay.includes('integration payment');
+      const markOrderPaidInCrm = async () => {
+        const editUrl =
+          `${apiUrl}/api/v5/orders/${encodeURIComponent(String(orderId))}/edit` +
+          `?apiKey=${encodeURIComponent(apiKey)}` +
+          `&by=externalId` +
+          (site ? `&site=${encodeURIComponent(site)}` : '');
+        const form = new URLSearchParams();
+        form.set(
+          'order',
+          JSON.stringify({
+            externalId: orderId,
+            paymentStatus: 'paid',
+            fullPaidAt: crmDatetime(paidAtIso),
+          })
+        );
+        const r = await fetch(editUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+          body: form.toString(),
+        });
+        return await parseCrmApiResult(r);
       };
 
       for (const statusCandidate of statusCandidates) {
@@ -1462,6 +1485,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
           lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
           lastPaymentErrorExternalId = externalIdAttempt;
+          if (isIntegrationPaymentError(lastPaymentErrorText, lastPaymentErrorDetails)) {
+            const orderEdit = await markOrderPaidInCrm();
+            if (orderEdit.ok) {
+              lastPaymentErrorText = '';
+              lastPaymentErrorStatus = 200;
+              lastPaymentErrorDetails = [];
+              break;
+            }
+          }
         }
 
         if (!lastPaymentErrorText) break;

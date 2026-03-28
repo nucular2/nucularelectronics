@@ -1285,7 +1285,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const site = process.env.RETAILCRM_SITE || undefined;
       const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || 'stripe-payment';
       const paymentTypePayPal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || 'paypal';
-      const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'payed';
+      const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || 'paid';
 
       if (!apiUrl || !apiKey) {
         return res.status(500).json({ message: 'RetailCRM credentials are missing' });
@@ -1354,7 +1354,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
 
-      const paidCodes = ['paid', 'payed', 'payment-paid', 'payment_paid'];
+      const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
       const exactMatch = (value: unknown) => Math.abs(Number(value) - amount) < 0.01;
 
       const candidate =
@@ -1368,7 +1368,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }) ||
         null;
 
-      const statusCandidates = Array.from(new Set([paymentStatusPaid, 'paid'].filter(Boolean)));
+      const statusCandidates = Array.from(new Set([paymentStatusPaid].filter(Boolean)));
       let lastPaymentErrorText = '';
       let lastPaymentErrorStatus = 500;
 

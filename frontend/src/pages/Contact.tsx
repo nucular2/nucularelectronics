@@ -45,25 +45,30 @@ export default function Contact() {
             </div>
           </div>
           <div className="contact-form">
-            <input
-              className="contact-input"
-              type="email"
-              placeholder="E-mail"
-            />
-            <input
-              className="contact-input"
-              type="text"
-              placeholder="Name"
-            />
-            <input
-              className="contact-input"
-              type="text"
-              placeholder="Country"
-            />
-            <textarea
-              className="contact-textarea"
-              placeholder="Your message"
-            />
+            <div className="contact-field">
+              <input className="contact-input" id="contact-email" type="email" placeholder=" " aria-label="E-mail" />
+              <label className="contact-label" htmlFor="contact-email">
+                E-mail
+              </label>
+            </div>
+            <div className="contact-field">
+              <input className="contact-input" id="contact-name" type="text" placeholder=" " aria-label="Name" />
+              <label className="contact-label" htmlFor="contact-name">
+                Name
+              </label>
+            </div>
+            <div className="contact-field">
+              <input className="contact-input" id="contact-country" type="text" placeholder=" " aria-label="Country" />
+              <label className="contact-label" htmlFor="contact-country">
+                Country
+              </label>
+            </div>
+            <div className="contact-field">
+              <textarea className="contact-textarea" id="contact-message" placeholder=" " aria-label="Your message" />
+              <label className="contact-label" htmlFor="contact-message">
+                Your message
+              </label>
+            </div>
             <button className="contact-send-button">Send</button>
           </div>
         </div>

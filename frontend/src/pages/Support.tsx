@@ -6,6 +6,7 @@ import "./ControllerSettings.css";
 
 export default function Support() {
   const [query, setQuery] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const results = useMemo(() => {
@@ -36,9 +37,13 @@ export default function Support() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!query.trim()) return;
+    setIsSubmitting(true);
     if (results[0]) {
       navigate(results[0].path);
+      return;
     }
+    setIsSubmitting(false);
   };
 
   const handleResultClick = (path: string) => {
@@ -54,51 +59,77 @@ export default function Support() {
             <div className="support-content-narrow">
             <h1 className="support-title">Support</h1>
             <form className="support-search-row" onSubmit={handleSubmit}>
-              <div className="support-search-input">
-                <input
-                  className="support-search-field"
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="What are you looking for?"
-                />
-                {query && (
-                  <button
-                    type="button"
-                    className="support-search-clear"
-                    onClick={() => setQuery("")}
-                  >
-                    ×
-                  </button>
-                )}
+              <div className="support-search-stack">
+                <div className={`support-search-input ${query.trim() ? "support-search-input--filled" : ""}`}>
+                  <span className="support-search-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M7.33333 2.66667C4.75599 2.66667 2.66667 4.75599 2.66667 7.33333C2.66667 9.91066 4.75599 12 7.33333 12C9.91066 12 12 9.91066 12 7.33333C12 4.75599 9.91066 2.66667 7.33333 2.66667ZM1.33333 7.33333C1.33333 4.01961 4.01961 1.33333 7.33333 1.33333C10.6471 1.33333 13.3333 4.01961 13.3333 7.33333C13.3333 8.76559 12.8313 10.0806 11.9935 11.112L14.4714 13.5899C14.7318 13.8503 14.7318 14.2724 14.4714 14.5328C14.2111 14.7931 13.7889 14.7931 13.5286 14.5328L11.0507 12.0549C10.0193 12.8927 8.70426 13.3947 7.272 13.3947C3.95828 13.3947 1.272 10.7084 1.272 7.39467L1.33333 7.33333Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    className="support-search-field"
+                    type="text"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      if (isSubmitting) setIsSubmitting(false);
+                    }}
+                    placeholder="What are you looking for?"
+                  />
+                  {query.trim() ? (
+                    <button
+                      type="button"
+                      className="support-search-clear"
+                      aria-label="Clear search"
+                      onClick={() => {
+                        setQuery("");
+                        setIsSubmitting(false);
+                      }}
+                    >
+                      ×
+                    </button>
+                  ) : null}
+                </div>
+                {query.trim() ? (
+                  <div className="support-search-results">
+                    {results.length > 0 ? (
+                      <>
+                        {results.map((item) => (
+                          <button
+                            key={item.type + item.label}
+                            className="support-search-result-item"
+                            type="button"
+                            onClick={() => handleResultClick(item.path)}
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                        {results.length === 5 ? (
+                          <button
+                            type="button"
+                            className="support-search-show-more"
+                            onClick={() => navigate(`/search?q=${encodeURIComponent(query)}`)}
+                          >
+                            Show more results
+                          </button>
+                        ) : null}
+                      </>
+                    ) : (
+                      <div className="support-search-not-found">Not found</div>
+                    )}
+                  </div>
+                ) : null}
               </div>
-              <button className="support-search-button" type="submit">Search</button>
+              <button className={`support-search-button ${isSubmitting ? "is-loading" : ""}`} type="submit" disabled={!query.trim() || isSubmitting}>
+                Search
+              </button>
         </form>
         
-
-            {query && (
-              <div className="support-search-results">
-                {results.map((item) => (
-                  <button
-                    key={item.type + item.label}
-                    className="support-search-result-item"
-                    type="button"
-                    onClick={() => handleResultClick(item.path)}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                {results.length === 5 && (
-                  <button
-                    type="button"
-                    className="support-search-show-more"
-                    onClick={() => navigate(`/search?q=${encodeURIComponent(query)}`)}
-                  >
-                    Show more results
-                  </button>
-                )}
-              </div>
-            )}
 
             <div className="support-topics">
               <div

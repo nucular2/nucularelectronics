@@ -821,6 +821,40 @@
   grid-row: 2;
 }
 
+.contact-field {
+  position: relative;
+  width: 100%;
+}
+
+.contact-label {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  color: #999999;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.contact-field:focus-within .contact-label {
+  color: #F36F25;
+  transform: translateY(-10px) scale(0.86);
+}
+
+.contact-input:not(:placeholder-shown) + .contact-label,
+.contact-textarea:not(:placeholder-shown) + .contact-label {
+  color: #222222;
+  transform: translateY(-10px) scale(0.86);
+}
+
+.contact-field:focus-within .contact-input:not(:placeholder-shown) + .contact-label,
+.contact-field:focus-within .contact-textarea:not(:placeholder-shown) + .contact-label {
+  color: #F36F25;
+}
+
 .contact-input,
 .contact-textarea {
   background: #f6f6f6;
@@ -830,7 +864,7 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: var(--footer-link-fs);
-  color: #999999;
+  color: #222222;
   transition: all 0.2s ease;
 }
 
@@ -850,17 +884,13 @@
 .contact-input {
   width: 100%;
   height: var(--newsletter-control-h);
-  padding: 0 16px;
-}
-
-.contact-input:nth-of-type(3) {
-  padding: 0 12px 0 16px;
+  padding: 20px 16px 8px 16px;
 }
 
 .contact-textarea {
   width: 100%;
   height: 147px;
-  padding: 16px 44px 16px 16px;
+  padding: 28px 44px 16px 16px;
   resize: none;
 }
 
@@ -880,7 +910,7 @@
 
 .contact-input::placeholder,
 .contact-textarea::placeholder {
-  color: #999999;
+  color: transparent;
 }
 
 @media (max-width: 900px) {

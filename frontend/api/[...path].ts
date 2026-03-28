@@ -297,10 +297,10 @@ async function parseCrmApiResult(r: Response) {
     data = null;
   }
   if (data && typeof data === 'object') {
-    const msg =
-      String(data?.errorMsg || data?.message || '').trim() ||
-      (Array.isArray(data?.errors) && data.errors.length ? String(data.errors[0]) : '') ||
-      text;
+    const rawMsg = String(data?.errorMsg || data?.message || '').trim();
+    const errorsAny = (data as any)?.errors;
+    const firstArrayErr = Array.isArray(errorsAny) && errorsAny.length ? String(errorsAny[0]) : '';
+    const msg = rawMsg || firstArrayErr || text;
     return { ok: Boolean(r.ok && data?.success !== false), success: data?.success, message: msg, data };
   }
   return { ok: r.ok, success: undefined, message: text, data: null };
@@ -309,12 +309,35 @@ async function parseCrmApiResult(r: Response) {
 function safePaymentExternalId(params: { provider: string; paymentId?: string; orderId: string }) {
   const base = `${params.provider}_${params.paymentId || params.orderId}`;
   const max = 50;
-  if (base.length <= max) return base;
+  const normalizedBase = base.replace(/[^a-zA-Z0-9_]/g, '_');
+  if (normalizedBase.length <= max) return normalizedBase;
   const hash = createHash('sha1').update(base).digest('hex').slice(0, 10);
   const orderPart = String(params.orderId || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 12) || 'order';
   const payPart = String(params.paymentId || '').replace(/[^a-zA-Z0-9]/g, '').slice(-12) || 'pay';
-  const compact = `${params.provider}_${orderPart}_${payPart}_${hash}`;
+  const compact = `${params.provider}_${orderPart}_${payPart}_${hash}`.replace(/[^a-zA-Z0-9_]/g, '_');
   return compact.length <= max ? compact : compact.slice(0, max);
+}
+
+function flattenCrmErrors(errors: any): string[] {
+  const out: string[] = [];
+  const walk = (value: any, path: string) => {
+    if (!value) return;
+    if (typeof value === 'string') {
+      out.push(path ? `${path}: ${value}` : value);
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const v of value) walk(v, path);
+      return;
+    }
+    if (typeof value === 'object') {
+      for (const [k, v] of Object.entries(value)) {
+        walk(v, path ? `${path}.${k}` : k);
+      }
+    }
+  };
+  walk(errors, '');
+  return out.filter(Boolean);
 }
 
 function normalizePhoneE164(phone?: string): string | undefined {
@@ -1383,6 +1406,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const statusCandidates = Array.from(new Set([paymentStatusPaid].filter(Boolean)));
       let lastPaymentErrorText = '';
       let lastPaymentErrorStatus = 500;
+      let lastPaymentErrorDetails: string[] = [];
 
       for (const statusCandidate of statusCandidates) {
         const paymentBase = {
@@ -1409,10 +1433,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           if (parsed.ok) {
             lastPaymentErrorText = '';
             lastPaymentErrorStatus = 200;
+            lastPaymentErrorDetails = [];
             break;
           }
           lastPaymentErrorStatus = r.status;
           lastPaymentErrorText = parsed.message || 'RetailCRM payments edit failed';
+          lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
           continue;
         }
 
@@ -1430,14 +1456,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (parsed.ok) {
           lastPaymentErrorText = '';
           lastPaymentErrorStatus = 200;
+          lastPaymentErrorDetails = [];
           break;
         }
         lastPaymentErrorStatus = r.status;
         lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
+        lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
       }
 
       if (lastPaymentErrorText) {
-        return res.status(lastPaymentErrorStatus).json({ message: lastPaymentErrorText, paymentExternalId });
+        return res.status(lastPaymentErrorStatus).json({
+          message: lastPaymentErrorText,
+          details: lastPaymentErrorDetails,
+          paymentExternalId,
+          context: {
+            provider,
+            amount,
+            paidAt: crmDatetime(paidAtIso),
+            type: paymentType,
+            status: paymentStatusPaid,
+          },
+        });
       }
 
       const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};

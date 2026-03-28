@@ -1390,41 +1390,93 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
 
       const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
-      const exactMatch = (value: unknown) => Math.abs(Number(value) - amount) < 0.01;
-
-      const candidate =
-        payments.find((p: any) => p?.externalId && String(p.externalId) === paymentExternalId) ||
-        payments.find((p: any) => {
-          const status = String(p?.status || '').toLowerCase();
-          const isPaid = paidCodes.includes(status);
-          if (isPaid) return false;
-          if (!exactMatch(p?.amount)) return false;
-          return true;
-        }) ||
-        null;
+      const existing =
+        payments.find((p: any) => p?.externalId && String(p.externalId) === paymentExternalId) || null;
+      const existingStatus = String(existing?.status || '').toLowerCase();
+      if (existing && paidCodes.includes(existingStatus)) {
+        const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
+        const nextContacts = {
+          ...prevContacts,
+          payment: {
+            ...(prevContacts?.payment && typeof prevContacts.payment === 'object' ? prevContacts.payment : {}),
+            provider,
+            status: 'paid',
+            paidAt: paidAtIso,
+            amount,
+            updatedAt: new Date().toISOString(),
+          },
+        };
+        await supabaseService.from('orders').update({ status: 'Paid', contacts: nextContacts }).eq('id', orderId);
+        return res.status(200).json({ ok: true, note: 'Payment already paid in RetailCRM' });
+      }
 
       const statusCandidates = Array.from(new Set([paymentStatusPaid].filter(Boolean)));
       let lastPaymentErrorText = '';
       let lastPaymentErrorStatus = 500;
       let lastPaymentErrorDetails: string[] = [];
+      let lastPaymentErrorExternalId = paymentExternalId;
+      const isIntegrationPaymentError = (msg: string, details: string[]) => {
+        const hay = `${msg} ${details.join(' ')}`.toLowerCase();
+        return hay.includes('integration payment');
+      };
 
       for (const statusCandidate of statusCandidates) {
-        const paymentBase = {
-          externalId: candidate?.externalId || paymentExternalId,
-          order: { externalId: orderId },
-          amount,
-          paidAt: crmDatetime(paidAtIso),
-          type: candidate?.type || paymentType,
-          status: statusCandidate,
-        };
+        const externalIdAttempts: string[] = [paymentExternalId];
+        if (existing?.id) {
+          externalIdAttempts.unshift(String(existing.externalId));
+        }
+        externalIdAttempts.push(
+          safePaymentExternalId({
+            provider,
+            paymentId: `${paymentIdRaw || orderId}_alt`,
+            orderId,
+          })
+        );
 
-        if (candidate?.id) {
-          const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+        for (const externalIdAttempt of Array.from(new Set(externalIdAttempts.filter(Boolean)))) {
+          const paymentBase = {
+            externalId: externalIdAttempt,
+            order: { externalId: orderId },
+            amount,
+            paidAt: crmDatetime(paidAtIso),
+            type: paymentType,
+            status: statusCandidate,
+          };
+
+          if (existing?.id && String(existing.externalId) === externalIdAttempt) {
+            const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(existing.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
+              site ? `&site=${encodeURIComponent(site)}` : ''
+            }`;
+            const form = new URLSearchParams();
+            form.set('payment', JSON.stringify(paymentBase));
+            const r = await fetch(editUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+              body: form.toString(),
+            });
+            const parsed = await parseCrmApiResult(r);
+            if (parsed.ok) {
+              lastPaymentErrorText = '';
+              lastPaymentErrorStatus = 200;
+              lastPaymentErrorDetails = [];
+              lastPaymentErrorExternalId = externalIdAttempt;
+              break;
+            }
+            lastPaymentErrorStatus = r.status;
+            lastPaymentErrorText = parsed.message || 'RetailCRM payments edit failed';
+            lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
+            lastPaymentErrorExternalId = externalIdAttempt;
+            if (isIntegrationPaymentError(lastPaymentErrorText, lastPaymentErrorDetails)) {
+              continue;
+            }
+          }
+
+          const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
             site ? `&site=${encodeURIComponent(site)}` : ''
           }`;
           const form = new URLSearchParams();
           form.set('payment', JSON.stringify(paymentBase));
-          const r = await fetch(editUrl, {
+          const r = await fetch(createUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
             body: form.toString(),
@@ -1434,41 +1486,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             lastPaymentErrorText = '';
             lastPaymentErrorStatus = 200;
             lastPaymentErrorDetails = [];
+            lastPaymentErrorExternalId = externalIdAttempt;
             break;
           }
           lastPaymentErrorStatus = r.status;
-          lastPaymentErrorText = parsed.message || 'RetailCRM payments edit failed';
+          lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
           lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
-          continue;
+          lastPaymentErrorExternalId = externalIdAttempt;
         }
 
-        const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
-          site ? `&site=${encodeURIComponent(site)}` : ''
-        }`;
-        const form = new URLSearchParams();
-        form.set('payment', JSON.stringify(paymentBase));
-        const r = await fetch(createUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-          body: form.toString(),
-        });
-        const parsed = await parseCrmApiResult(r);
-        if (parsed.ok) {
-          lastPaymentErrorText = '';
-          lastPaymentErrorStatus = 200;
-          lastPaymentErrorDetails = [];
-          break;
-        }
-        lastPaymentErrorStatus = r.status;
-        lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
-        lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
+        if (!lastPaymentErrorText) break;
       }
 
       if (lastPaymentErrorText) {
         return res.status(lastPaymentErrorStatus).json({
           message: lastPaymentErrorText,
           details: lastPaymentErrorDetails,
-          paymentExternalId,
+          paymentExternalId: lastPaymentErrorExternalId,
           context: {
             provider,
             amount,

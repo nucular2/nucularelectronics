@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
+import { createHash } from 'node:crypto';
 import type Stripe from 'stripe';
 
 const supabaseUrl =
@@ -303,6 +304,17 @@ async function parseCrmApiResult(r: Response) {
     return { ok: Boolean(r.ok && data?.success !== false), success: data?.success, message: msg, data };
   }
   return { ok: r.ok, success: undefined, message: text, data: null };
+}
+
+function safePaymentExternalId(params: { provider: string; paymentId?: string; orderId: string }) {
+  const base = `${params.provider}_${params.paymentId || params.orderId}`;
+  const max = 50;
+  if (base.length <= max) return base;
+  const hash = createHash('sha1').update(base).digest('hex').slice(0, 10);
+  const orderPart = String(params.orderId || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 12) || 'order';
+  const payPart = String(params.paymentId || '').replace(/[^a-zA-Z0-9]/g, '').slice(-12) || 'pay';
+  const compact = `${params.provider}_${orderPart}_${payPart}_${hash}`;
+  return compact.length <= max ? compact : compact.slice(0, max);
 }
 
 function normalizePhoneE164(phone?: string): string | undefined {
@@ -1318,7 +1330,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           : Math.round(Number(orderRow.total_amount || 0) * 100) / 100;
 
       const paymentIdRaw = String(body.paymentId || '').trim();
-      const paymentExternalId = `${provider}_${paymentIdRaw || String(orderId)}`;
+      const paymentExternalId = safePaymentExternalId({ provider, paymentId: paymentIdRaw, orderId });
 
       const paymentType =
         provider === 'stripe'
@@ -1425,7 +1437,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       if (lastPaymentErrorText) {
-        return res.status(lastPaymentErrorStatus).json({ message: lastPaymentErrorText });
+        return res.status(lastPaymentErrorStatus).json({ message: lastPaymentErrorText, paymentExternalId });
       }
 
       const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};

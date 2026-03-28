@@ -1422,9 +1422,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       for (const statusCandidate of statusCandidates) {
         const externalIdAttempts: string[] = [paymentExternalId];
-        if (existing?.id) {
-          externalIdAttempts.unshift(String(existing.externalId));
-        }
         externalIdAttempts.push(
           safePaymentExternalId({
             provider,
@@ -1442,34 +1439,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             type: paymentType,
             status: statusCandidate,
           };
-
-          if (existing?.id && String(existing.externalId) === externalIdAttempt) {
-            const editUrl = `${apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(existing.id))}/edit?apiKey=${encodeURIComponent(apiKey)}${
-              site ? `&site=${encodeURIComponent(site)}` : ''
-            }`;
-            const form = new URLSearchParams();
-            form.set('payment', JSON.stringify(paymentBase));
-            const r = await fetch(editUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-              body: form.toString(),
-            });
-            const parsed = await parseCrmApiResult(r);
-            if (parsed.ok) {
-              lastPaymentErrorText = '';
-              lastPaymentErrorStatus = 200;
-              lastPaymentErrorDetails = [];
-              lastPaymentErrorExternalId = externalIdAttempt;
-              break;
-            }
-            lastPaymentErrorStatus = r.status;
-            lastPaymentErrorText = parsed.message || 'RetailCRM payments edit failed';
-            lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
-            lastPaymentErrorExternalId = externalIdAttempt;
-            if (isIntegrationPaymentError(lastPaymentErrorText, lastPaymentErrorDetails)) {
-              continue;
-            }
-          }
 
           const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
             site ? `&site=${encodeURIComponent(site)}` : ''

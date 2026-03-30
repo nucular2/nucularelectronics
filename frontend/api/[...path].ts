@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { createHash } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import type Stripe from 'stripe';
 
 const supabaseUrl =
@@ -306,6 +306,43 @@ async function parseCrmApiResult(r: Response) {
   return { ok: r.ok, success: undefined, message: text, data: null };
 }
 
+async function crmPostForm(params: {
+  url: string;
+  form: URLSearchParams;
+}) {
+  const r = await fetch(params.url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: params.form.toString(),
+  });
+  return await parseCrmApiResult(r);
+}
+
+async function crmUpdateInvoice(params: {
+  apiUrl: string;
+  apiKey: string;
+  site?: string;
+  invoice: any;
+}) {
+  const base =
+    `${params.apiUrl}/api/v5/payment/updateInvoice` +
+    `?apiKey=${encodeURIComponent(params.apiKey)}` +
+    (params.site ? `&site=${encodeURIComponent(params.site)}` : '');
+  const form = new URLSearchParams();
+  form.set('invoice', JSON.stringify(params.invoice));
+  const r1 = await crmPostForm({ url: base, form });
+  if (r1.ok) return r1;
+
+  const alt =
+    `${params.apiUrl}/api/v5/payment/update-invoice` +
+    `?apiKey=${encodeURIComponent(params.apiKey)}` +
+    (params.site ? `&site=${encodeURIComponent(params.site)}` : '');
+  const form2 = new URLSearchParams();
+  form2.set('invoice', JSON.stringify(params.invoice));
+  const r2 = await crmPostForm({ url: alt, form: form2 });
+  return r2.ok ? r2 : r1;
+}
+
 function safePaymentExternalId(params: { provider: string; paymentId?: string; orderId: string }) {
   const base = `${params.provider}_${params.paymentId || params.orderId}`;
   const max = 50;
@@ -343,6 +380,40 @@ function flattenCrmErrors(errors: any): string[] {
 function isIntegrationPaymentError(msg: string, details: string[]) {
   const hay = `${msg} ${details.join(' ')}`.toLowerCase();
   return hay.includes('integration payment');
+}
+
+function requirePaymentModuleToken(req: VercelRequest) {
+  const expected = String(process.env.RETAILCRM_PAYMENT_MODULE_TOKEN || '').trim();
+  if (!expected) {
+    if (isDev()) return { ok: true as const };
+    return { ok: false as const, status: 500 as const, message: 'Payment module token is not configured' };
+  }
+  if (isDev()) return { ok: true as const };
+  const got = String((req.query as any)?.token || '').trim() || String(req.headers['x-payment-module-token'] || '').trim();
+  if (!got) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
+  try {
+    const a = Buffer.from(got);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
+    if (!timingSafeEqual(a, b)) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
+  } catch {
+    return { ok: false as const, status: 403 as const, message: 'Forbidden' };
+  }
+  return { ok: true as const };
+}
+
+function getBodyAny(req: VercelRequest): any {
+  const b: any = (req as any).body;
+  if (!b) return {};
+  if (typeof b === 'string') {
+    try {
+      return JSON.parse(b);
+    } catch {
+      return {};
+    }
+  }
+  if (typeof b === 'object') return b;
+  return {};
 }
 
 function normalizePhoneE164(phone?: string): string | undefined {
@@ -1358,14 +1429,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           : Math.round(Number(orderRow.total_amount || 0) * 100) / 100;
 
       const paymentIdRaw = String(body.paymentId || '').trim();
-      const paymentExternalId = safePaymentExternalId({ provider, paymentId: paymentIdRaw, orderId });
-
-      const paymentType =
-        provider === 'stripe'
-          ? paymentTypeStripe
-          : provider === 'paypal'
-          ? paymentTypePayPal
-          : paymentTypeStripe;
+      const paymentType = provider === 'stripe' ? paymentTypeStripe : provider === 'paypal' ? paymentTypePayPal : paymentTypeStripe;
 
       if (provider === 'stripe') {
         if (!paymentIdRaw) return res.status(400).json({ message: 'Missing paymentId (Stripe session id)' });
@@ -1394,11 +1458,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
       const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
 
-      const paidCodes = ['paid', 'payment-paid', 'payment_paid'];
-      const existing =
-        payments.find((p: any) => p?.externalId && String(p.externalId) === paymentExternalId) || null;
-      const existingStatus = String(existing?.status || '').toLowerCase();
-      if (existing && paidCodes.includes(existingStatus)) {
+      const paidCodes = ['succeeded', 'paid', 'payment-paid', 'payment_paid'];
+      const invoiceCandidate =
+        payments.find((p: any) => String(p?.type?.code || p?.type || '').toLowerCase() === String(paymentType).toLowerCase()) ||
+        payments.find((p: any) => String(p?.type || '').toLowerCase().includes('stripe')) ||
+        payments[0] ||
+        null;
+
+      const invoiceStatus = String(invoiceCandidate?.status || '').toLowerCase();
+      if (invoiceCandidate && paidCodes.includes(invoiceStatus)) {
         const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
         const nextContacts = {
           ...prevContacts,
@@ -1410,106 +1478,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             amount,
             updatedAt: new Date().toISOString(),
           },
+          crm: {
+            ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
+            paymentStatuses: payments.map((p: any) => p?.status).filter(Boolean),
+            fullPaidAt: crmOrder?.fullPaidAt || null,
+          },
         };
         await supabaseService.from('orders').update({ status: 'Paid', contacts: nextContacts }).eq('id', orderId);
-        return res.status(200).json({ ok: true, note: 'Payment already paid in RetailCRM' });
+        return res.status(200).json({ ok: true, note: 'Invoice already marked paid in RetailCRM' });
       }
 
-      const statusCandidates = Array.from(new Set([paymentStatusPaid].filter(Boolean)));
-      let lastPaymentErrorText = '';
-      let lastPaymentErrorStatus = 500;
-      let lastPaymentErrorDetails: string[] = [];
-      let lastPaymentErrorExternalId = paymentExternalId;
-      const markOrderPaidInCrm = async () => {
-        const editUrl =
-          `${apiUrl}/api/v5/orders/${encodeURIComponent(String(orderId))}/edit` +
-          `?apiKey=${encodeURIComponent(apiKey)}` +
-          `&by=externalId` +
-          (site ? `&site=${encodeURIComponent(site)}` : '');
-        const form = new URLSearchParams();
-        form.set(
-          'order',
-          JSON.stringify({
-            externalId: orderId,
-            paymentStatus: 'paid',
-            fullPaidAt: crmDatetime(paidAtIso),
-          })
-        );
-        const r = await fetch(editUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-          body: form.toString(),
-        });
-        return await parseCrmApiResult(r);
+      const invoiceToUpdate: any = {
+        ...(invoiceCandidate?.invoice && typeof invoiceCandidate.invoice === 'object' ? invoiceCandidate.invoice : {}),
+        ...(invoiceCandidate?.invoiceUuid ? { uuid: invoiceCandidate.invoiceUuid } : {}),
+        ...(invoiceCandidate?.id ? { id: invoiceCandidate.id } : {}),
+        ...(invoiceCandidate?.externalId ? { externalId: invoiceCandidate.externalId } : {}),
+        ...(invoiceCandidate?.number ? { number: invoiceCandidate.number } : {}),
+        ...(invoiceCandidate?.type ? { paymentType: invoiceCandidate.type } : {}),
+        status: 'succeeded',
+        paidAt: crmDatetime(paidAtIso),
+        amount,
       };
 
-      for (const statusCandidate of statusCandidates) {
-        const externalIdAttempts: string[] = [paymentExternalId];
-        externalIdAttempts.push(
-          safePaymentExternalId({
-            provider,
-            paymentId: `${paymentIdRaw || orderId}_alt`,
-            orderId,
-          })
-        );
-
-        for (const externalIdAttempt of Array.from(new Set(externalIdAttempts.filter(Boolean)))) {
-          const paymentBase = {
-            externalId: externalIdAttempt,
-            order: { externalId: orderId },
-            amount,
-            paidAt: crmDatetime(paidAtIso),
-            type: paymentType,
-            status: statusCandidate,
-          };
-
-          const createUrl = `${apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(apiKey)}${
-            site ? `&site=${encodeURIComponent(site)}` : ''
-          }`;
-          const form = new URLSearchParams();
-          form.set('payment', JSON.stringify(paymentBase));
-          const r = await fetch(createUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-            body: form.toString(),
-          });
-          const parsed = await parseCrmApiResult(r);
-          if (parsed.ok) {
-            lastPaymentErrorText = '';
-            lastPaymentErrorStatus = 200;
-            lastPaymentErrorDetails = [];
-            lastPaymentErrorExternalId = externalIdAttempt;
-            break;
-          }
-          lastPaymentErrorStatus = r.status;
-          lastPaymentErrorText = parsed.message || 'RetailCRM payments create failed';
-          lastPaymentErrorDetails = flattenCrmErrors(parsed.data?.errors);
-          lastPaymentErrorExternalId = externalIdAttempt;
-          if (isIntegrationPaymentError(lastPaymentErrorText, lastPaymentErrorDetails)) {
-            const orderEdit = await markOrderPaidInCrm();
-            if (orderEdit.ok) {
-              lastPaymentErrorText = '';
-              lastPaymentErrorStatus = 200;
-              lastPaymentErrorDetails = [];
-              break;
-            }
-          }
-        }
-
-        if (!lastPaymentErrorText) break;
-      }
-
-      if (lastPaymentErrorText) {
-        return res.status(lastPaymentErrorStatus).json({
-          message: lastPaymentErrorText,
-          details: lastPaymentErrorDetails,
-          paymentExternalId: lastPaymentErrorExternalId,
+      const invoiceUpdate = await crmUpdateInvoice({ apiUrl, apiKey, site, invoice: invoiceToUpdate });
+      if (!invoiceUpdate.ok) {
+        const details = flattenCrmErrors((invoiceUpdate as any)?.data?.errors);
+        return res.status(400).json({
+          message: invoiceUpdate.message || 'RetailCRM updateInvoice failed',
+          details,
           context: {
             provider,
             amount,
             paidAt: crmDatetime(paidAtIso),
-            type: paymentType,
-            status: paymentStatusPaid,
+            paymentType,
+            invoice: invoiceToUpdate,
           },
         });
       }
@@ -1525,12 +1527,131 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           amount,
           updatedAt: new Date().toISOString(),
         },
+        crm: {
+          ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
+          paymentStatuses: payments.map((p: any) => p?.status).filter(Boolean),
+          fullPaidAt: crmOrder?.fullPaidAt || null,
+          syncedAt: new Date().toISOString(),
+        },
       };
       await supabaseService.from('orders').update({ status: 'Paid', contacts: nextContacts }).eq('id', orderId);
 
       return res.status(200).json({ ok: true });
     } catch (e: any) {
       return res.status(500).json({ message: 'Handler exception', details: e?.message || String(e) });
+    }
+  }
+
+  if (route === 'payment/create') {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).end('Method Not Allowed');
+    }
+    const auth = requirePaymentModuleToken(req);
+    if (!auth.ok) return res.status(auth.status).json({ success: false, errorMsg: auth.message });
+
+    try {
+      const body = getBodyAny(req);
+      const invoiceIn = body?.invoice || body?.payment || body || {};
+      const orderExternalId =
+        String(body?.order?.externalId || invoiceIn?.order?.externalId || invoiceIn?.orderExternalId || '').trim();
+      if (!orderExternalId) return res.status(200).json({ success: false, errorMsg: 'Missing order externalId' });
+
+      const { data: orderRow } = await supabaseService
+        .from('orders')
+        .select('id,user_id,total_amount,contacts')
+        .eq('id', orderExternalId)
+        .single();
+      if (!orderRow) return res.status(200).json({ success: false, errorMsg: 'Order not found' });
+
+      const origin = String(req.headers.origin || '').trim();
+      const forwardedProto = String((req.headers['x-forwarded-proto'] as any) || '').trim() || 'https';
+      const forwardedHost = String((req.headers['x-forwarded-host'] as any) || '').trim();
+      const host = String(req.headers.host || '').trim();
+      const inferred = (forwardedHost || host) ? `${forwardedProto}://${forwardedHost || host}` : '';
+      const frontendUrl = process.env.FRONTEND_URL || origin || inferred || 'https://new.nucular.tech';
+
+      const stripeClient = await getStripe();
+      const amountCents = cents(orderRow.total_amount);
+      const session = await stripeClient.checkout.sessions.create({
+        mode: 'payment',
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            quantity: 1,
+            price_data: {
+              currency: 'usd',
+              unit_amount: amountCents,
+              product_data: { name: `Order ${orderExternalId}` },
+            },
+          },
+        ],
+        success_url: `${frontendUrl}/orders?payment=success&orderId=${encodeURIComponent(String(orderExternalId))}&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${frontendUrl}/orders?payment=canceled&orderId=${encodeURIComponent(String(orderExternalId))}`,
+        metadata: {
+          order_id: orderExternalId,
+          user_id: orderRow.user_id,
+        },
+      });
+
+      const prevContacts = orderRow.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
+      const nextContacts = {
+        ...prevContacts,
+        crmInvoice: {
+          ...(prevContacts?.crmInvoice && typeof prevContacts.crmInvoice === 'object' ? prevContacts.crmInvoice : {}),
+          id: invoiceIn?.id ?? null,
+          uuid: invoiceIn?.uuid ?? invoiceIn?.invoiceUuid ?? null,
+          externalId: invoiceIn?.externalId ?? null,
+          status: 'pending',
+          link: session.url,
+          stripeSessionId: session.id,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+      await supabaseService.from('orders').update({ contacts: nextContacts }).eq('id', orderExternalId);
+
+      return res.status(200).json({
+        success: true,
+        invoice: {
+          ...invoiceIn,
+          status: 'pending',
+          link: session.url,
+        },
+      });
+    } catch (e: any) {
+      return res.status(200).json({ success: false, errorMsg: e?.message || String(e) });
+    }
+  }
+
+  if (route === 'payment/cancel' || route === 'payment/approve' || route === 'payment/refund') {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).end('Method Not Allowed');
+    }
+    const auth = requirePaymentModuleToken(req);
+    if (!auth.ok) return res.status(auth.status).json({ success: false, errorMsg: auth.message });
+
+    try {
+      const apiUrl = process.env.RETAILCRM_URL;
+      const apiKey = process.env.RETAILCRM_API_KEY;
+      const site = process.env.RETAILCRM_SITE || undefined;
+      if (!apiUrl || !apiKey) return res.status(200).json({ success: false, errorMsg: 'RetailCRM credentials are missing' });
+
+      const body = getBodyAny(req);
+      const invoiceIn = body?.invoice || body?.payment || body || {};
+      const nextStatus =
+        route === 'payment/cancel' ? 'canceled' : route === 'payment/refund' ? 'refundSucceeded' : 'succeeded';
+
+      const invoiceToUpdate = {
+        ...invoiceIn,
+        status: nextStatus,
+      };
+
+      const r = await crmUpdateInvoice({ apiUrl, apiKey, site, invoice: invoiceToUpdate });
+      if (!r.ok) return res.status(200).json({ success: false, errorMsg: r.message || 'updateInvoice failed' });
+      return res.status(200).json({ success: true, invoice: invoiceToUpdate });
+    } catch (e: any) {
+      return res.status(200).json({ success: false, errorMsg: e?.message || String(e) });
     }
   }
 

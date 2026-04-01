@@ -605,6 +605,7 @@ function asArray(value: unknown): any[] {
 
 const NEWS_PATH = 'news.json';
 const HOME_PATH = 'home.json';
+const SHOP_PATH = 'shop.json';
 
 const fallbackNews = [
   {
@@ -642,6 +643,22 @@ const fallbackNews = [
     blocks: [{ id: 'p1', type: 'paragraph', text: 'Until the end of spring, you can order a controller with a 15% discount.' }],
   },
 ];
+
+const fallbackShop = {
+  version: 1,
+  banners: {
+    desktop: [
+      { id: 'left', imageUrl: '/banner-1.png', alt: 'Shop banner 1' },
+      { id: 'center', imageUrl: '/banner-2.png', alt: 'Shop banner 2' },
+      { id: 'right', imageUrl: '/banner-3.png', alt: 'Shop banner 3' },
+    ],
+    mobile: [
+      { id: 'left', imageUrl: '/banner-1мб.png', alt: 'Shop banner 1' },
+      { id: 'center', imageUrl: '/banner-2моб.png', alt: 'Shop banner 2' },
+      { id: 'right', imageUrl: '/banner-3мб.png', alt: 'Shop banner 3' },
+    ],
+  },
+};
 
 function getRouteParts(req: VercelRequest) {
   const raw = (req.query as any)?.path;
@@ -684,6 +701,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
+  if (route === 'content/shop') {
+    if (req.method !== 'GET') {
+      res.setHeader('Allow', 'GET');
+      return res.status(405).end('Method Not Allowed');
+    }
+
+    try {
+      const stored = await readJson<any>(SHOP_PATH);
+      if (stored && typeof stored === 'object') {
+        return res.status(200).json({ ok: true, config: stored });
+      }
+      await writeJson(SHOP_PATH, fallbackShop);
+      return res.status(200).json({ ok: true, config: fallbackShop });
+    } catch (e: any) {
+      return res.status(200).json({ ok: true, config: fallbackShop, warning: e?.message || String(e) });
+    }
+  }
+
   if (route === 'admin/news') {
     if (req.method !== 'POST') {
       res.setHeader('Allow', 'POST');
@@ -700,6 +735,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ ok: true });
     } catch (e: any) {
       return res.status(500).json({ message: e?.message || String(e) });
+    }
+  }
+
+  if (route === 'admin/shop') {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).end('Method Not Allowed');
+    }
+
+    const auth = await requireAdmin(req);
+    if (!auth.ok) return res.status(auth.status).json({ message: auth.message });
+
+    try {
+      const body = (req.body || {}) as { config?: any };
+      const config = body?.config && typeof body.config === 'object' ? body.config : null;
+      if (!config) return res.status(400).json({ message: 'Missing config' });
+      await writeJson(SHOP_PATH, config);
+      return res.status(200).json({ ok: true });
+    } catch (e: any) {
+      return res.status(500).json({ message: 'Handler exception', details: e?.message || String(e) });
     }
   }
 

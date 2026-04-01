@@ -1,16 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import ChevronDown from '../components/icons/ChevronDown';
+import { defaultShopCmsConfig, type ShopCmsConfig } from '../cms/shopConfig';
 import './Shop.css';
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('Components');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTabsSticky, setIsTabsSticky] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [shopConfig, setShopConfig] = useState<ShopCmsConfig>(defaultShopCmsConfig);
+  const [activeBannerId, setActiveBannerId] = useState<string>('center');
   const tabsRef = useRef<HTMLDivElement | null>(null);
+  const bannerRefs = useRef<Array<HTMLDivElement | null>>([]);
   const { products } = useProducts();
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -49,11 +54,117 @@ export default function Shop() {
     };
   }, []);
 
+  useEffect(() => {
+    const update = () => {
+      setIsMobile(window.matchMedia('(max-width: 900px)').matches);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  useEffect(() => {
+    let canceled = false;
+    void (async () => {
+      try {
+        const r = await fetch('/api/content/shop');
+        const payload = await r.json().catch(() => null);
+        const cfg = payload?.config && typeof payload.config === 'object' ? (payload.config as ShopCmsConfig) : defaultShopCmsConfig;
+        if (!canceled) setShopConfig(cfg);
+      } catch {
+        if (!canceled) setShopConfig(defaultShopCmsConfig);
+      }
+    })();
+    return () => {
+      canceled = true;
+    };
+  }, []);
+
+  const banners = useMemo(() => {
+    const list = isMobile ? shopConfig?.banners?.mobile : shopConfig?.banners?.desktop;
+    return Array.isArray(list) ? list.slice(0, 3) : [];
+  }, [isMobile, shopConfig]);
+
+  useEffect(() => {
+    const center = banners.find((b: any) => String(b?.id || '').toLowerCase() === 'center');
+    if (center?.id) {
+      setActiveBannerId(String(center.id));
+      return;
+    }
+    if (banners[1]?.id) {
+      setActiveBannerId(String(banners[1].id));
+      return;
+    }
+    if (banners[0]?.id) setActiveBannerId(String(banners[0].id));
+  }, [banners, isMobile]);
+
   return (
     <>
       <Header variant="white" />
       <div className="shop-page">
         <div className={`shop-container grid-container ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+          <div className="shop-banners-section">
+            <div className="shop-banners">
+              <div className="shop-banners-track">
+                {banners.map((b, idx) => (
+                  <div
+                    key={b.id || idx}
+                    ref={(el) => {
+                      bannerRefs.current[idx] = el;
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    className={`shop-banner-item ${
+                      String(b.id || idx) === String(activeBannerId)
+                        ? 'shop-banner-item--center'
+                        : 'shop-banner-item--side'
+                    } shop-banner-item--clickable`}
+                    onClick={() => {
+                      const id = String(b.id || idx);
+                      setActiveBannerId(id);
+                      window.setTimeout(() => {
+                        bannerRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                      }, 0);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key !== 'Enter' && e.key !== ' ') return;
+                      e.preventDefault();
+                      const id = String(b.id || idx);
+                      setActiveBannerId(id);
+                      window.setTimeout(() => {
+                        bannerRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                      }, 0);
+                    }}
+                  >
+                    <img
+                      className="shop-banner-img"
+                      src={b.imageUrl}
+                      alt={b.alt}
+                      width={
+                        isMobile
+                          ? String(b.id || idx) === String(activeBannerId)
+                            ? 320
+                            : 288
+                          : String(b.id || idx) === String(activeBannerId)
+                          ? 1180
+                          : 1062
+                      }
+                      height={
+                        isMobile
+                          ? String(b.id || idx) === String(activeBannerId)
+                            ? 260
+                            : 234
+                          : String(b.id || idx) === String(activeBannerId)
+                          ? 400
+                          : 360
+                      }
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
           <h1 className="shop-title">Shop</h1>
           
           <div ref={tabsRef} className={`shop-tabs ${isTabsSticky ? 'is-sticky' : ''}`}>

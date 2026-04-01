@@ -1,5 +1,5 @@
 .partners-layout {
-  max-width: 800px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 20px 20px 60px;
   font-family: var(--font-family);
@@ -7,7 +7,7 @@
 }
 
 .partners-title {
-  font-size: 48px;
+  font-size: 54px;
   font-weight: 700;
   margin-bottom: 40px;
   line-height: 1.2;
@@ -39,6 +39,15 @@
   color: #F36F25;
 }
 
+.partners-link {
+  color: #F36F25;
+  text-decoration: none;
+}
+
+.partners-link:hover {
+  text-decoration: underline;
+}
+
 .partners-list {
   margin-bottom: 24px;
   padding-left: 20px;
@@ -64,17 +73,25 @@
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 12px 32px;
+  padding: 0 32px;
+  height: 44px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 40px;
-  transition: background-color 0.2s;
+  margin-top: 48px;
+  transition: background-color 0.15s ease, transform 0.05s ease, opacity 0.15s ease;
   font-family: var(--font-family);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .partners-cta:hover {
-  background-color: #d65a15;
+  background-color: #F46922;
+}
+
+.partners-cta:active {
+  background-color: #FFB187;
 }
 
 @media (max-width: 768px) {

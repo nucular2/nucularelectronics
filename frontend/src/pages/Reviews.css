@@ -1,0 +1,6 @@
+.reviews-sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+  align-self: flex-start;
+}
+

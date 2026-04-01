@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useReviews } from '../context/ReviewsContext';
+import './Reviews.css';
 
 export default function Reviews() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +18,8 @@ export default function Reviews() {
   }, []);
 
   const categories = ['All reviews', 'Controllers', 'On-board computer', 'BMS', 'uLight controller'];
+  const filteredReviews = reviews.filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory);
+  const shouldShowMore = filteredReviews.length > 20;
 
   if (!isMobile) {
     // DESKTOP VERSION
@@ -24,14 +27,32 @@ export default function Reviews() {
       <div style={{ background: '#fff', minHeight: '100vh', paddingBottom: '40px' }}>
         <Header variant="white" />
         
-        <div style={{ width: '100%', maxWidth: 'var(--content-w)', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: 'var(--home-slider-gap)', alignItems: 'flex-start', paddingTop: 'calc(var(--header-h) + 20px)', paddingLeft: '0', paddingRight: '0', boxSizing: 'border-box' }}>
+        <div className="reviews-page-layout" style={{ width: '100%', maxWidth: 'var(--content-w)', minHeight: '1570px', margin: '0 auto', display: 'flex', gap: 'var(--home-slider-gap)', alignItems: 'flex-start', paddingTop: 'calc(var(--header-h) + 20px)', paddingLeft: '0', paddingRight: '0', boxSizing: 'border-box' }}>
           
           {/* Left Sidebar */}
-          <div style={{ width: '240px', display: 'flex', flexDirection: 'column', gap: '40px', paddingTop: '0' }}>
-            <h1 style={{ fontSize: 'var(--home-section-title-fs)', fontWeight: 700, margin: '0 0 20px 0', fontFamily: 'var(--font-family)' }}>Reviews</h1>
+          <div className="reviews-sidebar" style={{ width: '240px', display: 'flex', flexDirection: 'column', gap: '32px', paddingTop: '0' }}>
+            <h1 style={{ fontSize: 'var(--home-section-title-fs)', fontWeight: 700, margin: 0, fontFamily: 'var(--font-family)' }}>Reviews</h1>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ fontSize: 'var(--footer-link-fs)', fontWeight: selectedCategory === 'All reviews' ? 700 : 500, color: selectedCategory === 'All reviews' ? '#F36F25' : '#111', cursor: 'pointer', fontFamily: 'var(--font-family)' }} onClick={() => setSelectedCategory('All reviews')}>All reviews</div>
+              <div
+                style={{
+                  fontSize: 'var(--footer-link-fs)',
+                  fontWeight: 500,
+                  color: selectedCategory === 'All reviews' ? '#F36F25' : '#111',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-family)',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.color = '#FF8D4D';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.color = selectedCategory === 'All reviews' ? '#F36F25' : '#111';
+                }}
+                onClick={() => setSelectedCategory('All reviews')}
+              >
+                All reviews
+              </div>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {categories.filter(cat => cat !== 'All reviews').map((cat) => (
@@ -40,12 +61,18 @@ export default function Reviews() {
                     onClick={() => setSelectedCategory(cat)}
                     style={{
                       fontSize: 'var(--footer-link-fs)',
-                      fontWeight: selectedCategory === cat ? 700 : 500,
+                      fontWeight: 500,
                       color: selectedCategory === cat ? '#F36F25' : '#111',
                       cursor: 'pointer',
                       fontFamily: 'var(--font-family)',
                       transition: 'color 0.2s',
                       whiteSpace: 'nowrap'
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.color = '#FF8D4D';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.color = selectedCategory === cat ? '#F36F25' : '#111';
                     }}
                   >
                     {cat}
@@ -54,36 +81,20 @@ export default function Reviews() {
               </div>
             </div>
             
-            <button style={{
-              background: '#F36F25',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '0 20px',
-              height: 'var(--newsletter-control-h)',
-              fontSize: 'var(--footer-link-fs)',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontFamily: 'var(--font-family)',
-              whiteSpace: 'nowrap',
-              width: 'auto',
-              marginTop: '10px'
-            }}>
+            <button className="primary-button primary-button--44" style={{ width: '153px', padding: 0 }}>
               Leave feedback
             </button>
           </div>
 
           {/* Right Content */}
           <div style={{ width: '880px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 'var(--home-slider-gap)', marginLeft: 'auto' }}>
-            {reviews
-              .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
-              .map((review) => (
-              <div key={review.id} style={{
+            {filteredReviews.map((review) => (
+              <div key={review.id} className="reviews-page-card" style={{
                 background: '#F6F6F6',
                 borderRadius: '20px',
                 padding: 'var(--home-card-pad)',
                 display: 'flex',
-                gap: 'var(--home-slider-gap)',
+                gap: '32px',
                 alignItems: 'flex-start',
                 minHeight: '214px',
                 boxSizing: 'border-box'
@@ -117,7 +128,7 @@ export default function Reviews() {
               </div>
             ))}
             
-            {(selectedCategory !== 'All reviews' && selectedCategory !== 'Controllers') && (
+            {shouldShowMore && (
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <button style={{
                 background: 'transparent',
@@ -149,20 +160,7 @@ export default function Reviews() {
         {/* Header Section: Title and Button */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
           <h1 style={{ fontSize: '32px', fontWeight: 700, margin: 0, fontFamily: 'var(--font-family)' }}>Reviews</h1>
-          <button style={{
-            background: '#F36F25',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '0 20px',
-            height: '44px',
-            fontSize: '14px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontFamily: 'var(--font-family)',
-            whiteSpace: 'nowrap',
-            width: '100%'
-          }}>
+          <button className="primary-button primary-button--44" style={{ width: '100%' }}>
             Leave feedback
           </button>
         </div>
@@ -233,10 +231,8 @@ export default function Reviews() {
 
         {/* Reviews List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {reviews
-            .filter(review => selectedCategory === 'All reviews' || review.category === selectedCategory)
-            .map((review) => (
-            <div key={review.id} style={{
+          {filteredReviews.map((review) => (
+            <div key={review.id} className="reviews-page-card" style={{
               background: '#f9f9f9',
               borderRadius: '20px',
               padding: '24px',
@@ -273,19 +269,21 @@ export default function Reviews() {
             </div>
           ))}
           
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <button style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#F36F25',
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              fontFamily: 'var(--font-family)'
-            }}>
-              Show more
-            </button>
-          </div>
+          {shouldShowMore && (
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+              <button style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#F36F25',
+                fontSize: '14px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-family)'
+              }}>
+                Show more
+              </button>
+            </div>
+          )}
         </div>
 
       </div>

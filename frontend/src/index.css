@@ -112,6 +112,15 @@
   cursor: pointer;
 }
 
+.reviews-page-card {
+  transition: box-shadow 0.2s ease;
+}
+
+.reviews-page-card:hover {
+  box-shadow: 0 0 0 2px #D7D7D7;
+  cursor: pointer;
+}
+
 /* Specific fix for quantity buttons/cards layout if needed */
 .product-kit-quantity {
   /* Ensure it has layout properties to accept border */
@@ -3545,6 +3554,72 @@ body.is-mobile .card-image-container {
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.primary-button {
+  background: #F36F25;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease, opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+.primary-button--44 {
+  height: 44px;
+  font-size: var(--footer-link-fs);
+}
+
+.primary-button--54 {
+  height: 54px;
+  font-size: 16px;
+}
+
+.primary-button:hover {
+  background: #F46922;
+}
+
+.primary-button:active {
+  background: #FFB187;
+}
+
+.primary-button:disabled {
+  background: #D9D9D9;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.primary-button.is-loading {
+  position: relative;
+  color: transparent;
+  background: #F36F25;
+  cursor: default;
+}
+
+.primary-button.is-loading:disabled {
+  background: #F36F25;
+  cursor: default;
+}
+
+.primary-button.is-loading::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: rgba(255, 255, 255, 1);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: auth-spin 0.8s linear infinite;
+}
+
 .auth-footer {
   margin-top: 32px;
   text-align: center;
@@ -4617,6 +4692,27 @@ body.is-mobile .review-card {
 
   .news-detail-casing-image {
     height: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .news-detail-shell {
+    padding: 0;
+  }
+
+  .news-detail {
+    max-width: 374px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .news-detail-title {
+    font-size: 32px;
+  }
+
+  .news-detail-image,
+  .news-block-image-frame {
+    height: 276px;
   }
 }
 

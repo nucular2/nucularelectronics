@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Header from "../components/Header";
+import CountryCombobox from "../components/CountryCombobox";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../lib/supabase";
@@ -722,22 +723,13 @@ export default function Checkout() {
               
               <div className="checkout-step-content">
                 <form onSubmit={goToStep3} className="checkout-form-grid checkout-form-grid--two-col">
-                  <select
-                    name="country"
+                  <CountryCombobox
                     value={shipping.country}
-                    onChange={handleShippingChange}
+                    onChange={(v) => setShipping((prev) => ({ ...prev, country: v }))}
+                    placeholder="Country"
+                    className="country-combobox-field"
                     required
-                    className="checkout-input checkout-select"
-                  >
-                    <option value="" disabled>
-                      Country
-                    </option>
-                    {sortedCountries.map((c) => (
-                      <option key={c.code} value={c.name}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <input
                     name="zipCode"
                     placeholder="Postcode"

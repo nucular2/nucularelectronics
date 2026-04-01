@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
+import CountryCombobox from "../components/CountryCombobox";
 import { useAuth } from "../context/AuthContext";
 import { refreshSupabaseSessionIfNeeded, supabase } from "../lib/supabase";
 
@@ -689,11 +690,11 @@ export default function OrderDetail() {
                             placeholder="City"
                             onChange={(e) => setAddressForm((p) => ({ ...p, city: e.target.value }))}
                           />
-                          <input
-                            className="user-info-input"
+                          <CountryCombobox
                             value={addressForm.country}
+                            onChange={(v) => setAddressForm((p) => ({ ...p, country: v }))}
                             placeholder="Country"
-                            onChange={(e) => setAddressForm((p) => ({ ...p, country: e.target.value }))}
+                            className="user-info-input"
                           />
                         </div>
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>

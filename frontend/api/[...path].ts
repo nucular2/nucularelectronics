@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import type Stripe from 'stripe';
+import { countries as knownCountries } from '../src/data/countries';
 
 const supabaseUrl =
   process.env.VITE_SUPABASE_URL ||
@@ -428,16 +429,27 @@ function countryIsoFrom(order: any): string | undefined {
   if (iso) return iso;
   const country = order?.shipping_address?.country || order?.recipient_info?.country;
   if (!country) return undefined;
+  const raw = String(country).trim();
+  if (!raw) return undefined;
+  const upper = raw.toUpperCase();
+  if (/^[A-Z]{2}$/.test(upper)) return upper;
+
+  const normalized = raw.toLowerCase().replace(/\s+/g, ' ').trim();
+  const direct = (knownCountries || []).find((c: any) => String(c?.name || '').toLowerCase() === normalized);
+  if (direct?.code) return String(direct.code).toUpperCase();
+  const byCode = (knownCountries || []).find((c: any) => String(c?.code || '').toLowerCase() === normalized);
+  if (byCode?.code) return String(byCode.code).toUpperCase();
+
   const map: Record<string, string> = {
-    'United States': 'US',
-    USA: 'US',
-    'United Kingdom': 'GB',
-    UK: 'GB',
-    Germany: 'DE',
-    France: 'FR',
-    Norway: 'NO',
+    usa: 'US',
+    'united states of america': 'US',
+    uk: 'GB',
+    uae: 'AE',
+    'south korea': 'KR',
+    korea: 'KR',
+    russia: 'RU',
   };
-  return map[country] || undefined;
+  return map[normalized] || undefined;
 }
 
 function parseMoney(value: unknown): number | undefined {

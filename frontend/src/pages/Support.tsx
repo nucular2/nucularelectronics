@@ -6,7 +6,7 @@ import "./ControllerSettings.css";
 
 export default function Support() {
   const [query, setQuery] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const navigate = useNavigate();
 
   const results = useMemo(() => {
@@ -38,12 +38,10 @@ export default function Support() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
-    setIsSubmitting(true);
-    if (results[0]) {
-      navigate(results[0].path);
-      return;
-    }
-    setIsSubmitting(false);
+    setSearchPhase("loading");
+    window.setTimeout(() => {
+      setSearchPhase("done");
+    }, 350);
   };
 
   const handleResultClick = (path: string) => {
@@ -77,7 +75,7 @@ export default function Support() {
                     value={query}
                     onChange={(e) => {
                       setQuery(e.target.value);
-                      if (isSubmitting) setIsSubmitting(false);
+                      if (searchPhase !== "idle") setSearchPhase("idle");
                     }}
                     placeholder="What are you looking for?"
                   />
@@ -88,7 +86,7 @@ export default function Support() {
                       aria-label="Clear search"
                       onClick={() => {
                         setQuery("");
-                        setIsSubmitting(false);
+                        setSearchPhase("idle");
                       }}
                     >
                       ×
@@ -125,7 +123,13 @@ export default function Support() {
                   </div>
                 ) : null}
               </div>
-              <button className={`support-search-button ${isSubmitting ? "is-loading" : ""}`} type="submit" disabled={!query.trim() || isSubmitting}>
+              <button
+                className={`support-search-button ${searchPhase === "loading" ? "is-loading" : ""} ${
+                  searchPhase === "done" ? "is-done" : ""
+                }`}
+                type="submit"
+                disabled={searchPhase !== "idle"}
+              >
                 Search
               </button>
         </form>

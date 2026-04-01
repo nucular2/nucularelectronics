@@ -51,7 +51,14 @@ export default function ForgotPassword() {
             </div>
           )}
 
-          {error && <div className="auth-error">{error}</div>}
+          {error && (
+            <div className="auth-error">
+              <div className="toast-content">{error}</div>
+              <button className="toast-close" onClick={() => setError(null)}>
+                ×
+              </button>
+            </div>
+          )}
           
           <form noValidate onSubmit={handleRecover} className="auth-form">
             <div className="form-group">
@@ -64,8 +71,8 @@ export default function ForgotPassword() {
               />
             </div>
             
-            <button type="submit" className="auth-button" disabled={loading}>
-              {loading ? 'Sending...' : 'Recover'}
+            <button type="submit" className={`auth-button ${loading ? 'is-loading' : ''}`} disabled={loading}>
+              Recover
             </button>
           </form>
 

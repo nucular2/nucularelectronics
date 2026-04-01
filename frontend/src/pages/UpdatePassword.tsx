@@ -155,14 +155,14 @@ export default function UpdatePassword() {
   };
 
   const toggleIcon = (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 
   const toggleIconOff = (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20C7 20 2.73 16.11 1 12C2.73 7.89 7 4 12 4C13.6 4 15.11 4.39 16.46 5.09L17.94 17.94ZM9.9 4.24L2.5 11.64" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
        <path d="M1 1L23 23" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
@@ -215,7 +215,7 @@ export default function UpdatePassword() {
                       </button>
                     </div>
 
-                    {error && <div className="auth-error" style={{marginBottom: '16px'}}>{error}</div>}
+                    {error && <div className="inline-error" style={{marginBottom: '16px'}}>{error}</div>}
                     {success && <div className="auth-success" style={{color: 'green', marginBottom: '16px'}}>Password updated successfully.</div>}
 
                     <form noValidate onSubmit={handleUpdatePassword} className="password-form">

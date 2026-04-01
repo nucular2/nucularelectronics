@@ -6,6 +6,7 @@ import "./ControllerSettings.css";
 
 export default function Settings() {
   const [query, setQuery] = useState("");
+  const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -37,9 +38,11 @@ export default function Settings() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (results[0]) {
-      navigate(results[0].path);
-    }
+    if (!query.trim()) return;
+    setSearchPhase("loading");
+    window.setTimeout(() => {
+      setSearchPhase("done");
+    }, 350);
   };
 
   const handleResultClick = (path: string) => {
@@ -65,14 +68,14 @@ export default function Settings() {
           <div className="support-inner">
             <h1 className="support-title">Settings</h1>
             <form className="support-search-row" onSubmit={handleSubmit}>
-              <div className="support-search-input">
+              <div className="support-search-stack">
+              <div className={`support-search-input ${query.trim() ? "support-search-input--filled" : ""}`}>
                 <svg
                   className="support-search-icon"
                   width="20"
                   height="20"
                   viewBox="0 0 20 20"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fillRule="evenodd"
@@ -85,45 +88,65 @@ export default function Settings() {
                   className="support-search-field"
                   type="text"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    if (searchPhase !== "idle") setSearchPhase("idle");
+                  }}
                   placeholder="What are you looking for?"
                 />
                 {query && (
                   <button
                     type="button"
                     className="support-search-clear"
-                    onClick={() => setQuery("")}
+                    onClick={() => {
+                      setQuery("");
+                      setSearchPhase("idle");
+                    }}
                   >
                     ×
                   </button>
                 )}
               </div>
-              <button className="support-search-button" type="submit">Search</button>
-            </form>
-
-            {query && (
-              <div className="support-search-results">
-                {results.map((item) => (
-                  <button
-                    key={item.type + item.label}
-                    className="support-search-result-item"
-                    type="button"
-                    onClick={() => handleResultClick(item.path)}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                {results.length === 5 && (
-                  <button
-                    type="button"
-                    className="support-search-show-more"
-                    onClick={() => navigate(`/search?q=${encodeURIComponent(query)}`)}
-                  >
-                    Show more results
-                  </button>
-                )}
+              {query.trim() ? (
+                <div className="support-search-results">
+                  {results.length > 0 ? (
+                    <>
+                      {results.map((item) => (
+                        <button
+                          key={item.type + item.label}
+                          className="support-search-result-item"
+                          type="button"
+                          onClick={() => handleResultClick(item.path)}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                      {results.length === 5 ? (
+                        <button
+                          type="button"
+                          className="support-search-show-more"
+                          onClick={() => navigate(`/search?q=${encodeURIComponent(query)}`)}
+                        >
+                          Show more results
+                        </button>
+                      ) : null}
+                    </>
+                  ) : (
+                    <div className="support-search-not-found">Not found</div>
+                  )}
+                </div>
+              ) : null}
               </div>
-            )}
+              <button
+                className={`support-search-button ${searchPhase === "loading" ? "is-loading" : ""} ${
+                  searchPhase === "done" ? "is-done" : ""
+                }`}
+                type="submit"
+                disabled={searchPhase !== "idle"}
+              >
+                Search
+              </button>
+            </form>
 
             <div className="settings-grid">
               <div

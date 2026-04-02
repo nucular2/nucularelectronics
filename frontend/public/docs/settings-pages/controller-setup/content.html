@@ -1,0 +1,1936 @@
+
+<h1 id="controller_v0813">Controller (v.0.8.13)</h1>
+<div class="level1">
+
+<p>
+The controller allows you to control BLDC (Brushless Direct Current Motor) and PMSM (Permanent Magnet Synchronous Motor) electric motors. At the moment we are producing three types of controllers for different motors power.
+</p>
+
+<p>
+<em>Technical specifications of controllers:</em>
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Parameters  </th><th class="col1 centeralign">  Controller 6F v.2  </th><th class="col2 centeralign">  Controller 12F  </th><th class="col3 centeralign">  Controller P24F  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0">Maximum power</th><td class="col1 centeralign">  4 000W  </td><td class="col2 centeralign">  12 000W  </td><td class="col3 centeralign">  27 000W  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0">Nominal power</th><td class="col1 centeralign">  2 000W  </td><td class="col2 centeralign">  5 000W  </td><td class="col3 centeralign">  10 000W  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0">Voltage range</th><td class="col1 centeralign" colspan="3">  30-90V  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0">Phase current, max</th><td class="col1 centeralign">  120A  </td><td class="col2 centeralign">  250А  </td><td class="col3 centeralign">  500А  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0">Battery current, max</th><td class="col1 centeralign">  90A  </td><td class="col2 centeralign">  150A  </td><td class="col3 centeralign">  350A  </td>
+	</tr>
+	<tr class="row6">
+		<th class="col0">Supply out</th><td class="col1 centeralign" colspan="3">  12В 3A  </td>
+	</tr>
+	<tr class="row7">
+		<th class="col0">Operating temperature range</th><td class="col1 centeralign" colspan="3">  -30°C до 80°C  </td>
+	</tr>
+	<tr class="row8">
+		<th class="col0">Phase wires</th><td class="col1 centeralign">  11AWG 5mm bullets  </td><td class="col2 centeralign">  8AWG XT150  </td><td class="col3 centeralign">  No wires, M6 terminals  </td>
+	</tr>
+	<tr class="row9">
+		<th class="col0">Battery wires</th><td class="col1 centeralign">  12AWG XT60  </td><td class="col2 centeralign">  10AWG XT90  </td><td class="col3 centeralign">  No wires, M6 terminals  </td>
+	</tr>
+	<tr class="row10">
+		<th class="col0">Hall connectors</th><td class="col1 centeralign" colspan="2">  2.8mm 6P auto or Juliet waterproof  </td><td class="col3 centeralign">  JWPF 8P connector (Hall/Encoder)  </td>
+	</tr>
+	<tr class="row11">
+		<th class="col0">Wires length</th><td class="col1 centeralign">  140 mm  </td><td class="col2 centeralign">  190 mm  </td><td class="col3 centeralign">  No wires  </td>
+	</tr>
+	<tr class="row12">
+		<th class="col0">Control modes</th><td class="col1 centeralign" colspan="3">  Square, sensorless, FOC, charger, MPPT  </td>
+	</tr>
+	<tr class="row13">
+		<th class="col0">Protection</th><td class="col1 centeralign" colspan="3">  Temperature, hardware overcurrent protection, IO ports overvoltage protection for P24F  </td>
+	</tr>
+	<tr class="row14">
+		<th class="col0">Protection class</th><td class="col1 centeralign" colspan="2">  IP57 (IP67 with compound)  </td><td class="col3 centeralign">  IP67 (compound filled)  </td>
+	</tr>
+	<tr class="row15">
+		<th class="col0">Size, without wires</th><td class="col1 centeralign">  53х32х91 mm  </td><td class="col2 centeralign">  86х43х125 mm  </td><td class="col3 centeralign">  205х98х50 mm  </td>
+	</tr>
+	<tr class="row16">
+		<th class="col0">Weight</th><td class="col1 centeralign">  280g (with compound 430g)  </td><td class="col2 centeralign">  640g (with compound 890g)  </td><td class="col3 centeralign">  1440g (compound filled)  </td>
+	</tr>
+	<tr class="row17">
+		<th class="col0">Warranty</th><td class="col1 centeralign" colspan="2">  2 years (with compound potting — 3 year)  </td><td class="col3 centeralign">  3 year  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;338-1510&quot;} -->
+<p>
+<em>In the kit: </em>
+</p>
+<ul>
+<li class="level1"><div class="li"> CAN-cable 1,2-meters length for connection to the On-board Computer.</div>
+</li>
+<li class="level1"><div class="li"> Phase wires.</div>
+</li>
+<li class="level1"><div class="li"> Battery wires</div>
+</li>
+<li class="level1"><div class="li"> Hall sensors wire.</div>
+</li>
+</ul>
+
+<p>
+Phase, battery, and Hall sensors wires are supplied with connectors, depending on the type and specification of the controller in the order.
+</p>
+
+<p>
+<em>Optionally you can order:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> САN-cables 0,3 and 2 meters length.</div>
+</li>
+<li class="level1"><div class="li"> Controller-side inputs for connection throttle, brakes levers directly to the Controller.</div>
+</li>
+<li class="level1"><div class="li"> PWM/PAS wire for connection PAS, fans for cooling or brake lights.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Controller (v.0.8.13)&quot;,&quot;hid&quot;:&quot;controller_v0813&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;30-2043&quot;} -->
+<h2 id="connection_diagram">Connection diagram</h2>
+<div class="level2">
+
+<p>
+First, connect the three phases of the electric motor. It does not matter in which order and by which color you connect the phases, the controller will automatically detect them during auto-setup. Next, connect the hall connector as shown in the diagram below. You also need to connect the throttle lever and battery power. We also recommend connecting the brake levers, as their actuation turns off the motor. A simple rule — in any incomprehensible situation, press the brake.
+</p>
+
+<p>
+When the power is turned on for the first time, the controller will start automatically. To enable/disable the controller, you must connect an external switch according to the diagram or configure the button located on the back of the On-board computer in the menu <strong>Devices</strong>  &gt; <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>  &gt; <strong>Disable button</strong>.
+</p>
+
+<p>
+You can find the wiring diagrams for 6F,12F,24F, On-board computer and uLigt on this <a href="https://drive.google.com/file/d/175f4Cv4QuhjYu4UIwU951rA5HNJUEr5k/view?usp=drive_link" class="urlextern" title="https://drive.google.com/file/d/175f4Cv4QuhjYu4UIwU951rA5HNJUEr5k/view?usp=drive_link" rel="ugc nofollow">link</a>, wiring diagram for P24F and Encoder board <a href="https://docs.nucular.tech/doku.php?id=en:controller:schematic" class="urlextern" title="https://docs.nucular.tech/doku.php?id=en:controller:schematic" rel="ugc nofollow">here</a>. By default, all peripherals (throttle, brake, switches, etc.) are connected into ports located on the backside of <strong><a href="/doku.php?id=en:display:start" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">On-board computer</a></strong> . To access the ports, you need to unscrew five screws and remove the plastic cover. For connection, use PHD 2.0 connectors and crimp pins, which are included in the kit. If you do not have a crimping tool such as Crimper SN-2549, you must order “Crimped wires for display”. The On-board computer is connected to the controller with one CAN-wire 1.2 meters long, which is included in the controller kit. Be careful, the CAN-wire from the Controller is connected to the <strong>SYSTEM</strong>  connector on the backside of the On-board computer.
+</p>
+
+<p>
+If you want to connect peripherals directly to the Controller, you need to order “Control-side inputs”, in the diagram below this switching option is designated as “Alternative connection”. You can also use a mixed connection, for example, connect the throttle lever to the On-board computer, and the brake lever to the Controller. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/nucular_controller_manual_eng_for_wiki.png" class="medialeft" alt="" />
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Connection diagram&quot;,&quot;hid&quot;:&quot;connection_diagram&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2044-4304&quot;} -->
+<h2 id="connecting_multiple_controllers">Connecting multiple controllers</h2>
+<div class="level2">
+
+<p>
+If you want to connect two or more Controllers, you can use a CAN splitter with four ports (purchased separately) or a lighting controller <a href="/doku.php?id=en:ulight" class="wikilink1" title="en:ulight" data-wiki-id="en:ulight">uLight</a>, which also has three own CAN ports. The On-board computer supports the connection of up to eight Controllers.
+</p>
+
+<p>
+For example, for a two-motor connection scheme, which is used on all-wheel-drive electric scooters, in addition to the second controller, you will need a CAN-splitter and one more CAN wire (there are 2, 1.2, and 0.3 meters long). Each Controller has a standard CAN-wire 1.2 m long. These wires from both controllers must be connected to a CAN-splitter, and from it one CAN-wire connects directly to the On-board computer. In the On-board computer, you can configure both controllers are separate.
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+ <br/>
+Pay attention to the connection diagram. <strong> Do not disconnect power grounds when system wires are connected! </strong>  First connect all power wires and only then CAN wires. When disconnecting the controllers, first disconnect all CAN wires and only then disconnect the power cables; it is also recommended to discharge the controller capacitors with a resistor or an ordinary light bulb. 
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<img src="/docs/settings-pages/controller-setup/images/multiplay_en.png" class="media" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Connecting multiple controllers&quot;,&quot;hid&quot;:&quot;connecting_multiple_controllers&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;4305-5594&quot;} -->
+<h1 id="how_to_start">How to start?</h1>
+<div class="level1">
+
+<p>
+After you have connected the Controller and Controls according to the diagram, you need to configure the battery parameters. For this, go to the <strong>Settings</strong>  &gt; <strong>Devices</strong>  section, select the Controller in the list of devices, then go to the <strong>Controller</strong>  &gt; <strong>Battery</strong>  section and specify the supply voltage range. For a detailed description, see the section <a href="/doku.php?id=en:controller:setup#battery" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Battery</a>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k1_en.png" class="media" alt="" />
+</p>
+
+<p>
+After configuring the battery, you need to run Auto-setup in the <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  menu section. Ensure that the phase and battery wires are well contacted and insulated before running auto-setup. Check that the Hall sensor wire connectors are fully inserted into the mating parts. For details, see the section <strong>Auto-setup</strong>. After auto-setup, you need to adjust the speedometer to display the speed correctly, see the section <a href="/doku.php?id=en:controller:setup#speedometer_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Speedometer setup</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;How to start?&quot;,&quot;hid&quot;:&quot;how_to_start&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;5595-6576&quot;} -->
+<h1 id="menu_navigation">Menu navigation</h1>
+<div class="level1">
+
+<p>
+Use the On-board computer buttons to navigate through the menus. Left button — return to the previous menu or cancel editing. Right button — go to the menu section and confirm the parameter selection. The two middle buttons — to move up/down through the menu and select the value of the menu item.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Menu navigation&quot;,&quot;hid&quot;:&quot;menu_navigation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;6577-6912&quot;} -->
+<h2 id="settings_saving">Settings saving</h2>
+<div class="level2">
+
+<p>
+In the menu item <strong>Controller</strong>  &gt; <strong>Save settings</strong>  you can save all the settings made. Press the right button of the Onboard-computer and select <strong>On</strong>  to save. If you do not save the settings, they will be reset after restart.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Settings saving&quot;,&quot;hid&quot;:&quot;settings_saving&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;6913-7174&quot;} -->
+<h2 id="auto-setup">Auto-setup</h2>
+<div class="level2">
+
+<p>
+The auto-setup function in the <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  menu section allows you to automatically set up the electric motor, throttle, and brake levers. If the throttle and brake levers are connected to the On-board computer, then they must be configured in <a href="/doku.php?id=en:display:start#control_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">section</a> menu <strong>On-board computer</strong>  &gt; <strong>Control setup</strong>. In this case, when starting the function <strong>Full setup</strong>, you must skip the menu items <strong>Brake</strong>  and <strong>Throttle</strong>  (they will be detected as an error anyway) or you can not start <strong>Full setup</strong>  and activate each setup menu item manually starting with <strong>Motor LR</strong>, then <strong>Motor</strong>  and <strong>Angle correction</strong>. If you have an electric motor without a temperature sensor, then you need to disable it in <a href="/doku.php?id=en:controller:setup#motor_temperature_sensor" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a> section <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Motor t°-sensor</strong>  &gt; <strong>Sensor type</strong>. If this is not done, then auto-setup of the motor will show an error (Timeout).
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/1_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+The auto-setup menu starts the subprogram and shows only the process. All settings are saved under <strong>Controller</strong>  &gt; <strong>Motor setup</strong>. After restarting the Controller, all switches will be in the <strong>Off</strong>  position.
+</p>
+
+<p>
+Once you have specified the battery supply voltage in the <strong>Controller</strong>  &gt; <strong>Battery</strong>  section, you can proceed to calibrate the motor and levers in the Auto-setup section.
+</p>
+
+<p>
+Before auto-setup the angles, we recommend specifying the correct number of motor pole pairs in menu item <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  &gt; <strong>Pole pairs</strong>. See <strong><a href="/doku.php?id=en:motor_information" class="wikilink1" title="en:motor_information" data-wiki-id="en:motor_information">Motor information</a></strong>for this number for the most popular motors. If your motor is not on the list, check with the manufacturer or search the Internet for information. <br/>
+ <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+ <br/>
+<strong>Be careful! Before running autotuning, check that the drive wheels of your e-bike are not touching the surface and that the pedals (if equipped) do not touch anything when spinning. When adjusting the Hall sensors, the motor rotates in both directions, be careful and do not stand near the bicycle pedals. The motor will rotate five times, once when the motor is detected and four times when correcting the angle.</strong>  
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+If you have a throttle lever and an analog brake connected, then you need to enable Full Setup, and follow the instructions on the On-Board computer screen. The corresponding menu items will indicate when to press and release the throttle or brake lever.
+</p>
+
+<p>
+If only one throttle lever is connected, you must independently turn on the items step-by-step: <strong>Throttle</strong>, <strong>Motor LR</strong>, <strong>Motor</strong>, <strong>Angle correction</strong>. When you enable each of the menu items, the hints will be displayed. Auto-setup function <strong>Motor LR</strong>  detects the inductance and resistance of the motor. You can see the measurement results in the menu section <strong>Controller</strong>  &gt; <strong>Motor setup</strong>, items <strong>Phase resistance</strong>, <strong>Inductance d</strong>  and <strong>Inductance q</strong>.
+</p>
+
+<p>
+If the motor is heavy and autodetect does not happen, you can gently push it with your hand or increase the tuning current in the <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  &gt; <strong>Setup current</strong>  section, for example, twice. The setup current can be selected in the range from <strong>2A</strong>  to <strong>50A</strong>, in increments of <strong>1A</strong>.
+</p>
+
+<p>
+If the motor is rotating in the wrong direction, go to <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  &gt; <strong>Spin direction</strong>  and change the direction of rotation. You can choose from two options <strong>Forward</strong>  or <strong>Invert</strong>. A similar setting is available in the <strong>Controller</strong>  &gt; <strong>Motor setup</strong>&gt; <strong>Spin direction</strong>  menu. It doesn&#039;t matter in which menu you make the setting, after saving, the direction of rotation will be reversed in both sections.
+</p>
+
+<p>
+If an error occurs during autotuning, see the section <strong><a href="/doku.php?id=en:controller:diagnostics" class="wikilink1" title="en:controller:diagnostics" data-wiki-id="en:controller:diagnostics">Diagnostics of controller malfunctions</a></strong>. In the menu item <strong>Controller</strong>  &gt; <strong>Auto-setup</strong>  &gt; <strong>Control source</strong>  you can select the sources of control for the Controller. See Control Source section below for details<strong>.</strong>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Auto-setup&quot;,&quot;hid&quot;:&quot;auto-setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;7175-11226&quot;} -->
+<h2 id="firmware_update">Firmware update</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Update and Settings</strong>, you can update the Controller&#039;s firmware, reset settings, import or export a configuration. You can upload all controller settings to a microSD card. The created file with the name <strong>NCconf.cfg</strong>  - <strong>NCconf9.cfg</strong>  you can open with the “Notepad” program, see all your settings, make any changes, save. Likewise, you can import a previously saved configuration into the Controller. Trip computer settings cannot be exported or imported. On-board computer settings can be exported and imported in separate <a href="/doku.php?id=en:display:start#import_and_export_of_settings" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">sections</a> of the Onboard computer menu. This function is only available in the On-board computer firmware version <strong>0.7B</strong>  and higher.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k3_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Import config.</strong>  — loads the settings from the file <strong> NCconf.cfg </strong>  - <strong> NCconf9.cfg </strong>  up to a maximum of 9 different configurations, choosing a file number from 1 to 9. After a successful import, error messages may appear in the message, this means that not all the settings have been imported. In this case, it is advisable to check the downloaded settings with the original file by opening it in Notepad. <br/>
+ <br/>
+<strong>Export config.</strong>  - saves the settings to the <strong> NCconf.cfg </strong>  - <strong> NCconf9.cfg </strong>  file up to a maximum of 9 different configurations, choosing a file number from 1 to 9. <br/>
+ <br/>
+<strong>Reboot</strong>  — restarts the device. If the settings have not been saved, they will be reset. <br/>
+ <br/>
+<strong>Reset Wh usage</strong>  — resets the accumulated number of Watt-Hours in the controller. This indicator is displayed in the statistics of the On-board computer, see section <strong><a href="/doku.php?id=en:display:start#statistics" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Statistics</a></strong>. <br/>
+ <br/>
+<strong>Reset stats</strong>  — resets mileage in kilometers. <br/>
+ <br/>
+<strong>Load defaults</strong>  — after a reset, the default settings are loaded but not saved. If you restart the Controller without saving after a reset, the previous settings will be loaded. <br/>
+ <br/>
+<strong>Erase data storage</strong>  — This function may be needed for the correct firmware update, rollback to default settings, in a situation where user actions lead to incorrect operation of the Controller. If the controller has stopped saving the settings, do a reset, wait 3 seconds, and try to save again. <br/>
+ <br/>
+<strong>Update firmware</strong>  — starting the firmware update process. You can download the current firmware version and read the rules of update in the <strong><a href="/doku.php?id=en:firmware" class="wikilink1" title="en:firmware" data-wiki-id="en:firmware">Firmware</a></strong>section. To update, download the firmware file to the root directory of the microSD card with the Fat/Fat32 file system. Insert the card with the contacts facing up into the slot on the On-Board Computer and select <strong> On </strong>. When the update process is complete, a message appears on the screen <strong>Update finished</strong>. Press the left button and check the update version under <strong>Controller</strong>  &gt; <strong>Device Information</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Firmware update&quot;,&quot;hid&quot;:&quot;firmware_update&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;11227-14132&quot;} -->
+<h2 id="control_modes">Control modes</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Control modes</strong>  you can configure and save three presets of the parameters of the electric motor and switch between them using a 3-position switch or buttons on the On-board computer. The currently active mode number is displayed at the top of the main screen. After setting, it is necessary to activate the modes in the menu item <strong>Controller</strong>  &gt; <strong>Additional modes</strong>  &gt; <strong>Enable additional modes</strong>  by setting the value <strong>On</strong>. In the same menu <strong>Controller</strong>  &gt; <strong>Additional modes</strong>  you can make detailed settings for each mode (see the section Additional modes).
+</p>
+
+<p>
+If there is no speed switch, then mode 1 is the default. If the switch is connected to the On-board computer, it is necessary to configure the On-board computer buttons in the <strong>On-board computer</strong>  &gt; <strong>Button settings</strong>  menu. See section <strong><a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Buttons setup</a></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control modes&quot;,&quot;hid&quot;:&quot;control_modes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;14133-15066&quot;} -->
+<h3 id="modes_setup">Modes setup</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/9_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+The <strong> # Current mode </strong>  line displays the currently selected control mode. List of possible options: <br/>
+<strong>N</strong>  — neutral. <br/>
+<strong>S1</strong>  — speed 1. <br/>
+<strong>S2</strong>  — speed 2. <br/>
+<strong>S3</strong>  — speed 3. <br/>
+<strong>RV</strong>  — reverse.
+</p>
+
+<p>
+Four parameters are used to configure each mode: <br/>
+<strong>Phase</strong>  — the maximum value of the phase current, in Amperes (<strong>A</strong>). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. When setting, consider the maximum phase current of your controller type. In most cases, we recommend specifying the value of the phase current 1.5-2 times higher than the battery current.
+</p>
+
+<p>
+<strong>Battery</strong>  — the maximum value of the battery current, in Amperes (<strong>A</strong>). Select of values from <strong>2A</strong>  to <strong>400A</strong>, in increments of <strong>2A</strong>. When setting up, consider the capabilities of the connected battery and the maximum battery current of your controller type.
+</p>
+
+<p>
+<strong>Power</strong>  — maximum power (discharge) of the battery, in kilowatts (<strong>kW</strong>). Select of values from <strong>0.00kW</strong>  to <strong>30.0kW</strong>, in increments of <strong>0.1kW</strong>. Set to 0.0kW to disable the power limiting limit.
+</p>
+
+<p>
+<strong>Speed</strong>  — maximum speed in percentage (%). Select of values from <strong>4%</strong>  to <strong>150%</strong>, in increments of <strong>2%</strong>. The value of this parameter determines the percentage of speed depending on the reference speed (see section <strong><a href="/doku.php?id=en:controller:setup#speedometer_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Speedometer setup</a></strong>). A speed value over 100% activates the field weakening mode, which allows the motor to accelerate above the supply voltage (see section <strong><a href="/doku.php?id=en:controller:setup#field_weakening_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Field weakening setup</a></strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Modes setup&quot;,&quot;hid&quot;:&quot;modes_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;15067-16721&quot;} -->
+<h3 id="electric_brake_setup">Electric brake setup</h3>
+<div class="level3">
+
+<p>
+<strong>Braking phase</strong>  — the value of the phase current of braking by the motor, in Amperes (<strong>A</strong>). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. For braking to zero, it is recommended to enable <strong>Active braking</strong>  in the section <strong>Controller</strong>  &gt; <strong>Control</strong>. When using limit switches on mechanical brakes, lower brake current change speed makes recuperation more smooth.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Electric brake setup&quot;,&quot;hid&quot;:&quot;electric_brake_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;16722-17149&quot;} -->
+<h3 id="braking_phase_at_speed_control">Braking phase at speed control</h3>
+<div class="level3">
+
+<p>
+<strong>Braking ph. at speed</strong>  — phase braking current during speed control, in Amperes (A). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. This function allows you to slow down when you reset the throttle stick. Works only with Direct Drive motors, without a clutch.
+</p>
+
+<p>
+Also to use this mode should be selected: <strong>Speed</strong>  or <strong>Speed and Torque</strong>  mode in the <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Throttle Mode</strong>  menu item. In the menu item <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Speed lim. at 0% throttle</strong>  enable the speed limit at 0% throttle (optional), enable if you need braking with completely released throttle.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Braking phase at speed control&quot;,&quot;hid&quot;:&quot;braking_phase_at_speed_control&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;17150-17825&quot;} -->
+<h3 id="regenerative_braking_setting">Regenerative braking setting</h3>
+<div class="level3">
+
+<p>
+<strong>Braking ph. at 0% throttle</strong>  — phase braking current with the throttle handle released, in Amperes (A). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. This function allows regenerative braking to be initiated when the throttle is released.
+</p>
+
+<p>
+This function will be active if additional modes are disabled in the <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  menu section or if, with activated additional modes, in one of the menu sections <strong>Mode S1</strong>, <strong>Mode S2</strong>  or <strong>Mode S3</strong>  in menu item <strong>Braking ph. at 0% throttle</strong>  was setup is <strong>0A</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regenerative braking setting&quot;,&quot;hid&quot;:&quot;regenerative_braking_setting&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:18,&quot;range&quot;:&quot;17826-18429&quot;} -->
+<h3 id="reverse_setup">Reverse setup</h3>
+<div class="level3">
+
+<p>
+<strong>Speed reverse</strong>  — reverse speed, in percentage (%). Select of values from <strong> 2% </strong>  to <strong> 150% </strong>, in increments of <strong> 2% </strong>. The value of this parameter determines the percentage of speed depending on the reference speed (see section <strong><a href="/doku.php?id=en:controller:setup#speedometer_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Speedometer setup</a></strong>). A speed value over 100% activates the field weakening mode, which allows the motor to accelerate above the supply voltage (see section <strong><a href="/doku.php?id=en:controller:setup#field_weakening_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Field weakening setup</a></strong>).
+</p>
+
+<p>
+<strong>Phase reverse</strong>  — the value of the reverse phase current, in Amperes (<strong>A</strong>). Select of values from <strong>10A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Reverse setup&quot;,&quot;hid&quot;:&quot;reverse_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:19,&quot;range&quot;:&quot;18430-19125&quot;} -->
+<h3 id="field_weakening_setup">Field weakening setup</h3>
+<div class="level3">
+
+<p>
+<strong>Field weakening</strong>  — the magnitude of the field weakening current, in Amperes (<strong>A</strong>). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. This setting allows you to increase the maximum motor speed and depends on the supply voltage, in any case, the speed will be no more than the maximum supply voltage (<strong>Vmax</strong>) of the controller (<strong>95V limit</strong>).
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_info plugin_wrap" style="width: 60%;">
+<p>
+ The current of weakening creates a field that acts against the field of the permanent magnets. The superposition of these fields creates an equivalent field that is below nominal. The attenuation efficiency depends on the parameters of the motor. The best results can be obtained with IPM motors. 
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_warning plugin_wrap" style="width: 60%;">
+<p>
+Warning! High Field weakening setting may damage your motor! It is not recommend to exceed 500Hz on a rotor for most 0.35mm steel motors
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+To set up the weakening, you need:
+</p>
+<ul>
+<li class="level1"><div class="li"> for one of the control modes in the section <strong>Controller</strong>  &gt; <strong>Control modes</strong>  specify a speed value greater than 100%, for example, Speed 3 is 120%.</div>
+</li>
+<li class="level1"><div class="li"> set the weakening current value in the section <strong>Controller</strong>  &gt; <strong>Control modes</strong>, you can start from 30A.</div>
+</li>
+</ul>
+
+<p>
+Field weakening is activated when the maximum speed is reached, the Controller adds weakening current, limiting the phase current and weakening current specified in the control mode. That is if the effective phase current is 70A, and the weakening current is set to 30A, then a minimum of 100A must be specified in the phase current settings. If the phase current increases to 80A, then only 20A will remain for weakening because 80A 20A = 100A.
+</p>
+
+<p>
+Also, the Controller will limit the speed of rotation of the motor so that its effective EMF does not exceed the maximum supply voltage of the controller (not the battery). If the motor starts twitching on the suspended wheel, then it is necessary to reduce the weakening current.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Field weakening setup&quot;,&quot;hid&quot;:&quot;field_weakening_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:20,&quot;range&quot;:&quot;19126-21075&quot;} -->
+<h3 id="current_change_speed">Current change speed</h3>
+<div class="level3">
+
+<p>
+<strong># Current change speed</strong>.
+</p>
+<ul>
+<li class="level1"><div class="li"> acceleration, select of values from <strong>50A/s</strong>  to <strong>50000A/s</strong>, in increments of <strong>100A/s</strong>.</div>
+</li>
+<li class="level1"><div class="li"> braking, select of values from <strong>50A/s</strong>  to <strong>50000A/s</strong>, in increments of <strong>100A/s</strong>.</div>
+</li>
+<li class="level1"><div class="li"> shutdown, select of values from <strong>50A/s</strong>  to <strong>50000A/s</strong>, in increments of <strong>100A/s</strong>.</div>
+</li>
+</ul>
+
+<p>
+Three parameters determine the rate of change of the current (smoothness). The higher the value, the faster the current build-up in the motor will occur. For conventional brake levers, it will be useful to reduce the parameter <strong>braking</strong>  for a smoother activation of the regeneration. If the throttle response seems too slow, you need to increase the parameter <strong>acceleration</strong>. The parameter <strong>shutdown</strong>  determines how quickly the current drops after throttle and brakes are released.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Current change speed&quot;,&quot;hid&quot;:&quot;current_change_speed&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:25,&quot;range&quot;:&quot;21076-21910&quot;} -->
+<h2 id="advanced_control_modes">Advanced control modes</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  enables the control modes and activates the advanced settings for each of these modes.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k5_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+To activate the control modes, select <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  &gt; <strong>Enable add. modes</strong>  and to set <strong>On</strong>.
+</p>
+
+<p>
+In the menu <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  &gt; <strong>Neutral by default</strong>  you can activate the neutral mode (N) when the controller starts up, which will be active until one of the speed modes is activated. In neutral mode, only the electric brake operates, throttle and PAS are disabled. This mode is recommended for use with speed buttons (not a switch). The function does not work with a 3-position switch (functions of the S1of3 and S3of3 ports in the <strong>Controller</strong>  &gt; <strong>I/O configuration</strong>  menu). ​
+</p>
+
+<p>
+<strong>Neutral timer</strong>  — switches neutral on after a certain time in seconds (<strong>s</strong>), which is set in the settings. To turn it off, switch the speed mode.
+</p>
+<div class="clearer"></div>
+
+<p>
+Each mode has its own section in the <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  &gt; <strong>Mode S1, Mode S2, Mode S3 </strong>  with the following settings:
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/5_0.8.png" class="medialeft" alt="" /><strong>Throttle mode</strong>  — selection of the operating mode of the throttle lever, read more in the section <strong><a href="/doku.php?id=en:controller:setup#throttle_control_mode_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Throttle control mode setup</a></strong>.
+</p>
+
+<p>
+<strong>Acceleration lim.</strong>  and <strong>Deceleration lim.</strong>  — are specified in ERPM/s, select of values from <strong>0 ERPM/s</strong>  to <strong>500000 ERPM/s</strong>, in increments of <strong>200 ERPM/s </strong>. These settings allow you to limit the speed of acceleration or deceleration of the motor, it is convenient to use on slippery surfaces. For setting go to the <strong>Controller</strong>  &gt; <strong>Status flags</strong>  section, in this menu there are two parameters that register the maximum acceleration and deceleration — <strong>Max acceleration</strong>  and <strong>Max deceleration</strong>. <strong>Reset</strong>  the values of these parameters in the same section of the menu, then you need to ride your e-bike in order to register the current dynamics of acceleration and deceleration. You can use these values as a reference and decrease them if you need to limit change speed. If the type of surface changes, for example, it becomes too slippery, then these values can be reduced until it becomes comfortable to catch the moment when the wheel loses traction.
+</p>
+
+<p>
+<strong>Braking phase</strong>  — the value of the phase current of braking by the motor, in Amperes (A). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. For braking to zero, it is recommended to enable Active braking in the section <strong>Controller</strong>  &gt; <strong>Control</strong>. When using limit switches on mechanical brakes, lower brake current change speed makes recuperation more smooth.
+</p>
+
+<p>
+<strong>Braking ph. at 0% throttle</strong>  — phase braking current with the throttle handle released, in Amperes (A). Select of values from <strong>0A</strong>  to <strong>500A</strong>, in increments of <strong>2A</strong>. This function allows regenerative braking to be initiated when the throttle is released. If <strong>0A</strong>  is specified or additional modes are disabled in the <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>  section of the menu, then for the recuperation level will be used value from menu item in the <strong>Controller</strong>  &gt; <strong>Control modes</strong>  &gt; <strong>Braking ph. at 0% throttle</strong>  menu item.
+</p>
+
+<p>
+<strong>Revers</strong>  — reverse gear activation when the control mode is selected. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Cruise</strong>  — activation of the cruise function. Select of values <strong>On</strong>  or <strong>Off</strong>. Convenient to use with cruise mode <strong>Allow Throttle hold</strong>  in the menu section <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Cruise</strong>  &gt; <strong>Cruise</strong>  to enable cruise in certain modes. See section <strong><a href="/doku.php?id=en:controller:setup#cruise_control_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Cruise control setup</a></strong>.
+</p>
+
+<p>
+<strong>Disable motor</strong>  — completely disables motor control. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Disable throttle</strong>  — disable throttle control. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Active braking</strong>  — allow the brake to use the battery for stopping. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Reverse on brake</strong>  — after stopping, pressing the brake lever again activates reverse speed. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Speed lim. at 0% throttle</strong>  — allows limiting the speed when the throttle lever is released. Select of values <strong>On</strong>  or <strong>Off</strong>. Selecting <strong>Off</strong>  disables motor control when the throttle is released.
+</p>
+
+<p>
+<strong>Disable PAS</strong>  — disables the Pedal Assist. Select of values <strong>On</strong>  or <strong>Off</strong>.
+</p>
+
+<p>
+<strong>PAS Scale</strong>  — extra PAS multiplier for tuning, decreases PAS signal for smoother control on high power modes. Select of values from <strong>1%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Advanced control modes&quot;,&quot;hid&quot;:&quot;advanced_control_modes&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:26,&quot;range&quot;:&quot;21911-26579&quot;} -->
+<h2 id="control">Control</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller</strong>  &gt; <strong>Control</strong>  menu section you can setup setting the engine controls, throttle levers, torque and PAS sensors, cruise control.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control&quot;,&quot;hid&quot;:&quot;control&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:27,&quot;range&quot;:&quot;26580-26752&quot;} -->
+<h3 id="pas_and_torque_sensor_setup">PAS and Torque sensor setup</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Pedal Assist System</strong>  you can set up the Pedal Assist System (PAS), which connects the electric motor when pedaling.
+</p>
+
+<p>
+To be able to connect the PAS system, it is necessary to order the PWM IO/PAS cable as an option. The PAS system connects to the Controller via the PWM IO/PAS wire to the <strong>P1/P2</strong>  or <strong>IO5/IO6</strong>  ports of the <strong>USB/PWM</strong>  connector. When using a SEMPU pressure sensor, an additional signal output from the TH port of the connector <strong>Control</strong>  is required. Note: to use <strong>P1/P2</strong>  or <strong>IO5/IO6</strong>  ports, setup them to <strong>Spec.</strong>  mode in IO Configuration.
+</p>
+
+<p>
+You can look at the connecting methods of various PAS systems at <strong><a href="/doku.php?id=en:controller:setup#connection_diagram" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Connection diagram</a></strong>.
+</p>
+
+<p>
+The PAS, unlike the Torque sensor, controls the throttle by frequency and not by the force of rotation. The PAS setup menu consists of the following items:
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/pas_010623.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>PAS</strong>  — selection of pedaling assistant type <strong>PAS sensor</strong>  or <strong>Torque sensor</strong>. If there is no PAS system, select <strong>Disabled</strong>.
+</p>
+
+<p>
+<strong>PAS connection</strong>  — 1-wire or 2-wire connection option, two wires are used for the angle sensor (encoder). <br/>
+<strong>Invert PAS</strong>  — change of direction in case of 2-wire connection. Select of values <strong>On</strong>  or <strong>Off</strong>. <br/>
+<strong>PAS poles</strong>  — number of impulses per pedal revolution. Select of values from <strong>1</strong>  to <strong>200</strong>, in increments of <strong>1</strong>. <br/>
+<strong>PAS min. freq.</strong>  — the minimum pedal speed (cadence) at which the motor starts, RPM. Select of values from <strong>1 RPM</strong>  to <strong>500 RPM</strong>, in increments of <strong>1 RPM</strong>. <br/>
+<strong>PAS max freq.</strong>  — the maximum pedal speed (cadence) at which the motor starts, RPM. Select of values from <strong>10 RPM</strong>  to <strong>1000 RPM</strong>, in increments of <strong>5 RPM</strong>.
+</p>
+
+<p>
+<strong># PAS freq.</strong>  — the value of the signal coming from the PAS in real-time. <br/>
+<strong>PAS timeout</strong>  — the time after which the motor turns off after stopping pedaling, in seconds (s). Select of values from <strong>0.02s</strong>  to <strong>5.00s</strong>, in increments of <strong>0.02s</strong>. <br/>
+<strong>PAS filter</strong>  — smoothing the control signal for smoother operation, in hertz (Hz). Select of values from <strong>1 Hz</strong>  to <strong>100 Hz</strong>, in increments of <strong>1 Hz</strong>. <br/>
+<strong>PAS min out</strong>  — minimum control level when PAS is running, in percent (%). Select value from <strong>0%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. <br/>
+<strong>PAS max out</strong>  — maximum control level, in percent (%). Select of values from <strong>0%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. By analogy with the “pressed” throttle, PAS sends a signal within the specified limits.
+</p>
+
+<p>
+Further in the menu are the settings related to the pressure sensor (Torque sensor).
+</p>
+
+<p>
+<strong>Pressure scale</strong>  — in Newton-meters/volts (Nm/V). You can calibrate by placing a load on the pedal and calculating the torque on the shaft through the lever. Select value from <strong>0.0 Nm/V</strong>  to <strong>100.0 Nm/V</strong>, in increments of <strong>0.5 Nm/V</strong>. <br/>
+<strong>Zero pressure</strong>  — zero pressure, in millivolts (mV). Select of values from <strong>0mV</strong>  to <strong>10000mV</strong>, in increments of <strong>10mV</strong>. <br/>
+<strong>Protection pressure</strong>  — switching off the pressure sensor when the threshold of the specified value is exceeded, in millivolts (mV). Select of values from <strong>0mV</strong>  to <strong>10000mV</strong>, in increments of <strong>100mV</strong>. <br/>
+<strong>Torque averaging</strong>  — period for which is torque value updated. Measured in half turns (turn/2). If the torque sensor measures only one pedal, then the period must be a multiple of two. Select of values from <strong>1 turn/2</strong>  to <strong>20 turn/2</strong>, in increments of <strong>1 turn/2</strong>.
+</p>
+
+<p>
+<strong># Torque</strong>  — shows the current torque at the sensor, in Newton meters (Nm).
+</p>
+
+<p>
+<strong># Human watt</strong>  — shows the average power you develop when pedaling, in watts (W). <br/>
+<strong>Human watt min</strong>  — the minimum power you develop to activate the motor, in watts (W). Select of values from <strong>0 W</strong>  to <strong>500 W</strong>, in increments of <strong>10 W</strong>. <br/>
+<strong>Human watt max</strong>  — the maximum power for 100% activation, in watts (W). Select of values from <strong>0 W</strong>  to <strong>1000 W</strong>, in increments of <strong>10 W</strong>.
+</p>
+
+<p>
+<strong>Torque min</strong>  — the torque at which the throttle signal starts to increase, Newton-meters (Nm). Select of values from <strong>0 Nm</strong>  to <strong>100 Nm</strong>, in increments of <strong>2 Nm</strong>. All values less than this level is 0% of throttle. <br/>
+<strong>Torque max</strong>  — the torque, which limits the level of 100% throttle, Newton-meters (Nm). Select of values from <strong>0 Nm</strong>  to <strong>300 Nm</strong>, in increments of <strong>2 Nm</strong>. <br/>
+<strong>Instant Torque</strong>  — allows torque sensor activation without rotation. Select of values <strong>On</strong>  or <strong>Off</strong>. The pressure sensor also includes frequency configuration and output level configuration as well as the usual PAS. <br/>
+<strong>Start torque</strong>  — minimum torque to trigger “Instant Torque”, in newton meters (Nm). Select of values from <strong>0 Nm</strong>  to <strong>120 Nm</strong>, in increments of <strong>2 Nm</strong>. <br/>
+<strong>Default scale</strong>  — starting power level of PAS control (for changing PAS level with buttons), in percentages (%). Select of values from <strong>1%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. <br/>
+<strong>Button step</strong>  — power step change with button, in percentages (%). Select of values from <strong>1%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. <br/>
+<strong># Set scale</strong>  — current PAS power level, in percentages (%).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PAS and Torque sensor setup&quot;,&quot;hid&quot;:&quot;pas_and_torque_sensor_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:28,&quot;range&quot;:&quot;26753-32025&quot;} -->
+<h3 id="remote_control">Remote control</h3>
+<div class="level3">
+
+<p>
+The <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>RC Control</strong>  menu section allows you to configure the remote control of the Controller using an external RC receiver.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k8_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Input for radio control via PWM (PWM), connects to the <strong>P1</strong>  port of the <strong>USB/PWM</strong>  connector on the Controller board. To activate the function, select the <strong>PWM</strong>  value in the <strong>P1 Input Mode</strong>  menu item.
+</p>
+
+<p>
+The <strong># Input Freq.</strong>  and <strong># Width</strong>  menu items show the current signal value in hertz (<strong>Hz</strong>) and milliseconds (<strong>ms</strong>), respectively.
+</p>
+
+<p>
+In the menu item <strong>Function</strong>  selects the control function — <strong>Off</strong>, <strong>Throttle</strong>, <strong>Brake</strong>  or <strong>Throttle and brk</strong>.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+Adjust the throttle and/or brake range as indicated by the signal.
+</p>
+
+<p>
+<strong># Throttle range</strong> <br/>
+<strong>Throttle min</strong>  — minimum throttle value, in milliseconds (ms). Select of values from <strong>0.00 ms</strong>  to <strong>10.00 ms</strong>, in increments of <strong>0.01 ms</strong>. <br/>
+<strong>Throttle max</strong>  — maximum throttle value, in milliseconds (ms). Select of values from <strong>0.00 ms</strong>  to <strong>10.00 ms</strong>, in increments of <strong>0.01 ms</strong>.
+</p>
+
+<p>
+<strong># Brake range</strong> <br/>
+<strong>Brake min</strong>  — minimum brake value, in milliseconds (ms). Select of values from <strong>0.00 ms</strong>  to <strong>10.00 ms</strong>, in increments of <strong>0.01 ms</strong>. <br/>
+<strong>Brake max</strong>  — maximum brake value, in milliseconds (ms). Select of values from <strong>0.00 ms</strong>  to <strong>10.00 ms</strong>, in increments of <strong>0.01 ms</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Remote control&quot;,&quot;hid&quot;:&quot;remote_control&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:29,&quot;range&quot;:&quot;32026-33449&quot;} -->
+<h3 id="cruise_control_setup">Cruise control setup</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Cruise</strong>  you can set up the cruise control function. After connecting buttons or switches for cruise control to the ports of the Controller or Onboard Computer, you need to configure the functions that relate to cruise control:
+</p>
+
+<p>
+<strong>CRe</strong>  — cruise activation. <br/>
+<strong>CR </strong>  — increase cruise speed (when active). <br/>
+<strong>CR-</strong>  — decrease cruise speed (when active). <br/>
+<strong>CRr</strong>  — restoring cruise (turning on the last saved speed).
+</p>
+
+<p>
+For more information about configuring these functions, read the <strong><a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">I/O port configuration</a></strong>section below. If the cruise control button is connected to the On-board computer, then you need to configure it in the <strong><a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Buttons setup</a></strong>section.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k9_en.png" class="medialeft" alt="" />In the <strong>Cruise</strong>  menu item, you can select several control modes: <br/>
+<strong>Disabled</strong>  — cruise control disabled. <br/>
+<strong>Button</strong>  — activation of cruise control at the push of a button. The response time of the button is determined by the parameter <strong>Cruise EN time</strong>. <br/>
+<strong>Switch</strong>  — activation of cruise control by turning on the switch, time is not used. <br/>
+<strong>Throttle hold</strong>  — activation of cruise control by holding the throttle for a certain time in one position. The response time is determined by the parameter <strong>Cruise EN time</strong>. The accuracy is set by the parameter <strong>Cruise by throttle</strong>  in percent (%). Select of values from <strong>1%</strong>  to <strong>30%</strong>, in increment of <strong>1%</strong>. Accuracy is essential, as the throttle lever moves slightly during the ride due to shaking. The default is <strong>2%</strong>. <br/>
+<strong>Allow Throttle hold</strong>  — similar to the previous mode, with the difference that to activate the cruise control, you must additionally press the cruise button.
+</p>
+
+<p>
+Next are the menu items for setting the cruise:
+</p>
+
+<p>
+<strong>Cruise restore</strong>  — this function activates the last saved cruise speed. To enable, select the <strong>CRr</strong>  function when configuring <strong><a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">I/O ports</a></strong>. The function can be deactivated by selecting the parameter <strong>Disabled</strong>.
+</p>
+
+<p>
+<strong>Cruise EN time</strong>  — setting the cruise activation delay in seconds after enabled button (<strong>s</strong>). Select of values from <strong>0.25s</strong>  to <strong>30.00s</strong>, in increments <strong>0.25s</strong>.
+</p>
+
+<p>
+<strong>Cruise level</strong>  — selects what speed cruise will use:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Throttle</strong>  — speed depends on the position of the throttle lever, turns on instantly.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Speed</strong>  — cruise enables when <strong>Safe acceleration</strong>  reached after that uses current speed as a reference.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Mixed</strong>  — if controller cant use speed reference, uses throttle value.</div>
+</li>
+</ul>
+
+<p>
+<strong>Cruise smoothness</strong>  — this setting limits acceleration during cruising so that there are no jerks, measured in electrical revolutions per minute per second (ERPM/s). To get the value in rpm, the ERPM/s value must be divided by the number of pole pairs of the electric motor. Select of values from <strong>0 ERPM/s</strong>  to <strong>50000 ERPM/s</strong>, in increments of <strong>50 ERPM/s</strong>.
+</p>
+
+<p>
+<strong># Used for cruise activation</strong>: <br/>
+<strong>Safe acceleration</strong>  — limits the acceleration at which the cruise is activate, for example, to prevent it from engaging when accelerating, in electrical revolutions per minute per second (ERPM/s). Select value from <strong>100 ERPM/s</strong>  to <strong>10000 ERPM/s</strong>, in increments of <strong>100 ERPM/s</strong>. <br/>
+<strong>Min. speed</strong>  — speed below which you can not activate cruise or recovery, in kilometers per hour (km/h). Select of values from <strong>3 km/h</strong>  to <strong>127 km/h</strong>, in increments of <strong>1 km/h</strong>.
+</p>
+
+<p>
+Additionally, to control the cruise, you can use the <strong>CR </strong>  and <strong>CR-</strong>  functions for the buttons, which adjust the cruise speed when it is active.
+</p>
+
+<p>
+What actions disable cruise control:
+</p>
+<ul>
+<li class="level1"><div class="li"> pressing the brake, analog or digital.</div>
+</li>
+<li class="level1"><div class="li"> repeated throttle press.</div>
+</li>
+<li class="level1"><div class="li"> if a switch is used — when it&#039;s disabled.</div>
+</li>
+<li class="level1"><div class="li"> reverse enable.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Cruise control setup&quot;,&quot;hid&quot;:&quot;cruise_control_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:30,&quot;range&quot;:&quot;33450-37371&quot;} -->
+<h3 id="throttle_and_brake_curves_setup">Throttle and brake curves setup</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Throttle/brake curves</strong>  you can set up the behavior of the throttle and brake levers. In <strong>Throttle preset</strong>  and <strong>Brake preset</strong>  menu items you can select one of the typical settings, select one of the throttle or brake presets, and press enter, the preset will be loaded.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k10_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+You can select the following types of throttle and brake presets: <br/>
+<strong>Linear</strong>  — smooth increase, direct dependence. <br/>
+<strong>Exponential</strong>  — slow increase. <br/>
+<strong>Normal</strong>  — average between linear and exponential. <br/>
+<strong>Polynomial</strong>  — average between normal and exponential.
+</p>
+
+<p>
+Manual setting of throttle and brake position points is also available, to do this select <strong>None</strong>  in <strong>Throttle preset</strong>  or <strong>Brake preset</strong>  and enter the value manually. There are eight position points available for throttle and brake:: <br/>
+<strong>Start</strong>  — starting point, in percentages (%). Select of values from <strong>0%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. <br/>
+<strong>1</strong>-<strong>6</strong>  — midpoints, in percentages (%). Select of values from <strong>0%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>. <br/>
+<strong>End</strong>  — end point, in percentages (%). Select of values from <strong>0%</strong>  to <strong>100%</strong>, in increments of <strong>1%</strong>.
+</p>
+
+<p>
+You can also manually edit the value of each point in the loaded preset.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Throttle and brake curves setup&quot;,&quot;hid&quot;:&quot;throttle_and_brake_curves_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:31,&quot;range&quot;:&quot;37372-38752&quot;} -->
+<h3 id="control_source">Control source</h3>
+<div class="level3">
+
+<p>
+The controller supports the connection of controls (throttle, brake, switches, and buttons) to the Controller, On-board computer, ulight board, or mixed connection when one part of the periphery is connected to the Controller, and the second part to the On-board computer, or to ulight and On-board computer. This is necessary in the case of Tork/PAS sensor configurations in the Controller throttle lever in the On-board computer. In the menu item <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Control Source</strong>  you can set up the control source of the Controller`s.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k11_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Select of control options: <br/>
+<strong>Auto</strong>  — all sources will control the Сontroller. Built-in and external, connected via CAN bus (for example, On-board computer or ulight). <br/>
+<strong>Embedd</strong>  — only what is connected directly to the Сontroller. <br/>
+<strong>Remote</strong>  — control only via CAN bus (via On-board computer or Microlight). <br/>
+<strong>Disabled</strong>  — disables any control of the Controller.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control source&quot;,&quot;hid&quot;:&quot;control_source&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:32,&quot;range&quot;:&quot;38753-39776&quot;} -->
+<h3 id="throttle_control_mode_setup">Throttle control mode setup</h3>
+<div class="level3">
+
+<p>
+The menu item <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Throttle mode</strong>  you can set up throttle lever mode.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/6_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Five throttle modes options are available: <br/>
+<strong>Speed</strong>  — a similar mode is used in Infineon controllers and non-programmable low-cost controllers and is characterized by the use of maximum current to reach a given speed. In this mode, the maximum thrust is used until the desired speed is reached, the thrust is not regulated by the throttle grip. <br/>
+<strong>Speed+torque</strong>  — combined mode (as Kelly), similar to the operation of the gas pedal in a car with an internal combustion engine. In the case of selecting the <strong>Speed+torque</strong>  mode, pressing throttle to 50%, when achieved 50% speed, the current consumption will be reduced to hold speed. The acceleration current will also be proportionally lower. <br/>
+<strong>Torque</strong>  — in this mode, the throttle controls phase current, the thrust is limited by the angle of rotation of the throttle. <br/>
+<strong>Power+torque</strong>  — In this mode, it is possible to drive an ebike like a motorcycle with an internal combustion engine. The response is similar to the throttle grip on internal combustion engines. <br/>
+<strong>Power</strong>  — in this mode, you can fine-tune the consumption from the battery using the throttle.
+</p>
+
+<p>
+<strong>Adaptive throttle</strong>  — this function allows you to more accurately dose throttle at high speed when the battery current in the settings is several times lower than the phase current. The default is set to 6%.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Throttle control mode setup&quot;,&quot;hid&quot;:&quot;throttle_control_mode_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:33,&quot;range&quot;:&quot;39777-41322&quot;} -->
+<h3 id="throttle_and_brake_voltage_range_setup">Throttle and brake voltage range setup</h3>
+<div class="level3">
+
+<p>
+The menu items in the <strong>Controller</strong>  &gt; <strong>Control</strong>  section allow you to set the voltage ranges of the throttle and brake grips.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/7_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Currently, voltage settings for all throttles and brakes are common. <br/>
+<strong># Throttle</strong>  — shows the voltage of throttle grip connected to the controller, in volts (V). <br/>
+<strong>Throttle min</strong>  and <strong>Throttle max</strong>  — range of the throttle grip, in millivolts (mV). Select of values from <strong>0 mV</strong>  to <strong>15 000 mV</strong>, in increments of <strong>10 mV</strong>. If the maximum value is exceeded by 5%, protection against a broken throttle grip will be activated. If the range is incorrectly set, then when you fully press the throttle grip, the electric motor will turn off, in this case, you need to increase the range value.
+</p>
+
+<p>
+<strong># Brake</strong>  — shows the voltage of the brake connected to the controller, in volts (V). <br/>
+<strong>Brake min</strong>  and <strong>Brake max</strong>  — range of the analog brake lever, in millivolts (mV). Select of values from <strong>0 mV</strong>  to <strong>15 000 mV</strong>, in increments of <strong>10 mV</strong>.
+</p>
+
+<p>
+<strong>Brake button power</strong>  — braking force when pressing the brake button relative to the phase braking level, in percent (%). This setting allows you to adjust the level of braking force with the brake levers with integrated brake buttons. <br/>
+<strong>Invert brake</strong>  — inverts the voltage value from the built-in brake lever. Select <strong>On</strong>  to enable. It is useful to enable when the voltage brake lever with reverse voltage is connected to the On-board computer and you want to use the value <strong>Auto</strong>  in the menu item <strong>Controller</strong>  &gt; <strong>Control</strong>  &gt; <strong>Control source</strong>. The digital brake grip (i.e. button) connects to the On-board computer, see section <strong><a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Buttons setup</a></strong>. <br/>
+<strong>Active braking</strong>  — enables the brake to use the battery for stopping. Select of values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Brake at overheat</strong>  — enables full torque braking when the motor overheats. Select of values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Lock throttle at brake</strong>  — disables the throttle lever after the brake is applied until the throttle is fully released. Helps with throttle lever glitches, in this case, the <strong>Throttle lock</strong>  flag will be set in the menu <strong>Status flags</strong>. <br/>
+<strong>Reverse on brake</strong>  — after stopping, pressing the brake lever again activates reverse. Select of values <strong>On</strong>  and <strong>Off</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Throttle and brake voltage range setup&quot;,&quot;hid&quot;:&quot;throttle_and_brake_voltage_range_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:34,&quot;range&quot;:&quot;41323-43744&quot;} -->
+<h3 id="boost_mode">Boost mode</h3>
+<div class="level3">
+
+<p>
+<strong>Boost duration</strong>  (User level) — maximum power operation time, in seconds. Select of values from <strong>0.2</strong>s to <strong>10</strong>s, in increments of <strong>0.2</strong>s. The function works as follows: in the <strong>Controller</strong>  &gt; <strong>Control modes</strong>  menu, configure the battery current to be greater than the discharge current in the battery settings in the <strong>Controller</strong>  &gt; <strong>Battery</strong>  &gt; <strong>Discharge max</strong>  menu. Next, select the boost operating time in the <strong>Controller</strong>  &gt; <strong>Controls</strong>  &gt; <strong>Boost duration</strong>  menu. Now, while driving, when the battery current increases more than <strong>Discharge Max</strong>, the countdown of the time during which this excess will work begins, i.e. Boost. After this time, the battery current will be reset to the <strong>Discharge max</strong>  setting level. In order for the boost mode to be available again, it is necessary to drive for 1 minute at a battery current value of no more than 70% of the Discharge max value.
+</p>
+
+<p>
+For example, on the Sur-Ron Ultra Bee, this mode allows you to squeeze the maximum out of the standard battery and achieve a power of 21 kW instead of 12 kW.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Boost mode&quot;,&quot;hid&quot;:&quot;boost_mode&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:35,&quot;range&quot;:&quot;43745-44842&quot;} -->
+<h3 id="setup_100_speed_value">Setup 100% speed value</h3>
+<div class="level3">
+
+<p>
+The menu items in the <strong>Controller</strong>  &gt; <strong>Control</strong>  section allow you to adjust the 100% speed level. The maximum speed in the field weakening mode is 150%.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k14_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Speed ref. filter</strong>  — filter mode selection. Select of values <strong>OFF</strong>, <strong>Linear</strong>, <strong>Quadratic</strong>, <strong>Cubic</strong>. For the control modes <strong>Speed</strong>  and <strong>Speed torque</strong>, a speed reference filter is applied, for a smoother response to the throttle change. The filter algorithm calculates the difference between the previous speed request and the current one, multiplies the error by a power of 1,2,3 (linear, quadratic, and cubic, respectively), and multiplies by a factor. The resulting value is used as the cutoff frequency of the low-pass filter. The larger the change, the sharper the response to it.
+</p>
+
+<p>
+<strong>Filter factor</strong>  — sets the filtration factor. Select of values from <strong>0</strong>  to <strong>30000</strong>, in increments of <strong>100</strong>.
+</p>
+
+<p>
+<strong>Speed mode</strong>  allows you to select the level of 100% speed and what it depends on:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>OFF</strong>  — completely disables speed control PID.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Middle U bat</strong>  — the average value between the minimum and maximum voltage of the battery settings used as speed reference, depending on motor kV.</div>
+</li>
+<li class="level1"><div class="li"> <strong>U supply</strong>  — supply voltage used as speed reference, depending on motor kV.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Ref. speed</strong>  — speed in km/h, is set by parameter <strong>Reference speed</strong>. The speed value is taken from the motor or from an external speed sensor connected to the controller.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Ref. ERPM</strong>  — speed in motor electric RPM, is set by parameter <strong>Reference speed</strong>.</div>
+</li>
+</ul>
+
+<p>
+<strong>Minimum speed</strong>  — in electrical revolutions per minute (ERPM). Select of values from <strong>0 ERPM</strong>  to <strong>100000 ERPM</strong>, in increments of <strong>100 ERPM</strong>.
+</p>
+
+<p>
+<strong>Speed lim. at 0% throttle</strong>  — enables limiting the speed when the throttle grip is completely released. Select of values <strong>On</strong>  and <strong>Оff</strong>. Selecting <strong>Off</strong>  disables motor control when the throttle is released.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Setup 100% speed value&quot;,&quot;hid&quot;:&quot;setup_100_speed_value&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:36,&quot;range&quot;:&quot;44843-46835&quot;} -->
+<h2 id="motor_setup">Motor setup</h2>
+<div class="level2">
+
+<p>
+The <strong>Controller</strong>  &gt; <strong>Motor Setup</strong>  menu contains all settings related to electric motor operation parameters.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Motor setup&quot;,&quot;hid&quot;:&quot;motor_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:37,&quot;range&quot;:&quot;46836-46975&quot;} -->
+<h3 id="motor_temperature_sensor">Motor temperature sensor</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Motor t°-sensor</strong>  you can select a temperature range in which a smooth power limit will occur (<strong>Delta °t</strong>  parameter) and specify the maximum temperature (<strong>°t max</strong>).
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/temp_010623.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>°t max</strong>  — maximum electric motor temperature, in degrees Celsius (°C). Select of values from <strong>50°C</strong>  to <strong>200°C</strong>, in increments of <strong>1°C</strong>. <br/>
+<strong>Delta °t</strong>  — the temperature value that is deducted from the maximum temperature (<strong>°t max</strong>), the resulting temperature value will be the beginning of the power limit, in degrees Celsius (°C). Select of values from <strong>1°C</strong>  to <strong>100°C</strong>, in increments of <strong>1 °C</strong>.
+</p>
+
+<p>
+In the menu item <strong>Sensor type</strong>  you can select the following types of temperature sensors that support the controller — <strong>KTY81(82)</strong>, <strong>KTY83</strong>, <strong>KTY84</strong>, <strong>NTC10K (B:3950)</strong>, <strong>NTC10K (B:3380)</strong>, <strong>PT1000</strong>. To disable the temperature control, select the value <strong>OFF</strong>.
+</p>
+
+<p>
+It is recommended to install a temperature sensor so close as possible on the stator windings, while not in contact with the stator iron. If you don&#039;t know what kind of sensor is in the motor, you can check all types of sensors and select the one that displays data the most closely to room temperature. The current measured temperature is displayed at <strong># Value °t</strong>.
+</p>
+
+<p>
+The <strong># °t resistance</strong>  menu item displays the resistance of the motor temperature sensor, with an accuracy of +/-10%.
+</p>
+
+<p>
+<strong>Resistance Offset</strong>  — temperature sensor offset, in Ohms. Select values from <strong>-100 Ohm</strong>  to <strong>100 Ohm</strong>, in increments of <strong>1 Ohm</strong>. <br/>
+<strong>Temperature correction</strong>  — temperature sensor correction with wire resistance. Select of values <strong>On</strong>  or <strong>Off</strong>. <br/>
+<strong>GND wire resistance</strong>  — resistance of a ground wire, in Ohms. Select values from <strong>0 Ohm</strong>  to <strong>1000 Ohm</strong>, in increments of <strong>1 Ohm</strong>. <br/>
+<strong>Sensors current</strong>  — hall sensor current consumption, if temperature sensor uses common ground with hall sensors, in milliamps (mA). Select values from <strong>0 mA</strong>  to <strong>100 mA</strong>, in increments of <strong>1 mA</strong>. <br/>
+<strong># Total current:</strong>  — calculated current, to check with a tester, in mA.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Motor temperature sensor&quot;,&quot;hid&quot;:&quot;motor_temperature_sensor&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:38,&quot;range&quot;:&quot;46976-49198&quot;} -->
+<h3 id="clutch">Clutch</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Motor Setup</strong>  &gt; <strong>Clutch</strong>  you can configure a smooth engine launch for soft engagement clutch or freewheel. Useful for gear motors or mid-drives. At the moment, the setting works well only in the control mode <strong>Torque</strong>, because the clutch there is always engaged. An alternative option is to configure the acceleration limit in the modes <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong>  in the menu section <strong>Controller</strong>  &gt; <strong>Advanced modes</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k16_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+The parameter <strong>Mode</strong>  determines the way of operation:: <br/>
+<strong>Accelerate</strong>  — smoothly accelerates the motor until the load appears. <br/>
+<strong>Accelerate and hold</strong>  — in addition to the previous one, it applies weak torque to the motor after the throttle is released, this mode allows you to switch speeds at mid-drive systems without using the pedals.
+</p>
+
+<p>
+<strong># Phase amps</strong> <br/>
+<strong>Start time</strong>  — maximum time for soft start, in seconds (s). Select values from <strong>1s</strong>  to <strong>20s</strong>, in increments of <strong>1s</strong>. <br/>
+<strong>Start current</strong>  — phase motor current at which the load will be detected and the soft start is disabled, in amperes (А). Select values from <strong>0.2А</strong>  to <strong>50.0А</strong>, in increments of <strong>0.2А</strong>. This value must be higher than the phase current for specified acceleration of the motor without load. <br/>
+<strong>Detection time</strong>  — the time during which the load must be present, after which the soft start will be switched off, in milliseconds (ms). Select values from <strong>10 ms</strong>  to <strong>1000 ms</strong>, in increments of <strong>10 ms</strong>. <br/>
+<strong>Acceleration</strong>  — value in volts/seconds (V/s). Select values from <strong>2V/s</strong>  to <strong>1000V/s</strong>, in increments of <strong>2 V/s</strong>. The higher the value, the more you need to specify <strong>Start current</strong>, since the motor will consume more current during acceleration. <br/>
+<strong>Hold (20%)</strong>  and <strong>Hold (80%)</strong>  — two parameters regulating the phase current supplied to the motor in the mode <strong>Accelerate and hold</strong>, in amperes (А). <strong>20%</strong>  — current at low speeds, <strong>80%</strong>  — current at about maximum speed. It is possible to determine the approximate values ​​by the no-load current of the motor. Select values from <strong>0.2А</strong>  to <strong>50.0А</strong>, in increments of <strong>0.2А</strong>. <br/>
+<strong>Hold enable time</strong>  — time through which after the throttle has been pressed, torque hold will become available, in seconds (s). Select values from <strong>1s</strong>  to <strong>120s</strong>, in increments of <strong>4s</strong>.
+</p>
+
+<p>
+<strong>Hold time</strong>  — the time during which torque will be applied after releasing the throttle, in seconds (s). Select values from <strong>1s</strong>  to <strong>120 s</strong>, in increments of <strong>1s</strong>.
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:40,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_tip plugin_wrap" style="width: 60%;">
+<p>
+ <br/>
+Optimal settings for MAC motor: <strong>Accelerate</strong>, 15a, 50V/s, 200ms.
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:41,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Clutch&quot;,&quot;hid&quot;:&quot;clutch&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:39,&quot;range&quot;:&quot;49199-51909&quot;} -->
+<h3 id="setup_the_motor_position_sensors">Setup the motor position sensors</h3>
+<div class="level3">
+
+<p>
+Under the menu section <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Position sensors</strong>, you can find the menu items for configuring the position sensors of the electric motor. At the moment, the Controller supports two types of sensors — Hall sensors and a rotation angle sensor (encoder).
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/hall_0908.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Sensor type</strong>  — Parameter needs reboot if manually changed. There are currently two types of sensors available: <br/>
+<strong>Hall</strong>  — Hall sensors. <br/>
+<strong>Encoder</strong>  — rotation angle sensor.
+</p>
+
+<p>
+<strong>Sensor mode</strong>  — this parameter is loaded at start-up and can be saved. At the moment, the Controller has the following motor control modes: <br/>
+<strong>Sensorless</strong>  — motor control using BEMF integration, parameter <strong>Integration threshold</strong>  is used. It is rather insensitive to tuning, but more accurate tuning may be required for high-speed motors (such as RC). At the moment, the sensorless does not have a start-up algorithm, it works stably only at some speed. Hall setups start with sensorless mode. <br/>
+<strong>Combined</strong>  — start the motor on Hall sensors, then switch to sensorless mode, the threshold is determined by the parameter radians per second (<strong>rad/s</strong>) in the <strong>From hall to s-less</strong>  menu item. Select of values from <strong>0.00 rad/s</strong>  to <strong>2.00 rad/s</strong>  in increments of <strong>0.05 rad/s</strong>. To convert values to RPM = 9.5493 * Pole Pairs * rad/s. <br/>
+<strong>Sensors</strong>  — electric motor control only by signals from Hall sensors. <br/>
+<strong>Freq</strong>  — frequency control. Do not use this mode for driving!
+</p>
+
+<p>
+<strong>Interpolate sensors</strong>  — smooth change of the sensors angle based on speed. Used for FOC mode. Select of values <strong>On</strong>  and <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Interpolation start</strong>  — the motor is always started from a discrete angle, if digital halls are used. After the specified speed, the angle starts to change smoothly. Select of values from <strong>0 rad/s</strong>  to <strong>100 rad/s</strong>, in increments of <strong>1 rad/s</strong>.
+</p>
+
+<p>
+<strong>Frequency control</strong>  — a separate mode that can be used to power equipment through a transformer or to dry the varnish on the motor windings. Select of values from <strong>10 HZ</strong>  to <strong>200 HZ</strong>, in increments of <strong>1 HZ</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Setup the motor position sensors&quot;,&quot;hid&quot;:&quot;setup_the_motor_position_sensors&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:42,&quot;range&quot;:&quot;51910-54098&quot;} -->
+<h3 id="hall_sensors_setup">Hall sensors setup</h3>
+<div class="level3">
+
+<p>
+Further in the menu section <strong>Controller</strong>  &gt; <strong>Motor Setup</strong>  &gt; <strong>Position sensor</strong>  &gt; <strong>Hall settings</strong>  there are items for additional setting of Hall sensors.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/hall_010623.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Hall filter</strong>  — enable or disable the filter in the direction of rotation, select the <strong>Direction</strong>  and <strong>OFF</strong>  values.
+</p>
+
+<p>
+<strong>State filter</strong>  — select the delay time, in seconds (sec). Selection of values from <strong>0.000s</strong>  to <strong>1.000s</strong>, in increments of <strong>0.002s</strong>. This delay is used if the wrong value of the Hall sensors is received. All indicators that are less than the set value will be filtered out.
+</p>
+
+<p>
+<strong>Min step filter</strong>  — minimum hall switch time, in microseconds (µs). Select values from <strong>25 µs</strong>  to <strong>5000 µs</strong>, in increments of <strong>1 µs</strong>.
+</p>
+
+<p>
+<strong>Direction filter</strong>  — select the delay time for changing the direction of rotation of the electric motor (forward/backward), in seconds (sec). Selection of values from <strong>0.000s</strong>  to <strong>1.000s</strong>, in increments of <strong>0.002s</strong>.
+</p>
+
+<p>
+<strong>Idle filter</strong>  — when the motor is not moving, the sensor position is reset to the middle position. Selection of values from <strong>10ms</strong>  to <strong>1000ms</strong>, in <strong>5ms</strong>  increments.
+</p>
+
+<p>
+<strong>Disable pullup</strong>  — disable hall pullup, mostly not needed. Select of values On or Off.
+</p>
+
+<p>
+The next menu sections shows the Hall indices and Hall angles for the two directions of rotation of the electric motor. These indices are used for the internal operation of the Controller.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Hall sensors setup&quot;,&quot;hid&quot;:&quot;hall_sensors_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:43,&quot;range&quot;:&quot;54099-55602&quot;} -->
+<h3 id="manual_setup_the_hall_sensors_angles">Manual setup the Hall sensors angles</h3>
+<div class="level3">
+
+<p>
+In general, it is not recommended to change these settings manually! <br/>
+In the menu section <strong>Controller</strong>  &gt; <strong>Motor settings</strong>  &gt; <strong>Manual angle setup</strong>  you can set up the Hall sensors angles of the electric motor.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k17_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Offset for square</strong>  — additional shift for square wave mode, in degrees (<strong>°</strong>). Select of values from <strong>-30°</strong>  to <strong>30°</strong>, in increments of <strong>1°</strong>. <br/>
+<strong>Offset total fwd</strong>  — shift all Halls sensors by the specified value for the direct rotation of the motor, in degrees (<strong>°</strong>). Select of values from <strong>-60°</strong>  to <strong>60°</strong>, in increments of <strong>1°</strong>. <br/>
+<strong>Offset total bkwd</strong>  — shift all Halls sensors by the specified value for the reverse rotation of the motor., in degrees (<strong>°</strong>). Select of values from <strong>-60°</strong>  to <strong>60°</strong>, in increments of <strong>1°</strong>.
+</p>
+
+<p>
+To shift all the halls, you must press the right button of the On-board computer, enter the shift angle, press the right button again. The value will be reset and the angle of all halls will change to the specified value. You can change the angle of the hall shift in the opposite direction by setting a negative value.
+</p>
+
+<p>
+<strong>Reset angles</strong>  — reset of all Hall sensors angles. Select of values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Integration threshold</strong>  — analogue of Hall angles for sensorless engine control mode, in volts (<strong>V</strong>). <br/>
+<strong>Hall adjust Ki</strong>  — the meaning of the coefficient is to find the midpoint of the position of the Hall sensors when adjusting them. Values from <strong>0.02</strong>  to <strong>5.00</strong>, in increments of <strong>0.02</strong>. If the value of the coefficient is too small, then the tuning process will end before the midpoint is determined. If the value of the coefficient is too large, then the setting will not be completed and will stop by timeout, because the midpoint will not be found due to the angles changing too often.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Manual setup the Hall sensors angles&quot;,&quot;hid&quot;:&quot;manual_setup_the_hall_sensors_angles&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:44,&quot;range&quot;:&quot;55603-57518&quot;} -->
+<h3 id="encoder_setup">Encoder setup</h3>
+<div class="level3">
+
+<p>
+In the menu <strong>Controller</strong>  &gt; <strong>Motor Setup</strong>  &gt; <strong>Position sensor</strong>  &gt; <strong>Encoder settings</strong>  there are menu items for configuring the motor encoder. The parameter values in each of the items will appear after passing through the Auto-setup procedure. Controllers with encoder capable have orange phase wires and an encoder speed of 580kHZ under <strong>Controller</strong>  &gt; <strong>Device Information</strong>. The wire for connecting the electric motor with the encoder is ordered separately and is installed instead of the wire with connector for the Hall sensors. <br/>
+<strong>Note:</strong>  on older controllers encoder use <strong>P1</strong>  input as PWM for initial position detection, setup ports <strong>P1 (I5)</strong>  and <strong>P2 (I6)</strong>  to <strong>OFF</strong>  and disable PWM output. Settings applied after reboot.
+</p>
+
+<p>
+Wiring and connectors Compatibility: <br/>
+<strong>Halls</strong>  &gt; <strong>Encoder</strong>  — if your controller has a connector for Hall sensors, then you can make an adapter for the encoder yourself. But, in this case, you will not be able to move when you turn it on, you will need to push the electric bike with your feet to start first time. <br/>
+<strong>Encoder</strong>  &gt; <strong>Halls</strong>  — if your controller has an encoder connector, then you can make an adapter for Hall sensors yourself. Everything will work.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/encoder.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Steps</strong>  — number of encoder steps, selectable in increments of <strong>1</strong>. <br/>
+<strong># Invert counter</strong>  — select of values <strong>Off</strong>  and <strong>On</strong>. <br/>
+<strong># Invert PWM</strong>  — select of values <strong>Off</strong>  and <strong>On</strong>. <br/>
+<strong># Index Z</strong>  — the value of the additional output signal of the encoder (zero pointer), the choice of values from <strong>0</strong>  to <strong>7</strong>, in increments of <strong>1</strong>. <br/>
+<strong># Shift Z FW</strong>  — signal shift, select of values from <strong>-60°</strong>  to <strong> 60°</strong>  in increments of <strong>1°</strong>. <br/>
+<strong># Shift Z BW</strong>  — signal shift, select of values from <strong>-60°</strong>  to <strong> 60°</strong>  in increments of <strong>1°</strong>.
+</p>
+
+</div>
+
+<h5 id="debug_information">Debug information</h5>
+<div class="level5">
+
+<p>
+<strong>Index</strong>  — encoder index signal value. <br/>
+<strong>Z-Index</strong>  — the value of the zero pointer. <br/>
+<strong>PWM Period</strong>  — PWM signal period, in microseconds (<strong>µs</strong>). <br/>
+<strong>PWM Width</strong>  — PWM signal pulse width, in microseconds (<strong>µs</strong>). <br/>
+<strong>Rad by index</strong>  — position of the electric motor by index, in radians (<strong>rad</strong>). <br/>
+<strong>Rad by PWM</strong>  — position of the electric motor by PWM, in radians (<strong>rad</strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Encoder setup&quot;,&quot;hid&quot;:&quot;encoder_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:45,&quot;range&quot;:&quot;57519-59845&quot;} -->
+<h3 id="motor_parameters">Motor parameters</h3>
+<div class="level3">
+
+<p>
+Items in the <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  menu section allow you to configure the parameters of the electric motor.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/motor_en_0504.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Pole pair</strong>  — the number of magnetic pole pairs of the rotor of the electric motor determines the speed at which the motor shaft will rotate. This parameter is used to calculate RPM and speed. For a more accurate autodetection of the Hall sensors angles, you must specify the correct value for the number of pole pairs for your motor. For the most popular motors, you can see this value in the table <strong><a href="/doku.php?id=en:motor_information" class="wikilink1" title="en:motor_information" data-wiki-id="en:motor_information">Motor Information</a></strong>. If your motor is not listed in the table, check with the manufacturer for the number of pole pairs.
+</p>
+
+<p>
+<strong>Spin direction</strong>  — this setting allows you to change the direction of rotation of the electric motor. Select of values <strong>Forward</strong>  and <strong>Invert</strong>. Or you can swap two motor phases to change the direction of rotation.
+</p>
+
+<p>
+<strong>Gear ratio</strong>  — additional motor reduction factor for motors with built-in gearbox. Simplifies setting wheel ratios for speed calculation.
+</p>
+
+<p>
+<strong>Integration thr.</strong>  — the analog of Hall sensors angles for sensorless motor control mode, in volts (<strong>V</strong>).
+</p>
+
+<p>
+<strong>Control mode</strong>  — this parameter is loaded at start-up and can be saved. At the moment, the Controller has the following motor control modes: <br/>
+<strong>Off</strong>  — control mode is disabled. <br/>
+<strong>Square</strong>  — outdated control method used only for motor detection. <br/>
+<strong>FOC</strong>  — field-oriented control of the motor. <br/>
+<strong>DC-DC</strong>  — charging mode when you use the controller in motor charging mode.
+</p>
+
+<p>
+The control mode selected in this menu is the priority setting for the controller. If the Hall sensor mode is selected in the <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Position sensor</strong>  menu, which does not correspond to the set operating mode of the electric motor, then this Hall sensor mode will be automatically replaced with a more suitable one.
+</p>
+
+<p>
+<strong>Max motor U</strong>  — limits voltage supplied to the motor, in volts (<strong>V</strong>). In most cases, this parameter is not needed. Select of values from <strong>0V</strong>  to <strong>100V</strong>, in increments of <strong>1V</strong>.
+</p>
+
+<p>
+<strong>kV</strong>  — motor parameter, electric revolutions per volt (<strong>eRPM/V</strong>).
+</p>
+
+<p>
+Next are the menu items for configuring the MTPA, this function allows you to introduce a negative id current to increase the torque on the IPM motors.
+</p>
+
+<p>
+<strong>Phase resistance</strong>  — the result of measuring the phase resistance of the electric motor during auto-setup (menu item <strong>Motor LR</strong>), in Ohms (Ohm).
+</p>
+
+<p>
+<strong>Inductance d</strong>  — the result of measuring the inductance of the electric motor along the d axis during auto-setup (menu item <strong>Motor LR</strong>), in microHenry (µH). The d-axis (“straight”) refers to the component of the stator magnetic field that is in phase with the rotor magnetic field.
+</p>
+
+<p>
+<strong>Inductance q</strong>  — the result of measuring the inductance of the electric motor along the q axis during auto-setup (menu item <strong>Motor LR</strong>), in microHenry (µH). The q-axis (“quadrature”) refers to the component of the stator magnetic field that is 90 ° out of phase with the rotor magnetic field.
+</p>
+
+<p>
+<strong>Flux linkage</strong>  — is the total magnetic flux permeating the electrical circuit, in Weber (Wb).
+</p>
+
+<p>
+<strong>FOC Optimization</strong>  — changes the FOC PWM mode with a choice of <strong>Efficiency</strong>  or <strong>Ripple</strong>. In <strong>Efficiency</strong>  mode — reduces losses in the controller. In <strong>Ripple mode</strong>  — reduces current ripple in the motor and, in some cases, slightly increases motor efficiency and reduces motor noise.
+</p>
+
+<p>
+<strong>MTPA (IPM Motor)</strong>  — enable (<strong>On</strong>) the MTPA function for IPM motor, for all other motors this function must be disabled (<strong>Off</strong>).
+</p>
+
+<p>
+<strong>FOC Vq limit</strong>  — improves field weakening on some motors. Select of values <strong>On</strong>  and <strong>Off</strong>.
+</p>
+
+<p>
+<strong># Square wave settings:</strong> <br/>
+<strong>Square offset</strong>  — additional shift for square wave mode, in degrees (°). Select of values from -30° to 30°, in increments of 1°. This item is similar to the same item in the menu <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Position sensor</strong>  &gt; <strong>Manual angle setup</strong>. <br/>
+<strong>Boost square current</strong>  — in the sensorless or square mode, applies 100% PWM at the beginning of each winding switch. Starting from specified speed and minimum requested current. Select of values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Boost current</strong>  — setting refers to the control mode <strong>Square</strong>, the minimum current from which the rapid current pumping in the windings is turned on, in amperes (<strong>А</strong>). Select of values from <strong>0A</strong>  to <strong>100A</strong>, in increments of <strong>1A</strong>. <br/>
+<strong>Boost speed</strong>  — setting refers to the control mode <strong>Square</strong>, the minimum speed after which the rapid pumping of current in the windings is turned on, in radians per second (<strong>rad/s</strong>). Select of values from <strong>0.00rad/s</strong>  to <strong>2.00rad/ms</strong>  in increments of <strong>0.05rad/s</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Motor parameters&quot;,&quot;hid&quot;:&quot;motor_parameters&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:46,&quot;range&quot;:&quot;59846-64700&quot;} -->
+<h2 id="battery">Battery</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller</strong>  &gt; <strong>Battery</strong>  menu section you can set up the parameters of the battery connected to the Controller. The Nucular controllers support supply voltages from <strong>20V</strong>  to <strong>90V</strong>, this is <strong>21S</strong>  for Lithium-ion (Li-ion) batteries and <strong>25S</strong>  for Lithium-iron-phosphate (LiFePO4) batteries. To configure the battery, you must specify the range of supply voltage and current. To correctly display the battery capacity on the On-board computer screen and correctly calculate the remaining charge, you must specify the battery capacity in <a href="/doku.php?id=en:display:start#battery_capacity" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">settings</a> of On-board Computer. If you use several batteries with different parameters on the same bike, you can save the configurations for each battery on the SD card and load them after replacing the battery. The SD card can be stored in the On-board computer.
+</p>
+
+<p>
+<strong>#Quick voltage setup</strong>  — feature to help you select the correct parameters for your battery. To automatically configure the items <strong>Full charge</strong>, <strong>Supply max</strong>, <strong>Supply min</strong>, you need to select the type of battery chemistry from the following options: <br/>
+<strong>LiIon (3.6V)</strong>  for li-ion battery. <br/>
+<strong>LFP (3.2V)</strong>  for lithium-iron-phosphate battery (LiFePO4). <br/>
+<strong>LTO (2.3V)</strong>  for lithium-titanate battery (Li4Ti5O12).
+</p>
+
+<p>
+Next, select the <strong>Cell count</strong>, values from <strong>8S</strong>  to <strong>28S</strong>, in increments of <strong>1S</strong>. After that, in the <strong>Apply setup</strong>  item, select <strong>Yes</strong>. After saving the settings, you will see a window with new battery parameters. It is important to remember that we guarantee the operation of controllers with voltages up to 90V. The device is technically rated for 95V, but operating above 90V will void the warranty and you will be warned about this in a pop-up window. For example, if you try to select 22S for a lithium-ion battery. If the settings exceed 95V, the controller will also warn you that you are trying to set the voltage too high.
+</p>
+
+<p>
+<strong>#Limits:</strong>  section <br/>
+<strong>Full charge</strong>  — delta voltage relative to the maximum, at which when the controller is turned on, will reset the watt-hour consumption, in volts (<strong>dV</strong>). This setting resets the <strong>From charge statistics</strong>  when the Controller is turned on. Select values from <strong>0.00 dV</strong>  to <strong>10.00 dV</strong>, in increments of <strong>0.3 dV</strong>.
+</p>
+
+<p>
+<strong>Supply max</strong>  and <strong>Supply min</strong>  — battery voltage range, in volts (<strong>V</strong>). Select values from <strong>20.00V</strong>  to <strong>95.00V</strong>, in increments of <strong>0.1V</strong>. Also, these settings are used for the <strong>Converter</strong>  mode.
+</p>
+
+<p>
+For lithium-ion (Li-ion) batteries, the minimum can be considered <strong>2.8V*S</strong>, the maximum <strong>4.2V*S</strong>. <br/>
+For lithium-iron-phosphate (LiFePO4)-minimum <strong>2.7V*S</strong>, maximum <strong>3.6V*S</strong>.
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:48,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+ We guarantee stable operation of the Controller at voltages up to <strong>90V</strong>  inclusive. Using a battery over 90V may damage the Controller and void the warranty. 
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:49,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<strong>Charge max</strong>  — maximum battery charging current, during regeneration or in <strong>Converter</strong>  mode, in amperes (<strong>А</strong>). Select values from <strong>1.0A</strong>  to <strong>400.0А</strong>, in increments of <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Discharge max</strong>  — maximum continuous discharge current of the battery, but in boost mode, it can be more, check (Throttle control mode setup.), in amperes (<strong>А</strong>). Select values from <strong>1.0A</strong>  to <strong>400.0А</strong>, in increments of <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Power max</strong>  — maximum continuous discharge power, in watts (<strong>W</strong>). Set 0W to deactivate power limit. Select values from <strong>0W</strong>  to <strong>30000 W</strong>, in increments of <strong>100W</strong>.
+</p>
+
+<p>
+<strong># DC voltage</strong>  — current supply voltage of the Controller, in volts (<strong>V</strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Battery&quot;,&quot;hid&quot;:&quot;battery&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:47,&quot;range&quot;:&quot;64701-68306&quot;} -->
+<h2 id="converter">Converter</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Converter</strong>, can configure charging mode from the power supply through the motor. Charging through the inductor is not currently supported. For the power supply connection diagram, see this <a href="/doku.php?id=en:controller:setup#connection_diagram" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">link</a>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k21_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Enable</strong>  — turn on the converter mode and start charging. Select of values <strong>On</strong>  and <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Auto-enable</strong>  — allows the automatic start of charging when the charging PSU is connected to the controller. Select of values <strong>On</strong>  and <strong>Off</strong>.
+</p>
+
+<p>
+<strong>Detection threshold</strong>  — minimum voltage on phases when charger mode activates, also disables motor control, in volts per phase (<strong>Vph</strong>). Select of values from <strong>10Vph</strong>  to <strong>80Vph</strong>, in increments of <strong>1Vph</strong>.
+</p>
+
+<p>
+<strong>Battery max I</strong>  — maximum battery charge current, if no value is specified then battery settings are used, in amperes (<strong>А</strong>). Select of values from <strong>0.0А</strong>  to <strong>100.0A</strong>, in increments of <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Battery min I</strong>  — minimum charge current when current is decreased by voltage, in amperes (<strong>А</strong>). Select of values from <strong>0.5А</strong>  to <strong>10.0A</strong>, in increments of <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Undercharge</strong>  — voltage relative to maximum battery voltage setup, in volts (<strong>V</strong>). Let&#039;s decrease the full charge voltage. Select of values from <strong>0.00V</strong>  to <strong>10.0V</strong>, in increments of <strong>0.1V</strong>.
+</p>
+
+<p>
+<strong>Current drop delta</strong>  — decreases charging current down to <strong>Battery min I</strong>  as the battery reaches maximum voltage on specified voltage range, in volts (<strong>dV</strong>). Select of values from <strong>0.0dV</strong>  to <strong>20.0 dV</strong>  in increments of <strong>0.5 dV</strong>.
+</p>
+
+<p>
+<strong>Supply max I</strong>  — maximum power supply current, in amperes (<strong>А</strong>). Select of values from <strong>2.0 A</strong>  to <strong>150.0 A</strong>, in increments of <strong>0.5 A</strong>.
+</p>
+
+<p>
+<strong>Supply drop U</strong>  — allowable voltage drop on wires or power supply, in volts (<strong>V</strong>). Select of values from <strong>0.50 V</strong>  to <strong>10.00 V</strong>, in increments of <strong>0.25 V</strong>.
+</p>
+
+<p>
+<strong>Max motor t°</strong>  — setting the limitation of the heating temperature of the motor during charging, in degrees Celsius (<strong>°C</strong>). Select of values from <strong>50°C</strong>  to <strong>120°C</strong>, in increments of <strong>5°C</strong>.
+</p>
+
+<p>
+<strong>MPPT</strong>  — enables and disables the maximum power point tracking feature when charging the battery through the controller from a solar panel.
+</p>
+
+<p>
+Below in the menu section, through the <strong>#</strong>  sign, the real-time values of voltages, currents and power are shown: <br/>
+<strong># Battery I</strong> <br/>
+<strong># Battery U</strong> <br/>
+<strong># Charging power</strong> <br/>
+<strong># Supply I</strong> <br/>
+<strong># Supply U</strong>
+</p>
+
+<p>
+After plugging in the power supply, the On-board Computer will display the battery charging process.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/charging.png" class="medialeft" alt="" /><strong>Indication to the right:</strong> <br/>
+<strong>-22.1A</strong>  — information line parameter, depending on the On-Board Computer settings. <br/>
+<strong>0:0:58</strong>  — time elapsed since charging started, hours, minutes, seconds. <br/>
+<strong>I24.9</strong>  — charging current, in Amperes (<strong>A</strong>). <br/>
+<strong>U53.7</strong>  — charging voltage, in Volts (<strong>V</strong>).
+</p>
+
+<p>
+<strong>The indication in the middle</strong>  is the temperature of the motor and the controller, respectively, in degrees Celsius (<strong>°C</strong>).
+</p>
+
+<p>
+<strong>Indication to the left:</strong> <br/>
+<strong>59.0V</strong>  — information line parameter, depending on the On-Board Computer settings. <br/>
+<strong>15Wh</strong>  — the battery capacity in Watt hours (<strong>Wh</strong>). <br/>
+<strong>100%</strong>  — the battery level, in percent (<strong>%</strong>). <br/>
+<strong>I24.9</strong>  — the battery current, in Amperes (<strong>A</strong>). <br/>
+<strong>U53.7</strong>  — the battery voltage, in Volts (<strong>V</strong>).
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Converter&quot;,&quot;hid&quot;:&quot;converter&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:50,&quot;range&quot;:&quot;68307-71807&quot;} -->
+<h2 id="i_o_port_configuration">I/O port configuration</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller</strong>  &gt; <strong>I/O configuration</strong>  menu section, you can configure the port&#039;s functions. The controller has thirteen digital ports that can be configured for different functions — <strong>I1</strong>-<strong>I4</strong>, <strong>IO5</strong>, <strong>IO6</strong>, <strong>I7</strong>-<strong>I13</strong>. See section <strong><a href="/doku.php?id=en:controller:setup#connection_diagram" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Connection diagram</a></strong>.
+</p>
+
+<p>
+Sixteen CAN ports are additionally available <strong>CAN port 1</strong>  - <strong>CAN port 16</strong>, the signal source for which can be configured on the On-board computer or uLight. These are software values, there are fewer physical inputs on the boards, at the moment there are eight CAN ports <strong>IO1</strong>  - <strong>IO8</strong>  available in the On-board computer plus four Hotkeys (buttons on the On-board computer). In the future, six CAN ports <strong>I1</strong>  - <strong>I6</strong>  will be added to the uLight board.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/port_01062023.png" class="medialeft" alt="" />
+</p>
+
+<p>
+In the section <strong>Controller</strong>  &gt; <strong>I/O configuration</strong>  &gt; <strong>Port state</strong>, you can check input activation when contact shorted to GND. When a signal is applied, the value will change from <strong>Off</strong>  to <strong>On</strong>. Below in the menu items <strong># Throttle</strong>  and <strong># Brake</strong>  you can see the voltage on the throttle and brake levers, respectively.
+</p>
+
+<p>
+If the controls are connected to the On-board computer, then it is necessary to check the activation when contact shorted to GND in the <strong>On-board computer</strong>  &gt; <strong>Information</strong>  <a href="/doku.php?id=en:display:start#information" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a>.
+</p>
+
+<p>
+<strong># PAS An</strong>  — shows an analog PAS sensor voltage, in volts (V).
+</p>
+<div class="clearer"></div>
+
+<p>
+In the item <strong> Controller </strong>&gt; <strong>I/O configuration</strong>  &gt; <strong>Speeds mode</strong>  you can select the method for switching additional modes <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong>  for inputs in the Controller or CAN inputs - <strong>Switch</strong>  or <strong>Buttons</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/io_010623.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Available functions for the Controller ports <strong>I1</strong>, <strong>I2</strong>, <strong>I3</strong>, <strong>I4</strong>, <strong>IO5</strong>, <strong>IO6</strong>, <strong>I7</strong>, <strong>I8</strong>-<strong>I13</strong>  and CAN ports <strong>CAN port 1</strong>  - <strong>CAN port 16</strong>: <br/>
+<strong>OFF</strong>  — disable port. <br/>
+<strong>Spec.</strong>  — special port function (like PWM or PAS). <br/>
+<strong>RV</strong>  — reverse. <br/>
+<strong>CRe</strong>  — enable cruise. <br/>
+<strong>CR+</strong>  — increment cruise speed (when the cruise is active). <br/>
+<strong>CR-</strong>  — decrement cruise speed (when the cruise is active). <br/>
+<strong>CRr</strong>  — restore the last saved cruise speed with the button, activated only above min cruise speed. <br/>
+<strong>BK</strong>  — brake button. <br/>
+<strong>DM</strong>  — disable motor (disable throttle, brake, and PAS). <br/>
+<strong>DTH</strong>  — disable throttle. <br/>
+<strong>DPAS</strong>  — disable PAS. <br/>
+<strong>P+</strong>  — PAS power level increase. <br/>
+<strong>P-</strong>  — PAS power level decrease. <br/>
+<strong>SWSNS</strong>  — input for Gearsensor to reduce motor torque (WIP). In development. <br/>
+<strong>N</strong>  — activates the neutral mode forcibly, resets speed mode counter if used. If neutral is activated by default, you need to change speed mode again to exit neutral. <br/>
+<strong>ENTH</strong>  — enable throttle. <br/>
+<strong>nBK</strong>  — inverted brake button input, activates the brake when the contact is opened. <br/>
+<strong>S1</strong>  — speed 1. <br/>
+<strong>S2</strong>  — speed 2. <br/>
+<strong>S3</strong>  — speed 3. <br/>
+<strong>S1of3</strong>  — speed 1 for 3-position switch. <br/>
+<strong>S3of3</strong>  — speed 3 for 3-position switch. <br/>
+<strong>Scyc</strong>  — cycle speed mode, sequential switching with one button. <br/>
+<strong>S++</strong>  — increment speed, switching the speed from low to high with one button. <br/>
+<strong>S–</strong>  — decrement speedи, switching the speed from high to low with one button. <br/>
+<strong>SPSNS</strong>  — input for external speed sensor. <br/>
+<strong>CL1</strong>-<strong>CL5</strong>  — instant configuration import by pressing the CAN button (up to five different configurations). For correct import, the function number must match the number in the name of your configuration file. For example, a <strong>CL3</strong>  function would correspond to a file called <strong>ncconf3.cfg</strong>.
+</p>
+
+<p>
+Further in the menu, there are items for configuring the PWM outputs.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;I\/O port configuration&quot;,&quot;hid&quot;:&quot;i_o_port_configuration&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:51,&quot;range&quot;:&quot;71808-75627&quot;} -->
+<h3 id="pwm_output_setup">PWM output setup</h3>
+<div class="level3">
+
+<p>
+To activate the <strong>PWM IO5</strong>  or <strong>PWM IO6</strong>  output, the <strong>Controller</strong>  &gt; <strong>Port Setup</strong>  menu should be set to <strong>Spec.</strong>  mode and <strong>PAS</strong>  disabled.
+</p>
+
+<p>
+<strong>PWM freq</strong>  — selection of frequency of additional PWM output on ports <strong>P1/P2</strong>. Select of values PWM frequency — <strong>100Hz</strong>, <strong>500Hz</strong>, <strong>1kHz</strong>, <strong>5kHz</strong>, <strong>10kHz</strong>, <strong>24kHz (FAN)</strong>. For a conventional light bulb, large values are not needed. Select the frequency <strong>100Hz</strong>, this will be enough to avoid flickering. The high frequency marked <strong> FAN </strong>  is used to control the fan, this is their standard frequency.
+</p>
+
+<p>
+<strong>PWM IO5</strong>  and <strong>PWM IO6</strong>  — selection of operating modes:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Disabled</strong>  — mode not selected.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Stop-light</strong>  — activated when the brake is pressed.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Headlight</strong>  — activated when the controller is enabled.</div>
+</li>
+<li class="level1"><div class="li"> <strong>t°C motor</strong>  — activated beyond the two deltas of the motor temperature, as the motor heats up will increase the PWM duty ( Delta °t set up on menu <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  &gt; <strong>Motor t°-sensor</strong>).</div>
+</li>
+<li class="level1"><div class="li"> <strong>t°C controller</strong>  — activated from 40°С, maximum value at 80°С temperature of the Controller.</div>
+</li>
+</ul>
+
+<p>
+<strong>PWM IOn Min</strong>  / <strong>Max</strong>  — indicates the output range of the PWM (duty), select of values from <strong>0%</strong>  to <strong>100%</strong>, in increments <strong>1%</strong>. <br/>
+<strong>PWM IOn t° Min</strong>  / <strong>t° Max</strong>  — selection of motor or controller temperature, select of values from <strong>0°С</strong>  to <strong>100°С</strong>, in increments <strong>1°С</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PWM output setup&quot;,&quot;hid&quot;:&quot;pwm_output_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:52,&quot;range&quot;:&quot;75628-77096&quot;} -->
+<h2 id="extra_parameters">Extra parameters</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>  you can set up various additional settings of the Controller.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Extra parameters&quot;,&quot;hid&quot;:&quot;extra_parameters&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:53,&quot;range&quot;:&quot;77097-77249&quot;} -->
+<h3 id="the_power_button_and_auto_shutdown">The power button and auto shutdown</h3>
+<div class="level3">
+
+<p>
+The controller power button is located on the back of the On-Board Computer. In the <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>  &gt; <strong>Disable button</strong>  menu item, you can select the way to turn on/off the Controller, which turns on when it is powers-up or the button contacts are closed. In the off mode, the controller consumes about 100 μA, so if you reconnect the power supply without discharging the capacitors, the controller may not start.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k25_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Selecting modes for <strong>Disable button</strong>: <br/>
+<strong>None</strong>  — the controller turns on when it is power-up up or when the power button is closed, does not turn off. <br/>
+<strong>Switch</strong>  — the controller turns on when the power button is closed (when EN shorted to GND), turns off when it opens. <br/>
+<strong>Button</strong>  — the controller turns on the button on the On-Board Computer, press it for 2 seconds, and release, to disable it, press and hold the button again. <br/>
+<strong>CAN</strong>  — the controller turns on when it is powers-up or the button contacts shorts, disables only when another device on CAN bus will send a request to disable. This function is used when there are several controllers on a system, where one of them is set to button or switch mode, and the other in CAN mode.
+</p>
+
+<p>
+<strong>Auto shutdown</strong>  — activation of the controller shutdown function after a while if the motor does not spin. Select of values <strong>On</strong>  and <strong>Offл</strong>. The shutdown time is set in item <strong>Sleep time</strong>.
+</p>
+
+<p>
+<strong>Sleep time</strong>  — selection of the controller shutdown time when the <strong>Auto shutdown</strong>  function is activated, in seconds, (<strong>s</strong>). Select of values from <strong>30s</strong>  to <strong>1500s</strong>, in increments of <strong>5s</strong>.
+</p>
+
+<p>
+<strong>Lock at turn-on</strong>  — the function locks controller inputs when enabled until the password is entered on the On-Board Computer, if there is no On-Board Computer, enabling this setting will permanently lock the controller.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The power button and auto shutdown&quot;,&quot;hid&quot;:&quot;the_power_button_and_auto_shutdown&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:54,&quot;range&quot;:&quot;77250-79179&quot;} -->
+<h3 id="speedometer_setup">Speedometer setup</h3>
+<div class="level3">
+
+<p>
+The next block of settings in the menu section <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>  refers to the speed calculation setting. If you use an external speed sensor connected to the On-board computer, you need to configure it in menu <strong><a href="/doku.php?id=en:display:start#data_sources_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Data source setup</a></strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k26_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Speed calculation</strong>  — enabling speed calculation in the Controller. Useful for multi-motor configurations, you can turn off the speed calculation on some motors. Select of values <strong>On</strong>  and <strong>Off</strong>. <br/>
+
+<strong>Circumference</strong>  — wheel circumference, in millimeters (mm). Select of values from <strong>0mm</strong>  to <strong>3000mm</strong>, in increments of <strong>5mm</strong>. To calculate the circumference, you can use <a href="https://www.omnicalculator.com/math/circumference" class="urlextern" title="https://www.omnicalculator.com/math/circumference" rel="ugc nofollow">online calculator</a>. <br/>
+
+<strong>Motor sprocket</strong>  — this setting specifies the number of sprocket teeth on the motor (notional), which allows you to set the gear ratio from motor shaft to the wheel. Also, this setting can be used as a reduction ratio for gear motors. <br/>
+
+<strong>Wheel sprocket</strong>  — the number of teeth of the wheel sprocket, similar to the setting <strong>Motor sprocket</strong>. <br/>
+
+</p>
+
+<p>
+If you have a wheel motor, then in the section <strong>Controller</strong>  &gt; <strong>Motor setup</strong>  you need to specify the number of <strong>Pole pair</strong>  (divide the number of magnets by two). For gear motors or mid-drives, it is recommended to install an external speed sensor that connects to the Onboard computer or to any of the controller ports.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Speedometer setup&quot;,&quot;hid&quot;:&quot;speedometer_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:55,&quot;range&quot;:&quot;79180-80698&quot;} -->
+<h3 id="master-controller">Master-controller</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k27_en.png" class="medialeft" alt="" />In the menu section <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>  &gt; <strong>Master-controller</strong>  you can enable the function of controlling other controllers from the current one. This setting is suitable for multi-motor configurations where control (throttle, brake and etc.) is connected into one of the controllers directly.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Master-controller&quot;,&quot;hid&quot;:&quot;master-controller&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:56,&quot;range&quot;:&quot;80699-81091&quot;} -->
+<h3 id="other_settings">Other settings</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/4_0.8.png" class="medialeft" alt="" /><strong>Limit t° CPU</strong>  — limiting the temperature of the processor, in degrees Celsius (<strong>°C</strong>). When the specified threshold is reached, the phase current will be limited. Select of values from <strong>60°C</strong>  to <strong>105°C</strong>, in increments of <strong>5°C</strong>.
+</p>
+
+<p>
+<strong>Device ID</strong>  — setting the Controller number in the CAN network. This number is displayed in the menu section <strong>Settings</strong>  &gt; <strong>Devices</strong>  in front of each device that is connected to the network using the <a href="/doku.php?id=en:levcan" class="wikilink1" title="en:levcan" data-wiki-id="en:levcan">LEVCAN protocol</a>. If, by default, your device number is <strong>0</strong>, we recommend changing it to another number for the correct firmware update.
+</p>
+
+<p>
+<strong>Prefix 1</strong>  and <strong>Prefix 2</strong>  — controller name setting for multi-motor configurations. Using the prefixes together or separately, you can specify where the electric motor that the Controller controls is located. The selectable values for each prefix are <strong>None</strong>, <strong>Front</strong>, <strong>Rear</strong>, <strong>Left</strong>, <strong>Right</strong>. To save the setting, go to the <strong>Controller</strong>  &gt; <strong>Save settings</strong>  menu item and select <strong>On</strong>, then restart the controller. The prefix will now appear in front of the controller name in the <strong>Devices</strong>  menu.
+</p>
+
+<p>
+For example, you have a 2WD scooter and two 12F controllers, you need to distinguish them somehow in the <strong>Devices</strong>  menu for easy setup. A controller for a front motor can be prefixed with <strong>Front</strong>, in which case the controller will be named <strong>Front Nucular controller</strong>  in the <strong>Devices</strong>  menu.
+</p>
+
+<p>
+If you are using a 3WD drive or more, then both prefixes must be used for the controller name. For example, if the controller is driving a rear right motor, the setting will look like this: <strong>Prefix 1</strong>  — <strong>Rear</strong>, <strong>Prefix 2</strong>  — <strong>Right</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Other settings&quot;,&quot;hid&quot;:&quot;other_settings&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:57,&quot;range&quot;:&quot;81092-82840&quot;} -->
+<h3 id="access_level">Access level</h3>
+<div class="level3">
+
+<p>
+Four levels are available: <br/>
+<strong>Novice</strong> <br/>
+<strong>User</strong> <br/>
+<strong>Advanced</strong> <br/>
+<strong>Engineer</strong>
+</p>
+
+<p>
+Depending on the selected access level, some menu items will be hidden to make it easier to configure the controller. For example, at the <strong>Novice</strong>  level, a minimum basic set of settings will be displayed. At the Engineer level, all possible settings will be available. You can choose your level yourself.
+</p>
+
+<p>
+<strong>Important note</strong>: now after updating the firmware to v0.8.13, the default level will be set to <strong>Novice</strong>. Remember this when you don’t find the usual menu items in the controller settings.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Access level&quot;,&quot;hid&quot;:&quot;access_level&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:58,&quot;range&quot;:&quot;82841-83454&quot;} -->
+<h2 id="pid_regulators">PID regulators</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller</strong>  &gt; <strong>PID regulators</strong>  menu section, various signals of proportional-integral-derivative (PID) regulators are configured - devices in the control loop with feedback used in automatic control systems to generate a control signal in order to obtain the required accuracy and the quality of the transition process. <strong>Settings for advanced users</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k28_en.png" class="medialeft" alt="" />Two or three coefficients are used for the settings of each regulator: <br/>
+<strong>Ki</strong>  — integral coefficient. <br/>
+<strong>Кp</strong>  — proportional coefficient. <br/>
+<strong>Kd</strong>  — differentiating coefficient.
+</p>
+
+<p>
+<strong>Square Ki, Kp</strong>  — phase current regulator for a square wave. <br/>
+<strong>FOC Ki, Kp</strong>  — phase current regulator for FOC mode. <br/>
+<strong>FW Ki, Kp</strong>  — field weakening coefficients. <br/>
+<strong>DCv Ki, Kp</strong>  — voltage regulator on the DC bus. <br/>
+<strong>DCi Ki, Kp</strong>  — current regulator on the DC bus. <br/>
+<strong>DCw Ki, Kp</strong>  — power calculator. <br/>
+<strong>Speed Ki, Kp, Kd</strong>  — speed regulator for throttle control modes <strong>Speed</strong>  and <strong>Speed torque</strong>. <br/>
+<strong>PLL Ki, Kp</strong>  — speed regulator for motor angle interpolation. <br/>
+<strong>Acceleration Kp, Ki</strong>  — deceleration and acceleration regulator.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PID regulators&quot;,&quot;hid&quot;:&quot;pid_regulators&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:59,&quot;range&quot;:&quot;83455-84673&quot;} -->
+<h2 id="status_flags">Status flags</h2>
+<div class="level2">
+
+<p>
+The <strong>Controller</strong>  &gt; <strong>Status Flags</strong>  menu section displays errors that may occur during the operation of the Controller. If an error occurs, the parameter value changes to <strong>On</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/status_en_0504.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Reset?</strong>  — reset all statuses. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Max acceleration</strong>  — maximum acceleration, in ERPM/s. <br/>
+<strong>Min deceleration</strong>  — maximum deceleration, in ERPM/s. <br/>
+<strong>Overload current</strong>  — the last recorded current on the phases, in Amperes. <br/>
+<strong>Overload</strong>  — exceeding the permissible current values. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>High V ripple</strong>  — overcurrent on the P24F controller (plate) which is monitored via voltage ripple. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Over-Field weakening</strong>  — weakening error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Supply overvoltage</strong>  — too high supply voltage, the error will appear above 95V, but in general depends on the controller model. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Supply undervoltage</strong>  — too low supply voltage, less than the minimum battery supply threshold. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>12V protection</strong>  — error on the 12V power line. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Control fail</strong>  — the controller was not able to smoothly turn off the electric motor in time when throttle released. May happen with certain motors when field weakening used, decrease FW current. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>12V protection</strong>  — breaking down or error on the 12V power line. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Brake error</strong>  — brake lever connection error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Throttle error</strong>  — throttle lever connection error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Throttle lock</strong>  — indicates that the throttle lever is disabled. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Position sensor error</strong>  — motor position sensor connection error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Square index error</strong>  — signal error from sensors when trapezoidal control. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Thread error</strong>  — processor overload. Values <strong>On</strong>  and <strong>Off</strong>. The error is not critical, let us know if it occurs. <br/>
+<strong>PAS protection</strong>  — PAS error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Controller overheat</strong>  — overheat protection of the controller. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Motor overheat</strong>  — overheating protection of the electric motor. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Protection fail</strong>  — hardware error, malfunction of all protection systems during controller self-test. If this error occurs, the operation of the Controller will be impossible. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>ADC sample error</strong>  — software error of the analog-to-digital converter (ADC). Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>VBUS sample error</strong>  — supply voltage measurement error. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>Voltage on phases</strong>  — overvoltage on phases. Values <strong>On</strong>  and <strong>Off</strong>. <br/>
+<strong>LEC</strong>  — types of errors on the CAN bus. If everything is alright you will see the value <strong>Ok</strong>. In case of errors, there will be values - <strong>Stuff</strong>, <strong>Form</strong>, <strong>Acknowledgment</strong>, <strong>Bit recessive</strong>, <strong>Bit dominant</strong>, <strong>CRC</strong>, <strong>SW</strong>. Tell us the code if this error occurs. <br/>
+<strong>Receive w/error</strong>  — CAN-bus errors on receiving. <br/>
+<strong>Sent w/error</strong>  — CAN-bus errors on transmitting. <br/>
+<strong>CAN state</strong>  — overloading buffers. If everything is alright you will see the value <strong>Ok</strong>. In case of errors, there will be values - <strong>OVR0</strong>, <strong>OVR1</strong>, <strong>OVR01</strong>. Tell us the code if this error occurs. <br/>
+<strong>CAN RX</strong>  — the number of messages in the CAN bus to receive. <br/>
+<strong>CAN TX</strong>  — the number of messages in the CAN bus to transmission. <br/>
+<strong>CPU Load</strong>  — current load of the central processor, in percentage (<strong>%</strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Status flags&quot;,&quot;hid&quot;:&quot;status_flags&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:60,&quot;range&quot;:&quot;84674-88429&quot;} -->
+<h2 id="debug_information1">Debug information</h2>
+<div class="level2">
+
+<p>
+The menu section <strong>Controller</strong>  &gt; <strong>Debug information</strong>  shows the main parameters of your Controller, electric motor, and the whole system - temperature, rpm, voltage, and current, as well as the values of the current regulators.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/debug_0808.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Temp. controller</strong>  — temperature of the Controller, in degrees Celsius (<strong>°C</strong>). <br/>
+<strong>Temp. motor</strong>  — temperature of the electric motor, in degrees Celsius (<strong>°C</strong>). <br/>
+<strong>DC current</strong>  — DC current, in amperes (<strong>А</strong>). <br/>
+<strong>DC voltage</strong>  — DC voltage, in volts (<strong>V</strong>). <br/>
+<strong>AC current</strong>  — AC current, in amperes (<strong>А</strong>). <br/>
+<strong>AC voltage</strong>  — AC voltage, in volts (<strong>V</strong>). <br/>
+<strong>Motor U0</strong>  — DC voltage on phases, in volts (<strong>V</strong>). <br/>
+<strong>System 12V</strong>  — voltage on the CAN bus 12V, in volts (<strong>V</strong>). <br/>
+<strong>System 5V</strong>  — voltage on the CAN bus 5V, in volts (<strong>V</strong>). <br/>
+<strong>RPM</strong>  — motor speed, in RPM (<strong>RPM</strong>). <br/>
+<strong>ERPM</strong>  — electric revolutions of the motor per minute (<strong>ERPM</strong>). <br/>
+<strong>Hall input</strong>  — this parameter allows you to check the functionality of the Hall sensors. There are three digits in this item, each shows the signal level, if you rotate the motor slowly by hand, all three digits should change. If none of the digits change, check if the Hall connector is connected or the ground may be broken. If one of the digits does not change - there is no contact or the sensor wire is broken. To check the contacts in the controller, disconnect the Hall connector and measure the voltages on the controller connector. There should be about 4V on the signal lines of the Halls, 5V on the power supply, and about 3V on the temperature sensor line. <br/>
+<strong>Hall index</strong>  — virtual position of the motor, digits from 1 to 6 (normal operation). <br/>
+<strong>Throttle %</strong>  — the percentage of how much the throttle is pressed. <br/>
+<strong>Brake %</strong>  — the percentage of how much the brake is pressed. <br/>
+<strong>Speed request</strong>  — set point for the speed regulator, in eRPM. <br/>
+<strong>Torque request</strong>  — phase current request, either positive throttle or a negative brake. <br/>
+<strong>Torque limit</strong>  — current limit for this type of controller, taking into account overheating. <br/>
+<strong>Temp CPU</strong>  — CPU temperature, in degrees Celsius (<strong>°C</strong>).
+</p>
+
+<p>
+Next in the menu are the sections <strong>Debug FOC</strong>  and <strong>Remote inputs</strong>, which are described below.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Debug information&quot;,&quot;hid&quot;:&quot;debug_information1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:61,&quot;range&quot;:&quot;88430-90800&quot;} -->
+<h3 id="debug_foc">Debug FOC</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Debug information</strong>  &gt; <strong>Debug FOC</strong>
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k31_en.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>U Q</strong>  — Q-axis voltage, in volts (<strong>V</strong>). <br/>
+<strong>U D</strong>  — D-axis voltage, in volts (<strong>V</strong>). <br/>
+<strong>I Q</strong>  — Q-axis current, in amperes (<strong>А</strong>). <br/>
+<strong>I D</strong>  — D-axis current, in amperes (<strong>А</strong>). <br/>
+<strong>Ireqest Q</strong>  — Q-axis current request, in amperes (<strong>А</strong>). <br/>
+<strong>Ireqest D</strong>  — D-axis current request, in amperes (<strong>А</strong>).
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Debug FOC&quot;,&quot;hid&quot;:&quot;debug_foc&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:62,&quot;range&quot;:&quot;90801-91286&quot;} -->
+<h3 id="remote_inputs">Remote inputs</h3>
+<div class="level3">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Debug information</strong>  &gt; <strong>Remote inputs</strong>  you can view the parameters of the throttle and brake levers connected to other devices connected to the CAN-bus (On-board computer or uLight).
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k32_en.png" class="medialeft" alt="" /><strong>Throttle</strong>  — voltage on the throttle lever at a remote source (On-board computer or uLight), in volts (<strong>V</strong>). <br/>
+<strong>Brake</strong>  — voltage at the brake lever at a remote source (On-board computer or uLight), in volts (<strong>V</strong>). <br/>
+<strong>Throttle % </strong>— the percentage of how much the throttle pressed at a remote source. <br/>
+<strong>Brake %</strong>  — the percentage of how much the brake pressed at a remote source.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Remote inputs&quot;,&quot;hid&quot;:&quot;remote_inputs&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:63,&quot;range&quot;:&quot;91287-91990&quot;} -->
+<h2 id="logger">Logger</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller </strong>  &gt; <strong>Logger</strong>  menu section, you can enable and configure the data logging during the operation of the Controller. This functionality is experimental, errors may occur. The file is saved in <strong> CSV </strong>  format to an SD card inserted into the On-board computer. To view the file, you can use the service <a href="https://datazap.me/" class="urlextern" title="https://datazap.me/" rel="ugc nofollow">Datazap</a>. The SD card must have a FAT32 file system.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/11_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Start logging</strong>  — to start recording, select <strong>On</strong>  and press the right button of the On-board computer. After that, the <strong>#State</strong>  menu item will change to <strong>Waiting</strong>  status. The recording will start automatically after pressing the throttle grip. If an error occurs during the recording process, you will see its code in the <strong> # Error code </strong>  menu item. In case of an error, firstly, check that the SD card has the FAT32 file system, and secondly, that there is free space on the SD card for recording. Additionally, you can delete unnecessary files from the card. After that, restart the Controller and start recording again. If the error repeats, contact us through the website or chat technical support and report the error code.
+</p>
+
+<p>
+<strong>Stop logging</strong>  — stop recording, select <strong>On</strong>  to end recording.
+</p>
+
+<p>
+<strong>Continuous logging</strong>  — allows you to activate the continuous logging mode, including during stops. In firmware before v0.8.12 the log was written only during driving and electric motor operation.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+<strong>Start mode</strong>  — selection of recording start mode:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Manual</strong>  — enable manual recording.</div>
+</li>
+<li class="level1"><div class="li"> <strong>At start</strong>  — recording starts automatically when the Controller is turned on.</div>
+</li>
+</ul>
+
+<p>
+<strong>Log time</strong>  — two parameters of time for recording to choose from:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Time step</strong>  — delta of time since the previous record.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sys time</strong>  — global time, which is incremented after the start of the controller.</div>
+</li>
+</ul>
+
+<p>
+<strong>Log rate</strong>  — delay between records of values. You can choose either the number of PWM cycles (<strong>PWM1</strong>, <strong>PWM2</strong>, <strong>PWM5</strong>, <strong>PWM10</strong>), either time (<strong>1ms</strong>, <strong>10ms</strong>, <strong>20ms</strong>, <strong>100ms</strong>, <strong>1s</strong>, <strong>5s</strong>, <strong>10s</strong>, <strong>30s</strong>).
+</p>
+
+<p>
+<strong>Mode</strong>  — recording mode selection:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Buffered</strong>  — buffering and recording in segments.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Max rate</strong>  — continuous recording mode.</div>
+</li>
+</ul>
+
+<p>
+<strong>Data averaging</strong>  — using filters while recording:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>None</strong>  — filter disabled (records real values).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Fast</strong>  — slight averaging (smoothes values).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Slow</strong>  — large averaging.</div>
+</li>
+</ul>
+
+<p>
+<strong>Add header to log</strong>  — adding the name of the controller when writing the log, so that you can understand which controller the log belongs to in multi-motors configurations. You can set the name of the controller in the menu <strong>Controller</strong>  &gt; <strong>Extra parameters</strong>, items <strong>Prefix 1</strong>  and <strong>Prefix 2</strong>.
+</p>
+
+<p>
+Next, in the <strong># Data to log</strong>  menu sections, you can select the set of parameters you want to record. Select <strong>On</strong>  to enable parameter recording.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/k_55_en.png" class="medialeft" alt="" /><strong># Data to log</strong>: <br/>
+<strong>Battery Voltage</strong>  — battery voltage data logging. <br/>
+<strong>Battery Current</strong>  — battery current data logging. <br/>
+<strong>Motor Voltage</strong>  — motor voltage data logging. <br/>
+<strong>Motor Current</strong>  — motor current data logging. <br/>
+<strong>Wheel speed</strong>  — wheel speed data logging. <br/>
+<strong>Motor rad/s</strong>  — data logging of the angular speed of the electric motor. <br/>
+<strong>Motor RPM</strong>  — data logging of revolutions of an electric motor per minute. <br/>
+<strong>Tmotor °C</strong>  — data logging of the electric motor temperature. <br/>
+<strong>Tfet °C</strong>  — data logging the temperature of field-effect transistors. <br/>
+<strong>Raw hall input</strong>  — data logging the input status from Hall sensors without filter. <br/>
+<strong>Hall index</strong>  — virtual position of motor. <br/>
+<strong>Throttle %</strong>  — throttle grip data logging. <br/>
+<strong>Brake %</strong>  — brake lever data logging. <br/>
+<strong>FOC Vq</strong>  — Q-axis voltage data logging. <br/>
+<strong>FOC Vd</strong>  — D-axis voltage data logging. <br/>
+<strong>FOC Iq</strong>  — Q-axis current data logging. <br/>
+<strong>FOC Id</strong>  — D-axis current data logging. <br/>
+<strong>FOC Iq request</strong>  — Q-axis current request data logging. <br/>
+<strong>FOC Id request</strong>  — D-axis current request data logging. <br/>
+<strong>Current phA</strong>  — data logging the current on the A phase of the electric motor. <br/>
+<strong>Current phB</strong>  — data logging the current on the B phase of the electric motor. <br/>
+<strong>Current phC</strong>  — data logging the current on the С phase of the electric motor. <br/>
+<strong>PAS frequency RPM</strong>  — PAS frequency data logging. <br/>
+<strong>PAS torque Nm</strong>  — PAS torque data logging. <br/>
+<strong>PAS power W</strong>  — PAS power data logging. <br/>
+<strong>Speed request</strong>  — speed request data logging. <br/>
+<strong>Torque request</strong>  — torque request data logging.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Logger&quot;,&quot;hid&quot;:&quot;logger&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:64,&quot;range&quot;:&quot;91991-96675&quot;} -->
+<h2 id="statistics">Statistics</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Statistics</strong>  you can view the data on the Controller. These are trip statistics that will be automatically reset when the controller is powered off. If you have several Controllers in the system, then you can see the summary data for all controllers in the general statistics in the On-board computer.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/statistics_0808.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Wh used total</strong>  — total energy consumption (used plus regen), in Watt-hours (<strong>Wh</strong>). <br/>
+<strong>Wh used</strong>  — energy consumption, in Watt-hours (<strong>Wh</strong>). <br/>
+<strong>Wh regen.</strong>  — energy gained during the recuperation process, in Watt-hours (<strong>Wh</strong>). <br/>
+<strong>Regen. %</strong>  — the percentage of energy recovered during recuperation (<strong>%</strong>). <br/>
+<strong>Ah used total</strong>  — total energy consumption (used plus regen), in Ampere hours (<strong>Ah</strong>). <br/>
+<strong>Ah used</strong>  — energy consumption, in Ampere hours (<strong>Ah</strong>). <br/>
+<strong>Ah regen.</strong>  — energy gained during the recuperation process, in Ampere hours (<strong>Ah</strong>). <br/>
+<strong>Min bat. voltage</strong>  — minimum battery voltage, in Volts (<strong>V</strong>). <br/>
+<strong>Max phase curr.</strong>  — maximum phase current, in Amps (<strong>A</strong>). <br/>
+<strong>Peak power</strong>  — maximum motor power, in Watts (<strong>W</strong>). <br/>
+<strong>Max motor temp.</strong>  — maximum motor temperature, in degrees Celsius (<strong>°C</strong>). <br/>
+<strong>Max controller temp.</strong>  — the maximum temperature of the Controller, in degrees Celsius (<strong>°C</strong>).
+</p>
+
+<p>
+The values below are approximate! <br/>
+<strong>Motor efficiency</strong>  — efficiency of the electric motor, in percent (<strong>%</strong>). <br/>
+<strong>Eff. average</strong>  — average efficiency of the electric motor, in percent (<strong>%</strong>). <br/>
+<strong>Torque</strong>  — current torque of the electric motor, in Newton-meters (<strong>Nm</strong>). <br/>
+<strong>Power out</strong>  — the power that the electric motor delivers, in Watts (<strong>W</strong>). <br/>
+<strong>Power in</strong>  — power supplied to the electric motor, in Watts (<strong>W</strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Statistics&quot;,&quot;hid&quot;:&quot;statistics&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:65,&quot;range&quot;:&quot;96676-98527&quot;} -->
+<h2 id="device_information">Device information</h2>
+<div class="level2">
+
+<p>
+In the menu section <strong>Controller</strong>  &gt; <strong>Device Information</strong>  you can view the basic information about the Controller. In this menu, you can check which firmware version is loaded into your Controller, as well as other parameters that differ depending on the Controller model.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/images/device_info.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Nucular Controller</strong>  — device name depending on the type of Controller. <br/>
+<strong>Max supply</strong>  — 95V. The warranty covers supply voltages up to <strong>90V</strong>  inclusive. <br/>
+<strong>Max current</strong>  — the value of the maximum phase current, depending on the type of Controller, in amperes (A). <br/>
+<strong>Encoder speed</strong>  — 26kHz or 580kHz (new Controller version with orange phase wires). <br/>
+<strong>Firmware date</strong>  — firmware compilation date. <br/>
+<strong>Firmware ver.</strong>  — version of the installed firmware, you can check for updates in the section <strong><a href="/doku.php?id=en:firmware" class="wikilink1" title="en:firmware" data-wiki-id="en:firmware">Firmware</a></strong>. <br/>
+<strong>Loader date</strong>  — the data loader compilation date. <br/>
+<strong>Loader version</strong>  — data loader version. <br/>
+<strong>Production date</strong>  — date of manufacture of the controller. <br/>
+<strong>Worked</strong>  — operating time of the Controller in kilowatt-hours (kW*h). <br/>
+<strong>t° middle 100 h</strong>  — the average temperature of the Сontroller over the last 100 hours. <br/>
+<strong>t° middle</strong>  — the average temperature of the Сontroller over all time. <br/>
+<strong>Current protections</strong>  — the number of triggered overcurrent protections over all time of operation of the controller. <br/>
+<strong>Temperature protections</strong>  — the number of triggered temperature protections over all time of operation of the controller. <br/>
+<strong>Voltage protections</strong>  — the number of triggered voltage protections over all time of operation of the controller. <br/>
+<strong>Power cycle</strong>  — number of controller switching on. <br/>
+<strong>Power-on time</strong>  — total operating time of the Controller, minutes, hours, days. <br/>
+<strong>Serial number</strong>  — serial number of the Controller (for devices manufactured from 01 Jul 2022). Take a photo or write down this number and keep it separate from the Controller. You may need it when requesting repairs or if the Controller is stolen. After updating the firmware to 0.8.7, in some versions of controllers manufactured before 01 Jul 2022, a serial number may also appear. Check after update. date.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Device information&quot;,&quot;hid&quot;:&quot;device_information&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:66,&quot;range&quot;:&quot;98528-&quot;} -->

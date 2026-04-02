@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
+import DocsLanguageToggle, { useDocsLanguage } from "../components/DocsLanguageToggle";
 import "./ControllerSettings.css";
 import "./SettingsDocPage.css";
 
@@ -46,6 +47,7 @@ function buildSearchItems(html: string) {
 export default function SettingsDocPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { language } = useDocsLanguage();
   const [query, setQuery] = useState("");
   const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const [html, setHtml] = useState<string>("");
@@ -53,19 +55,34 @@ export default function SettingsDocPage() {
 
   const docs = useMemo(
     () => ({
-      bluetooth: { title: "Bluetooth", htmlPath: "/docs/settings-pages/bluetooth/content.html" },
-      "cad-models": { title: "CAD files / 3D models", htmlPath: "/docs/settings-pages/cad-models/content.html" },
-      "onboard-computer": { title: "On-board computer", htmlPath: "/docs/settings-pages/onboard-computer/content.html" },
-      ulight: { title: "uLight", htmlPath: "/docs/settings-pages/ulight/content.html" },
-      firmware: { title: "Firmware", htmlPath: "/docs/settings-pages/firmware/content.html" },
-      "motor-information": { title: "Motor information", htmlPath: "/docs/settings-pages/motor-information/content.html" },
-      usb2can: { title: "USB2CAN module", htmlPath: "/docs/settings-pages/usb2can/content.html" },
+      bluetooth: {
+        title: language === "ru" ? "Bluetooth" : "Bluetooth",
+        htmlPath: "/docs/settings-pages/bluetooth/content.html",
+      },
+      "cad-models": {
+        title: language === "ru" ? "CAD файлы / 3D модели" : "CAD files / 3D models",
+        htmlPath: "/docs/settings-pages/cad-models/content.html",
+      },
+      "onboard-computer": {
+        title: language === "ru" ? "Бортовой компьютер" : "On-board computer",
+        htmlPath: "/docs/settings-pages/onboard-computer/content.html",
+      },
+      ulight: { title: language === "ru" ? "uLight" : "uLight", htmlPath: "/docs/settings-pages/ulight/content.html" },
+      firmware: { title: language === "ru" ? "Прошивки" : "Firmware", htmlPath: "/docs/settings-pages/firmware/content.html" },
+      "motor-information": {
+        title: language === "ru" ? "Информация по моторам" : "Motor information",
+        htmlPath: "/docs/settings-pages/motor-information/content.html",
+      },
+      usb2can: {
+        title: language === "ru" ? "USB2CAN модуль" : "USB2CAN module",
+        htmlPath: "/docs/settings-pages/usb2can/content.html",
+      },
       "connection-schematic": {
-        title: "Connection schematic",
+        title: language === "ru" ? "Схема подключения" : "Connection schematic",
         htmlPath: "/docs/settings-pages/connection-schematic/content.html",
       },
     }),
-    []
+    [language]
   );
 
   const docDef = slug ? docs[slug as keyof typeof docs] : undefined;
@@ -78,20 +95,46 @@ export default function SettingsDocPage() {
 
     if (!docDef) return;
 
-    const controller = new AbortController();
-    fetch(docDef.htmlPath, { signal: controller.signal })
+    const langPath = `/docs/settings-pages/${slug}/${language}/content.html`;
+    const legacyPath = docDef.htmlPath;
+
+    let isActive = true;
+
+    fetch(langPath)
+      .then((r) => {
+        if (!r.ok) return fetch(legacyPath);
+        return r;
+      })
       .then((r) => {
         if (!r.ok) throw new Error(`Failed to load (${r.status})`);
         return r.text();
       })
-      .then((text) => setHtml(text))
+      .then((text) => {
+        if (!isActive) return;
+        if (language === "ru" && text.trim().length < 400) {
+          fetch(`/docs/settings-pages/${slug}/en/content.html`)
+            .then((r) => (r.ok ? r.text() : text))
+            .then((fallback) => {
+              if (!isActive) return;
+              setHtml(fallback);
+            })
+            .catch(() => {
+              if (!isActive) return;
+              setHtml(text);
+            });
+          return;
+        }
+        setHtml(text);
+      })
       .catch((e) => {
-        if (e?.name === "AbortError") return;
+        if (!isActive) return;
         setLoadError("Failed to load page");
       });
 
-    return () => controller.abort();
-  }, [docDef]);
+    return () => {
+      isActive = false;
+    };
+  }, [docDef, language, slug]);
 
   const searchItems = useMemo(() => (html ? buildSearchItems(html) : []), [html]);
 
@@ -151,6 +194,7 @@ export default function SettingsDocPage() {
             </button>
             <span className="support-breadcrumb-separator">/</span>
             <span className="support-breadcrumb-current">{docDef.title}</span>
+            <DocsLanguageToggle />
           </div>
 
           <form className="support-search-row" onSubmit={handleSubmit}>
@@ -239,4 +283,3 @@ export default function SettingsDocPage() {
     </>
   );
 }
-

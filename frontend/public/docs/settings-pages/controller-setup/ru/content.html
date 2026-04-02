@@ -1,0 +1,2497 @@
+
+<h1 id="контроллер_v0813">Контроллер (v0.8.13)</h1>
+<div class="level1">
+
+<p>
+Контроллер позволяет управлять BLDC (бесщеточный двигатель постоянного тока) и PMSM (синхронный двигатель с постоянными магнитами) электродвигателями. В данный момент мы выпускаем три вида контроллеров под разную мощность.
+</p>
+
+<p>
+<em>Сравнительные характеристики контроллеров:</em>
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0 centeralign">  Параметры  </th><th class="col1 centeralign">  Контроллер 6F v.2  </th><th class="col2 centeralign">  Контроллер 12F  </th><th class="col3 centeralign">  Контроллер P24F  </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0">Мощность, пиковая</th><td class="col1 centeralign">  4 000W  </td><td class="col2 centeralign">  10 000W  </td><td class="col3 centeralign">  27 000W  </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0">Мощность, номинальная</th><td class="col1 centeralign">  2 000W  </td><td class="col2 centeralign">  5 000W  </td><td class="col3 centeralign">  10 000W  </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0">Диапазон питания</th><td class="col1 centeralign" colspan="3">  20-90V  </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0">Фазный ток, макс.</th><td class="col1 centeralign">  120A  </td><td class="col2 centeralign">  250А  </td><td class="col3 centeralign">  500А  </td>
+	</tr>
+	<tr class="row5">
+		<th class="col0">Батарейный ток, макс.</th><td class="col1 centeralign">  ~90A  </td><td class="col2 centeralign">  ~150A  </td><td class="col3 centeralign">  ~350A  </td>
+	</tr>
+	<tr class="row6">
+		<th class="col0">Бортовое питание</th><td class="col1 centeralign" colspan="3">  12В 3A  </td>
+	</tr>
+	<tr class="row7">
+		<th class="col0">Рабочая температура</th><td class="col1 centeralign" colspan="3">  -30°C до 80°C  </td>
+	</tr>
+	<tr class="row8">
+		<th class="col0">Фазные провода</th><td class="col1 centeralign">  11AWG разъем буллет 5 mm  </td><td class="col2 centeralign">  8AWG разъем XT150  </td><td class="col3 centeralign">  Коннекторы под клеммы M6  </td>
+	</tr>
+	<tr class="row9">
+		<th class="col0">Батарейные провода</th><td class="col1 centeralign">  12AWG разъем XT60  </td><td class="col2 centeralign">  10AWG разъем XT90  </td><td class="col3 centeralign">  Коннекторы под клеммы M6  </td>
+	</tr>
+	<tr class="row10">
+		<th class="col0">Разъемы на датчики холла</th><td class="col1 centeralign" colspan="2">  2.8mm 6P автомобильный, либо Juliet водонепроницаемый  </td><td class="col3 centeralign">  Разъем JWPF 8P (Датчики Холла или Энкодер)  </td>
+	</tr>
+	<tr class="row11">
+		<th class="col0">Длина всех проводов</th><td class="col1 centeralign">  140 мм  </td><td class="col2 centeralign">  190 мм  </td><td class="col3 centeralign">   Без проводов   </td>
+	</tr>
+	<tr class="row12">
+		<th class="col0">Режимы управления</th><td class="col1 centeralign" colspan="3">  Трапеция, безсенсор, синус (векторный), зарядка, MPPT  </td>
+	</tr>
+	<tr class="row13">
+		<th class="col0">Защита</th><td class="col1 centeralign" colspan="3">  Температурная (по перегреву), аппаратная по превышению тока, защита портов ввода-вывода от перенапряжения для P24F  </td>
+	</tr>
+	<tr class="row14">
+		<th class="col0">Класс защиты корпуса</th><td class="col1 centeralign" colspan="2">  IP54 (при заливке компаундом IP67)  </td><td class="col3 centeralign">  IP67 (залит компаундом)  </td>
+	</tr>
+	<tr class="row15">
+		<th class="col0">Габариты, без проводов</th><td class="col1 centeralign">  53х32х91 мм  </td><td class="col2 centeralign">  86х43х125 мм  </td><td class="col3 centeralign">  205х98х50 мм  </td>
+	</tr>
+	<tr class="row16">
+		<th class="col0">Вес</th><td class="col1 centeralign">  280 гр (с компаундом 430 гр)  </td><td class="col2 centeralign">  640 гр (с компаундом 890 гр)  </td><td class="col3 centeralign">  1440 гр (залит компаундом)  </td>
+	</tr>
+	<tr class="row17">
+		<th class="col0">Гарантия</th><td class="col1 centeralign" colspan="3">  2 года (при заливке компаундом — 3 года)  </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;594-2608&quot;} -->
+<p>
+<em>Что в комплекте: </em>
+</p>
+<ul>
+<li class="level1"><div class="li"> CAN-провод длиной 1,2 метра для подключения к Бортовому компьютеру.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Фазные провода.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Батарейные провода<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Провод на датчики Холла.</div>
+</li>
+</ul>
+
+<p>
+Фазные, батарейные и провода на датчики Холла поставляются с разъемами, в зависимости от типа и спецификации контроллера в заказе.
+</p>
+
+<p>
+<em>Опционально можно заказать:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> САN-провод длиной 0,3 м или 2 м.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Провода управления для подключения периферии напрямую в Контроллер.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Провод PWM/PAS для подключения PAS, охлаждения или стоп-сигналов.<br/>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440 (v0.8.13)&quot;,&quot;hid&quot;:&quot;\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440_v0813&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;55-3504&quot;} -->
+<h2 id="схема_подключения">Схема подключения</h2>
+<div class="level2">
+
+<p>
+Сначала подключите три фазы мотора. В какой последовательности и по какому цвету вы соедините фазы значения не имеет, Контроллер автоматически определит их в процессе автонастройки. Далее подключите разъем холлов как показано на схеме ниже. Также необходимо подключить ручку газа и питание от батареи. Также, рекомендуем подключить ручки тормоза, так как их срабатывание отключает мотор. Простое правило — в любой непонятной ситуации нажми на тормоз.
+</p>
+
+<p>
+При первом включении питания Контроллер запустится автоматически. Для включения/отключения контроллера необходимо подключить внешний переключатель согласно схеме или настроить кнопку, расположенную на задней стороне Бортового компьютера в меню <strong>Устройства</strong> &gt; <strong>Контроллер</strong> &gt; <strong>Доп.настройки</strong> &gt; <strong>Кнопка включения</strong>.
+</p>
+
+<p>
+Ознакомиться со схемами подключения контроллеров 6F,12F,24F, Бортового компьютера и Микролайта вы можете по этой <a href="https://drive.google.com/file/d/17pykEGPVzq71pE5ZXwqnaRy4f57al_Ng/view?usp=drive_link" class="urlextern" title="https://drive.google.com/file/d/17pykEGPVzq71pE5ZXwqnaRy4f57al_Ng/view?usp=drive_link" rel="ugc nofollow">ссылке</a>, схема подключения контроллера P24F и платы энкодера <a href="https://drive.google.com/file/d/1X0YpCXcGma7j3XqCotbyBKJXDPPfI9As/view" class="urlextern" title="https://drive.google.com/file/d/1X0YpCXcGma7j3XqCotbyBKJXDPPfI9As/view" rel="ugc nofollow">здесь</a>. По умолчанию, вся периферия (газ, тормоз, переключатели и т.д.) подключается в порты, расположенные на задней стороне <a href="/doku.php?id=ru:display:start" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Бортового компьютера</a>. Для доступа к ним необходимо открутить пять винтов и снять пластиковую крышку. Для подключения используются разъемы PHD 2.0 и пины для обжимки, которые входят в комплект поставки. Если у вас нет обжимного инструмента, например, Кримпер SN-2549, то необходимо заказать «Обжатые провода для дисплея». Бортовой компьютер соединяется с контроллером одним CAN-проводом длиной 1,2 метра, который входит в комплект Контроллера. Будьте внимательны, CAN-провод от Контроллера подключается в разъем <strong>SYSTEM</strong> на задней стороне <a href="/doku.php?id=ru:display:start#подключение" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Бортового компьютера</a>.
+</p>
+
+<p>
+Если вы хотите подключить периферию напрямую в Контроллер, необходимо заказать «Провода управления», на схеме ниже этот вариант коммутации обозначен как «Альтернативное подключение». Вы также можете использовать смешанный вариант подключения, например, ручку газа подключить в Бортовой компьютер, а ручку тормоза в Контроллер.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/nucular_controller_manual_rus_2.png" class="medialeft" alt="" />
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u0445\u0435\u043c\u0430 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0441\u0445\u0435\u043c\u0430_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;3505-7413&quot;} -->
+<h2 id="подключение_нескольких_контроллеров">Подключение нескольких контроллеров</h2>
+<div class="level2">
+
+<p>
+Бортовой компьютер поддерживает подключение до восьми Контроллеров. Если вы хотите соединить два и более Контроллеров, то для этих целей можно воспользоваться CAN-разветвителем на четыре порта (приобретается отдельно) или контроллером светотехники <a href="/doku.php?id=ru:ulight" class="wikilink1" title="ru:ulight" data-wiki-id="ru:ulight">uLight</a>, который также имеет три собственных CAN-порта. <br/>
+
+</p>
+
+<p>
+Например, для двухмоторной схемы подключения, которая используется на полноприводных электросамокатах, помимо второго контроллера, дополнительно понадобится CAN-разветвитель и еще один CAN-провод. Каждый Контроллер комплектуется стандартным CAN-проводом длиной 1,2 м. Эти провода от обоих контроллеров необходимо подключить в CAN-разветвитель, и от него один CAN-провод напрямую в Бортовой компьютер. В Бортовом компьютере оба Контроллера настраиваются по отдельности. Также вы можете заказать CAN-провода длиной 0,3 м и 2 м. <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:5,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+<br/>
+
+Обратите внимание на схему подключения. 
+Сначала соедините все силовые провода и только потом CAN провода. При отключении контроллеров сначала отключите все CAN провода и только потом отключайте силовые кабели, также рекомендуется разрядить конденсаторы контроллера резистором или обычной лампочкой. <strong>Нельзя отключать силовые земли, когда соединены системные провода!</strong>
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:6,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/nucular_controller_multiplay_devices_ru.png" class="media" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u043e\u0432&quot;,&quot;hid&quot;:&quot;\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u0438\u0445_\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u043e\u0432&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;7414-9811&quot;} -->
+<h1 id="с_чего_начать">С чего начать?</h1>
+<div class="level1">
+
+<p>
+После того как вы подключили Контроллер и органы управления согласно схеме, необходимо настроить параметры батареи. Для этого перейдите в раздел <strong>Настройки</strong> &gt; <strong>Устройства</strong>, выберите Контроллер в списке устройств, далее перейдите в раздел <strong>Контроллер</strong> &gt; <strong>Батарея</strong> и укажите диапазон питающего напряжения. Подробное описание см. в пункте <a href="/doku.php?id=ru:controller:setup#батарея" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка батареи</a>.<br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k1.png" class="media" alt="" />
+</p>
+
+<p>
+После настройки батареи необходимо запустить Автонастройку в разделе меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong>. Перед запуском автонастройки убедитесь, что фазные и батарейные провода имеют хороший контакт и изоляцию. Проверьте, что разъемы проводов на датчики Холла полностью вставлены в ответные части. Подробнее см. в разделе <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Автонастройка</a>. После автонастройки необходимо настроить спидометр для корректного отображения скорости, см. раздел <a href="/doku.php?id=ru:controller:setup#настройка_спидометра" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка спидометра</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421 \u0447\u0435\u0433\u043e \u043d\u0430\u0447\u0430\u0442\u044c?&quot;,&quot;hid&quot;:&quot;\u0441_\u0447\u0435\u0433\u043e_\u043d\u0430\u0447\u0430\u0442\u044c&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;9812-11551&quot;} -->
+<h1 id="навигация_по_меню">Навигация по меню</h1>
+<div class="level1">
+
+<p>
+Для навигации по меню используйте кнопки Бортового компьютера. Левая кнопка — возврат в предыдущее меню или отмена редактирования. Правая кнопка — переход в раздел меню и подтверждение выбора параметра. Две средние кнопки — для перемещения по меню вверх/вниз и выбора значения пункта меню.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f \u043f\u043e \u043c\u0435\u043d\u044e&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f_\u043f\u043e_\u043c\u0435\u043d\u044e&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;11552-12137&quot;} -->
+<h2 id="сохранение_настроек">Сохранение настроек</h2>
+<div class="level2">
+
+<p>
+В пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong> можно сохранить все сделанные настройки. Нажмите правую кнопку Бортового компьютера и выберите <strong>Вкл.</strong>, чтобы сохранить. Если вы не сохраните настройки, они будут сброшены после перезапуска.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;hid&quot;:&quot;\u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435_\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;12138-12635&quot;} -->
+<h2 id="автонастройка">Автонастройка</h2>
+<div class="level2">
+
+<p>
+Функция автонастройки в разделе меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong> позволяет в автоматическом режиме настроить электромотор и ручки управления газом и тормозом (если они подключены к контроллеру). Если ручки газа и тормоза подключены в Бортовой компьютер, то их необходимо настраивать в <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">разделе</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка управления</strong>. В данном случае, при запуске функции <strong>Полная настройка</strong> необходимо пропустить пункты меню <strong>Ручка газа</strong> и <strong>Ручка тормоза</strong> (они будут определены как ошибка) или можно не запускать <strong>Полная настройка</strong> и активировать каждый пункт меню настройки вручную начиная с <strong>Мотор LR</strong>, затем <strong>Мотор</strong> и <strong>Корректировка угла</strong>. Если у вас электромотор без термодатчика, то необходимо отключить его в <a href="/doku.php?id=ru:controller:setup#термодатчик_мотора" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">меню</a> <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Термодатчик мотора</strong> &gt; <strong>Тип датчика</strong>. Если этого не сделать, то автонастройка мотора выдаст ошибку (Timeout).
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/1_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Меню автонастройки запускает подпрограмму и показывает только процесс. Все настройки сохраняются в разделе <strong>Контроллер</strong> &gt; <strong>Настройки мотора</strong>. После перезапуска Контроллера все переключатели будут в положении <strong>Выкл</strong>.
+</p>
+
+<p>
+После того как вы указали питающее напряжение батареи в разделе <strong>Контроллер</strong> &gt; <strong>Батарея</strong> можно приступить к калибровке мотора и ручек в разделе <strong>Автонастройка</strong>.
+</p>
+
+<p>
+Перед автонастройкой углов рекомендуем указать правильное количество пар полюсов электромотора в пункте меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong> &gt; <strong>Пар полюсов</strong>. Данный показатель для наиболее популярных моторов смотрите в разделе <a href="/doku.php?id=ru:motor_information" class="wikilink1" title="ru:motor_information" data-wiki-id="ru:motor_information">Информация по моторам</a>. Если вашего мотора нет в списке, уточняйте у производителя или поищите информацию в Интернет.<br/>
+
+<br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+<br/>
+
+<strong>Будьте осторожны! Перед запуском автонастройки проверьте, что ведущие колеса вашего электровелосипеда не касаются поверхности, а педали (при их наличии) при вращении ничего не задевают. При настройке датчиков Холла мотор вращается в обе стороны, будьте аккуратнее и не стойте рядом с педалями велосипеда. Мотор будет вращаться пять раз, один раз при детекте мотора и четыре раза при корректировке угла.</strong>
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+Если у вас подключены ручка газа и аналоговый тормоз, то необходимо включить функцию <strong>Полная настройка</strong>, и следовать указаниям на экране Бортового компьютера. Соответствующие пункты меню будут указывать, когда необходимо нажать и отпустить ручку газа или тормоза.
+</p>
+
+<p>
+В случае если подключена только одна ручка газа необходимо самостоятельно включить пункты по очереди: <strong>Ручка газа</strong>, <strong>Мотор LR</strong>, <strong>Мотор</strong>, <strong>Корректировка угла</strong>. При включении каждого из пунктов появятся подсказки. Функция автонастройки <strong>Мотор LR</strong> определяет индуктивность и сопротивление электродвигателя. Результаты измерений можно посмотреть в разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong>, пункты <strong>Сопротивление фазное</strong>, <strong>Индуктивность d</strong> и <strong>Индуктивность q</strong>.
+</p>
+
+<p>
+Если мотор тяжелый и автодетект не происходит, можно аккуратно подтолкнуть его рукой или увеличить ток настройки в разделе <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong> &gt; <strong>Ток настройки</strong>, например в два раза. Ток настройки можно выбрать в диапазоне от <strong>2А</strong> до <strong>50А</strong>, с шагом <strong>1А</strong>.
+</p>
+
+<p>
+Если мотор вращается в неправильном направлении, перейдите в раздел <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong> &gt; <strong>Направление вращения</strong> и измените направление вращения. Вы можете выбрать один из двух вариантов <strong>Прямое</strong> или <strong>Обратное</strong>. Аналогичная настройка есть в меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Направление вращения</strong>. Не важно, в каком меню вы сделаете настройку, после сохранения, направление вращения будет изменено в обоих разделах.
+</p>
+
+<p>
+Если при автонастройке появляется ошибка, см. раздел <a href="/doku.php?id=ru:controller:diagnostics" class="wikilink1" title="ru:controller:diagnostics" data-wiki-id="ru:controller:diagnostics">Диагностика неисправностей</a>. В пункте меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong> &gt; <strong>Источник управления</strong> вы можете выбрать источники управления Контроллером. См. подробнее ниже в разделе Источник управления<strong>.</strong> <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0410\u0432\u0442\u043e\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430&quot;,&quot;hid&quot;:&quot;\u0430\u0432\u0442\u043e\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;12636-19727&quot;} -->
+<h2 id="обновление_прошивки">Обновление прошивки</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройки и обновление</strong> можно обновить прошивку Контроллера, сбросить настройки, импортировать или экспортировать конфигурацию. Все настройки Контроллера вы можете выгрузить на microSD карту. Созданный файл с названием <strong>NCconf.cfg</strong> — <strong>NCconf9.cfg</strong> вы можете открыть программой «Блокнот», посмотреть все ваши настройки, внести какие-либо изменения, сохранить. Аналогично, вы можете импортировать в Контроллер ранее сохраненную конфигурацию. Настройки Бортового компьютера могут быть <a href="/doku.php?id=ru:display:start#импорт_и_экспорт_настроек" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">экспортированы и импортированы</a> в отдельных разделах меню Бортового компьютера. Данная функция доступна только в версии прошивки Бортового компьютера <strong>0.7B</strong> и выше.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k3.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Импорт конфигурации</strong> — загружает настройки из файла <strong>NCconf.cfg</strong> — <strong>NCconf9.cfg</strong> максимум до 9 различных конфигураций, выбор номера файла от 1 до 9. В сообщении после успешного импорта могут появиться сообщения об ошибках, это означает, что не все настройки были импортированы. В этом случае желательно сверить загруженные настройки с изначальным файлом, открыв его в программе «Блокнот».<br/>
+<br/>
+
+<strong>Экспорт конфигурации</strong> — сохраняет настройки в файл <strong>NCconf.cfg</strong> — <strong>NCconf9.cfg</strong> максимум до 9 различных конфигураций, выбор номера файла от 1 до 9.<br/>
+<br/>
+
+<strong>Перезагрузка</strong> — перезапускает устройство. Если настройки не были сохранены, то они будут сброшены.<br/>
+<br/>
+
+<strong>Сбросить расход Wh</strong> — сбрасывает наработанное количество Ватт-Часов в контроллере. Данный показатель отображается в статистике Бортового компьютера, см. раздел <a href="/doku.php?id=ru:display:start#статистика" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Статистика</a>.<br/>
+<br/>
+
+<strong>Сбросить статистику</strong> — сбрасывает пробег км.<br/>
+<br/>
+
+<strong>Сбросить настройки</strong> — после сброса загружаются настройки по умолчанию, но не сохраняются. Если перезапустить Контроллер без сохранения после сброса, то будут загружены старые настройки.<br/>
+<br/>
+
+<strong>Стереть банки памяти</strong> — данная функция может понадобится для корректного обновления прошивки, отката к настройкам по умолчанию, в ситуации, когда действия пользователя приводят к некорректной работе Контроллера. Если контроллер перестал сохранять настройки, сделайте сброс, подождите 3 сек, и пробуйте сохранить повторно.<br/>
+<br/>
+
+<strong>Обновить прошивку</strong> — запуск процесса обновления прошивки. Скачать актуальную версию прошивки и ознакомиться с правилами обновления вы можете в разделе <a href="/doku.php?id=ru:firmware" class="wikilink1" title="ru:firmware" data-wiki-id="ru:firmware">Прошивки</a>. Для обновления загрузите файл прошивки в корневой каталог карты microSD с файловой системой Fat/Fat32. Вставьте карту контактами вверх в разъем на Бортовом компьютере и выберите <strong>Вкл</strong>. После завершения процесса обновления на экране появится сообщение <strong>Update finished</strong>. Нажимайте левую кнопку и проверяйте версию обновления в разделе <strong>Контроллер</strong> &gt; <strong>Информация об устройстве</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0448\u0438\u0432\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435_\u043f\u0440\u043e\u0448\u0438\u0432\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;19728-24658&quot;} -->
+<h2 id="режимы_управления">Режимы управления</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> можно настроить и сохранить три пресета параметров работы электромотора и переключаться между ними 3-х позиционным переключателем или кнопками на Бортовом компьютере. Номер активного в данный момент режима отображается вверху на главном экране. После настройки необходимо активировать режимы в пункте меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Включить доп.режимы</strong> установив значение <strong>On</strong>. В этом же меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> можно провести детальную настройку каждого режима (см. раздел <a href="/doku.php?id=ru:controller:setup#дополнительные_режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Дополнительные режимы управления</a>).
+</p>
+
+<p>
+Если переключателя скоростей нет, то режим 1 используется по умолчанию. Если переключатель подключен к Бортовому компьютеру, то необходимо провести настройку кнопок Бортового компьютера в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong>. См. раздел <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Настройка кнопок</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0420\u0435\u0436\u0438\u043c\u044b \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0440\u0435\u0436\u0438\u043c\u044b_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;24659-26433&quot;} -->
+<h3 id="настройка_режимов">Настройка режимов</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/2_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+В строке <strong># Текущий режим</strong> отображается выбранный в данный момент режим управления. Список возможных вариантов: <br/>
+
+<strong>N</strong> — нейтраль. <br/>
+
+<strong>S1</strong> — режим 1. <br/>
+
+<strong>S2</strong> — режим 2. <br/>
+
+<strong>S3</strong> — режим 3. <br/>
+
+<strong>RV</strong> — реверс. <br/>
+
+</p>
+
+<p>
+Для настройки каждого режима используются четыре параметра: <br/>
+
+<strong>Фазный</strong> — максимальное значение фазного тока, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. При настройке учитывайте максимальный фазный ток вашего типа контроллера. В большинстве случаев рекомендуем указывать значение фазного тока в 1,5-2 раза больше батарейного.<br/>
+
+</p>
+
+<p>
+<strong>Батарейный</strong> — максимальное значение батарейного тока, в Амперах (А). Выбор значений от <strong>2А</strong> до <strong>400А</strong>, с шагом <strong>2А</strong>. При настройке учитывайте возможности подключенной батареи и максимальный батарейный ток вашего типа контроллера.<br/>
+
+</p>
+
+<p>
+<strong>Мощность</strong> — максимальная мощность (разряда) батареи, в киловаттах (kW). Выбор значений от <strong>0.00kW</strong> до <strong>30.0kW</strong>, с шагом <strong>0.1kW</strong>. Установите 0.0kW чтобы отключить лимит ограничения мощности.<br/>
+
+</p>
+
+<p>
+<strong>Скорость</strong> — максимальная скорость в процентах (%). Выбор значений от <strong>4%</strong> до <strong>150%</strong>, с шагом <strong>2%</strong>. Значение данного параметра определяет процент скорости в зависимости от опорной скорости (см. <a href="/doku.php?id=ru:controller:setup#настройка_спидометра" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка спидометра</a>). Значение скорости более 100% активирует режим ослабления поля, что позволяет разгонять мотор выше напряжения питания. (см. <a href="/doku.php?id=ru:controller:setup#настройка_ослабления_поля" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка ослабления поля</a>).<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0440\u0435\u0436\u0438\u043c\u043e\u0432&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0440\u0435\u0436\u0438\u043c\u043e\u0432&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;26434-29049&quot;} -->
+<h3 id="настройка_торможения">Настройка торможения</h3>
+<div class="level3">
+
+<p>
+<strong>Фазный торможения</strong> — величина фазного тока торможения мотором, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Для торможения до нуля рекомендуется включить <strong>Активное торможение</strong> в разделе <strong>Контроллер</strong> &gt; <strong>Управление</strong>. При использовании концевиков на механических тормозах снижение скорости изменения тока торможения позволяет добавить плавности рекуперации.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;29050-29790&quot;} -->
+<h3 id="настройка_торможения_при_управлении_скоростью">Настройка торможения при управлении скоростью</h3>
+<div class="level3">
+
+<p>
+<strong>Фаз.торм. при упр. скор.</strong> — фазный ток торможения при управлении скоростью, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Данная функция позволяет снижать скорость при сбросе ручки газа. Актуально для Direct Drive моторов.<br/>
+
+</p>
+
+<p>
+Также для использования данной функции должны быть выбраны:
+Режим <strong>Скорость</strong> или <strong>Скорость и тяга</strong> в пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Режим ручки газа</strong>.
+В пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Лимит ск. при 0% газа</strong> включить лимит скорости при 0% газа (опционально), если требуется торможение при отпущенной ручке газа.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f \u043f\u0440\u0438 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0438 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c\u044e&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f_\u043f\u0440\u0438_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0438_\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c\u044e&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;29791-30918&quot;} -->
+<h3 id="настройка_рекуперации">Настройка рекуперации</h3>
+<div class="level3">
+
+<p>
+<strong>Фаз.торм. при 0% газа</strong> — фазный ток торможения при отпущенной ручке газа, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Данная функция позволяет начать рекуперативное торможение при сбросе ручки газа. <br/>
+
+</p>
+
+<p>
+Данная функция будет активна если отключены дополнительные режимы в разделе меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> или, если при активированных дополнительных режимах в одном из разделов меню <strong>Режим S1</strong>, <strong>Режим S2</strong> или <strong>Режим S3</strong> в пункте <strong>Фаз.торм. при 0% газа</strong> указано <strong>0A</strong>. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0440\u0435\u043a\u0443\u043f\u0435\u0440\u0430\u0446\u0438\u0438&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0440\u0435\u043a\u0443\u043f\u0435\u0440\u0430\u0446\u0438\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:18,&quot;range&quot;:&quot;30919-31876&quot;} -->
+<h3 id="настройка_обратного_вращения_мотора_реверса">Настройка обратного вращения мотора (реверса)</h3>
+<div class="level3">
+
+<p>
+<strong>Скорость реверса</strong> — скорость заднего хода, в процентах (%). Выбор значений от <strong>2%</strong> до <strong>150%</strong>, с шагом <strong>2%</strong>. Значение данного параметра определяет процент скорости в зависимости от опорной скорости (см. <a href="/doku.php?id=ru:controller:setup#настройка_спидометра" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка спидометра</a>). Значение скорости более 100% активирует режим ослабления поля, что позволяет разгонять мотор выше напряжения питания. (см. <a href="/doku.php?id=ru:controller:setup#настройка_ослабления_поля" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка ослабления поля</a>).<br/>
+
+</p>
+
+<p>
+<strong>Фазный реверса</strong> — величина фазного тока заднего хода, в Амперах (А). Выбор значений от <strong>10А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043e\u0431\u0440\u0430\u0442\u043d\u043e\u0433\u043e \u0432\u0440\u0430\u0449\u0435\u043d\u0438\u044f \u043c\u043e\u0442\u043e\u0440\u0430 (\u0440\u0435\u0432\u0435\u0440\u0441\u0430)&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043e\u0431\u0440\u0430\u0442\u043d\u043e\u0433\u043e_\u0432\u0440\u0430\u0449\u0435\u043d\u0438\u044f_\u043c\u043e\u0442\u043e\u0440\u0430_\u0440\u0435\u0432\u0435\u0440\u0441\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:19,&quot;range&quot;:&quot;31877-32997&quot;} -->
+<h3 id="настройка_ослабления_поля">Настройка ослабления поля</h3>
+<div class="level3">
+
+<p>
+<strong>Ослабление</strong> — величина тока ослабления поля, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Данная настройка позволяет увеличить максимальную скорость мотора и зависит от напряжения питания, в любом случае, скорость будет не больше, чем максимальное напряжение питания (Vmax) контроллера (лимит 95В).<br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_info plugin_wrap" style="width: 60%;">
+<p>
+<br/>
+
+Ток ослабления создает поле, которое действует против поля постоянных магнитов. Суперпозиция этих полей создает эквивалентное поле, которое ниже номинального. Эффективность ослабления зависит от параметров мотора. Наилучшие результаты можно получить на IPM моторах.
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:22,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+Чтобы настроить ослабление, необходимо:
+</p>
+<ul>
+<li class="level1"><div class="li"> для одного из режимов управления в разделе <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> указать значение скорости более 100%, например Скорость 3 равна 120%.</div>
+</li>
+<li class="level1"><div class="li"> установить значение тока ослабления в разделе <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong>, можно начать с 30А.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+Ослабление поля включается при достижении максимальной скорости, Контроллер добавляет ток ослабления, ограничиваясь указанным в режиме управления фазным током и током ослабления. То есть, если действующий фазный ток равен 70А, а ток ослабления установлен на 30А значит в настройках фазного тока должно быть указано минимум 100А. Если фазный ток увеличится до 80А, то для ослабления останется только 20А, т.к. 80А+20А=100А.<br/>
+
+</p>
+
+<p>
+Также Контроллер будет ограничивать скорость вращения мотора, чтобы его действующая ЭДС не превышала максимальное напряжение питания контроллера (не батареи). Если на вывешенном колесе мотор начал дергаться — значит необходимо уменьшить ток ослабления.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043e\u0441\u043b\u0430\u0431\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043e\u0441\u043b\u0430\u0431\u043b\u0435\u043d\u0438\u044f_\u043f\u043e\u043b\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:20,&quot;range&quot;:&quot;32998-35925&quot;} -->
+<h3 id="скорость_изменения_тока">Скорость изменения тока</h3>
+<div class="level3">
+
+<p>
+<strong># Скорость изменения тока</strong>.
+</p>
+<ul>
+<li class="level1"><div class="li"> разгона, выбор значений от <strong>50A/s</strong> до <strong>50000A/s</strong> с шагом <strong>100A/s</strong>.</div>
+</li>
+<li class="level1"><div class="li"> торможения, выбор значений от <strong>50A/s</strong> до <strong>50000A/s</strong> с шагом <strong>100A/s</strong>.</div>
+</li>
+<li class="level1"><div class="li"> отключения, выбор значений от <strong>50A/s</strong> до <strong>50000A/s</strong> с шагом <strong>100A/s</strong>.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+Три параметра, определяющих скорость изменения тока (плавность). Чем выше значение — тем быстрее будет происходить набор тока в моторе. Для обычных ручек тормоза будет полезно уменьшить параметр Скорость изменения тока торможения для более плавного включения рекуперации. Если отклик на ручку газа кажется слишком медленным, нужно увеличить значение параметра Скорость изменения тока разгона. Параметр Скорость изменения тока отключения определяет то, как быстро спадет ток после отпускания всех ручек.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u043a\u0430&quot;,&quot;hid&quot;:&quot;\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c_\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f_\u0442\u043e\u043a\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:23,&quot;range&quot;:&quot;35926-37301&quot;} -->
+<h2 id="дополнительные_режимы_управления">Дополнительные режимы управления</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> включаются режимы управления и активируются дополнительные настройки каждого из этих режимов.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k5.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Чтобы активировать режимы управления необходимо в пункте меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Включить доп.режимы</strong> установить значение <strong>Вкл</strong>.
+</p>
+
+<p>
+В пункте меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Нейтраль по умолч.</strong> включается режим нейтрали (N) при запуске контроллера, который будет активен пока не будет включена одна из скоростей. В режиме нейтрали работает только электрический тормоз, ручка газа и PAS отключены. Данный режим рекомендуется использовать с кнопками скоростей. Функция не работает с 3-х позиционным переключателем скоростей (функции портов S1of3 и S3of3 в меню <strong>Контроллер</strong> &gt; <strong>Настройки портов</strong>). <br/>
+
+</p>
+
+<p>
+<strong>Таймер нейтрали</strong> — включение нейтрали через определенное время, которое задается в настройках в секундах (<strong>s</strong>). Чтобы выключить необходимо переключить режим скорости. <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+У каждого режима есть свой раздел в меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Режим S1, Режим S2, Режим S3</strong> со следующими настройками:
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/3_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Реж. ручки газа</strong> — выбор режима работы ручки газа, читайте подробнее в разделе <a href="/doku.php?id=ru:controller:setup#настройка_режима_ручки_газа" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка режима ручки газа</a>.
+</p>
+
+<p>
+<strong>Лимит ускорения</strong> и <strong>Лимит торможения</strong> — указываются в ERPM/s, значение от <strong>0 ERPM/s</strong> до <strong>500000 ERPM/s</strong>, с шагом <strong>200 ERPM/s</strong>. Данные настройки позволяют лимитировать скорость разгона или замедления мотора, удобно использовать на скользких поверхностях. Для настройки рекомендуется зайти в раздел меню <strong>Контроллер</strong> &gt; <strong>Флаги статуса</strong>, в нем есть два параметра которые регистрируют максимальные ускорения и замедления — <strong>Макс. ускорение</strong> и <strong>Макс. замедление</strong>. Вы можете сбросить значения этих параметров в этом же разделе меню, далее необходимо проехаться на вашем электротранспорте, чтобы зарегистрировать текущую динамику разгона и торможения. Полученные значения можно записать в лимиты и ориентироваться на эти данные. Если тип поверхности меняется, например, становится слишком скользко, то можно уменьшать эти значения до тех пор, пока не станет комфортно отлавливать момент потери сцепления колеса с дорогой.
+</p>
+
+<p>
+<strong>Фазный торможения</strong> — величина фазного тока торможения мотором, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Для торможения до нуля рекомендуется включить <strong>Активное торможение</strong> в разделе <strong>Контроллер</strong> &gt; <strong>Управление</strong>. При использовании концевиков на механических тормозах снижение скорости изменения тока торможения позволяет добавить плавности рекуперации.
+</p>
+
+<p>
+<strong>Фаз.торм. при 0% газа</strong> — фазный ток торможения при отпущенной ручке газа, в Амперах (А). Выбор значений от <strong>0А</strong> до <strong>500А</strong>, с шагом <strong>2А</strong>. Данная функция позволяет начать рекуперативное торможение при сбросе ручки газа. Если указан <strong>0A</strong> или отключены дополнительные режимы в разделе меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> то для уровня рекуперации будет использовано значение, указанное в пункте меню <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> &gt; <strong>Фаз.торм. при 0% газа</strong>.
+</p>
+
+<p>
+<strong>Реверс</strong> — активация заднего хода при выборе режима управления. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>Круиз</strong> — активация функции круиза. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. Удобно использовать с режимом круиза <strong>Разрешен. удержание газа</strong> в пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Круиз</strong> &gt; <strong>Круиз</strong> для включения круиза на определенных режимах. См. раздел <a href="/doku.php?id=ru:controller:setup#настройка_круиз-контроля" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка круиз-контроля</a>.
+</p>
+
+<p>
+<strong>Отключить мотор</strong> — отключение управления мотором. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>Отключить ручку газа</strong> — отключение управления по ручке газа. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>Активное торможение</strong> — разрешает торможение батареей до нуля. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>Обратный ход при тормозе</strong> — после остановки повторное нажатие ручки тормоза активирует обратный ход. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>Лимит скорости при 0% газа</strong> — разрешает лимитировать скорость при отпущенной ручке газа. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. При выборе значения <strong>Откл</strong> управление мотором отключается при отпускании ручки газа.
+</p>
+
+<p>
+<strong>Отключить PAS</strong> — отключает управление по ассистенту педалей. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong>PAS Коэффициент</strong> — дополнительный множитель PAS для подстройки под выбранный режим, уменьшает сигнал PAS для более мягкого управления на больших мощностях. Выбор значений от <strong>1%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u0440\u0435\u0436\u0438\u043c\u044b \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0434\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435_\u0440\u0435\u0436\u0438\u043c\u044b_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:24,&quot;range&quot;:&quot;37302-45322&quot;} -->
+<h2 id="управление">Управление</h2>
+<div class="level2">
+
+<p>
+Раздел меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> отвечает за настройку органов управления мотора, курками, ручками газа, торк и PAS сенсорами, круиз контролем.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;hid&quot;:&quot;\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:25,&quot;range&quot;:&quot;45323-45630&quot;} -->
+<h3 id="настройка_pas_и_torque_sensor">Настройка PAS и Torque sensor</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Pedal Assist System</strong> настраивается система ассистирования педалями PAS, которая подключает электродвигатель при вращении педалей. <br/>
+
+</p>
+
+<p>
+Чтобы иметь возможность подключения системы PAS необходимо опционально заказать провод PWM IO/PAS. Система PAS подключается к Контроллеру через провод PWM IO/PAS в порты P1/P2 разъема USB/PWM. При использовании датчика давления SEMPU необходим дополнительный вывод сигнала с порта TH разъема <strong>Управление</strong>. <br/>
+
+</p>
+
+<p>
+Способы коммутации различных систем PAS вы можете посмотреть на <a href="/doku.php?id=ru:controller:setup#подключение" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">схеме подключения</a>. <br/>
+
+</p>
+
+<p>
+PAS в отличие от Torque sensor управляет газом частотой, а не усилием вращения. Меню настройки PAS состоит из следующих пунктов: <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/pas_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>PAS</strong> — выбор типа ассистента педалирования <strong>Датчик PAS</strong> или <strong>Датчик давления</strong>. При отсутствии системы PAS выберите значение <strong>Отключен</strong>.<br/>
+
+</p>
+
+<p>
+<strong>Подключение</strong> — выбор варианта подключения 1-провод или 2-провода, для датчика угла поворота (энкодера) используется два провода. <br/>
+
+<strong>Инвертировать PAS</strong> — изменение направления в случае 2-х проводного подключения. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>PAS полюсов</strong> — количество импульсов на один оборот педалей. Выбор значений от <strong>1</strong> до <strong>200</strong>, с шагом <strong>1</strong>.<br/>
+
+<strong>PAS мин. частота</strong> — минимальная частота вращения педалей, при которой мотор включается в работу, Об/мин. (RPM). Выбор значений от <strong>1 RPM</strong> до <strong>500 RPM</strong>, с шагом <strong>1 RPM</strong>. <br/>
+
+<strong>PAS макс. частота</strong> — максимальная частота вращения педалей, при которой мотор включается в работу, Об/мин. (RPM). Выбор значений от <strong>10 RPM</strong> до <strong>1000 RPM</strong>, с шагом <strong>5 RPM</strong>. <br/>
+
+<strong># PAS частота</strong> — значение сигнала, поступающего с PAS в режиме реального времени. <br/>
+
+<strong>PAS таймаут</strong> — время, через которое отключается мотор после остановки вращения педалей, в секундах. Выбор значений от <strong>0.02 сек</strong> до <strong>5.00 сек</strong>  с шагом <strong>0.02 сек</strong>. <br/>
+
+<strong>PAS фильтр</strong> — сглаживание сигнала управления для более плавной работы, в герцах (Hz). Выбор значений от <strong>1 Hz</strong> до <strong>100 Hz</strong> с шагом <strong>1 Hz</strong>. <br/>
+
+<strong>PAS мин. выход</strong> — минимальный уровень управления когда работает PAS, в процентах (%). Выбор значений от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong>PAS макс. выход</strong> — максимальный уровень управления, в процентах (%). Выбор значений от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. По аналогии с «нажатой» ручкой газа, PAS подает сигнал в указанных пределах. <br/>
+
+</p>
+
+<p>
+Далее в меню находятся настройки относящиеся к датчику давления (Torque sensor).<br/>
+
+</p>
+
+<p>
+<strong>Шкала давления</strong> — в Ньютон-метр/вольт (Nm/V). Можно откалибровать установив на педаль груз и через рычаг рассчитать момент на валу. Выбор значений от <strong>0.0 Nm/V</strong> до <strong>100.0 Nm/V</strong>, с шагом  <strong>0.5 Nm/V</strong>. <br/>
+
+<strong>Нулевое давление</strong> — Нулевое давление, в милливольтах (mV). Выбор значений от <strong>0 mV</strong> до <strong>10000 mV</strong>, с шагом <strong>10 mV</strong>. <br/>
+
+ <strong>Уровень защиты</strong> — отключение датчика давления при превышении порога указанного значения, в милливольтах (mV). Выбор значений от <strong>0 mV</strong> до <strong>10000 mV</strong>, с шагом <strong>100 mV</strong>. <br/>
+
+<strong>Усреднение тяги</strong> — период, за который считается значение давления, измеряется в полуоборотах (об/2). Если у датчика давления измерение идет только по одной педали, значит период должен быть кратный двум. Выбор значений от <strong>1 об/2</strong> до <strong>20 об/2</strong>, с шагом <strong>1 об/2</strong>. <br/>
+
+</p>
+
+<p>
+<strong># Момент</strong> — показывает текущее давление на датчике, в Ньютон-метрах (Nm). <br/>
+
+</p>
+
+<p>
+<strong># Человатт</strong> — показывает усредненную мощность, развиваемую вами при педалировании, в Ваттах (W). <br/>
+
+<strong>Человатт мин.</strong> — минимальная мощность, развиваемая вами для активации управления, в Ваттах (W). Значения от <strong>0 W</strong> до <strong>500 W</strong>, с шагом <strong>10 W</strong>. <br/>
+
+<strong>Человатт макс.</strong> — максимальная мощность для 100% управления, в Ваттах (W). Значения от <strong>0 W</strong> до <strong>1000 W</strong>, с шагом <strong>10 W</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Тяга мин.</strong> —  момент, с которого начнет увеличиваться сигнал газа, в Ньютон-метрах (Nm). Значения от <strong>0 Nm</strong> до <strong>100 Nm</strong>, с шагом <strong>2 Nm</strong>. Все значения меньше этого уровня это 0% газа. <br/>
+
+<strong>Тяга макс.</strong> — момент, которым ограничивается уровень 100% газа, в Ньютон-метрах (Nm). Значения от <strong>0 Nm</strong> до <strong>300 Nm</strong>, с шагом <strong>2 Nm</strong>. <br/>
+
+<strong>Мгновенная тяга</strong> — активация датчика давления при нажатия без вращения. Значения <strong>Вкл</strong> и <strong>Откл</strong>. К датчику давления также относятся настройка частоты и выходного уровня как и к обычному PAS. <br/>
+
+<strong>Стартовая тяга</strong> — минимальное давление на педалях для срабатывания “мгновенной” тяги, в ньютон-метрах (Nm). Выбор значений от <strong>0 Nm</strong> до <strong>120 Nm</strong>, с шагом <strong>2 Nm</strong>. <br/>
+
+<strong>Коэффициент</strong> — начальная мощность сигнала PAS управления (для регулирования кнопками), в процентах (%). Выбор значений от <strong>1%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong>Шаг изменения</strong> — шаг регулирования уровня мощности кнопками, в процентах (%). Выбор значений от <strong>1%</strong> до <strong>20%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong># Тек. коэффициент</strong> — текущий уровень PAS.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 PAS \u0438 Torque sensor&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_pas_\u0438_torque_sensor&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:26,&quot;range&quot;:&quot;45631-53647&quot;} -->
+<h3 id="дистанционное_управление">Дистанционное управление</h3>
+<div class="level3">
+
+<p>
+Раздел меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>RC Управление</strong> позволяет настроить дистанционное управление Контроллером с использование внешнего RC-приемника. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Вход для радиоуправления через ШИМ (PWM), подключается в порт <strong>P1</strong> разъема <strong>USB/PWM</strong> на плате Контроллера. Для активации функции выберите значение <strong>PWM</strong> в пункте меню <strong>Режим входа P1</strong>. <br/>
+
+</p>
+
+<p>
+Пункты меню <strong># Частота входа</strong> и <strong># Длина</strong> показывают текущее значение сигнала в герцах (<strong>Hz</strong>) и миллисекундах (<strong>ms</strong>) соответственно. <br/>
+
+</p>
+
+<p>
+В пункте меню <strong>Функция</strong> выбирается функция управления — <strong>Газ</strong>, <strong>Тормоз</strong> или <strong>Газ с тормозом</strong>. <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+По показаниям сигнала настройте диапазон газа и/или тормоза. <br/>
+
+</p>
+
+<p>
+<strong># Диапазон газа</strong> <br/>
+
+<strong>Газ мин</strong> —  минимальное значение газа, в миллисекундах (ms). Выбор значений от <strong>0.00 ms</strong> до <strong>10.00 ms</strong>, с шагом <strong>0.01 ms</strong>. <br/>
+
+<strong>Газ макс</strong> — максимальное значение газа, в миллисекундах (ms). Выбор значений от <strong>0.00 ms</strong> до <strong>10.00 ms</strong>, с шагом <strong>0.01 ms</strong>. <br/>
+
+</p>
+
+<p>
+<strong># Диапазон тормоза</strong> <br/>
+
+<strong>Тормоз мин</strong> — минимальное значение тормоза, в миллисекундах (ms). Выбор значений от <strong>0.00 ms</strong> до <strong>10.00 ms</strong>, с шагом <strong>0.01 ms</strong>. <br/>
+
+<strong>Тормоз макс</strong> — максимальное значение тормоза, в миллисекундах (ms). Выбор значений от <strong>0.00 ms</strong> до <strong>10.00 ms</strong>, с шагом <strong>0.01 ms</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0414\u0438\u0441\u0442\u0430\u043d\u0446\u0438\u043e\u043d\u043d\u043e\u0435 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;hid&quot;:&quot;\u0434\u0438\u0441\u0442\u0430\u043d\u0446\u0438\u043e\u043d\u043d\u043e\u0435_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:27,&quot;range&quot;:&quot;53648-55816&quot;} -->
+<h3 id="настройка_круиз-контроля">Настройка круиз-контроля</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Круиз</strong> настраивается круиз-контроль. После подключения кнопок или переключателей для управления круиз-контролем в порты Контроллера или Бортового компьютера вам необходимо настроить функции, которые относятся к круиз-контролю:<br/>
+
+</p>
+
+<p>
+<strong>CRe</strong> — включение круиза. <br/>
+
+<strong>CR+</strong> — увеличить скорость круиза (когда активен). <br/>
+
+<strong>CR-</strong> — уменьшить скорость круиза (когда активен). <br/>
+
+<strong>CRr</strong> — восстановление круиза (включение последней сохраненной скорости). <br/>
+
+</p>
+
+<p>
+Подробнее про настройку данных функций читайте ниже в разделе <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройка портов</a>. Если кнопка круиз-контроля подключена к Бортовому компьютеру, то необходимо настроить ее в разделе <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Настройка кнопок</a>. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k9.png" class="medialeft" alt="" />
+В пункте меню <strong>Круиз</strong> можно выбрать несколько режимов управления: <br/>
+
+<strong>Отключен</strong> — функция круиз-контроля отключена. <br/>
+
+<strong>Кнопка</strong> — активация круиз-контроля по нажатию кнопки. Время срабатывания кнопки определяется параметром <strong>Время вкл. круиза</strong>. <br/>
+
+<strong>Переключатель</strong> — активация круиз-контроля по включению переключателя, время не используется. <br/>
+
+<strong>Удержание газа</strong> — активация круиз-контроля по удержанию ручки газа определённое время в одном положении. Время срабатывания определяется параметром <strong>Время вкл. круиза</strong>. Точность задается параметром <strong>Круиз по ручке газа</strong> в процентах (%), выбор значений от <strong>1%</strong> до <strong>30%</strong>, с шагом <strong>1%</strong>. Точность необходима, так как в процессе езды ручка газа немного двигается из-за тряски. По умолчанию задано <strong>2%</strong>. <br/>
+
+<strong>Разрешение удержания газа</strong> — аналогично предыдущему режиму, с тем отличием, что для активации круиз-контроля требуется дополнительно нажать кнопку круиза. <br/>
+
+</p>
+
+<p>
+Далее пункты меню для настройки круиза:
+</p>
+
+<p>
+<strong>Восстанов. круиза</strong> — данная функция включает последнюю сохраненную скорость круиза, для подключения выберите функцию <strong>CRr</strong> при <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">настройке</a> порта. Функцию можно деактивировать выбрав параметр <strong>Отключен</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Время вкл. круиза</strong> — настройка задержки включения круиза в секундах (<strong>s</strong>), выбор значений от <strong>0.25s</strong> до <strong>30.00s</strong>, с шагом <strong>0.25s</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Уровень круиза</strong> — выбор скорости, которую запоминает круиз контроль: <br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>По газу</strong> — скорость зависит от положения ручки газа, включается мгновенно. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>По скорости</strong> — круиз включается и фиксирует скорость, если достигнуто <strong>Безопасное ускорение</strong> (описание данной настройки см. ниже). <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Смешанный</strong> — если не может включить круиз по скорости, то включает по уровню ручки газа. <br/>
+</div>
+</li>
+</ul>
+
+<p>
+<strong>Плавность круиза</strong> — настройка ограничивает ускорение во время круиза, чтобы не было рывков, измеряется в электрических оборотах в минуту за секунду (ERPM/s). Чтобы получить значение в оборотах в минуту, необходимо значение ERPM/s разделить на число пар полюсов электромотора. Выбор значений от <strong>0 ERPM/s</strong> до <strong>50000 ERPM/s</strong>, с шагом <strong>50 ERPM/s</strong>. <br/>
+
+</p>
+
+<p>
+<strong>#Используется для вкл. круиза</strong>: <br/>
+
+<strong>Безопасное ускорение</strong> — ограничивает ускорение, при котором включается круиз, например, чтобы он не включился при наборе скорости, в электрических оборотах в минуту за секунду (ERPM/s). Выбор значений <strong>100 ERPM/s</strong> от до <strong>10000 ERPM/s</strong>, с шагом <strong>100 ERPM/s</strong>. <br/>
+
+<strong>Мин. скорость</strong> — скорость, ниже которой нельзя активировать круиз и не работает восстановление круиза, в километрах в час (km/h). Выбор значений от <strong>3 km/h</strong> до <strong>127 km/h</strong>, с шагом <strong>1 km/h</strong>.<br/>
+
+</p>
+
+<p>
+Дополнительно, для управления круизом вы можете использовать для кнопок функции <strong>CR+</strong> и <strong>CR-</strong>, которые регулируют скорость круиза, когда он активен. <br/>
+
+</p>
+
+<p>
+Какие действия отключают круиз-контроль:
+</p>
+<ul>
+<li class="level1"><div class="li"> любое нажатие на тормоз, аналоговый или цифровой.</div>
+</li>
+<li class="level1"><div class="li"> повторное нажатие на газ.</div>
+</li>
+<li class="level1"><div class="li"> если используется переключатель — его отключение.</div>
+</li>
+<li class="level1"><div class="li"> включение заднего хода.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043a\u0440\u0443\u0438\u0437-\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043a\u0440\u0443\u0438\u0437-\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:28,&quot;range&quot;:&quot;55817-62423&quot;} -->
+<h3 id="настройка_кривых_ручек_газа_и_тормоза">Настройка кривых ручек газа и тормоза</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Кривые ручек газа/тормоза</strong> можно настроить поведение ручек газа и тормоза. Используя пункты меню <strong>Пресет газа</strong> и <strong>Пресет тормоза</strong> можно установить типовые настройки, для этого выберите один из пресетов газа или тормоза и нажмите ввод, пресет будет загружен.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k10.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Вы можете выбрать следующие виды пресетов для газа и тормоза: <br/>
+
+<strong>Линейный</strong> — плавное нарастание, прямая зависимость. <br/>
+
+<strong>Экспонента</strong> — медленное нарастание. <br/>
+
+<strong>Нормальный</strong> — среднее между линейным и экспонентой. <br/>
+
+<strong>Полином</strong> — среднее между нормальным и экспонентой. <br/>
+
+</p>
+
+<p>
+Также доступна ручная настройка точек положения газа и тормоза, для этого выберите <strong>Нет</strong> в <strong>Пресет газа</strong> или <strong>Пресет тормоза</strong> и введите значение вручную. Доступно восемь точек положения для газа и тормоза: <br/>
+
+<strong>Начало</strong> — начальная точка, в процентах (%), значения от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong>1</strong>-<strong>6</strong> — средние точки, в процентах (%), значения от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong>Конец</strong> — конечная точка, в процентах (%), значения от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+</p>
+
+<p>
+Вы также можете вручную отредактировать значение каждой из точек в установленном пресете.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043a\u0440\u0438\u0432\u044b\u0445 \u0440\u0443\u0447\u0435\u043a \u0433\u0430\u0437\u0430 \u0438 \u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043a\u0440\u0438\u0432\u044b\u0445_\u0440\u0443\u0447\u0435\u043a_\u0433\u0430\u0437\u0430_\u0438_\u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:29,&quot;range&quot;:&quot;62424-64584&quot;} -->
+<h3 id="источник_управления">Источник управления</h3>
+<div class="level3">
+
+<p>
+Контроллер поддерживает подключение органов управления (газ, тормоз, переключатели и кнопки) к Контроллеру, Бортовому компьютеру, плате Микролайт или смешанное подключение, когда одна часть периферии подключается в Контроллер, а вторая часть в Бортовой компьютер, или в Микролайт и Бортовой компьютер. Это бывает необходимо в случае конфигураций Торк/PAS сенсор в Контроллер + ручка/курок газа в Бортовой компьютер. В пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Источник управл.</strong> настраивается источник управления Контроллером.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k11.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Выбор вариантов источников управления:<br/>
+
+<strong>Авто</strong> — все источники будут управлять контроллером. Встроенные и внешние, подключенные по CAN шине (например, в Бортовой компьютер или Микролайт).<br/>
+
+<strong>Встроенный</strong> — управляет только то, что подключено непосредственно в Контроллер.<br/>
+
+<strong>Удаленный</strong> — управление только по CAN шине (через Бортовой компьютер или Микролайт).<br/>
+
+<strong>Отключен</strong> — отключает любое управление Контроллером.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:30,&quot;range&quot;:&quot;64585-66406&quot;} -->
+<h3 id="настройка_режима_ручки_газа">Настройка режима ручки газа</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Реж.ручки газа</strong> настраивается режим работы ручки газа. 
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/control_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Доступны три варианта режима:<br/>
+
+<strong>Скорость</strong> — аналогичный режим используется в контроллерах Infineon и непрограммируемых недорогих контроллерах и характеризуется использованием максимального тока для достижения заданной скорости. В данном режиме используется максимальная тяга до набора нужной скорости, ручкой тяга не регулируется. <br/>
+
+<strong>Скорость и тяга</strong> — комбинированный режим (аналогично Kelly), похож на работу педали газа в автомобиле с ДВС. В случае выбора режима <strong>Скорость и тяга</strong> выкрутив ручку газа на 50% по достижению 50% скорости потребление тока сократится до удержания соответствующей скорости. Ток разгона также будет пропорционально ниже. <br/>
+
+<strong>Тяга</strong> — в данном режиме тяга ограничивается углом поворота ручки газа. <br/>
+
+<strong>Мощность и тяга</strong> — отклик напоминает работу ручки газа на ДВС моторах. <br/>
+
+<strong>Мощность</strong> — в этом режиме можно точно регулировать потребление с батареи с помощью ручки газа. <br/>
+
+</p>
+
+<p>
+<strong>Адаптивный газ</strong> — данная функция позволяет более точно дозировать газ на высокой скорости, когда батарейный ток в настройках в разы ниже фазного. По умолчанию настроен на 6%. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0440\u0435\u0436\u0438\u043c\u0430 \u0440\u0443\u0447\u043a\u0438 \u0433\u0430\u0437\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0440\u0435\u0436\u0438\u043c\u0430_\u0440\u0443\u0447\u043a\u0438_\u0433\u0430\u0437\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:31,&quot;range&quot;:&quot;66407-68674&quot;} -->
+<h3 id="настройка_диапазонов_ручек_газа_и_тормоза">Настройка диапазонов ручек газа и тормоза</h3>
+<div class="level3">
+
+<p>
+Пункты меню в разделе <strong>Контроллер</strong> &gt; <strong>Управление</strong> позволяют настроить диапазоны напряжения ручек газа и тормоза. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/5_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+На текущий момент настройки напряжения для всех источников газа и тормоза общие. <br/>
+
+<strong># Ручка газа</strong> — показывает напряжение ручки газа, подключенной к Контроллеру, в Вольтах (V). <br/>
+
+<strong>Газ мин</strong> и <strong>Газ макс</strong> — диапазон работы ручки газа, в милливольтах (mV), выбор значений от <strong>0 mV</strong> до <strong>15 000 mV</strong>, с шагом <strong>10 mV</strong>. При превышении максимального значения на 5% будет включена защита от сломанной ручки газа. Если у вас неправильно выставлен диапазон, то при полном нажатии ручки газа будет выключаться электродвигатель, в данном случае необходимо увеличить значение диапазона. <br/>
+
+</p>
+
+<p>
+<strong># Ручка тормоза</strong> — показывает напряжение ручки тормоза, подключенной к Контроллеру, в Вольтах (V). <br/>
+
+<strong>Тормоз мин</strong> и <strong>Тормоз макс</strong> — диапазон работы аналоговой ручки тормоза, в милливольтах (mV), выбор значений от <strong>0 mV</strong> до <strong>15 000 mV</strong>, с шагом <strong>10 mV</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Уровень кнопки тормоза</strong> — сила торможения при нажатии кнопки тормоза относительно уровня фазного торможения, в процентах (%). Данная настройки позволяет регулировать уровень силы торможения ручками тормоза со встроенными кнопками тормоза. <br/>
+
+<strong>Инвертировать тормоз</strong> — инвертирует значение напряжения с встроенной ручки тормоза. Выберите <strong>Вкл</strong> для включения. Полезно включить, когда в Бортовой компьютер подключена ручка тормоза с обратным напряжением и необходимо использовать значение <strong>Авто</strong> в пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Источник управления</strong>. Цифровая ручка тормоза (т.е. кнопка) подключается в Бортовой компьютер, см. раздел <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Настройка кнопок</a>. <br/>
+
+<strong>Активное торможение</strong> — разрешает торможение батареей до нуля. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Торможение при перегреве</strong> — разрешает торможение полным фазным током при перегреве мотора. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Блок. газ при торможении</strong> — отключение ручки газа после нажатия тормоза, пока газ не будет полностью отпущен. Помогает при глюках ручки газа, в этом случае будет выставлен флаг <strong>Блокировка газа</strong> в меню <strong>Флаги статуса</strong>. <br/>
+
+<strong>Обратный ход при тормозе</strong> — после остановки повторное нажатие ручки тормоза активирует обратный ход. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0434\u0438\u0430\u043f\u0430\u0437\u043e\u043d\u043e\u0432 \u0440\u0443\u0447\u0435\u043a \u0433\u0430\u0437\u0430 \u0438 \u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0434\u0438\u0430\u043f\u0430\u0437\u043e\u043d\u043e\u0432_\u0440\u0443\u0447\u0435\u043a_\u0433\u0430\u0437\u0430_\u0438_\u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:32,&quot;range&quot;:&quot;68675-72816&quot;} -->
+<h3 id="режим_буста">Режим буста</h3>
+<div class="level3">
+
+<p>
+<strong>Режим буста</strong> (уровень Пользователь) — время работы на максимальной мощности, в секундах. Выбор значений от <strong>0.2</strong>c до <strong>10</strong>c, с шагом <strong>0.2</strong>c.<br/>
+
+</p>
+
+<p>
+Функция работает следующим образом: в меню <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> настраивается батарейный ток больше, чем ток разряда в настройках батареи в меню <strong>Контроллер</strong> &gt; <strong>Батарея</strong> &gt; <strong>Разряд макс</strong>. Далее выбираете время работы буста в меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Режим буста</strong>. Теперь, во время езды, при увеличении текущего тока батареи больше чем <strong>Разряд макс</strong> начинается отсчет времени, в течение которого будет работать это превышение, т.е. сам буст. По истечении этого времени батарейный ток будет сброшен до уровня настройки <strong>Разряд макс</strong>. Чтобы режим буста был снова доступен, необходимо в течение 1-й минуты ехать в режиме величины батарейного токе не более 70% от значения <strong>Разряд макс</strong>.<br/>
+
+</p>
+
+<p>
+Например, на Sur-Ron Ultra Bee данный режим позволяет выжать из штатной батареи максимум и достичь мощности 21 кВт вместо 12кВт.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0420\u0435\u0436\u0438\u043c \u0431\u0443\u0441\u0442\u0430&quot;,&quot;hid&quot;:&quot;\u0440\u0435\u0436\u0438\u043c_\u0431\u0443\u0441\u0442\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:33,&quot;range&quot;:&quot;72817-74607&quot;} -->
+<h3 id="настройка_уровня_100_скорости">Настройка уровня 100% скорости</h3>
+<div class="level3">
+
+<p>
+Пункты меню в разделе <strong>Контроллер</strong> &gt; <strong>Управление</strong> позволяют настроить уровень 100% скорости. Максимальная скорость в режиме ослабления поля — 150%.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k14.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Фильтр опорной скорости</strong> — выбор режима фильтра. Выбор значений <strong>Линейный</strong>, <strong>Квадрат</strong>, <strong>Кубический</strong>. Для режимов управления <strong>Скорость</strong> и <strong>Скорость и тяга</strong> применяется фильтр по заданию скорости, для более плавного отклика на ручку газа. Алгоритм фильтра считает разницу между предыдущим запросом скорости и текущим, умножает ошибку в степень 1,2,3 (линейный, квадрат и кубический соответственно) и умножает на коэффициент. Полученное значение используется как частота среза НЧ фильтра. Чем больше изменение — тем резче отклик на него. <br/>
+
+</p>
+
+<p>
+<strong>Коэффициент фильтра</strong> — устанавливает коэффициент фильтрации. Выбор значений от <strong>0</strong> до <strong>30000</strong>, с шагом <strong>100</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Режим скорости</strong> позволяет выбрать уровень 100% скорости и то от чего она зависит: <br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Откл</strong> — полностью отключает регулятор скорости. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Сред. U бат</strong> — среднее значение между минимальным и максимальным напряжением настроек батареи берется за опорную скорость, высчитывается через kV мотора. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>U питания</strong> — текущее напряжение питания берется за опорную скорость, высчитывается через kV мотора. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Опорн. скорость</strong> — скорость в км/ч выставляется параметром <strong>Опорная скорость</strong>. Значение скорости берется с мотора или с внешнего датчика скорости, подключенного в контроллер. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Опорн. ERPM</strong> — скорость выставляется в электрических оборотах мотора параметром <strong>Опорная скорость</strong>. <br/>
+</div>
+</li>
+</ul>
+
+<p>
+<strong>Минимальная скорость</strong>  —  в электрических оборотах в минуту (ERPM). Выбор значений от <strong>0 ERPM</strong> до <strong>100000 ERPM</strong>, с шагом <strong>100 ERPM</strong>.
+</p>
+
+<p>
+<strong>Лимит скорости при 0% газа</strong> — разрешает лимитировать скорость при отпущенной ручке газа. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. При выборе значения <strong>Откл</strong> управление мотором отключается при отпускании ручки газа.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0443\u0440\u043e\u0432\u043d\u044f 100% \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0443\u0440\u043e\u0432\u043d\u044f_100_\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:34,&quot;range&quot;:&quot;74608-78016&quot;} -->
+<h2 id="настройка_мотора">Настройка мотора</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> находятся все настройки, относящиеся к параметрам работы электродвигателя.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:35,&quot;range&quot;:&quot;78017-78292&quot;} -->
+<h3 id="термодатчик_мотора">Термодатчик мотора</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Термодатчик мотора</strong> можно выбрать диапазон температуры, в котором будет происходить плавное ограничение мощности (параметр Дельта °t) и указать максимальную температуру. 
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/temp_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>°t макс.</strong> — максимальная температура электромотора, в градусах Цельсия (°C). Выбор значений от <strong>50°C</strong> до <strong>200°C</strong> , с шагом <strong>1°C</strong>. <br/>
+
+<strong>Дельта °t</strong>  — значение температуры, которое вычитается из максимальной температуры (<strong>°t макс</strong>), полученное значение температуры будет началом ограничения мощности, в градусах Цельсия (°C). Выбор значений от <strong>1 °C</strong> до <strong>100 °C</strong>, с шагом <strong>1 °C</strong>. <br/>
+
+</p>
+
+<p>
+В пункте меню <strong>Тип датчика</strong> вы можете выбрать следующие типы термодатчиков, которые поддерживает Контроллер — <strong>KTY81(82)</strong>, <strong>KTY83</strong>, <strong>KTY84</strong>, <strong>NTC10K (B:3950)</strong>, <strong>NTC10K (B:3380)</strong>, <strong>PT1000</strong>. Для отключения температурного контроля выберите значение <strong>OFF</strong>. <br/>
+
+</p>
+
+<p>
+Термодатчик рекомендуется устанавливать как можно большей площадью на обмотках статора, при этом не контактируя с железом статора. Если неизвестно какой именно датчик стоит в моторе, можно проверить все варианты и выбрать тот, который точнее всего отражает текущую температуру. Текущая измеренная температура отображается в пункте <strong># Значение °t</strong>. <br/>
+
+</p>
+
+<p>
+В пункте меню <strong># °t сопротивление</strong> отображается сопротивление термодатчика электродвигателя, с точностью +/-10%. <br/>
+
+</p>
+
+<p>
+<strong>Сдвиг сопротивления</strong> — коррекция сопротивления термодатчика, в Ом (Ohm). Выбор значений от <strong>-100 Ohm</strong> до <strong>100 Ohm</strong>, с шагом <strong>1 Ohm</strong>. <br/>
+
+<strong>Коррекция температуры</strong> — коррекция сопротивления термодатчика с учетом сопротивления проводки. Значения <strong>Вкл</strong> и <strong>Откл</strong> <br/>
+
+<strong>Сопр. провода GND</strong> — сопротивление провода “земля”, в Ом (Ohm). Выбор значений от <strong>0 Oh</strong> до <strong>1000 Ohm</strong>, с шагом <strong>1 Ohm</strong>. <br/>
+
+<strong>Ток датчиков</strong> — ток потребления датчиков, если термодатчик подключен по общему проводу, в mA (мА). Выбор значений от <strong>0 mA</strong> до <strong>100 mA</strong>, с шагом <strong>1 mA</strong>. <br/>
+
+<strong># Суммарный ток:</strong> — расчетный суммарный ток, для сверки по тестеру, в мА (mA).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0422\u0435\u0440\u043c\u043e\u0434\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u0442\u0435\u0440\u043c\u043e\u0434\u0430\u0442\u0447\u0438\u043a_\u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:36,&quot;range&quot;:&quot;78293-81790&quot;} -->
+<h3 id="муфта">Муфта</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Муфта</strong> настраивается плавный пуск двигателя для мягкого зацепления муфты или фривила. Полезно для редукторных моторов или мид-драйвов. В данный момент настройка хорошо работает только в режиме управления <strong>Тяга</strong>, т.к. в нем всегда поддерживается зацепление. Альтернативным вариантом является настройка лимита ускорения в режимах <strong>S1</strong>,<strong>S2</strong>,<strong>S3</strong> в разделе меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы управления</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k16.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Параметр <strong>Режим</strong> определяет способ работы: <br/>
+
+<strong>Разгон</strong> — плавно раскручивает мотор до момента появления нагрузки. <br/>
+
+<strong>Разгон и удержание</strong> — в дополнении к предыдущему способу подает слабый газ на мотор после отпускания ручки газа. Этот режим позволяет ускоренно переключать скорости на мид-драйве не вращая при этом педали. <br/>
+
+</p>
+
+<p>
+<strong># Фазн. ток</strong> <br/>
+
+<strong>Время пуска</strong> — максимальное время на разгон, в секундах (s). Выбор значений от <strong>1 s</strong> до <strong>20 s</strong>, с шагом <strong>1 s</strong>. <br/>
+
+<strong>Ток пуска</strong> — фазный ток мотора, при котором будет определено наличие нагрузки и отключен плавный пуск, в амперах (А). Выбор значений от <strong>0.2 А</strong> до <strong>50.0 А</strong>, с шагом <strong>0.2 А</strong>. Данное значение должно быть выше фазного тока разгона мотора без нагрузки. <br/>
+
+<strong>Время тока</strong> — время, в течении которого должна присутствовать нагрузка, после чего плавный пуск отключится, в миллисекундах (ms). Выбор значений от <strong>10 ms</strong> до <strong>1000 ms</strong>, с шагом <strong>10 ms</strong>. <br/>
+
+<strong>Скорость разгона</strong> — значение в вольт/секундах (V/s). Выбор значений от <strong>2 V/s</strong> до <strong>1000 V/s</strong>, с шагом <strong>2 V/s</strong>. Чем выше значение, тем больше потребуется указать Ток пуска, так как мотор будет потреблять больше тока на разгоне. <br/>
+
+<strong>Ток удержания (20%)</strong> и <strong>Ток удержания (80%)</strong> — два параметра, регулирующие фазный ток, подаваемый на мотор в режиме Разгон и удержание, в амперах (А). <strong>20%</strong> — ток при малых оборотах, <strong>80%</strong> — ток при около-максимальных оборотах. Определить примерные значения можно по току холостого хода мотора. Выбор значений от <strong>0.2 А</strong> до <strong>50.0 А</strong>, с шагом <strong>0.2 А</strong>. <br/>
+
+<strong>Время вкл. удержания</strong> — время, через которое станет доступно удержание тяги мотором после нажатия ручки газа, в секундах (s). Выбор значений от <strong>1 s</strong> до <strong>120 s</strong>, с шагом <strong>4 s</strong>. <br/>
+
+<strong>Длительность удержания</strong> — время, в течение которого будет подаваться тяга после отпускания ручки газа, в секундах (s). Выбор значений от <strong>1 s</strong> до <strong>120 s</strong>, с шагом <strong>1 s</strong>. <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:38,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_tip plugin_wrap" style="width: 60%;">
+<p>
+<br/>
+Оптимальные настройки для двигателя MAC: муфта разгон, 15А, 50в/сек, 200мс.
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:39,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041c\u0443\u0444\u0442\u0430&quot;,&quot;hid&quot;:&quot;\u043c\u0443\u0444\u0442\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:37,&quot;range&quot;:&quot;81791-86071&quot;} -->
+<h3 id="настройка_датчиков_положения_электродвигателя">Настройка датчиков положения электродвигателя</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> находятся пункты меню для настройки датчиков положения электродвигателя. На данный момент контроллер поддерживает два типа датчиков — датчики Холла и датчик угла поворота (энкодер). <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/hall_0908.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Тип датчиков</strong> — параметр требует перезагрузки при ручной смене настройки, на данный момент доступно два типа датчиков: <br/>
+
+<strong>Hall</strong> — датчики Холла. <br/>
+
+<strong>Encoder</strong> — датчик угла поворота (энкодер). Информацию по поддержке энкодера и совместимости типов датчиков между собой см. в разделе <strong><a href="/doku.php?id=ru:controller:setup#настройка_энкодера" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Настройки энкодера</a></strong>.
+</p>
+
+<p>
+<strong>Режим датчиков</strong> — загружается при старте и сохраняется. Контроллер имеет следующие режимы работы датчиков Холла: <br/>
+
+<strong>Бездатчик</strong> — управление мотором по интегрированию ЭДС, используется параметр <strong>Порог интегрирования</strong>. Он довольно нечувствителен к настройке, но для оборотистых моторов (типа RC) может потребоваться более точная настройка. В настоящий момент у данного режима нет алгоритма для старта с места, он работает стабильно только на оборотах. Определение настроек холлов происходит по бездатчику. <br/>
+
+<strong>Совмещённый</strong> — старт мотора на датчиках, далее переключение на режим бездатчик, порог определяется параметром радиан в секунду (<strong>rad/s</strong>) в пункте меню <strong>Холлы&gt;Бездатчик</strong>. Выбор значений от <strong>0.00 rad/s</strong> до <strong>2.00 rad/s</strong> с шагом <strong>0.05 rad/s</strong>. Для перевода значений 1 rad/s to RPM = 9.5493 RPM. <br/>
+
+<strong>Датчики</strong> — управление электромотором только по сигналам с датчиков Холла или энкодера. <br/>
+
+<strong>Част.</strong> — частотное управление. Не использовать для движения! <br/>
+
+</p>
+
+<p>
+<strong>Интерполяция датчиков</strong> — плавное изменение угла датчиков на основании скорости. Используется для режима FOC. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Начало интерполяции</strong> — старт мотора всегда производится с дискретным углом, если используются цифровые холлы. После указанной скорости угол начинает плавно изменяться. Выбор значений от <strong>0 rad/s</strong> до <strong>100 rad/s</strong>, с шагом <strong>1 rad/s</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Частотное управление</strong> — отдельный режим, которые может использоваться для питания оборудования через трансформатор или для просушки лака на обмотках мотора. Выбор значений от <strong>10 HZ</strong> до <strong>200 HZ</strong>, с шагом <strong>1 HZ</strong>. <br/>
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="настройка_датчиков_холла">Настройка датчиков Холла</h4>
+<div class="level4">
+
+<p>
+Далее в разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> &gt; <strong>Настройки холлов</strong> находятся пункты для настройки датчиков Холла. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/hall_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Фильтр холлов</strong> — включение и отключение фильтра по направлению вращения, выбор значений <strong>Направление</strong> и <strong>OFF</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Фильтр шагов</strong> — выбор времени задержки, в секундах (сек). Выбор значений от <strong>0.000сек</strong> до <strong>1.000сек</strong>, с шагом <strong>0.002сек</strong>. Данная задержка используется, если поступило неправильное значение датчиков Холла. Все показатели, которые меньше установленного значения будут отфильтровываться. <br/>
+
+</p>
+
+<p>
+<strong>Фильтр мин. шага</strong> — минимальное время переключения холлов, в мкс. Выбор значений от <strong>25 мкс</strong> до <strong>5000 мкс</strong>, с шагом <strong>10 мкс</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Фильтр направления</strong> — выбор времени задержки на смену направления вращения электродвигателя (вперед/назад), в секундах (сек). Выбор значений от <strong>0.000сек</strong> до <strong>1.000сек</strong>, с шагом <strong>0.002сек</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Фильтр простоя</strong> — когда мотор не двигается, положение датчика сбрасывается на среднюю позицию. Выбор значений от <strong>10мс</strong> до <strong>1000мс</strong>, с шагом <strong>5 мс</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Откл. подтяжку</strong> — отключение подтяжки холлов, в большинстве случаев отключать не нужно. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+</p>
+
+<p>
+Далее в меню указаны индексы и углы датчиков Холла для двух направлений вращения электромотора. Данные показатели используются для внутренней работы Контроллера. <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+
+<h4 id="ручная_настройка_угла_датчиков_холла">Ручная настройка угла датчиков Холла</h4>
+<div class="level4">
+
+<p>
+В общем случае не рекомендуется менять данные настройки вручную и для установки углов датчиков Холла использовать режим <strong>Автонастройка</strong>!<br/>
+
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> &gt; <strong>Ручная настройка угла</strong> находятся пункты для ручной настройки углов датчиков Холла электромотора. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k17.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Сдвиг для трапеции</strong> — дополнительный сдвиг для работы в режиме трапеции, в градусах (<strong>°</strong>). Выбор значений от <strong>-30°</strong> до <strong>30°</strong>, с шагом <strong>1°</strong>. <br/>
+
+<strong>Сдвиг общий прямой</strong> — сдвиг всех холлов на указанное значение для прямого вращения мотора, в градусах (<strong>°</strong>). Выбор значений от <strong>-60°</strong> до <strong>60°</strong>, с шагом <strong>1°</strong>. <br/>
+
+<strong>Сдвиг общий обратный</strong> — сдвиг всех холлов на указанное значение для обратного вращения мотора, в градусах (<strong>°</strong>). Выбор значений от <strong>-60°</strong> до <strong>60°</strong>, с шагом <strong>1°</strong>. <br/>
+
+</p>
+
+<p>
+Для сдвига всех холлов необходимо нажать правую кнопку Бортового компьютера, ввести угол сдвига, снова нажать правую кнопку. Значение обнулится и угол всех холлов изменится на указанное значение.  Менять угол сдвига холлом можно в обратном направлении, задав отрицательное значение. <br/>
+
+</p>
+
+<p>
+<strong>Сброс настроек холлов</strong> — обнуляет все углы холлов. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Порог интегрирования</strong> — аналог углов холлов для бездатчикового режима управления двигателем, в вольтах (<strong>V</strong>). <br/>
+
+<strong>Коэффициент корректировки</strong> — смысл коэффициента в том, чтобы найти среднюю точку положения датчиков холла при их настройке. Значения от <strong>0.02</strong> до <strong>5.00</strong>, с шагом <strong>0.02</strong>. Если значение коэффициента слишком маленькое, то процесс настройки завершится до того, как будет определена средняя точка. Если значение коэффициента слишком большое, то настройка не будет завершена и остановится по таймауту, т.к. не будет найдена средняя точка из-за того, что углы будут меняться слишком часто. <br/>
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="настройка_энкодера">Настройка энкодера</h4>
+<div class="level4">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> &gt; <strong>Настройка энкодера</strong> находятся пункты меню для настройки энкодера электродвигателя. Значения параметров в каждом из пунктов появятся после прохождения процедуры <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Автонастройки</a>. Контроллеры, поддерживающие энкодер имеют оранжевые фазные провода и скорость энкодера 580kHZ в разделе <strong>Контроллер</strong> &gt; <strong>Информация об устройстве</strong>. Провод для подключения электродвигателя с энкодером заказывается отдельно и устанавливается вместо провода для датчиков Холла. <br/>
+
+<strong>Внимание:</strong> на старых контроллерах энкодер использует порт <strong>P1</strong> для сигнала PWM положения мотора, настройте порты <strong>P1</strong> и <strong>P2</strong> в режим <strong>OFF</strong> и отключите выход <strong>ШИМ (PWM)</strong>. Настройки применятся после перезагрузки.
+</p>
+
+<p>
+Совместимость проводки и датчиков: <br/>
+
+<strong>Холлы</strong> &gt; <strong>Энкодер</strong> — если ваш контроллер с коннектором под датчики Холла, то вы можете сделать переходник под энкодер самостоятельно. Но, в этом случае, вы не сможете тронуться с места при включении, вам необходимо будет толкать ногами электровелосипед для старта. <br/>
+
+<strong>Энкодер</strong> &gt; <strong>Холлы</strong> — если ваш контроллер с коннектором под энкодер, то вы можете сделать переходник под датчики Холла самостоятельно. Все будет работать. 
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/encoder_2907.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Шагов</strong> — число шагов энкодера, выбор значений с шагом <strong>1</strong>. <br/>
+
+<strong># Инвертировать счетчик</strong> — выбор значений <strong>Откл</strong> и <strong>Вкл</strong>. <br/>
+
+<strong># Инвертировать PWM</strong> — выбор значений <strong>Откл</strong> и <strong>Вкл</strong>. <br/>
+
+<strong># Индекс Z</strong> — значение дополнительного выходного сигнала энкодера (указатель нулевой отметки), выбор значений от <strong>0</strong> и <strong>7</strong>, с шагом <strong>1</strong>. <br/>
+
+<strong># Сдвиг Z FW</strong> — сдвиг сигнала, выбор значений от <strong>-60°</strong> до <strong>+60°</strong> с шагом <strong>1°</strong>. <br/>
+
+<strong># Сдвиг Z BW</strong> — сдвиг сигнала, выбор значений от <strong>-60°</strong> до <strong>+60°</strong> с шагом <strong>1°</strong>. <br/>
+
+</p>
+
+</div>
+
+<h5 id="отладочные_данные">Отладочные данные</h5>
+<div class="level5">
+
+<p>
+<strong>Index</strong> — значение индексного сигнала энкодера. <br/>
+
+<strong>Z-Index</strong> — значение указателя нулевой отметки. <br/>
+
+<strong>PWM Period</strong> — период ШИМ сигнала, в микросекундах (<strong>µs</strong>). <br/>
+
+<strong>PWM Width</strong> — ширина импульса ШИМ сигнала, в микросекундах (<strong>µs</strong>). <br/>
+
+<strong>Rad by index</strong> — положение электромотора по индексу, в радианах (<strong>rad</strong>). <br/>
+
+<strong>Rad by PWM</strong> — положение электромотора по ШИМ, в радианах (<strong>rad</strong>). <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0434\u0430\u0442\u0447\u0438\u043a\u043e\u0432 \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u0435\u043b\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0434\u0430\u0442\u0447\u0438\u043a\u043e\u0432_\u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u044f_\u044d\u043b\u0435\u043a\u0442\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u0435\u043b\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:40,&quot;range&quot;:&quot;86072-99653&quot;} -->
+<h3 id="параметры_мотора">Параметры мотора</h3>
+<div class="level3">
+
+<p>
+Пункты раздела меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> позволяют настроить параметры работы электродвигателя.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/motor_ru_0504.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Пар полюсов</strong> — число пар магнитных полюсов ротора электродвигателя определяет скорость, с которой будет вращаться вал мотора. Данный параметр используется для расчета об/мин и скорости. Для более точного автоопределения углов холов необходимо указать правильное значение числа пар полюсов для вашего мотора. Для наиболее популярных моторов вы можете посмотреть данное значение в таблице моторов. Если вашего мотора нет в таблице, уточняйте число пар полюсов у производителя.
+</p>
+
+<p>
+<strong>Направление вращения</strong> — данная настройка позволяет изменить направление вращения электродвигателя. Выбор вариантов <strong>Прямое</strong> и <strong>Обратное</strong>. Или вы можете поменять местами две фазы двигателя, чтобы изменить направление вращения. <br/>
+
+</p>
+
+<p>
+<strong>Редукция мотора</strong> — дополнительный коэффициент редукции мотора для моторов со встроенным редуктором. Упрощает настройку передаточных чисел колеса для расчета скорости. <br/>
+
+</p>
+
+<p>
+<strong>Порог интегрирования</strong> — аналог углов холлов для бездатчикового режима управления двигателем, в вольтах (<strong>V</strong>).
+</p>
+
+<p>
+<strong>Режим управления</strong> — загружается при старте и сохраняется. На текущий момент контроллер имеет следующие режимы управления мотором:<br/>
+
+<strong>Откл.</strong> — режим управления отключен.<br/>
+
+<strong>Трапеция</strong> — устаревший способ управления, который используется только для детекта мотора.<br/>
+
+<strong>FOC</strong> — векторное управление мотором.<br/>
+
+<strong>DC-DC</strong> — режим зарядки, когда вы используете контроллер в режиме зарядки через мотор.
+</p>
+
+<p>
+Выбранный в данном меню режим управления является приоритетной настройкой для контроллера. Если в меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> выбран режим датчиков Холла, который не соответствует установленному режиму работы электромотора, то данный режим датчиков Холла будет автоматически заменен на более подходящий.
+</p>
+
+<p>
+<strong>Макс напряжение мотора</strong> — абсолютный ограничитель напряжения, подаваемого на мотор, в вольтах (<strong>V</strong>). В большинстве случаев этот параметр не нужен. Выбор значений от <strong>0V</strong> до <strong>100V</strong>, с шагом <strong>1 V</strong>.
+</p>
+
+<p>
+<strong>kV</strong> — характеристика мотора, число электрических оборотов на вольт (<strong>eRPM/V</strong>).
+</p>
+
+<p>
+Далее находятся пункты меню для настройки MTPA, данная функция позволяет добавлять отрицательный ток по оси d, чтобы увеличить тягу на IPM моторах.
+</p>
+
+<p>
+<strong>Сопротивление фазное</strong> — результат измерения фазного сопротивления электромотора при автонастройке (пункт Moтор LR), в Омах (Ohm).
+</p>
+
+<p>
+<strong>Индуктивность d</strong> — результат измерения индуктивности электромотора по оси d при автонастройке (пункт Moтор LR), в микроГенри (µH). Ось d («прямая») относится к компоненте магнитного поля статора, которое находится в фазе с магнитным полем ротора.
+</p>
+
+<p>
+<strong>Индуктивность q</strong> — результат измерения индуктивности электромотора по оси q при автонастройке (пункт Moтор LR), в микроГенри (µH). Ось q («квадратура») относится к составляющей магнитного поля статора, которая на 90° не в фазе с магнитным полем ротора.
+</p>
+
+<p>
+<strong>Потокосцепление</strong> — общий магнитный поток, пронизывающий электрический контур, в Веберах (Wb). <br/>
+
+</p>
+
+<p>
+<strong>Оптимизация FOC</strong> — меняет режим ШИМ FOC с выбором значений <strong>Эффективность</strong> или <strong>Пульсации</strong>. В режиме <strong>Эффективность</strong> — уменьшает потери в контроллере. В режиме <strong>Пульсации</strong> — уменьшает пульсации тока в моторе и, в некоторых случаях, немного увеличивает КПД мотора и уменьшает его шум. <br/>
+
+</p>
+
+<p>
+<strong>MTPA (только для IPM)</strong> — данная функция должна быть включена (<strong>Вкл</strong>) для моторов IPM, для всех остальных типов моторов эта функция должна быть отключена (<strong>Откл</strong>). 
+</p>
+
+<p>
+<strong>FOC Vq лимит</strong> — улучшает ослабление поля на некоторых моторах. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.
+</p>
+
+<p>
+<strong># Настройки трапеции:</strong> <br/>
+
+<strong>Сдвиг для трапеции</strong> — сдвиг фазы для трапеции, в градусах (°). Выбор значений от -30° до 30°. Данный пункт аналогичен такому же пункту в разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Датчики положения</strong> &gt; <strong>Ручная настройка угла</strong>.<br/>
+
+<strong>Усилитель тока трапеции</strong> — в режиме бездатчика или трапеции подает 100% ШИМ в начале каждой коммутации обмоток. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>.<br/>
+
+<strong>Ток усиления</strong> — настройка относится к режиму управления <strong>Трапеция</strong>, минимальный ток, с которого включается быстрое накачивание тока в обмотках, в амперах (<strong>А</strong>). Выбор значений от <strong>0 A</strong> до <strong>100 A</strong>, с шагом <strong>1 A</strong>.<br/>
+
+<strong>Скорость усиления</strong> — настройка относится к режиму управления <strong>Трапеция</strong>, минимальная скорость, после которой включается быстрое накачивание тока в обмотках, в радиан в секунду (<strong>rad/s</strong>). Выбор значений от <strong>0.00 rad/s</strong> до <strong>2.00 rad/ms</strong> с шагом <strong>0.05 rad/s</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b_\u043c\u043e\u0442\u043e\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:41,&quot;range&quot;:&quot;99654-107717&quot;} -->
+<h2 id="батарея">Батарея</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Батарея</strong> настраиваются параметры подключенной к Контроллеру батареи. Вся линейка контроллеров Nucular поддерживают напряжение питания от <strong>20В</strong> до <strong>90В</strong>, это <strong>21S</strong> для литий-ионных (Li-ion) батарей и <strong>25S</strong> для литий-железо-фосфатных батарей (LiFePO4). Для настройки батареи необходимо указать диапазон питающего напряжения и тока. Для корректного отображения емкости батареи на экране Бортового компьютера и правильного расчета остатка заряда необходимо указать емкость батареи в <a href="/doku.php?id=ru:display:start#емкость_батареи" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">настройках</a> Бортового компьютера. Если вы используете несколько батарей с разными параметрами на одном велосипеде, вы можете сохранить конфигурации для каждой батареи на SD-карте и загружать их после замены батареи. SD-карту можно хранить в Бортовом компьютере.
+</p>
+
+<p>
+<strong>#Быстрая настройка напряжения</strong> — функция, которая поможет выбрать правильные параметры батареи. Для автоматической настройки пунктов <strong>Полный заряд</strong>, <strong>Питание макс</strong>, <strong>Питание мин</strong> вам необходимо выбрать тип химии батареи из следующих вариантов:<br/>
+
+<strong>LiIon (3.6V)</strong> для литий-ионной батареи (Li-ion)<br/>
+
+<strong>LFP (3.2V)</strong> для литий-железо-фосфатной батареи (LiFePO4)<br/>
+
+<strong>LTO (2.3V)</strong> для литий-титанатной батареи (Li4Ti5O12)<br/>
+
+</p>
+
+<p>
+Далее выбираете <strong>Кол-во ячеек</strong>, значения от <strong>8S</strong> до <strong>28S</strong>, с шагом <strong>1S</strong>. После этого в пункте <strong>Применить настройки</strong> выбираете <strong>Да</strong>. После сохранения настроек вы увидите окно с новыми параметрами батареи. Важно помнить, что мы гарантируем работу контроллеров с напряжением до 90В. Технически устройство рассчитано на 95В, но при работе на напряжении свыше 90В гарантия будет аннулирована, о чем вы будете предупреждены во всплывающем окне. Например, при попытке выбрать значение 22S для литий-ионной батареи. При превышении в настройках 95В, контроллер также предупредит вас, что вы пытаетесь настроить слишком большое напряжение.<br/>
+
+</p>
+
+<p>
+<strong>Полный заряд</strong> — дельта напряжения относительно максимального, при котором во время включения контроллера будет сбрасывать расход ватт-часов, в вольтах (<strong>dV</strong>). Данная настройка сбрасывает статистику после зарядки при включении Контроллера. Выбор значений от <strong>0.00 dV</strong> до <strong>10.00 dV</strong>, с шагом <strong>0.3 dV</strong>. 
+</p>
+
+<p>
+<strong>Питание макс</strong> и <strong>Питание мин</strong> — диапазон напряжений батареи, в вольтах (<strong>V</strong>). Выбор значений от <strong>20.00V</strong> до <strong>95.00V</strong>, с шагом <strong>00.1V</strong>. Также данные настройки используются для режима <strong>Преобразователь</strong>.<br/>
+
+</p>
+
+<p>
+Для литий-ионных (Li-ion) батарей можно считать минимум <strong>2.8V*S</strong>, максимум <strong>4.2V*S</strong>.<br/>
+
+Для литий-железо-фосфатных (LiFePO4) — минимум <strong>2.7V*S</strong>, максимум <strong>3.6V*S</strong>. <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:43,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+Мы гарантируем стабильную работу Контроллера при напряжении до <strong>90В</strong> включительно. Использование батареи свыше 90В может привести к выходу Контроллера из строя и аннулированию гарантии.
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:44,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+<strong>Заряд макс</strong> — максимальный ток зарядки батареи, при рекуперации или в режиме <strong>Преобразователь</strong>, в амперах (<strong>А</strong>). Выбор значений от <strong>1.0A</strong> до <strong>400.0А</strong>, с шагом <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Разряд макс</strong> — максимальный ток разряда батареи, но в режиме буста может быть больше (см. настройку режимов управления), в амперах (<strong>А</strong>). Выбор значений от <strong>1.0A</strong> до <strong>400.0А</strong>, с шагом <strong>0.5А</strong>.
+</p>
+
+<p>
+<strong>Мощность макс</strong> — максимальная разрядная мощность батареи. Установите 0W чтобы отключить лимит мощности, в ваттах (<strong>W</strong>). Выбор значений от <strong>0W</strong> до <strong>30000 W</strong>, с шагом <strong>100W</strong>.
+</p>
+
+<p>
+<strong># DC напряжение</strong> — текущее напряжение питания Контроллера, в вольтах (<strong>V</strong>).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0411\u0430\u0442\u0430\u0440\u0435\u044f&quot;,&quot;hid&quot;:&quot;\u0431\u0430\u0442\u0430\u0440\u0435\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:42,&quot;range&quot;:&quot;107718-113645&quot;} -->
+<h2 id="преобразователь">Преобразователь</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Преобразователь</strong> настраивается режим зарядки батареи от блока питания через мотор. Зарядка через катушку индуктивности в данный момент не поддерживается. Схему подключения блока питания см. по <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">ссылке</a>. Для запуска зарядки напряжение источника питание должно быть ниже минимального напряжения батареи!
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k21.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Включить</strong> — включение режим преобразователя. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Авто-включение</strong> — при активации настройки разрешается автоматический старт зарядки при подключении блока питания в зарядный разъем. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Уровень детекта</strong> — напряжение на обмотках электродвигателя, после которого запускается преобразователь, а также блокирует управление, в вольтах на фазе (<strong>Vph</strong>). Выбор значений от <strong>10Vph</strong> до <strong>80Vph</strong>, с шагом <strong>1Vph</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Батарея макс ток</strong> — максимальный ток заряда батареи, если значение не указано, тогда используются настройки батареи, в амперах (<strong>А</strong>). Выбор значений от <strong>0.0А</strong> до <strong>100.0A</strong>, с шагом <strong>0.5А</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Батарея мин ток</strong> — минимальный ток заряда батареи при снижении тока по напряжению, в амперах (<strong>А</strong>). Выбор значений от <strong>0.5А</strong> до <strong>10.0A</strong>, с шагом <strong>0.5А</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Недозаряд</strong> — напряжение относительно настройки максимального напряжения батареи, в вольтах (<strong>V</strong>). Позволяет снизить напряжение зарядки. Выбор значений от <strong>0.00V</strong> до <strong>10.0V</strong>, с шагом <strong>0.1V</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Дельта снижения тока</strong> — уменьшает ток зарядки принудительно по мере приближения к максимальному напряжению, в вольтах (<strong>dV</strong>). Выбор значений от <strong>0.0dV</strong> до <strong>20.0 dV</strong> с шагом <strong>0.5 dV</strong>.
+</p>
+
+<p>
+<strong>БП макс макс</strong> — максимальный ток блока питания, в амперах (<strong>А</strong>). Выбор значений от <strong>2.0A</strong> до <strong>150.0A</strong>, с шагом <strong>0.5A</strong>.
+</p>
+
+<p>
+<strong>Падение U БП</strong> — допустимое падение напряжения на проводах или блоке питания, в вольтах (<strong>V</strong>). Выбор значений от <strong>0.50V</strong> до <strong>10.00V</strong>, с шагом <strong>0.25V</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Макс t° мотора</strong> — установка ограничения температуры нагрева мотора при зарядке, в градусах Цельсия (<strong>°C</strong>). Выбор значений от <strong>50°C</strong> до <strong>120 °C</strong>, с шагом <strong>5°C</strong>. <br/>
+
+</p>
+
+<p>
+<strong>MPPT</strong> — включает и выключает функцию отслеживания точки максимальной мощности при зарядке батареи через контроллер от солнечной панели. <br/>
+
+</p>
+
+<p>
+Ниже в разделе меню через знак <strong>#</strong> показаны текущие значения напряжений, токов и мощности зарядки: <br/>
+
+<strong># Ток батареи</strong> <br/>
+
+<strong># Напряжение батареи</strong> <br/>
+
+<strong># Мощность заряда</strong> <br/>
+
+<strong># Ток зарядки</strong> <br/>
+
+<strong># Напряжение зарядки</strong>
+</p>
+
+<p>
+После подлючения блока питания, на экране Бортового компьютера появится индикация процесса заряда аккумулятора.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/charging.png" class="medialeft" alt="" /> <strong>Индикация справа:</strong><br/>
+
+<strong>-22.1A</strong> — параметр инфостроки, в зависимости от настроек Бортового компьютера. <br/>
+
+<strong>0:0:58</strong> — время, прошеднее после начала зарядки, часы, минуты, секунды. <br/>
+
+<strong>I24.9</strong> — ток зарядки, в амперах (<strong>А</strong>). <br/>
+
+<strong>U53.7</strong> — напряжение зарядки, в вольтах (<strong>V</strong>). <br/>
+
+</p>
+
+<p>
+<strong>Индикация посередине</strong> — температура мотора и контроллера, соответственно, в градусах Цельсия (<strong>°C</strong>).<br/>
+
+</p>
+
+<p>
+<strong>Индикация слева:</strong> <br/>
+
+<strong>59.0V</strong> — параметр инфостроки, в зависимости от настроек Бортового компьютера. <br/>
+
+<strong>15Wh</strong> — емкость батареи, в Ватт-часах (<strong>Wh</strong>). <br/>
+
+<strong>100%</strong> — уровень заряда батареи, в процентах (<strong>%</strong>). <br/>
+
+<strong>I24.9</strong> — ток батареи, в амперах (<strong>А</strong>). <br/>
+
+<strong>U53.7</strong> — напряжение батареи, в вольтах (<strong>V</strong>). <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0440\u0435\u043e\u0431\u0440\u0430\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c&quot;,&quot;hid&quot;:&quot;\u043f\u0440\u0435\u043e\u0431\u0440\u0430\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:45,&quot;range&quot;:&quot;113646-119316&quot;} -->
+<h2 id="настройка_портов">Настройка портов</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> настраиваются функции портов. В Контроллере есть тринадцать цифровых портов которые можно настроить на разные функции — <strong>I1</strong>-<strong>I4</strong>, <strong>IO5</strong>, <strong>IO6</strong>, <strong>I7</strong>-<strong>I13</strong>. См. <a href="/doku.php?id=ru:controller:setup#схема_подключения" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">схему подключения</a>. <br/>
+
+</p>
+
+<p>
+Также дополнительно доступны шестнадцать CAN портов <strong>CAN порт 1</strong> — <strong>CAN порт 16</strong>, сигналы которых можно настроить на Бортовом компьютере или Микролайт. Это программные значения, физических входов на платах меньше, в данный момент доступно восемь CAN-портов <strong>IO1</strong>-<strong>IO8</strong> в Бортовом компьютере (см. <a href="/doku.php?id=ru:display:start#схема_подключения" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">схему подключения)</a> плюс четыре Хоткея (кнопки на Бортовом компьютере, описание настроек см. в разделе <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Настройка кнопок</a>). В будущем добавится шесть CAN-портов <strong>I1</strong>-<strong>I6</strong> в плате Микролайт. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/ports_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+В разделе <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> &gt; <strong>Состояние портов</strong> можно проверить активацию входа по замыканию контакта. При подаче сигнала значение будет менять с <strong>Откл.</strong> на <strong>Вкл.</strong> Ниже в пунктах меню <strong># Ручка газа</strong> и <strong># Ручка тормоза</strong> можно посмотреть напряжение на ручке газа и тормоза соответственно. <br/>
+
+</p>
+
+<p>
+Если органы управления подключены в Бортовой компьютер, то проверять активацию входа по замыканию контакта надо в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">меню</a> <strong>Бортовой компьютер</strong> &gt; <strong>Информация</strong>. <br/>
+
+</p>
+
+<p>
+<strong># PAS An</strong> — показывает напряжение аналогового входа PAS датчика, в вольтах (V).
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+<p>
+В пункте <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> &gt; <strong>Режим скоростей</strong> выбирается способ переключения дополнительных режимов <strong>S1</strong>,<strong>S2</strong>,<strong>S3</strong> для входов в Контроллере или CAN входов — <strong>Кнопка</strong> или <strong>Переключатель</strong>. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/ports_ru_22052023.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Доступные функции для портов Контроллера <strong>I1</strong>, <strong>I2</strong>, <strong>I3</strong>, <strong>I4</strong>, <strong>IO5</strong>, <strong>IO6</strong>, <strong>I7</strong>, <strong>I8</strong>-<strong>I13</strong> и CAN портов <strong>CAN порт 1</strong> — <strong>CAN порт 16</strong>: <br/>
+
+<strong>OFF</strong> — отключение порта. <br/>
+
+<strong>RV</strong> — задний ход. <br/>
+
+<strong>CRe</strong> — включение круиза. <br/>
+
+<strong>CR+</strong> — увеличить скорость круиза (когда активен). <br/>
+
+<strong>CR-</strong> —  уменьшить скорость круиза (когда активен). <br/>
+
+<strong>CRr</strong> — восстановление круиза (включение последней сохраненной скорости). <br/>
+
+<strong>BK</strong> — кнопка торможения. <br/>
+
+<strong>DM</strong> — отключение мотора (отключает газ, тормоз, PAS). <br/>
+
+<strong>DTH</strong> — отключение ручки газа. <br/>
+
+<strong>DPAS</strong> — отключение PAS сенсора. <br/>
+
+<strong>P+</strong> — увеличение уровня мощности PAS. <br/>
+
+<strong>P-</strong> — уменьшение уровня мощности PAS. <br/>
+
+<strong>SWSNS</strong> — вход датчика переключения скоростей (Gearsensor) для отключения тяги мотора. Функционал в разработке. <br/>
+
+<strong>N</strong> — активирует режим нейтрали принудительно, сбрасывает счетчик номера скорости если используется. Если включена нейтраль по умолчанию, то для выхода из режима нейтрали необходимо заново нажать кнопку скорости. <br/>
+
+<strong>ETNH</strong> — включение ручки газа. <br/>
+
+<strong>nBK</strong> — инвертированный вход кнопки тормоза, включает тормоз при размыкании контакта. <br/>
+
+<strong>S1</strong> — скорость 1. <br/>
+
+<strong>S2</strong> — скорость 2. <br/>
+
+<strong>S3</strong> — скорость 3. <br/>
+
+<strong>S1of3</strong> — скорость 1 для 3-х позиционного переключателя. <br/>
+
+<strong>S3of3</strong> — скорость 3 для 3-х позиционного переключателя. <br/>
+
+<strong>Scyc</strong> — циклирование скоростей по кругу, последовательное переключение с помощью одной кнопки. <br/>
+
+<strong>S++</strong> — инкремент скорости, переключение скорости от меньшей к большей с помощью одной кнопки. <br/>
+
+<strong>S–</strong> — декремент скорости, переключение скорости от большей к меньшей с помощью одной кнопки. <br/>
+
+<strong>SPSNS</strong> — вход, внешний датчик скорости. <br/>
+
+<strong>Spec.</strong> — спец. функция порта, например, USB или PWM выход. <br/>
+
+<strong>CL1</strong>-<strong>CL5</strong> — мгновенный импорт конфигурации по нажатию CAN кнопки (до пяти разных конфигураций). Для корректного импорта, номер функции должен соответствовать номеру в названии файла вашей конфигурации. Например, функция <strong>CL3</strong> будет соответствовать файлу с названием <strong>ncconf3.cfg</strong>. <a href="/doku.php?id=ru:controller:examples#настройка_загрузки_конфига_can-кнопкой" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Описание</a> настройки данной функции.<br/>
+
+</p>
+
+<p>
+Далее в меню находятся пункты для настройки выходов ШИМ. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043f\u043e\u0440\u0442\u043e\u0432&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043f\u043e\u0440\u0442\u043e\u0432&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:46,&quot;range&quot;:&quot;119317-125963&quot;} -->
+<h3 id="настройка_выходов_шим">Настройка выходов ШИМ</h3>
+<div class="level3">
+
+<p>
+Для активации выхода <strong>ШИМ IO5</strong> или <strong>ШИМ IO6</strong> в разделе меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> должен быть установлен в режим <strong>Spec.</strong> и отключен <strong>PAS</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Выход ШИМ</strong> — выбор частоты дополнительного ШИМ выхода на портах <strong>P1/P2</strong>. Выбор значений частоты ШИМ — <strong>100Hz</strong>, <strong>500Hz</strong>, <strong>1kHz</strong>, <strong>5kHz</strong>, <strong>10kHz</strong>, <strong>24kHz (FAN)</strong>. Для обычной лампочки больших значений не нужно. Выберите частоту <strong>100Hz</strong>, этого будет достаточно, чтобы не видеть мерцания. Высокая частота с пометкой <strong>FAN</strong> используется для управления вентилятором, это их стандартная частота. <br/>
+
+</p>
+
+<p>
+<strong>ШИМ IO5</strong> и <strong>ШИМ IO6</strong> — выбор режимов работы: <br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Отключен</strong> — режим не выбран. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Стоп-огни</strong> — активируется когда нажат тормоз. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>Габариты</strong> — активируется когда включен контроллер. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>t°C мотора</strong> — активируется за две дельты температуры мотора (настройка <strong>Дельта °t</strong> в меню <strong>Контроллер</strong> &gt; <strong>Настройка мотора</strong> &gt; <strong>Термодатчик мотора</strong>), по мере нагрева мотора будет увеличиваться ШИМ. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <strong>t°C контроллера</strong> — активируется от 40°С, максимальное значение при 80°С температуры контроллера. <br/>
+</div>
+</li>
+</ul>
+
+<p>
+<strong>ШИМ IOn Минимум</strong> / <strong>Максимум</strong> — выбор выходного диапазона заполнения ШИМ, значения от <strong>0%</strong> до <strong>100%</strong>, с шагом <strong>1%</strong>. <br/>
+
+<strong>ШИМ IOn t° Минимум</strong> / <strong>t° Максимум</strong> — выбор температуры мотора или контроллера,  значения от <strong>0°С</strong> до <strong>100°С</strong>, с шагом <strong>1°С</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0432\u044b\u0445\u043e\u0434\u043e\u0432 \u0428\u0418\u041c&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0432\u044b\u0445\u043e\u0434\u043e\u0432_\u0448\u0438\u043c&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:47,&quot;range&quot;:&quot;125964-128268&quot;} -->
+<h2 id="дополнительные_настройки">Дополнительные настройки</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong> находятся различные дополнительные настройки Контроллера.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u0434\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435_\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:48,&quot;range&quot;:&quot;128269-128525&quot;} -->
+<h3 id="кнопка_включения_и_сон">Кнопка включения и сон</h3>
+<div class="level3">
+
+<p>
+Кнопка включения Контроллера находится на задней стороне Бортового компьютера. В пункте меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong> &gt; <strong>Кнопка включения</strong> выбирается способ включения/выключения Контроллера, который включается, когда на него подается питание или замыкаются контакты кнопки. В отключенном режиме Контроллер потребляет около 100мкА, поэтому если повторно подключить питание, не разрядив конденсаторы, контроллер может не запуститься. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k24.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Выбор настроек кнопки включения: <br/>
+
+<strong>Отключена</strong> — контроллер включается при подаче питания или при замыкании кнопки питания, не отключается. <br/>
+
+<strong>Переключатель</strong> — контроллер включается при замыкании кнопки питания (когда EN замкнут на GND), отключается при размыкании. <br/>
+
+<strong>Кнопка</strong> — контроллер включается кнопкой на Бортовом компьютере, ее необходимо нажать в течении 2 сек и отпустить, отключается повторным удержанием кнопки. <br/>
+
+<strong>CAN</strong> — контроллер включается при подаче питания или при замыкании кнопки, отключается только когда другое устройство по CAN шине отправляет команду отключения. Полезно использовать с несколькими контроллерами, когда один контроллер настроен на кнопку или переключатель, а остальные на режим CAN. <br/>
+
+</p>
+
+<p>
+<strong>Автоотключение</strong> — активация функции отключения контроллера спустя некоторое время, если мотор не крутится. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. Время отключения настраивается в пункте <strong>Время сна</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Время сна</strong> — выбор времени отключения контроллера при активированной функции <strong>Автоотключения</strong>, в секундах (<strong>s</strong>). Выбор значений от <strong>30s</strong> до <strong>1500s</strong>, с шагом <strong>5s</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Блокировка при включении</strong> — функция блокирует управление контроллером при запуске, пока на Бортовом компьютере не будет введен пароль, если Бортовой компьютер отсутствует, включение этой настройки приведет к постоянной блокировке контроллера.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041a\u043d\u043e\u043f\u043a\u0430 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0438 \u0441\u043e\u043d&quot;,&quot;hid&quot;:&quot;\u043a\u043d\u043e\u043f\u043a\u0430_\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f_\u0438_\u0441\u043e\u043d&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:49,&quot;range&quot;:&quot;128526-131863&quot;} -->
+<h3 id="настройка_спидометра">Настройка спидометра</h3>
+<div class="level3">
+
+<p>
+Следующий блок настроек в разделе меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong> относится к настройке расчета скорости. Если используется внешний датчик скорости, подключенный в Бортовой компьютер, то его настройку необходимо сделать в меню <strong><a href="/doku.php?id=ru:display:start#настройка_источников_данных" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Настройка источников данных</a></strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k25.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Расчет скорости</strong> — включение в Контроллере расчета скорости. Полезно для многомоторных конфигураций. Данную настройку можно отключить на некоторых моторах. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Длина окружности</strong> — длина окружности колеса, в миллиметрах (mm). Выбор значений от <strong>0mm</strong> до <strong>3000mm</strong>, с шагом <strong>5mm</strong>. Для расчета длины окружности можете воспользоваться <a href="https://mnogoformul.ru/dlina-okruzhnosti-ili-perimetr-kruga" class="urlextern" title="https://mnogoformul.ru/dlina-okruzhnosti-ili-perimetr-kruga" rel="ugc nofollow">онлайн-калькулятором</a>. <br/>
+
+</p>
+
+<p>
+<strong>Звезда мотора</strong> — в данной настройке указывается количество зубьев звезды на моторе (условно), что позволяет задать редукцию с вала мотора на колесо. Также эту настройку можно использовать как коэффициент редукции для редукторных МК. <br/>
+
+</p>
+
+<p>
+<strong>Звезда колеса</strong> — количество зубьев звезды колеса, аналогично настройке Звезда мотора. <br/>
+
+</p>
+
+<p>
+Если у вас мотор-колесо, то в разделе <strong>Контроллер</strong> &gt; <strong>Настройки мотора</strong> необходимо прописать количество <strong>Пар полюсов мотора</strong> (количество магнитов разделить на два). Для редукторных моторов или миддрайвов рекомендуется установка внешнего датчика скорости, который подключается к Бортовому компьютеру или в любой из портов контроллера.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0441\u043f\u0438\u0434\u043e\u043c\u0435\u0442\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0441\u043f\u0438\u0434\u043e\u043c\u0435\u0442\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:50,&quot;range&quot;:&quot;131864-134490&quot;} -->
+<h3 id="мастер-контроллер">Мастер-контроллер</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k26.png" class="medialeft" alt="" />
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong> &gt; <strong>Мастер-контроллер</strong> можно включить функцию управления другими контроллерами с текущего. Эта настройка подойдет для многомоторных конфигураций, где управление заведено в один из контроллеров напрямую.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041c\u0430\u0441\u0442\u0435\u0440-\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440&quot;,&quot;hid&quot;:&quot;\u043c\u0430\u0441\u0442\u0435\u0440-\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:51,&quot;range&quot;:&quot;134491-135042&quot;} -->
+<h3 id="уровень_доступа">Уровень доступа</h3>
+<div class="level3">
+
+<p>
+В меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong> &gt; <strong>Уровень доступа</strong> вам доступны четыре уровня: <strong>Новичок</strong>, <strong>Пользователь</strong>, <strong>Продвинутый</strong>, <strong>Инженер</strong>.<br/>
+
+</p>
+
+<p>
+В зависимости от выбранного уровня доступа будут скрыты некоторые пункты меню, чтобы упростить настройку контроллера. Например, на уровне <strong>Новичок</strong> будет отображаться минимальный базовый набор настроек. На уровне <strong>Инженер</strong> будут доступны все возможные пункты для настройки. Свой уровень вы можете выбрать самостоятельно.<br/>
+
+</p>
+
+<p>
+<strong>Важное замечание</strong>. После обновления прошивки контроллера на v0.8.13 по умолчанию будет установлен уровень <strong>Новичок</strong>. Помните об этом, когда не обнаружите привычных пунктов меню в настройках контроллера.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0423\u0440\u043e\u0432\u0435\u043d\u044c \u0434\u043e\u0441\u0442\u0443\u043f\u0430&quot;,&quot;hid&quot;:&quot;\u0443\u0440\u043e\u0432\u0435\u043d\u044c_\u0434\u043e\u0441\u0442\u0443\u043f\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:52,&quot;range&quot;:&quot;135043-136313&quot;} -->
+<h3 id="прочие_настройки">Прочие настройки</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/9_0.8.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Лимит t° CPU</strong> — ограничение температуры процессора, в градусах Цельсия (<strong>°C</strong>). При достижении указанного порога будет ограничиваться фазный ток. Выбор значений от <strong>60°C</strong> до <strong>105°C</strong>, с шагом <strong>5°C</strong>. <br/>
+
+</p>
+
+<p>
+<strong>ID устройства</strong> — настройка номера контроллера в CAN-сети. Данный номер отображается в разделе меню <strong>Настройки</strong> &gt; <strong>Устройства</strong> перед каждым устройством, которое подключено в сеть по протоколу LEVCAN. Если, по умолчанию, номер вашего устройства <strong>0</strong> рекомендуем сменить его на другое число, для корректного обновления прошивки. <br/>
+
+</p>
+
+<p>
+<strong>Префикс 1</strong> и <strong>Префикс 2</strong> — настройка названия контроллера для многомоторных конфигураций. Используя префиксы вместе или по отдельности можно указать, где расположен электродвигатель, которым управляет Контроллер. Выбор значений для каждого префикса — <strong>Нет</strong>, <strong>Передний</strong>, <strong>Задний</strong>, <strong>Левый</strong>, <strong>Правый</strong>. Для сохранения настройки перейдите в пункт меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong> и выберите <strong>Вкл.</strong>, после этого перезапустите контроллер. Теперь разделе меню <strong>Устройства</strong> перед названием контроллера будет отображаться его префикс.
+</p>
+
+<p>
+Например, у вас 2WD самокат и два контроллера 12F, вам надо их как-то различать в меню <strong>Устройства</strong> для удобства настройки. Контроллеру для переднего электродвигателя можно назначить префикс <strong>Передний</strong>, тогда в разделе меню <strong>Устройства</strong> данный контроллер будет называться <strong>Передний Nucular controller</strong>.
+</p>
+
+<p>
+Если вы используете привод 3WD и более, то для названия контроллера необходимо задействовать оба префикса. Например, если контроллер управляет задним правым электродвигателем, то настройка будет выглядеть так: <strong>Префикс 1</strong> — <strong>Задний</strong>, <strong>Префикс 2</strong> — <strong>Правый</strong>. 
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0440\u043e\u0447\u0438\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u043f\u0440\u043e\u0447\u0438\u0435_\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:53,&quot;range&quot;:&quot;136314-139351&quot;} -->
+<h2 id="pid_регуляторы">PID регуляторы</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>PID регуляторы</strong> настраиваются различные сигналы пропорционально-интегрально-дифференцирующих (ПИД) регуляторов — устройств в управляющем контуре с обратной связью, используемых в системах автоматического управления для формирования управляющего сигнала с целью получения необходимых точности и качества переходного процесса. <strong>Настройки для продвинутых пользователей</strong>. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k27.png" class="medialeft" alt="" />
+Для настроек каждого регулятора используются два или три коэффициента: <br/>
+
+<strong>Ki</strong> — интегральный коэффициент. <br/>
+
+<strong>Кp</strong> — пропорциональный. <br/>
+
+<strong>Kd</strong> — дифференцирующий. <br/>
+
+</p>
+
+<p>
+<strong>Square Ki, Kp</strong> — регулятор фазного тока при трапеции. <br/>
+
+<strong>FOC Ki, Kp</strong> — регуляторы векторного управления. <br/>
+
+<strong>FW Ki, Kp</strong> — коэффициенты ослабления поля. <br/>
+
+<strong>DCv Ki, Kp</strong> — регулятор напряжения по шине питания. <br/>
+
+<strong>DCi Ki, Kp</strong> — регулятор тока по шине питания. <br/>
+
+<strong>DCw Ki, Kp</strong> — калькулятор мощности. <br/>
+
+<strong>Speed Ki, Kp, Kd</strong> — регулятор скорости для режима управления <strong>Скорость</strong> или <strong>Скорость + тяга</strong>. <br/>
+
+<strong>PLL Ki, Kp</strong> — регулятор определения скорости вращения мотора по холлам. <br/>
+
+<strong>Acceleration Kp, Ki</strong> — регулятор замедления и ускорения.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PID \u0440\u0435\u0433\u0443\u043b\u044f\u0442\u043e\u0440\u044b&quot;,&quot;hid&quot;:&quot;pid_\u0440\u0435\u0433\u0443\u043b\u044f\u0442\u043e\u0440\u044b&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:54,&quot;range&quot;:&quot;139352-141360&quot;} -->
+<h2 id="флаги_статуса">Флаги статуса</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Флаги статуса</strong> отображаются ошибки, которые могут возникнуть в процессе работы Контроллера. При возникновении ошибки значение параметра меняется на <strong>Вкл</strong>.<br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/status_ru_0504.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Сбросить</strong> — сброс всех статусов. Выбор значений <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Макс. ускорение</strong> — максимальное ускорение, в ERPM/s. <br/>
+
+<strong>Макс. замедление</strong> — максимальное замедление, в ERPM/s. <br/>
+
+<strong>Ток перегрузки</strong> — последний зарегистрированный ток на фазах, в Амперах. <br/>
+
+<strong>Перегрузка тока</strong> — превышение допустимых значений по току. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Пульсации напряжения</strong> — переток на контроллере P24F (плита), который отслеживается через пульсацию питания. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Чрезмерное ослабление</strong> — ошибка по ослаблению. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Превышение U питания</strong> — слишком высокое напряжение питания, ошибка появится свыше 95В, но в целом зависит от модели контроллера. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Низкое U питания</strong> — слишком низкое напряжение питания, меньше минимального порога питания батареи. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка управления</strong> — контроллер не смог вовремя плавно отключить электродвигатель когда был отпущен газ. Может происходить на некоторых моторах когда используется ослабление, уменьшите ток ослабления. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Защита 12V</strong> —  выход из строя или ошибка по линии питания 12В. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка тормоза</strong> — ошибка подключения ручки тормоза. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка газа</strong> — ошибка подключения ручки газа. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Блокировка газа</strong> — показывает что ручка газа отключена. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка датчиков положения</strong> — ошибка подключения датчиков положения двигателя. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка индекса трапеции</strong> — ошибка сигнала с датчиков при управлении по трапеции. Значения <strong>Вкл</strong> и <strong>Откл</strong>.<br/>
+
+<strong>Ошибка потоков</strong> — перегрузка процессора. Значения <strong>Вкл</strong> и <strong>Откл</strong>. Ошибка не критичная, сообщите нам, если она возникнет. <br/>
+
+<strong>Защита по PAS</strong> — ошибка системы PAS. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Перегрев контроллера</strong> — защита по перегреву контроллера. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Перегрев мотора</strong> — защита по перегреву электромотора. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Неисправность защиты</strong> — аппаратная ошибка, неисправность всех систем защиты при самотестировании контроллера. При возникновении этой ошибки эксплуатация Контроллера будет невозможна. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Ошибка измерения ADC</strong> — программная ошибка аналогово-цифровой преобразователя (АЦП). Значения <strong>Вкл</strong> и <strong>Откл</strong>.<br/>
+
+<strong>Ошибка измерения VBUS</strong> — ошибка измерения напряжения питания. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>Напряжение на фазах</strong> — превышение напряжения на фазах. Значения <strong>Вкл</strong> и <strong>Откл</strong>. <br/>
+
+<strong>LEC</strong> — формы ошибок CAN-шины. Если все в порядке, вы увидите значение <strong>Ok</strong>. При ошибках будут значения — <strong>Stuff</strong>, <strong>Form</strong>, <strong>Acknowledgment</strong>, <strong>Bit recessive</strong>, <strong>Bit dominant</strong>, <strong>CRC</strong>, <strong>SW</strong>. Сообщите нам код, если возникает одна из указанных ошибок. <br/>
+
+<strong>Получено с ошибкой</strong> — ошибки CAN-шины на прием. <br/>
+
+<strong>Отправлено с ошибкой</strong> — ошибки CAN-шины на передачу. <br/>
+
+<strong>CAN сост.</strong> — перегрузки буферов. Если все в порядке, вы увидите значение <strong>Ok</strong>. При ошибках будут значения — <strong>OVR0</strong>, <strong>OVR1</strong>, <strong>OVR01</strong>. При возникновении этой ошибки сообщите нам код. <br/>
+
+<strong>CAN RX</strong> — количество сообщений в CAN-шине на прием. <br/>
+
+<strong>CAN TX</strong> — количество сообщений в CAN-шине на передачу. <br/>
+
+<strong>CPU Load</strong> — текущая загрузка центрального процессора, в процентах (<strong>%</strong>). 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0424\u043b\u0430\u0433\u0438 \u0441\u0442\u0430\u0442\u0443\u0441\u0430&quot;,&quot;hid&quot;:&quot;\u0444\u043b\u0430\u0433\u0438_\u0441\u0442\u0430\u0442\u0443\u0441\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:55,&quot;range&quot;:&quot;141361-147493&quot;} -->
+<h2 id="отладочная_информация">Отладочная информация</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Отладочная информация</strong> показаны основные параметры работы вашей Контроллера, электромотора и всей системы в целом — температура, обороты, напряжение и ток, а также значения регуляторов тока. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k29.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Температура FET</strong> — температура полевых транзисторов (MOSFETs) Контролера, в градусах Цельсия (<strong>°C</strong>). <br/>
+
+<strong>Температура мотора</strong> — температура электромотора, в градусах Цельсия (<strong>°C</strong>). <br/>
+
+<strong>DC ток</strong> — сила постоянного тока, в амперах (<strong>А</strong>). <br/>
+
+<strong>DC напряжение</strong> —  напряжение постоянного тока, в вольтах (<strong>V</strong>). <br/>
+
+<strong>AC ток</strong> — сила переменного тока, в амперах (<strong>А</strong>). <br/>
+
+<strong>AC напряжение</strong> — напряжение переменного тока, в вольтах (<strong>V</strong>). <br/>
+
+<strong>Motor U0</strong> — постоянное напряжение на фазах, в вольтах (<strong>V</strong>). <br/>
+
+<strong>System 12V</strong> — напряжение на CAN-шине 12V, в вольтах (<strong>В</strong>). <br/>
+
+<strong>System 5V</strong> — напряжение на CAN-шине 5V, в вольтах (<strong>В</strong>). <br/>
+
+<strong>RPM</strong> — обороты мотора, Об/мин.(<strong>RPM</strong>). <br/>
+
+<strong>ERPM</strong> — электрические обороты мотора в минуту (<strong>ERPM</strong>). <br/>
+
+<strong>Hall вход</strong> — данный параметр позволяет проверить работоспособность датчиков холла. В этом пункте есть три цифры, каждая показывает уровень сигнала, если медленно вращать мотор рукой, то все три цифры должны меняться. Если ни одна цифра не меняется — проверьте подключен ли разъем холлов или может быть оборвана земля. Если не меняется одна из цифр — нет контакта или оборван провод датчика. Для проверки контактов в контроллере нужно отключить разъем холлов и померить напряжения на разъеме контроллера то на сигнальных линиях холлов должно быть около 4V, должно присутствовать 5V на питании и примерно 3V на линии термодатчика. <br/>
+
+<strong>Hall индекс</strong> — виртуальное положение мотора, цифры от 1 до 6 (нормальная работа). <br/>
+
+<strong>Газ %</strong> — процент, на сколько нажат газ. <br/>
+
+<strong>Тормоз %</strong> — процент, на сколько нажат тормоз. <br/>
+
+<strong>Запрос скорости</strong> — задание для регулятора скорости, в eRPM. <br/>
+
+<strong>Запрос тока</strong> — запрос фазного тока, либо положительный газ, либо отрицательный тормоз. <br/>
+
+<strong>Абс. лимит тока</strong> — лимит тока для данного типа контроллера с учетом перегрева. <br/>
+
+<strong>Температура CPU</strong> — температура центрального процессора, в градусах Цельсия (<strong>°C</strong>).
+</p>
+
+<p>
+Далее в меню находятся разделы <strong>Отладка FOC</strong> и <strong>Удаленное управление</strong>, с описанием которых вы можете ознакомиться ниже.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u0442\u043b\u0430\u0434\u043e\u0447\u043d\u0430\u044f \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043e\u0442\u043b\u0430\u0434\u043e\u0447\u043d\u0430\u044f_\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:56,&quot;range&quot;:&quot;147494-151451&quot;} -->
+<h3 id="отладка_foc">Отладка FOC</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Отладочная информация</strong> &gt; <strong>Отладка FOC</strong> <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/foc_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>U Q</strong> — напряжение по оси Q,  в вольтах (<strong>V</strong>). <br/>
+
+<strong>U D</strong> — напряжение по оси D, в вольтах (<strong>V</strong>). <br/>
+
+<strong>I Q</strong> — сила тока по оси Q, в амперах (<strong>А</strong>). <br/>
+
+<strong>I D</strong> — сила тока по оси D, в амперах (<strong>А</strong>). <br/>
+
+<strong>I Q reqest</strong> — запрос тока по оси Q, в амперах (<strong>А</strong>). <br/>
+
+<strong>I D reqest</strong> — запрос тока по оси D, в амперах (<strong>А</strong>).
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u0442\u043b\u0430\u0434\u043a\u0430 FOC&quot;,&quot;hid&quot;:&quot;\u043e\u0442\u043b\u0430\u0434\u043a\u0430_foc&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:57,&quot;range&quot;:&quot;151452-152148&quot;} -->
+<h3 id="удаленное_управление">Удаленное управление</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Отладочная информация</strong> &gt; <strong>Удаленное управление</strong> можно посмотреть параметры ручек газа и тормоза, подключенных к другим устройствам, подключенным в CAN-шину (Бортовой компьютер или Микролайт). Также вы можете посмотреть какие сигналы приходят с остальных устройств, подключенных в CAN-шину <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/otladcontrol_ru_220523.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Throttle</strong> — напряжение на ручке газа у удаленного источника (Бортовой компьютер или Микролайт), в вольтах (<strong>V</strong>). <br/>
+
+<strong>Brake</strong> — напряжение на ручке тормоза у удаленного источника (Бортовой компьютер или Микролайт), в вольтах (<strong>V</strong>). <br/>
+
+<strong>Throttle % </strong>—  процент, на сколько нажат газ у удаленного источника. <br/>
+
+<strong>Brake %</strong> — процент, на сколько нажат тормоз у удаленного источника. <br/>
+
+<strong>Neutral</strong> — сигнал нейтрали, <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Brake</strong> — сигнал тормоза <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Disable Motor</strong> — сигнал отключения электромотора, <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Disable Throttle</strong> — сигнал отключения газа, <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Disable PAS</strong> — сигнал отключения PAS, <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Reverse</strong> — сигнал заднего хода, <strong>On</strong> или <strong>Off</strong>. <br/>
+
+<strong>Speed mode:</strong> — сигналы активного в данный момент режима управления, <strong>S1</strong>, <strong>S2</strong> или <strong>S3</strong>. <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0423\u0434\u0430\u043b\u0435\u043d\u043d\u043e\u0435 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;hid&quot;:&quot;\u0443\u0434\u0430\u043b\u0435\u043d\u043d\u043e\u0435_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:58,&quot;range&quot;:&quot;152149-154164&quot;} -->
+<h2 id="логгер">Логгер</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Логгер</strong> включается и настраивается запись данных при работе Контроллера. Данный функционал экспериментальный, могут возникать ошибки. Файл сохраняется в формате <strong>CSV</strong> на SD карту, вставленную в Бортовой компьютер. Для просмотра файла можно воспользоваться сервисом <a href="https://datazap.me/" class="urlextern" title="https://datazap.me/" rel="ugc nofollow">Datazap</a>. SD карта должна иметь файловую систему FAT32.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/k40.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Запустить запись</strong> — для начала записи выберите значение <strong>Вкл</strong> и нажмите правую кнопку Бортового компьютера. После этого пункт меню <strong># Состояние</strong> перейдет в статус <strong>Ожидание</strong>. Запись начнется автоматически после нажатия ручки газа. Если в процессе записи возникнет ошибка вы увидите ее код в пункте меню <strong># Код ошибки</strong>. В случае возникновения ошибки, во-первых, проверьте, что SD карта имеет файловую систему FAT32, во-вторых, что на SD карте есть свободное место для записи. Дополнительно, вы можете удалить ненужные файлы с карты. После чего, перезапустите Контроллер и начните запись еще раз. Если ошибка повторяется, свяжитесь с нами через сайт или чат-техподдержки и сообщите код ошибки.
+</p>
+
+<p>
+<strong>Остановить запись</strong> — остановка записи, выберите <strong>Вкл</strong>, чтобы закончить запись. <br/>
+
+</p>
+
+<p>
+<strong>Постоянная запись</strong> — позволяет активировать режим непрерывной записи лога, в том числе при остановках. В прошивках до v0.8.12 лог писался только в процессе движения и работы электромотора. <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+<strong>Режим запуска</strong> — выбор режима запуска записи:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Ручной</strong>  — включение записи вручную.</div>
+</li>
+<li class="level1"><div class="li"> <strong>При включении</strong>  — запись начинается автоматически при включении Контроллера.</div>
+</li>
+</ul>
+
+<p>
+<strong>Время в логе</strong>  — два параметра времени при записи на выбор:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Шаг времени</strong>  — дельта времени с момента предыдущей записи.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Системное</strong>  — глобальное время, которое инкрементируется после старта контроллера.</div>
+</li>
+</ul>
+
+<p>
+<strong>Период записи</strong>  — задержка между записями значений. Можно выбрать либо количество тактов ШИМа (<strong>PWM1</strong>, <strong>PWM2</strong>, <strong>PWM5</strong>, <strong>PWM10</strong>), либо время (<strong>1ms</strong>, <strong>10ms</strong>, <strong>20ms</strong>, <strong>100ms</strong>, <strong>1s</strong>, <strong>5s</strong>, <strong>10s</strong>, <strong>30s</strong>).
+</p>
+
+<p>
+<strong>Режим записи</strong>  — выбор режима записи:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Буффер</strong>  — буферизация и запись отрезками. </div>
+</li>
+<li class="level1"><div class="li"> <strong>Макс скорость</strong>  — постоянный режим записи.</div>
+</li>
+</ul>
+
+<p>
+<strong>Усреднений данных</strong>  — использование фильтров при записи:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Нет</strong>  — фильтр отключен (записывает реальные значения).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Быстр</strong>  — небольшое усреднение (сглаживает значения).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Медл</strong>  — большое усреднение.</div>
+</li>
+</ul>
+
+<p>
+<strong>Добавить заголовок в лог</strong> — добавление названия контроллера при записи лога, чтобы можно было различить к какому контроллеру относится лог в многомоторных конфигурациях. Установить название контроллера можно в меню <strong>Контроллер</strong> &gt; <strong>Доп. настройки</strong>, пункты <strong>Префикс 1</strong> и <strong>Префикс 2</strong>. <br/>
+
+</p>
+
+<p>
+Далее в разделах меню <strong># Данные для записи</strong>  вы можете выбрать необходимый вам набор параметров для записи. Чтобы включить запись параметра выберите значение <strong>Вкл</strong>. В прошивке v0.8.9 язык логгера заменен на английский, для вебсайтов которые не поддерживают кодировку 1251.
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/logger_ru_0504.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong># Данные для записи:</strong> <br/>
+
+<strong>Battery Voltage</strong> (Напряжение батареи) — запись лога напряжения батареи. <br/>
+
+<strong>Battery Current</strong> (Ток батареи) — запись лога силы тока батареи. <br/>
+
+<strong>Motor Voltage</strong> (Напряжение мотора) — запись лога напряжения мотора. <br/>
+
+<strong>Motor Current</strong> (Ток мотора) — запись лога силы тока мотора. <br/>
+
+<strong>Wheel speed</strong> (Скорость) — запись лога скорости. <br/>
+
+<strong>Motor rad/s</strong> (Мотор рад/с) — запись лога угловой скорости электромотора. <br/>
+
+<strong>Motor RPM</strong> (Мотор об/мин) — запись лога оборотов электромотора в минуту. <br/>
+
+<strong>Motor angle</strong> (Угол мотора) — запись угла электромотора.<br/>
+
+<strong>Tmotor °C</strong> (Т-датчик мотора °C) — запись лога температуры электромотора. <br/>
+
+<strong>Tfet °C</strong> (Т-датчик контроллера °C) — запись лога температуры полевых транзисторов контроллера. <br/>
+
+<strong>Raw hall input</strong> (Вход холлов) — запись лога состояния входа с датчиков Холла без фильтра. <br/>
+
+<strong>Hall index</strong> (Индекс холлов) — запись лога виртуального положение мотора. <br/>
+
+<strong>Throttle %</strong> (Газ %) — запись лога работы ручки газа. <br/>
+
+<strong>Brake %</strong> (Тормоз %) — запись лога работы ручки тормоза. <br/>
+
+<strong>FOC Vq</strong> — запись лога напряжения по оси Q. <br/>
+
+<strong>FOC Vd</strong> — запись лога напряжения по оси D. <br/>
+
+<strong>FOC Iq</strong> — запись лога силы тока по оси Q. <br/>
+
+<strong>FOC Id</strong> — запись лога силы тока по оси D. <br/>
+
+<strong>FOC Iq request</strong> (FOC Iq запрос) — запись лога запроса силы тока по оси D. <br/>
+
+<strong>FOC Id request</strong> (FOC Id запрос) — запись лога запроса силы тока по оси D. <br/>
+
+<strong>Current phA</strong> (Ток фазы A) — запись лога силы тока на фазе A электромотора. <br/>
+
+<strong>Current phB</strong> (Ток фазы B) — запись лога силы тока на фазе B электромотора. <br/>
+
+<strong>Current phC</strong> (Ток фазы C) — запись лога силы тока на фазе C электромотора. <br/>
+
+<strong>PAS frequency RPM</strong> (PAS частота об/мин) — запись лога частоты PAS. <br/>
+
+<strong>PAS torque Nm</strong> (PAS тяга Нм) — запись лога тяги PAS. <br/>
+
+<strong>PAS power W</strong> (PAS мощность Вт) — запись лога мощности PAS. <br/>
+
+<strong>Speed request</strong> (Запрос скорости) — запись лога запроса скорости. <br/>
+
+<strong>Torque request</strong> (Запрос тяги) — запись лога запроса тяги. <br/>
+
+<strong>Fault flag</strong> (Флаг ошибки) — запись кода ошибки в лог. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041b\u043e\u0433\u0433\u0435\u0440&quot;,&quot;hid&quot;:&quot;\u043b\u043e\u0433\u0433\u0435\u0440&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:59,&quot;range&quot;:&quot;154165-162581&quot;} -->
+<h2 id="статистика">Статистика</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Статистика</strong> можно посмотреть данные по Контроллеру. Это статистика за поездку, которая будет сброшена автоматически после выключения питания Контроллера. Если у вас несколько Контроллеров в системе, то суммарные данные по всем контроллерам вы можете посмотреть в общей статистике в Бортовом компьютере.<br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/stat_2907.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Вт*ч использовано</strong> — суммарный расход энергии (потрачено плюс заряжено), в Ватт-часах (<strong>Wh</strong>). <br/>
+
+<strong>Вт*ч потрачено</strong> — расход энергии, в Ватт-часах (<strong>Wh</strong>). <br/>
+
+<strong>Вт*ч заряжено</strong> — энергия, полученная в процессе рекуперации, в Ватт-часах (<strong>Wh</strong>). <br/>
+
+<strong>Процент зарядки</strong> — процент энергии, восстановленной в процессе рекуперации (<strong>%</strong>). <br/>
+
+<strong>A*ч использовано</strong> — суммарный расход энергии, в Ампер-часах (<strong>Ah</strong>).  <br/>
+
+<strong>A*ч потрачено</strong>  — расход энергии (потрачено плюс заряжено), в Ампер-часах (<strong>Ah</strong>). <br/>
+
+<strong>A*ч заряжено</strong> — энергия, полученная в процессе рекуперации, в Ампер-час (<strong>Ah</strong>). <br/>
+
+<strong>Мин. напряж.бат.</strong> — минимальное напряжение батареи, в Вольтах (<strong>V</strong>). <br/>
+
+<strong>Макс. фазный ток</strong> — максимальный фазный ток, в Амперах (<strong>A</strong>). <br/>
+
+<strong>Макс. мощность</strong> — максимальная мощность электродвигателя, в Ваттах (<strong>W</strong>). <br/>
+
+<strong>Макс. темп. мотора</strong> — максимальная температура электродвигателя, в градусах Цельсия (<strong>°C</strong>).  <br/>
+
+<strong>Макс. темп. контроллера</strong> — максимальная температура Контроллера, в градусах Цельсия (<strong>°C</strong>).  <br/>
+
+</p>
+
+<p>
+Указанные ниже значения являются приблизительными! <br/>
+
+<strong>Эффективность мотора</strong> — КПД электродвигателя, в процентах (<strong>%</strong>). <br/>
+
+<strong>Средняя эффективность мотора</strong> — среднее КПД  электродвигателя, в процентах (<strong>%</strong>). <br/>
+
+<strong>Тяга</strong> — текущая тяга электродвигателя, в Ньютон-метрах (<strong>Nm</strong>). <br/>
+
+<strong>Мощность выходная</strong> — мощность, которую выдает электродвигатель, в Ваттах (<strong>W</strong>). <br/>
+
+<strong>Мощность входная</strong> — мощность, которая поступает в электродвигатель, в Ваттах (<strong>W</strong>). <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;hid&quot;:&quot;\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:60,&quot;range&quot;:&quot;162582-165804&quot;} -->
+<h2 id="информация_об_устройстве">Информация об устройстве</h2>
+<div class="level2">
+
+<p>
+В разделе меню <strong>Контроллер</strong> &gt; <strong>Информация об устройстве</strong> можно посмотреть основные данные по Контроллеру. В этом меню вы можете посмотреть какая версия прошивки загружена в ваш Контроллер, а также другие показатели, которые отличаются в зависимости от модели Контроллера. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-setup/ru/images/info_2907.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Nucular Controller</strong> — название устройства в зависимости от типа Контроллера. <br/>
+
+<strong>Предел напряжения</strong> — 95V. Гарантия распространяется на напряжение питания до 90V включительно. <br/>
+
+<strong>Максимальный ток</strong> — значение максимального фазного тока в зависимости от типа Контроллера, в амперах (А). <br/>
+
+<strong>Скорость энкодера</strong> — 26kHz или 580kHz (новая версия контроллера с оранжевыми фазными проводами). <br/>
+
+<strong>Дата прошивки</strong> — дата компиляции прошивки. <br/>
+
+<strong>Версия прошивки</strong> — версия установленной прошивки, проверить наличие обновлений можно в разделе <a href="/doku.php?id=ru:firmware" class="wikilink1" title="ru:firmware" data-wiki-id="ru:firmware">Прошивки</a>. <br/>
+
+<strong>Дата загрузчика</strong> — дата компиляции загрузчика данных. <br/>
+
+<strong>Версия загрузчика</strong> — версия загрузчика данных. <br/>
+
+<strong>Дата производства</strong> — дата производства контроллера. <br/>
+
+<strong>Наработка</strong> — наработка контроллера в киловатт-часах (kW*h). <br/>
+
+<strong>t° сред за 100 ч</strong> — средняя температура контроллера за последние 100 часов. <br/>
+
+<strong>t° сред</strong> — средняя температура контроллера за все время. <br/>
+
+<strong>Защит по току</strong> — число сработавших защит по току за все время работы контроллера. <br/>
+
+<strong>Защит по температуре</strong> — число сработавших защит по температуре за все время работы контроллера. <br/>
+
+<strong>Защит по напряжению</strong>  — число сработавших защит по напряжению за все время работы контроллера. <br/>
+
+<strong>Включений</strong> — число включений Контроллера. <br/>
+
+<strong>Время работы</strong> — общее время работы Контроллера, минуты, часы, дни. <br/>
+
+<strong>Серийный номер</strong> — серийный номер Контроллера (для устройств произведенных с 01.07.2022). Сфотографируйте или запишите этот номер и храните его отдельно от Контроллера. Он может потребоваться вам при обращении за ремонтом или в случае кражи Контроллера. После обновления прошивки на 0.8.7 в некоторых версиях контроллеров, произведенных до 01.07.2022 также может появиться серийный номер. Проверьте после обновления. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u043e\u0431 \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435&quot;,&quot;hid&quot;:&quot;\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f_\u043e\u0431_\u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:61,&quot;range&quot;:&quot;165805-&quot;} -->

@@ -11,8 +11,10 @@ import UpdatePassword from './pages/UpdatePassword';
 import Profile from './pages/Profile';
 import Support from './pages/Support';
 import Settings from './pages/Settings';
-import ControllerSettings from './pages/ControllerSettings';
+import ControllerSettingsTabs from './pages/ControllerSettingsTabs';
 import SettingsDocPage from './pages/SettingsDocPage';
+import OnboardComputerSettings from './pages/OnboardComputerSettings';
+import MicrolightSettings from './pages/MicrolightSettings';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Reviews from './pages/Reviews';
@@ -143,7 +145,9 @@ export default function App() {
             <Route path="/news/:slug" element={<NewsDetailDynamic />} />
             <Route path="/support" element={<Support />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/settings/controller" element={<ControllerSettings />} />
+            <Route path="/settings/controller" element={<ControllerSettingsTabs />} />
+            <Route path="/settings/onboard-computer" element={<OnboardComputerSettings />} />
+            <Route path="/settings/microlight" element={<MicrolightSettings />} />
             <Route path="/settings/:slug" element={<SettingsDocPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/partners" element={<Partners />} />

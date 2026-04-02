@@ -1,0 +1,1285 @@
+
+<p>
+Для обновления скопировать файлы в корень microSD карты с файловой системой FAT32, вставить в Бортовой компьютер (контактами на себя) и запустить процесс обновления. <br/>
+
+</p>
+
+<p>
+<strong>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_important plugin_wrap" style="width: 60%;">
+<p>
+ <br/>
+
+Не понижайте версию прошивки которая была установлена производителем! Можно получить кирпич.  <br/>
+
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+</strong>  <br/>
+
+</p>
+
+<p>
+Каждое устройство имеет собственную прошивку и обновляется отдельно. Обновлять прошивки на устройствах вы можете в любом порядке. Если у вас более старая прошивка, вы можете сразу установить последнюю версию, без необходимости устанавливать прошивки одну за другой.  <br/>
+
+</p>
+
+<p>
+Если у вас в Бортовом компьютере уже установлена прошивка версии <strong>v0.75B</strong> и выше, то порядок обновления устройств значения не имеет, поскольку в прошивке <strong>v0.75B</strong> была добавлена возможность принудительного обновления контроллера и других устройств подключенных в CAN-шину через меню Бортового компьютера. Прочитать подробнее про <strong>Принудительное обновление устройств</strong> вы можете в этом <a href="/doku.php?id=ru:display:start#обновление_прошивки" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">разделе</a>. 
+</p>
+
+<p>
+Если ваш Бортовой компьютер имеет прошивку <strong>v0.60B</strong> или ниже, а контроллер <strong>v.7.18</strong> и ниже, то сначала необходимо обновить все устройства через их меню, кроме Бортового компьютера. Поскольку протокол меню новый, старые устройства не будут видны в меню. После завершения обновления удерживайте левую кнопку несколько секунд, чтобы выйти из обновленного меню устройства. Если кнопка не сработает, вам нужно сбросить питание или переподключить кабель CAN в Бортовом компьютере. После того, как обновите прошивку всех устройств — обновите Бортовой компьютер. Сделайте сброс настроек контроллера (загрузите настройки по умолчанию) после обновления. Мы рекомендуем снова запустить в контроллере автонастройку мотора, если вы делали импорт параметров. Автонастройку газа/тормоза, подключенных к Бортовому компьютеру, теперь надо делать в <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">меню</a> Бортового компьютера. <br/>
+
+</p>
+
+<p>
+Инструкции по обновлению прошивок: <br/>
+
+1. <a href="/doku.php?id=ru:display:start#обновление_прошивки" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Описание</a> меню обновления Бортовой компьютера.  <br/>
+
+2. <a href="/doku.php?id=ru:controller:setup#обновление_прошивки" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Описание</a> меню обновления Контроллера.  <br/>
+
+3. <a href="/doku.php?id=ru:ulight#обновление_прошивки" class="wikilink1" title="ru:ulight" data-wiki-id="ru:ulight">Описание</a> меню Микролайт.  <br/>
+
+</p>
+
+<p>
+Для проверки текущей версии прошивки необходимо зайти в меню <strong>Информация об устройстве</strong>, на каждом устройстве отдельное меню.  <br/>
+
+1. <a href="/doku.php?id=ru:display:start#информация_об_устройстве" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Информация</a> о версии прошивки Бортового компьютера.  <br/>
+
+2. <a href="/doku.php?id=ru:controller:setup#информация_об_устройстве" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Информация</a> о версии прошивки Контроллера.  <br/>
+
+3. <a href="/doku.php?id=ru:ulight#информация_об_устройстве" class="wikilink1" title="ru:ulight" data-wiki-id="ru:ulight">Информация</a> о версии прошивки Микролайт.  <br/>
+
+</p>
+
+<p>
+Список актуальных прошивок для загрузки: <br/>
+
+</p>
+
+<h2 id="апреля_2024">8 Апреля 2024</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.8</strong> <a href="https://drive.google.com/file/d/12GlK1eRilJHd-wQcaH2SaYCRwmvSNnvc/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/12GlK1eRilJHd-wQcaH2SaYCRwmvSNnvc/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Распакуйте архив перед обновлением!<br/>
+
+Добавлен тормоз «Brk» в выбор кнопок входа сигнала для управления функциями.<br/>
+
+Удален реверс при включении CAN кнопок.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 \u0410\u043f\u0440\u0435\u043b\u044f 2024&quot;,&quot;hid&quot;:&quot;\u0430\u043f\u0440\u0435\u043b\u044f_2024&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;4714-5175&quot;} -->
+<h2 id="февраля_2024">2 Февраля 2024</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.6</strong> <a href="https://drive.google.com/file/d/1f4cAWTBJnqnFOtFKBAtqs7DzrgkRc2Od/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1f4cAWTBJnqnFOtFKBAtqs7DzrgkRc2Od/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Обновлен LEVCAN.<br/>
+
+Добавлено в функции 4 настраиваемых сигнала яркости по кнопке.<br/>
+
+Добавлена настраиваемая логика: И, НЕ, ИЛИ, Искл. ИЛИ, как еще один вид кнопок.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;2 \u0424\u0435\u0432\u0440\u0430\u043b\u044f 2024&quot;,&quot;hid&quot;:&quot;\u0444\u0435\u0432\u0440\u0430\u043b\u044f_2024&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;5176-5645&quot;} -->
+<h2 id="декабря_2023">22 Декабря 2023</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.5</strong> <a href="https://drive.google.com/file/d/1J6-6fEiI9dGeFZU67SaRLxiOAhXsUpPs/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1J6-6fEiI9dGeFZU67SaRLxiOAhXsUpPs/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Небольшое обновление:<br/>
+
+Добавлен выбор кнопки тормоза для отдельной световой индикации без торможения.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;22 \u0414\u0435\u043a\u0430\u0431\u0440\u044f 2023&quot;,&quot;hid&quot;:&quot;\u0434\u0435\u043a\u0430\u0431\u0440\u044f_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;5646-6022&quot;} -->
+<h2 id="сентября_2023">30 Сентября 2023</h2>
+<div class="level2">
+
+<p>
+Рекомендуем сначала обновить дисплей! Экспортируйте конфигурации всех устройств перед обновлением и импортируйте после, чтобы сохранить настройки.<br/>
+
+</p>
+
+<p>
+<strong>Контроллер v0.8.13</strong> <a href="https://drive.google.com/file/d/1nQhsEe9l47QdU-IbPtYLFhcdKvHJLIV3/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1nQhsEe9l47QdU-IbPtYLFhcdKvHJLIV3/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлены обработчики сброса<br/>
+
+Добавлена быстрая настройка напряжений батареи<br/>
+
+Исправлен преобразователь для P24F<br/>
+
+Добавлено отображение детекта LR<br/>
+
+Ошибка газа тормоза заменена на «не подключено»<br/>
+
+Добавлен детект термодатчика когда он отключен<br/>
+
+Добавлен выбор уровня доступа<br/>
+
+Добавлено время буста<br/>
+
+Исправлена тряска при активном торможении<br/>
+
+Подправлен период ШИМ в трапеции<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.82B</strong> <a href="https://drive.google.com/file/d/1vNaq8bavvXalMAGKhQ26NkMAHuTccv6q/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1vNaq8bavvXalMAGKhQ26NkMAHuTccv6q/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлена поддержка уровней доступа в меню<br/>
+
+Исправлены некоторые зависания<br/>
+
+Поправлено отображение режима при нескольких контроллерах<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;30 \u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044f 2023&quot;,&quot;hid&quot;:&quot;\u0441\u0435\u043d\u0442\u044f\u0431\u0440\u044f_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;6023-7769&quot;} -->
+<h2 id="июля_2023">21 Июля 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.12</strong> <a href="https://drive.google.com/file/d/1Pw6ZtwSs_-cPfPVDTtB7H47sWi7LY9y-/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1Pw6ZtwSs_-cPfPVDTtB7H47sWi7LY9y-/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлен MPPT для зарядки от солнечных панелей<br/>
+
+Добавлена блокировка газа когда тормоз нажат<br/>
+
+Исправлен звук «трапеции» в режиме FOC<br/>
+
+Добавлена нейтраль по таймеру<br/>
+
+Кнопка выключения отключает без отпускания<br/>
+
+Исправление активного тормоза когда он не включен (и тряски тоже)<br/>
+
+Добавлена настройка редукции мотора<br/>
+
+Speed kp изменен по умолчанию на 0.1<br/>
+
+Добавлен отдельный режим газа мощность + тяга<br/>
+
+Исправлено стирание банков когда оба банка памяти полные<br/>
+
+Увеличен сдвиг тока при старте для P24F<br/>
+
+Добавлена индикация мощности в меню Преобразователя<br/>
+
+Небольшие исправления текста параметров<br/>
+
+Добавлен режим постоянной записи лога<br/>
+
+Расчет температуры вынесен в отдельный файл<br/>
+
+Калибровка тока теперь сохраняется только после завершения тестирования<br/>
+
+Добавлена ошибка когда калибровка вне диапазона<br/>
+
+Мин ток зарядки батареи можно выставить в 0<br/>
+
+Добавлен NTC10k B:3500<br/>
+
+Добавлена прогрузка файла, когда запись медленная<br/>
+
+Добавлена таблица семплинга ADC<br/>
+
+Сдвиг меню логгера рассчитывается теперь автоматически<br/>
+
+Измерение тока FOC ADC для P24F изменено с ADC3 на ADC1+2<br/>
+
+Удалена низкая скорость при изменении HZ режима<br/>
+
+Добавлен флаг готовности круиза<br/>
+
+Добавлена блокировка газа когда нажат тормоз<br/>
+
+Добавлен PWM режим низких пульсаций (для FOC)<br/>
+
+DMA удалена из-за тройной буферизации (исправление звука)<br/>
+
+Добавлен флаг блокировки газа<br/>
+
+Выбор сектора SVM вынесен в отдельную функцию<br/>
+
+Добавлен индекс блокировки по имени функции<br/>
+
+Увеличены параметры отклика газа<br/>
+
+Допрежимы теперь по умолчанию имеют режим газа = тяга<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;21 \u0418\u044e\u043b\u044f 2023&quot;,&quot;hid&quot;:&quot;\u0438\u044e\u043b\u044f_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;7770-10779&quot;} -->
+<h2 id="июля_20231">1 Июля 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Микролайт v0.6.4</strong> <a href="https://drive.google.com/file/d/1RNN8vwDzYaZYHxQQ4zqC3Ed-HSY5um3J/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1RNN8vwDzYaZYHxQQ4zqC3Ed-HSY5um3J/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлен экспорт/импорт <br/>
+
+Добавлен термодатчик KTY84 <br/>
+
+Добавлена кнопка «аварийки», работает даже если все отключено <br/>
+
+Добавлен строб эффект при торможении <br/>
+
+Добавлена передача данных по LEVCAN <br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:16,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;1 \u0418\u044e\u043b\u044f 2023&quot;,&quot;hid&quot;:&quot;\u0438\u044e\u043b\u044f_20231&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;10780-11399&quot;} -->
+<h2 id="мая_2023">7 Мая 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.11</strong> <a href="https://drive.google.com/file/d/1-aL8hiNOGHFnXSB4Z0HxCGu88SNvAJKG/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1-aL8hiNOGHFnXSB4Z0HxCGu88SNvAJKG/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлен Адаптивный режим газа (по умолчанию 6%)<br/>
+
+Добавлен режим ручки газа - мощность<br/>
+
+Добавлено регулирование уровня PAS кнопками<br/>
+
+Добавлена Минимальная тяга для старта PAS датчика давления<br/>
+
+Ошибка холлов теперь отображается на экране<br/>
+
+Изменена логика ошибки холлов<br/>
+
+DC-DC теперь показывает ток на каждой фазе<br/>
+
+Добавлен потенциальный фикс драйвера TF21904<br/>
+
+В код PhaseResponse добавлен выбор фаз<br/>
+
+Обновлены названия флагов для ошибок датчиков<br/>
+
+Добавлены фазные токи и напряжения в детекте LR<br/>
+
+Добавлен PAS фильтр напряжения<br/>
+
+Добавлен выбор PAS напряжения (газ или vpas)<br/>
+
+Добавлены новые входы (I1-I13)<br/>
+
+Входы переименованы<br/>
+
+Добавлены проверки в HWPort HAL<br/>
+
+Добавлена компенсация термодатчика<br/>
+
+Добавлена температурная коррекция DAC защиты<br/>
+
+Добавлено 5V для ослабления<br/>
+
+VBUS расчет перемещен в RAM<br/>
+
+Добавлен костыль для FreeRTOS-gcc<br/>
+
+Детект сопротивления теперь использует 50% шим<br/>
+
+Новый способ синхронизации таймера для нарастающего режима (детект R)<br/>
+
+Детект LR включен в полный детект<br/>
+
+Добавлен детект кнопки на аналоговом входе тормоза<br/>
+
+Добавлен детект включения MTPA по разнице индуктивностей (30%+)<br/>
+
+Добавлен фильтр входа холлов<br/>
+
+Добавлен фильтр мин. шага холлов по времени<br/>
+
+Добавлены директивы fallthrough<br/>
+
+Добавлена проверка размера параметров через warning<br/>
+
+Небольшие исправления в I1-I13<br/>
+
+Детект LR перемещен в конец<br/>
+
+Добавлен фильтр портов I1-I13<br/>
+
+Добавлена функция включения газа (обратная к отключению газа)<br/>
+
+Добавлен код ожидания для детекта сопротивления<br/>
+
+Исправлена ошибка напряжения в детекте сопротивления<br/>
+
+Исправлен негативное потокосцепление<br/>
+
+Отключены MTPA, FW и другие опции для калибровки холлов<br/>
+
+Добавлен Адаптивный газ в доп. режимы<br/>
+
+Структура управления оптимизирована<br/>
+
+Параметр лимит vq убран, теперь включен по умолчанию<br/>
+
+Добавлен по умолчанию MTPA режим по активному Q току<br/>
+
+Небольшие оптимизации FOC<br/>
+
+Добавлен TIM1 в скрипт линкера<br/>
+
+Код холлов перемещен в нарастание, FOC в спадание (исправление шума 1)<br/>
+
+DMA в цикличном режиме, меньше кода, эффект тот-же<br/>
+
+Добавлены фильты шума на vd vq чтобы уменьшить переключение секторов (исправление шума 2)<br/>
+
+Хранилище данных обновлено, добавлена система версий<br/>
+
+Исправлен невидимый флаг ошибки в логгере<br/>
+
+Обновлены дефолты логгера<br/>
+
+v0.8.11<br/>
+
+Небольшие оптимизации<br/>
+
+Параметры FOC в логгере в быстром режиме заменены на фильтрованные<br/>
+
+Юнит тесты хранилища данных обновлены<br/>
+
+Исправлены несколько багов в хранилище данных<br/>
+
+LEVCAN обновлен с последними фиксами<br/>
+
+Добавлены дополнительные тесты для хранилища<br/>
+
+Убран мусор из startup<br/>
+
+Исправлено зависание логгера по отключению экрана<br/>
+
+Кэш логгера перемещен в SRAM2<br/>
+
+FOC pid откатился до v0.8.9<br/>
+
+Скорость увеличина до 200%
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:19,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.80B</strong> <a href="https://drive.google.com/file/d/1XSV82MXbeWDNaAxwqEgVD4DyKCkHjSwx/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1XSV82MXbeWDNaAxwqEgVD4DyKCkHjSwx/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:20,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Изменено сохранение по падению напряжения<br/>
+
+Исправления в LEVCAN<br/>
+
+Исправления в сохранении настроек<br/>
+
+Починены RPM в инфо строках
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;7 \u041c\u0430\u044f 2023&quot;,&quot;hid&quot;:&quot;\u043c\u0430\u044f_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;11400-16823&quot;} -->
+<h2 id="февраля_2023">8 Февраля 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.9</strong> <a href="https://drive.google.com/file/d/1sFakK9xB88rVmVRNs8dPx6Few6GcCzdr/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1sFakK9xB88rVmVRNs8dPx6Few6GcCzdr/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+После обновления необходимо провести настройку мотора заново! Данное обновление исправляет баг с задним ходом предыдущей версии, а также некоторые проблемы недавно выпущенных контроллеров. Известны проблемы со стартом под большим током, которые будут исправлены позже. 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Добавлена логика установки прерываний.<br/>
+
+Добавлен флаг «пульсации напряжения» для плиты.<br/>
+
+Добавлен сдвиг DAC относительно сырых данных для калибровки.<br/>
+
+Исправлен сброс регистра EXTI-PR в логгере.<br/>
+
+Исправлена нейтраль для мастер-контроллера.<br/>
+
+DAC сдвиг обновлен для плиты.<br/>
+
+Исправлен реверс на трапеции.<br/>
+
+Исправлен реверс на бездатчике.<br/>
+
+Добавлен параметр «Фильтр простоя» для холлов.<br/>
+
+Угол датчиков исправлен, теперь переход со сдвигом, без интерполяции — без сдвига.<br/>
+
+Язык логгера заменен на английский (для вебсайтов которые не умеют в кодировку 1251).<br/>
+
+Добавлен флаг ошибки в логгер.<br/>
+
+Убрано усиление тока на старте в FOC.<br/>
+
+FOC угол теперь без изменений.<br/>
+
+FOC сектора соответствуют трапеции.<br/>
+
+Добавлена доп. задержка мертвого времени в FOC.<br/>
+
+Добавлен сброс настроек по разделам. 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 \u0424\u0435\u0432\u0440\u0430\u043b\u044f 2023&quot;,&quot;hid&quot;:&quot;\u0444\u0435\u0432\u0440\u0430\u043b\u044f_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:22,&quot;range&quot;:&quot;16824-19003&quot;} -->
+<h2 id="октября_2022">14 Октября 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Дисплей v0.75B</strong> <a href="https://drive.google.com/file/d/18pGS2V8nEQXj5_gMGY4U8NYtL7h5XIKy/view?usp=sharing" class="media" title="https://drive.google.com/file/d/18pGS2V8nEQXj5_gMGY4U8NYtL7h5XIKy/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a> <br/>
+
+Добавлена возможность принудительного обновления устройств. <br/>
+
+Экспортируйте настройки перед обновлением, обновитесь, потом импортируйте!
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:26,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлены пароли для входа в меню устройств и выхода из главного экрана.<br/>
+
+Настраиваемое ограничение индикации макс скорости в статистике.<br/>
+
+Исправлена работа SD карты, поддержка exFAT кроме обновления экрана.<br/>
+
+Добавлена настройка мин-макс индикации фазного тока.<br/>
+
+Добавлено меню принудительной прошивки устройств.<br/>
+
+Исправлена возможность инверсии ручки тормоза.<br/>
+
+Исправлен показометр Wh при больших расходах.<br/>
+
+Удалена прокрутка инфо строк в теме инфо строк.<br/>
+
+Фазный ток в инфо-строке теперь обозначен как Ap.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:27,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;14 \u041e\u043a\u0442\u044f\u0431\u0440\u044f 2022&quot;,&quot;hid&quot;:&quot;\u043e\u043a\u0442\u044f\u0431\u0440\u044f_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:25,&quot;range&quot;:&quot;19004-20464&quot;} -->
+<h2 id="сентября_2022">26 Сентября 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.8</strong> <a href="https://drive.google.com/file/d/1XYPwbdhOvE_NlkggwFoc_o6eCnyTyko4/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1XYPwbdhOvE_NlkggwFoc_o6eCnyTyko4/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Экспортируйте настройки перед обновлением, обновитесь, загрузите настройки по умолчанию и потом импортируйте! 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:29,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Добавлен угол мотора в логгер<br/>
+
+Исправлены ошибки логики в совмещенном режиме<br/>
+
+Исправлен обратный выброс тока в муфте<br/>
+
+Добавлен параметр ограничения vq для мотора QS165<br/>
+
+Исправлена калибровка тока для шунта<br/>
+
+LEVCAN — обновлен парсинг значений параметров<br/>
+
+Исправлен минимальный период ШИМ для драйверов TF (FOC)<br/>
+
+Константы DAC обновляютcя в соответствии с калибровкой<br/>
+
+Временное исправление датчиков положения для FOC когда нет интерполяции<br/>
+
+Добавлен таймаут газа для внешнего управления (баг полного газа после ввода пароля)<br/>
+
+Много мелких исправлений для тестирования при сборке<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:30,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;26 \u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044f 2022&quot;,&quot;hid&quot;:&quot;\u0441\u0435\u043d\u0442\u044f\u0431\u0440\u044f_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:28,&quot;range&quot;:&quot;20465-22000&quot;} -->
+<h2 id="августа_2022">8 Августа 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.7</strong> <a href="https://drive.google.com/file/d/1HKxh5ADXRxQBQ-LbmsixGGaxt_dtBg3r/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1HKxh5ADXRxQBQ-LbmsixGGaxt_dtBg3r/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a> <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:32,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Обновлена логика датчиков для трапеции <br/>
+
+Исправлены проблемы ADC <br/>
+
+Логика ADC заменена на более универсальную <br/>
+
+Добавлен импорт конфигурации с кнопки <br/>
+
+Добавлена блокировка импорта если мотор крутится <br/>
+
+PLL перемещены в отдельный файл <br/>
+
+Исправлены выбросы тока при нажатии тормоза (фильтрация абсолютного шим) <br/>
+
+Убрана логика «неправильных холлов» из начала интерполяции <br/>
+
+Улучшено управление скоростью при реверсе из прямого движения <br/>
+
+Логика датчиков положения отделена <br/>
+
+USB код удален <br/>
+
+Остановка PWM при отладке добавлена в HAL <br/>
+
+Трапеция теперь имеет бездатчиковую интерполяцию <br/>
+
+Логика интерполяции улучшена <br/>
+
+Удалены глобальные переменные положения <br/>
+
+Исправлен NaN опорной скорости <br/>
+
+Добавлен диагностический режим в переключатель состояния <br/>
+
+Исправлено несколько проблем диагностики <br/>
+
+Добавлено обновление угла холлов в меню <br/>
+
+Добавлены проверки NaN для холлов <br/>
+
+Поправлен детект угла для первого шага <br/>
+
+ЭДС интеграция теперь имеет дополнительный шаг чтобы пропускать выброс, в случае если он спадает медленно <br/>
+
+Состояние детекта датчиков поправлено, вызывало заклинивание мотора <br/>
+
+Добавлен частотный старт для бездатчикового режима (трапеция) <br/>
+
+Параметр частотного управления используется для бездатчикового старта, по умолч. теперь =2 <br/>
+
+Добавлен энкодер <br/>
+
+Настройка подтяжки датчиков удалена <br/>
+
+Добавлено меню энкодера <br/>
+
+Добавлен детект энкодера <br/>
+
+Обновлена логика датчиков положения, детект теперь идет через нее <br/>
+
+Добавлен быстрый фейл определения холлов <br/>
+
+Перемещены входа холлов чтобы соответствовать таймеру <br/>
+
+Расчет скорости изменен <br/>
+
+Расчет Rads перемещет в файл датчиков положения <br/>
+
+ERPS счетчик обновлен с фильтром направления <br/>
+
+Добавлена калиброка угла энкодера <br/>
+
+Добавлен выход из функции RCPWM <br/>
+
+Добавлено назначение портов на энкодер <br/>
+
+Добавлен выход из функции PAS <br/>
+
+ADC порты переназначены <br/>
+
+Поправлено обновление некоторых параметров <br/>
+
+Добавлена информация о энкодере в меню о устройстве <br/>
+
+Добавлен E суффикс для энкодера <br/>
+
+Флаги OV и UV разделены <br/>
+
+Код тестирования перемещен в отдельный файл <br/>
+
+Оптимизированы #include <br/>
+
+Сдвиг в трапеции отключается теперь на следующей коммутации <br/>
+
+Улучшена логика включения ослабления чтобы избежать резкого торможения при ослаблении <br/>
+
+Добавлены оптимизации FOC <br/>
+
+Добавлен лимит FOC vq до лимита вектора vq-vd, чтобы ослабление работало лучше (неограниченный vq давал более худшие параметры ослабления и иногда вызывал зависание ослабления) <br/>
+
+Добавлена компенсация Dead time в трапеции <br/>
+
+Добавлена логика детекта потери управления <br/>
+
+Добавлен серийный номер <br/>
+
+Добавлены константы калибровки <br/>
+
+Добавлена логика калибровки при  проверке железа <br/>
+
+Добавлен FreeRTOS мониторинг стека <br/>
+
+Оптимизирована процедура теста <br/>
+
+Обновлены процедуры критических участов кода <br/>
+
+Исправлен удар тока если FOC ослабение было принудительно отключено <br/>
+
+Заменена константа частоты ШИМ <br/>
+
+Обновлено меню датчиков положения <br/>
+
+Логика флага переослабления исправлена <br/>
+
+Исправлено обновление параметров в меню PAS <br/>
+
+Перенесен буст FOC в логику переключения секторов <br/>
+
+Добавлена логика сглаживания PLL на низкой скорости <br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:33,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 \u0410\u0432\u0433\u0443\u0441\u0442\u0430 2022&quot;,&quot;hid&quot;:&quot;\u0430\u0432\u0433\u0443\u0441\u0442\u0430_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:31,&quot;range&quot;:&quot;22001-27841&quot;} -->
+<h2 id="апреля_2022">6 Апреля 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Микролайт v0.6.3</strong> <a href="https://drive.google.com/file/d/1Luj6V_2NLyCrMUi08Sf9NvrOkXLkX01T/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1Luj6V_2NLyCrMUi08Sf9NvrOkXLkX01T/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a> <br/>
+
+Исправлено меню настройки температур.<br/>
+
+Добавлено отключение моргания поворотниками, установив «Время выкл = 0сек».
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;6 \u0410\u043f\u0440\u0435\u043b\u044f 2022&quot;,&quot;hid&quot;:&quot;\u0430\u043f\u0440\u0435\u043b\u044f_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:34,&quot;range&quot;:&quot;27842-28246&quot;} -->
+<h2 id="maрта_2022">23 Maрта 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Контроллер v0.8.6</strong> <a href="https://drive.google.com/file/d/16nPs1gECGWAt7n5SqKJ9s_vve1L4q5qm/view?usp=sharing" class="media" title="https://drive.google.com/file/d/16nPs1gECGWAt7n5SqKJ9s_vve1L4q5qm/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a> <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:36,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Обновлен PID регулятор ослабления. <br/>
+
+Добавлен лимит ослабления по температуре мотора. <br/>
+
+Уменьшен доступный ток ослабления до 80% от макс. <br/>
+
+Уменьшены дефолтные настройки. <br/>
+
+Добавлена блокировка управления на 10 сек при полном перегреве. <br/>
+
+Небольшие исправления меню и экспорта. <br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:37,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;23 Ma\u0440\u0442\u0430 2022&quot;,&quot;hid&quot;:&quot;ma\u0440\u0442\u0430_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:35,&quot;range&quot;:&quot;28247-29030&quot;} -->
+<h2 id="января_2022">20 Января 2022</h2>
+<div class="level2">
+
+<p>
+Критическое обновление для новых контроллеров и хотфикс для 6F/12F и старых 24F. Сохраните конфиг перед обновлением, после обновления загрузите настройки по умолчанию и потом свой конфиг.<br/>
+
+</p>
+
+<p>
+<strong>Важно!</strong>
+</p>
+
+<p>
+Если ваш Бортовой компьютер имеет прошивку <strong>v0.60B</strong> или ниже, а контроллер <strong>v.7.18</strong> и ниже, то сначала необходимо обновить все устройства, кроме Бортового компьютера. Поскольку протокол меню новый, старые устройства не будут видны в меню. После завершения обновления удерживайте левую кнопку несколько секунд, чтобы выйти из обновленного меню устройства. Если кнопка не сработает, вам нужно сбросить питание или переподключить кабель CAN в Бортовом компьютере. После того, как обновите прошивку всех устройств — обновите Бортовой компьютер. Сделайте сброс настроек контроллера (загрузите настройки по умолчанию) после обновления. Мы рекомендуем снова запустить в контроллере автонастройку мотора, если вы делали импорт параметров. Автонастройку газа/тормоза, подключенных к Бортовому компьютеру, теперь надо делать в <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">меню</a> Бортового компьютера.
+</p>
+
+<p>
+<strong>Контроллер v0.8.5</strong> <a href="https://drive.google.com/file/d/1f0BY5nRbov3XgH4iMIIw9A0ev32bqwaF/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1f0BY5nRbov3XgH4iMIIw9A0ev32bqwaF/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" alt="" width="23" height="32" /></a> <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:39,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Обновлена функция сохранения параметров, добавлены юнит-тесты. <br/>
+
+Добавлено отключение муфты при нажатии тормоза. <br/>
+
+Добавлена опция включения MTPA.<br/>
+
+USB для подключения к компьютеру отключен по умолчанию, в будущем будет удален. <br/>
+
+Исправлены P1 P2 ШИМ выходы.<br/>
+
+Статистика работы считает среднюю температуру только когда запитан мотор.<br/>
+
+Добавлено отключение подтяжки холлов.<br/>
+
+Различные исправления в системе сохранения.<br/>
+
+Исправлен NaN для детекта сопротивления.<br/>
+
+Исправлен импорт 1-го параметра в каждом разделе.<br/>
+
+<br/>
+
+Хотфикс для контроллеров 6F/12F и старых 24F. <br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:40,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;20 \u042f\u043d\u0432\u0430\u0440\u044f 2022&quot;,&quot;hid&quot;:&quot;\u044f\u043d\u0432\u0430\u0440\u044f_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:38,&quot;range&quot;:&quot;29031-32290&quot;} -->
+<h2 id="октября_2021">18 Октября 2021</h2>
+<div class="level2">
+
+<p>
+Сначала необходимо обновить все устройства, кроме Бортового компьютера. Поскольку протокол меню новый, старые устройства не будут видны в меню. После завершения обновления удерживайте левую кнопку несколько секунд, чтобы выйти из обновленного меню устройства. Если кнопка не сработает, вам нужно сбросить питание или переподключить кабель CAN в Бортовом компьютере. После того, как обновите прошивку всех устройств — обновите Бортовой компьютер. Сделайте сброс настроек контроллера (загрузите настройки по умолчанию) после обновления. Мы рекомендуем снова запустить в контроллере автонастройку мотора, если вы делали импорт параметров. Автонастройку газа/тормоза, подключенных к Бортовому компьютеру, теперь надо делать в <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">меню</a> Бортового компьютера.
+</p>
+
+<p>
+<strong>Дисплей v0.71B</strong> <a href="https://drive.google.com/file/d/1TqnQaC17BmvvnRg5SNxyaLN-wHDTsDly/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1TqnQaC17BmvvnRg5SNxyaLN-wHDTsDly/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a> <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:42,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Переработано меню. <br/>
+Все настройки бортового компьютера перенесены в отдельное меню. <br/>
+Добавлен показ состояния входов экрана в настройках. <br/>
+Добавлены функции порта: отключить подсветку,  заблокировать экран. <br/>
+Добавлены отдельные хоткеи при зарядке. <br/>
+Добавлены хоткеи коротким нажатием. <br/>
+Добавлены настройки диапазона ручек газа/тормоза подключенных в борт.комп. <br/>
+Добавлена настройка общего пробега, чтобы можно было восстановить общий пробег. <br/>
+Сброс общей статистики не сбрасывает глобальный пробег. <br/>
+Добавлен импорт/экспорт настроек. <br/>
+Добавлены иконки на главный экран (торможение, лимит торможения, черепашка, ошибка мотора/контроллера, неисправность батареи). <br/>
+С новыми контроллерами скорость прошивки ускорена в 6 раз.  <br/>
+Также скорость записи лога с новыми прошивками должна быть выше. <br/>
+Добавлена прокрутка текста в меню. <br/>
+Обновлен логотип. <br/>
+Добавлены более информативные сообщения для действий сброса с вводом пароля. <br/>
+Добавлены параметры которые можно запросить по CAN шине. <br/>
+=== v0.71 <br/>
+Исправлено редактирование некоторых параметров. <br/>
+Обновлен импорт/экспорт параметров. <br/>
+Одометр теперь импортируется, значение в целых единицах. <br/>
+Исправлено мигание кнопок при вводе пароля. <br/>
+Исправлен зарядный экран, поправлено мигание кнопок. <br/>
+Поправлены названия инфо-строк. <br/>
+Исправлен заголовок при вводе пароля.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:43,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+<p>
+<strong>Контроллер v0.8.2</strong> <a href="https://drive.google.com/file/d/1jo9331Gwe-OrDulOmJzGke6t77RGIRED/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1jo9331Gwe-OrDulOmJzGke6t77RGIRED/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a> <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:44,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлен глючащий USB (нужен USB кабель подключенный в PWM порт). <br/>
+Новый протокол параметров LEVCAN с большими возможностями. <br/>
+Добавлено меню статистики за поездку в контроллер: <br/>
+- ВтЧ использовано/потрачено/заряжено. <br/>
+- Ач использовано/потрачено/заряжено. <br/>
+- Приблизительная эффективность мотора, средняя и текущая. <br/>
+- Расчетная тяга на валу мотора. <br/>
+Измерение температуры теперь расчитывает сопротивление т-датчика. <br/>
+Улучшено определение kV. <br/>
+Исправлен баг с долгим откликом на тормоз при медленных настройках скорости изменения тока. <br/>
+Дефолт для всех портов теперь ВЫКЛ. <br/>
+Добавлена настройка силы кнопки тормоза в % (процент относительно фазного тока торможения). <br/>
+Добавлена настройка торможения при отпущенной ручке газа. <br/>
+Добавлен детект сопротивления и индуктивности мотора. <br/>
+Добавлена MTPA логика (только для IPM моторов). <br/>
+Исправлено включение ослабления при нажатии тормоза. <br/>
+Добавлено больше CAN команд. <br/>
+Добавлено больше параметров которые можно запросить по CAN шине. <br/>
+Добавлено больше настроек логгера. <br/>
+Добавлены настройки фильтров холлов для отладки дерганья. <br/>
+Добавлен выбор префиксов к имени контроллера. <br/>
+=== v0.8.2 <br/>
+Добавлена опция заголовка в логе. <br/>
+Поправлен перевод некоторых сообщений. <br/>
+В детекте ручек добавлены сообщения ошибки.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:45,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+<strong>Микролайт v0.6.1</strong> <a href="https://drive.google.com/file/d/1y0iU0fZ2z_RYoOjyjTBfRoZudsLvTUt1/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1y0iU0fZ2z_RYoOjyjTBfRoZudsLvTUt1/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a> <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:46,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Новый протокол параметров LEVCAN. <br/>
+Небольшие исправления. <br/>
+Исходный код основной программы теперь опубликован на GitHub: <br/>
+<a href="https://github.com/Nucular-tech/uLight" class="urlextern" title="https://github.com/Nucular-tech/uLight" rel="ugc nofollow">https://github.com/Nucular-tech/uLight</a> <br/>
+=== v0.5 <br/>
+Исправлены PWM IO. Теперь работают :) <br/>
+Добавлены пороги термодатчика, работают как виртуальная кнопка I7 I8. <br/>
+Добавлена отправка портов на CAN шину.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:47,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;18 \u041e\u043a\u0442\u044f\u0431\u0440\u044f 2021&quot;,&quot;hid&quot;:&quot;\u043e\u043a\u0442\u044f\u0431\u0440\u044f_2021&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:41,&quot;range&quot;:&quot;32291-39796&quot;} -->
+<h2 id="августа_2020">31 Августа 2020</h2>
+<div class="level2">
+
+<p>
+Перед обновлением сделать экспорт настроек, после обновления сбросить настройки и импортировать. <br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.60B</strong> <a href="https://drive.google.com/open?id=1sGrqFpqhtSSt5QN12nUr1Fqb8x5rxMHO" class="media" title="https://drive.google.com/open?id=1sGrqFpqhtSSt5QN12nUr1Fqb8x5rxMHO" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:49,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Исправлен провал в ручке газа.  <br/>
+ Мелкие исправления в меню.  <br/>
+ Обновлен LEVCAN.  <br/>
+ Упрощена настройка кнопок, по умолчанию все входа настроены в режим CAN.  <br/>
+ Добавлена поддержка exFAT (но дисплей будет обновляться только с FAT32).  <br/>
+ Добавлен экран зарядки через мотор.  <br/>
+ Добавлен выбор типа быстрой статистики.  <br/>
+ Добавлено расширенное окно события.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:50,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+<strong>Контроллер v0.7.18</strong> <a href="https://drive.google.com/open?id=116HazXGjo4MCi0zXPyVQ8kQhiB25G_Vt" class="media" title="https://drive.google.com/open?id=116HazXGjo4MCi0zXPyVQ8kQhiB25G_Vt" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:51,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлен глючащий логгер :)  <br/>
+ Исправлены глюки зарядки, хотя некоторые остались.  <br/>
+ Добавлен плавный пуск зарядки и более безопасный детект фазы.  <br/>
+ Полностью переработано ослабление, теперь не должно жеско тормозить после отпускания газа.  <br/>
+ Добавлена минимальная опорная скорость для PID регулятора скорости.  <br/>
+ Добавлено RC PWM управление на P1 порт (газ/тормоз).  <br/>
+ Больше параметров для логгера.  <br/>
+ Важные фиксы в FOC управлении, DC ток должен считаться точнее при ослаблении.  <br/>
+ Исправлен редкий странный баг для трапеции.  <br/>
+ LEVCAN работает на очередях, после обновления экрана скорость логгинга должна повысится в 2 раза.  <br/>
+ Дефолт DCi Ki уменьшен с 500 до 200 тк много жалоб.  <br/>
+ Чучуть подкручено начало ослабления.  <br/>
+ Добавлен полный экспорт отладочной информации.  <br/>
+ Добавлен выбор режима логгера и немного поправлен старт лога.  <br/>
+ Убрана первая строка лога для совместимости с datazap.  <br/>
+ Добавлены кривые ручек газа/тормоза.  <br/>
+ Добавлен дополнительный коэффициент мощности PAS в доп. режимах.  <br/>
+ Добавлено плавное ускорение для круиза и больше триггеров откл круиза.  <br/>
+ Логика круиза обновлена - фазный ограничен выбранным режимом, не положением ручки газа.  <br/>
+ Минимальная скорость круиза ограничивает его активацию.  <br/>
+ Увеличить/уменьшить круиз - можно управлять скоростью кнопками (порт = CR+/CR-)  <br/>
+ Восстановление круиза - включает последнюю сохраненную скорость (порт - CRr)  <br/>
+ Добавлен лимит мощности в режимы и батарею. 0 = отключить лимит  <br/>
+ Фикс отключения 12V по кнопке.  <br/>
+ Мелкие исправления в меню.  <br/>
+ Расширено количество CAN входов до 16.  <br/>
+ Исправления с экспортом/импортом параметров.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:52,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;31 \u0410\u0432\u0433\u0443\u0441\u0442\u0430 2020&quot;,&quot;hid&quot;:&quot;\u0430\u0432\u0433\u0443\u0441\u0442\u0430_2020&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:48,&quot;range&quot;:&quot;39797-44012&quot;} -->
+<h2 id="марта_2020">18 Марта 2020</h2>
+<div class="level2">
+
+<p>
+Хотфикс датчика скорости экрана  <br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.59B</strong> <a href="https://drive.google.com/open?id=1Rz0EHMj5cRJ5Gs_YAA9WgonOT-ArLHIr" class="media" title="https://drive.google.com/open?id=1Rz0EHMj5cRJ5Gs_YAA9WgonOT-ArLHIr" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;18 \u041c\u0430\u0440\u0442\u0430 2020&quot;,&quot;hid&quot;:&quot;\u043c\u0430\u0440\u0442\u0430_2020&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:53,&quot;range&quot;:&quot;44013-44266&quot;} -->
+<h2 id="марта_20201">11 Марта 2020</h2>
+<div class="level2">
+
+<p>
+Добавлен выбор экспорта-импорта конфигурации от 1 до 9  <br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.58B</strong> <a href="https://drive.google.com/open?id=1Oy3xk_I_FZJr_dc1YYwVXrL9qtnCvE-v" class="media" title="https://drive.google.com/open?id=1Oy3xk_I_FZJr_dc1YYwVXrL9qtnCvE-v" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:55,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Исправлен баг 0V ручки газа.  <br/>
+ Исправлен сброс статистики после заряда  <br/>
+ Добавлен выбор кмч/мили  <br/>
+ Добавлено больше параметров в инфо-строки на главном экране  <br/>
+ Добавлен режим горячих клавиш для совместимости с функциями контроллера  <br/>
+ Исправлена настройка контраста  <br/>
+ Добавлен расчет запаса хода  <br/>
+ Много мелких фиксов
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:56,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+<p>
+<strong>Контроллер v0.7.12</strong> <a href="https://drive.google.com/open?id=1TmtDHFl4hz5eS7CZ3QFGKMbdv01Nj6Xg" class="media" title="https://drive.google.com/open?id=1TmtDHFl4hz5eS7CZ3QFGKMbdv01Nj6Xg" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:57,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Исправлен загрузчик доп конфигураций  <br/>
+ Добавлен выбор экспорта-импорта конфигурации от 1 до 9  <br/>
+ Импорт показывает первою строку файла конфигурации, можно указать комментарий для данного файла  <br/>
+ Исправлен режим N  <br/>
+ Добавлено больше отладочных данных  <br/>
+ Исправлено дрыганье мотором при зарядке
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:58,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;11 \u041c\u0430\u0440\u0442\u0430 2020&quot;,&quot;hid&quot;:&quot;\u043c\u0430\u0440\u0442\u0430_20201&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:54,&quot;range&quot;:&quot;44267-46031&quot;} -->
+<h2 id="ноября_2019">21 Ноября 2019</h2>
+<div class="level2">
+
+<p>
+Сделайте экспорт конфигурации (или скриншоты), после обновления нажать «стереть банки памяти» в контроллере и перезапустить. Часть настроек придется ввести заного вручную. <br/>
+
+</p>
+
+<p>
+<strong>Дисплей v0.57B</strong><a href="https://drive.google.com/open?id=1vOo5HuaH2ZZNTFbsYfJCqVew-GAsAdKg" class="media" title="https://drive.google.com/open?id=1vOo5HuaH2ZZNTFbsYfJCqVew-GAsAdKg" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+ 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:60,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Добавлена настройка CAN кнопок  <br/>
+ Добавлена настройка инверсии входа  <br/>
+ Переработана статистика  <br/>
+ Добавлены фильтры на аналоговые входа
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:61,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+ <br/>
+
+</p>
+
+<p>
+<strong>Контроллер v0.7.9</strong> <a href="https://drive.google.com/open?id=1_4wJAC3iNeOhFuHQ2FQVbaOeT4SE8s8w" class="media" title="https://drive.google.com/open?id=1_4wJAC3iNeOhFuHQ2FQVbaOeT4SE8s8w" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/ru/images/file.png" class="media" title="Скачать" alt="Скачать" width="23" height="32" /></a>  <br/>
+  
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:62,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Показать изменения
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Полностью переработана логика управления, подготовлено к интеграции с бмс.  <br/>
+    <br/>
+  Добавлено:  <br/>
+  Инвертированный вход тормоза  <br/>
+  Настройка 3х позиционного переключателя скоростей для того чтобы скорости переключались последовательно 1-2-3  <br/>
+  Настройка обычного переключателя скорости - кнопки или переключатель  <br/>
+  Добавлен термодатчик мотора NTC10k B:3380  <br/>
+  Команды перезагрузки/отключения по кан шине  <br/>
+  Кнопка включения нейтрали, сбрасывает переключатель скоростей  <br/>
+  Скорость 0 = нейтраль, отключает ручку газа. Можно активировать из меню доп режимов. При включении будет активирован этот режим  <br/>
+  Инкремент и декремент скорости в контроллере  <br/>
+  Детект напряжения на фазах, при наличии напряжения более чем указано в настройке «Уровень детекта» будет отключено управление на стоячем моторе  <br/>
+  Разнесены защиты по напряжению, добавлена блокировка при низком питании  <br/>
+  Дополнительные режимы управления, с раздельной настройкой ускорений и отключением/включением доп функций  <br/>
+  Блокировка газа теперь локальная и CAN - отдельно  <br/>
+  Лимит температуры мотора при зарядке  <br/>
+  Медианный фильтр по питанию  <br/>
+  Фильтр устреднения с отбрасыванием крайних значений на ручку газа и тормоза для входов контроллера  <br/>
+    <br/>
+  Исправлено:  <br/>
+  Определение напряжения зарядки при небольшой разнице с батарейным  <br/>
+  Обновлены некоторые значения по умолчанию  <br/>
+  Небольшие исправления и обновления в меню  <br/>
+  Баг подсчета CRC при сохраненнии  <br/>
+  Ослабление при скорости более 126%  <br/>
+  Поправлены частоты измерений шин питания  <br/>
+  Батарейное питание теперь измеряется с частотой ШИМ, защита от перенапряжения значительно улучшена  <br/>
+  Убран глюк с инверсией тока при торможении  <br/>
+  Поправлены тайминги измерения тока для обхода глюков на плате 6F  <br/>
+  При настроенной кнопке питания дисплей не будет включаться при подаче питания  <br/>
+  Подкручены коэфиценты регулятора напряжения и тока для более быстрого отклика  <br/>
+  Улучшен детект, добавлена обработка КЗ и поправлен таймаут  <br/>
+  Добавлена настройка блокировки при запуске, для работы вместе с блокировкой экрана по паролю. При отсутсвии экрана ее нужно отключать  <br/>
+  
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:63,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;21 \u041d\u043e\u044f\u0431\u0440\u044f 2019&quot;,&quot;hid&quot;:&quot;\u043d\u043e\u044f\u0431\u0440\u044f_2019&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:59,&quot;range&quot;:&quot;46032-&quot;} -->

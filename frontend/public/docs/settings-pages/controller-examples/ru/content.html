@@ -1,0 +1,495 @@
+
+<h1 id="примеры_настроек">Примеры настроек</h1>
+<div class="level1">
+
+<p>
+В данном разделе мы приводим примеры разных типовых настроек Контроллера и некоторых неочевидных функций. Раздел постоянно дополняется, если у вас есть пример собственной настройки какой-либо функции, вы можете прислать нам в разделе контакты на <a href="https://nucular.tech/" class="urlextern" title="https://nucular.tech/" rel="ugc nofollow">сайте</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0440\u0438\u043c\u0435\u0440\u044b \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;hid&quot;:&quot;\u043f\u0440\u0438\u043c\u0435\u0440\u044b_\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-539&quot;} -->
+<h2 id="настройка_загрузки_конфига_can-кнопкой">Настройка загрузки конфига CAN-кнопкой</h2>
+<div class="level2">
+
+<p>
+В настройках контроллера с прошивкой версии 0.8.7 и новее появилась возможность мгновенной загрузки нужной конфигурации с SD-карты в Контроллер по нажатию кнопки. Это может быть полезно при использовании нескольких разный батарей, чтобы при смене батареи быстро загрузить новые настройки без использования меню импорта и экпорта. Или, если вы хотите быстро сменить настройки контроллера с малой мощностью на конфиг с большой мощностью. Загруженная таким образом конфигурация не сохраняется в Контроллере при перезапуске, если не сохранять ее специально в меню Контроллера после импорта. Для загрузки SD-карта должна находиться в Бортовом компьютере и номер в названии файла конфигурации должен совпадать с номером функции, настроенной в Контроллере. Для загрузки конфигурации вы можете использовать несколько способов: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#загрузка_конфига_кнопками_бортового_компьютера" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Кнопки Бортового компьютера</a>.</div>
+</li>
+<li class="level1"><div class="li"> Внешний переключатель, подключенный к Бортовому компьютеру.</div>
+</li>
+<li class="level1"><div class="li"> Внешний переключатель, подключенный к Контроллеру.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438 \u043a\u043e\u043d\u0444\u0438\u0433\u0430 CAN-\u043a\u043d\u043e\u043f\u043a\u043e\u0439&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438_\u043a\u043e\u043d\u0444\u0438\u0433\u0430_can-\u043a\u043d\u043e\u043f\u043a\u043e\u0439&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;540-2521&quot;} -->
+<h3 id="загрузка_конфига_кнопками_бортового_компьютера">Загрузка конфига кнопками Бортового компьютера</h3>
+<div class="level3">
+
+<p>
+Данный способ самый простой в настройке, загрузка конфигурации активируются одной из четырех кнопок Бортового компьютера.
+</p>
+<ol>
+<li class="level1"><div class="li"> Убедитесь, что вы настроили и экспортировали конфигурацию на SD-карту в файл <strong>NCconf1.cfg</strong> — <strong>NCconf5.cfg</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Например, вы хотите загружать конфигурацию <strong>NCconf3.cfg</strong> по нажатию первой кнопки Бортового компьютера. Перейдите в раздел меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, далее назначьте на пункт меню <strong>CAN порт 1</strong> функцию <strong>CL3</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в раздел меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong> и для кнопки экрана <strong>Хоткей 1 функц.</strong> назначьте <strong>CAN_1</strong>. Тип кнопки <strong>Хоткей 1 тип</strong> выберите <strong>Обычный</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>. Настройка завершена. Перейдите на главный экран. Теперь нажав и удерживая первую кнопку Бортового компьютера вы сможете мгновенно импортировать конфигурацию <strong>NCconf3.cfg</strong> с SD-карты. После импорта вы увидите уведомление с названием загруженной конфигурации. <br/>
+</div>
+</li>
+</ol>
+
+<p>
+Если вы специально не сохраните загруженную конфигурацию в настройках Контроллера, то после выключения и включения Контроллера будет автоматически загружена ваша предыдущая конфигурация, которая использовалась до импорта.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u043a\u043e\u043d\u0444\u0438\u0433\u0430 \u043a\u043d\u043e\u043f\u043a\u0430\u043c\u0438 \u0411\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0430_\u043a\u043e\u043d\u0444\u0438\u0433\u0430_\u043a\u043d\u043e\u043f\u043a\u0430\u043c\u0438_\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2522-4898&quot;} -->
+<h2 id="настройка_переключения_режимов_управления">Настройка переключения режимов управления</h2>
+<div class="level2">
+
+<p>
+В настройках контроллера доступны три режима управления, для которых можно сделать разные настройки мощности и скорости. Для переключения режимов <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> вы можете использовать несколько способов: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#переключение_режимов_кнопками_бортового_компьютера" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Кнопки Бортового компьютера</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#переключение_режимов_внешними_кнопками_подключенными_к_бортовому_компьютеру" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Внешний переключатель, подключенный к Бортовому компьютеру</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#переключение_режимов_внешним_переключателем_подключенным_к_бортовому_компьютеру" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Внешний переключатель, подключенный к Контроллеру</a>.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0440\u0435\u0436\u0438\u043c\u043e\u0432 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f_\u0440\u0435\u0436\u0438\u043c\u043e\u0432_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;4899-6116&quot;} -->
+<h3 id="переключение_режимов_кнопками_бортового_компьютера">Переключение режимов кнопками Бортового компьютера</h3>
+<div class="level3">
+
+<p>
+Данный способ самый простой в настройке, режимы управления активируются одной из четырех кнопок Бортового компьютера.
+</p>
+<ol>
+<li class="level1"><div class="li"> Убедитесь, что вы <a href="/doku.php?id=ru:controller:setup#режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">настроили</a> режимы управления. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в раздел меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, в пункте меню <strong>Режим скоростей</strong> выберите <strong>Кнопки</strong>, далее назначьте на пункт меню <strong>CAN порт 1</strong> функцию <strong>S1</strong>. Для <strong>CAN порт 2</strong> и <strong>CAN порт 3</strong> функции <strong>S2</strong> и <strong>S3</strong>, соответственно. Убедитесь, что функции <strong>S1</strong>, <strong>S2</strong> и <strong>S3</strong> не настроены ни на какие другие порты в списке. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в раздел меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong> и для каждой кнопки экрана <strong>Хоткей</strong> назначьте <strong>CAN порт</strong>, на который был настроен режим. Для <strong>Хоткей 1 функц.</strong> назначим <strong>CAN_1</strong>, для <strong>Хоткей 2 функц.</strong> и <strong>Хоткей 3 функц.</strong> — <strong>CAN_2</strong> и <strong>CAN_3</strong> соответственно. Тип кнопок для всех трех Хоткеев выберите <strong>Обычный</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>. Настройка завершена. Перейдите на главный экран. Теперь нажав и удерживая  одну из кнопок Бортового компьютера вы сможете активировать настроенный на нее режим управления. Выбранный режим будет показан вверху посередине экрана цифрами <strong>1</strong>,<strong>2</strong> или <strong>3</strong>. В нашем примере, первая кнопка активирует режим <strong>S1</strong>, вторая и третья режимы <strong>S2</strong> и <strong>S3</strong> соотвественно. <br/>
+</div>
+</li>
+</ol>
+
+<p>
+Если после настройки вы не сможете переключить режимы, то перейдите в меню <strong>Контроллер</strong> &gt; <strong>Настройки и обновление</strong> выберете пункт <strong>Сбросить настройки</strong>, сделайте сброс, далее сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>, вернитесь в меню <strong>Контроллер</strong> &gt; <strong>Настройки и обновление</strong>, выберите пункт <strong>Перезагрузка</strong> и перезагрузите устройство. Далее повторите все настройки сначала. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0440\u0435\u0436\u0438\u043c\u043e\u0432 \u043a\u043d\u043e\u043f\u043a\u0430\u043c\u0438 \u0411\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0440\u0435\u0436\u0438\u043c\u043e\u0432_\u043a\u043d\u043e\u043f\u043a\u0430\u043c\u0438_\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;6117-9408&quot;} -->
+<h3 id="переключение_режимов_внешним_переключателем_подключенным_к_бортовому_компьютеру">Переключение режимов внешним переключателем, подключенным к Бортовому компьютеру</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа необходим внешний 3-х позиционный переключатель. Для подключения к Бортовому компьютеру необходимо необходимо обжать провод пинами по <a href="/doku.php?id=ru:display:start#схема_подключения" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">схеме</a> и вставить их в разъем PHD 2.0, который входит в комплект к Бортовому компьютеру. 
+</p>
+<ol>
+<li class="level1"><div class="li"> Провод от переключателя необходимо подключить к задней панели Бортового компьютера в порты <strong>I/O1</strong>  или <strong>I/O2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо проверить работоспособность подключенной кнопки и активацию входа по замыканию контакта. Перейдите в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong>  &gt; <strong>Информация</strong>  и нажмите кнопку. В зависимости от того, в какой порт подключен провод, при подаче сигнала значения в пунктах меню <strong>IO1 состояние</strong>  - <strong>IO8 состояние</strong>  будут меняться с <strong>0</strong>  на <strong>1</strong>  при нажатии подключенной в Бортовой компьютер кнопки. Если значение не меняется, значит сигнал не поступает и надо проверить правильность подключения, контакты в коннекторе, провод, и кнопки переключателя. Если все в порядке, переходим к пункту 3. Также вы можете проверить работу кнопки в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>, напротив пунктов <strong>IO1 состояние</strong>  - <strong>IO8 состояние</strong>. </div>
+</li>
+<li class="level1"><div class="li"> Допустим, вы подключили одну из кнопок переключателя к <strong>IO2 состояние</strong>, это вход <strong>IO2</strong>  порта <strong>I/O1</strong>. Теперь необходимо назначить данному входу Бортового компьютера номер CAN-входа для управления по CAN-шине и выбрать тип сигнала управления. Перейдите в <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>, и напротив пункта меню <strong>IO2 тип</strong>, выберите тип сигнала управления, например, <strong>Обычный</strong>, а в пункте <strong>IO2 функц.</strong> выберите свободный номер CAN-входа, например, <strong>CAN_1</strong>. Для остальных кнопок переключателя сделайте аналогичные настройки, выбирая другие номера CAN портов.</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, чтобы настроить функцию режимов <strong>S1</strong>, <strong>S2</strong> или <strong>S3</strong> на выбранный СAN порт. Для этого напротив пункта меню <strong>CAN порт 1</strong> выберите значение <strong>S1</strong>. Теперь настроенная в предыдущем пункте кнопка, при нажатии будет активировать режим <strong>S1</strong> в Контроллере. Далее настройте остальные кнопки аналогично, выбирая соответствующие режимы для настроенных CAN портов. Если вы используете 3-х позиционный переключатель, то вам необходимо выбрать в CAN портах функции <strong>S1of3</strong> и <strong>S3of3</strong>, которые будут активироваться при замыкании переключателя в крайнем левом и правом положении. В центральном положении будет активирован режим <strong>S2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. Настройка завершена. Перейдите на главный экран. Теперь нажав одну из внешних кнопок вы сможете активировать настроенный на нее режим управления. Выбранный режим будет показан вверху посередине экрана цифрами <strong>1</strong>,<strong>2</strong> или <strong>3</strong>. <br/>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0440\u0435\u0436\u0438\u043c\u043e\u0432 \u0432\u043d\u0435\u0448\u043d\u0438\u043c \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u0435\u043b\u0435\u043c, \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c \u043a \u0411\u043e\u0440\u0442\u043e\u0432\u043e\u043c\u0443 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0443&quot;,&quot;hid&quot;:&quot;\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0440\u0435\u0436\u0438\u043c\u043e\u0432_\u0432\u043d\u0435\u0448\u043d\u0438\u043c_\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u0435\u043b\u0435\u043c_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c_\u043a_\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u043c\u0443_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0443&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;9409-14720&quot;} -->
+<h3 id="переключение_режимов_внешним_переключателем_подключенным_к_контроллеру">Переключение режимов внешним переключателем, подключенным к Контроллеру</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа необходим внешний 3-х позиционный переключатель. Для подключения к Контроллеру необходимо использовать провода управления (опция) с коннекторами SM 2.54 3P. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Провод от переключателя необходимо подключить согласно <a href="/doku.php?id=ru:controller:setup#схема_подключения" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">схеме</a> в порты <strong>S1</strong>, <strong>S3</strong> и <strong>GND</strong> на проводах управления Контроллера. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо проверить работоспособность подключенного переключателя и активацию входа по замыканию контакта. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> &gt; <strong>Состояние портов</strong> и нажмите кнопку. В зависимости от того, в какой порт подключен провод, при подаче сигнала значения в пунктах меню <strong>S1</strong> и <strong>S3</strong> будут меняться с <strong>0</strong> на <strong>1</strong>. Если значение не меняется, значит сигнал не поступает и надо проверить правильность подключения, контакты в коннекторе, провод, и сам переключатель. Если все в порядке, переходим к пункту 3. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Теперь необходимо назначить портам Контроллера нужную функцию. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> и напротив пункта <strong>Порт S1</strong> выберите значение <strong>S1of3</strong>, a напротив <strong>Порт S3</strong> — <strong>S3of3</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. Настройка завершена. Теперь при замыкании переключателя в крайнем левом и правом положении будут активироваться режимы управления <strong>S1</strong> и <strong>S3</strong>. В центральном положении будет активирован режим <strong>S2</strong>. <br/>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0440\u0435\u0436\u0438\u043c\u043e\u0432 \u0432\u043d\u0435\u0448\u043d\u0438\u043c \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u0435\u043b\u0435\u043c, \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c \u043a \u041a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u0443&quot;,&quot;hid&quot;:&quot;\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0440\u0435\u0436\u0438\u043c\u043e\u0432_\u0432\u043d\u0435\u0448\u043d\u0438\u043c_\u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u0435\u043b\u0435\u043c_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c_\u043a_\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u0443&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;14721-17466&quot;} -->
+<h2 id="настройка_контроллеров_при_двухмоторной_схеме_подключения">Настройка контроллеров при двухмоторной схеме подключения</h2>
+<div class="level2">
+
+<p>
+Для начала вам необходимо внимательно ознакомиться со <a href="/doku.php?id=ru:controller:setup#подключение_нескольких_контроллеров" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">схемой подключения</a> при многомоторной конфигурации. Перед описанием настроек приведем ответы на два часто возникающих вопроса:
+</p>
+
+<p>
+<strong>Можно ли подключить два контроллера к одному мотору?</strong> <br/>
+
+</p>
+
+<p>
+Это возможно, но в этом случае нужно разделить обмотки двигателя на две независимые и потом добавить второй контроллер. Кроме того, на каждый контроллер необходимо два комплекта датчиков Холла.<br/>
+
+</p>
+
+<p>
+<strong>Можно ли подключить два двигателя к одному контроллеру?</strong> <br/>
+
+</p>
+
+<p>
+Нет, рассинхронизация при вращении моторов приведет к тому, что один из них будет тормозить.<br/>
+
+</p>
+
+<p>
+<strong>Настройка контроллеров при двухмоторной схеме подключения</strong>
+</p>
+
+<p>
+После подключения электромоторов к контроллерам, необходимо провести настройку каждого контроллера по отдельности через меню <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Автонастройка</a>. Ручки газа и тормоза, подключенные в Бортовой компьютер, настраиваются в меню <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Бортового компьютера</a>. <br/>
+
+</p>
+
+<p>
+Если ручки газа и тормоза подключены в один из контроллеров через «Провода управления», то этому контроллеру необходимо назначить функцию управления другими контроллерами с текущего — <a href="/doku.php?id=ru:controller:setup#мастер-контроллер" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Мастер контроллер</a>. <br/>
+
+</p>
+
+<p>
+Далее можно настроить <a href="/doku.php?id=ru:controller:setup#прочие_настройки" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Префикс</a> — название контроллера для многомоторных конфигураций. Используя префиксы вместе или по отдельности можно указать, где расположен электродвигатель, которым управляет Контроллер. <br/>
+
+</p>
+
+<p>
+<strong>Настройка режима привода — полный привод, передний или задний</strong>
+</p>
+
+<p>
+Для выбора режима движения и типа привода можно использовать кнопки Бортового компьютера или внешний переключатель (подключенный к Контроллеру через провода управления или к Бортовому компьютеру). Для этого необходимо настроить отключение газа на том контроллере, который не должен вращать электромотор в данный момент.
+</p>
+
+<p>
+При использовании для переключения кнопок Бортового компьютера настройку отключения контроллера можно сделать в меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong>. Необходимо выбрать режим, например, <strong>S1</strong> и в нем включить функцию <a href="/doku.php?id=ru:controller:setup#дополнительные_режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">Отключить ручку газа</a>. Теперь, когда будет выбран режим <strong>S1</strong>, тот контроллер, где активировано отключение газа не будет реагировать на ручку газа.
+</p>
+
+<p>
+Таким образом, комбинируя три режима — <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> можно настроить полный привод (2WD), задний привод (RWD) и передний привод (FWD).
+</p>
+
+<p>
+При использовании для переключения режимов внешнего переключателя, выбор режимов настраивается в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">меню</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>. Для 3-х позиционного переключателя нужно настроить функции <strong>S1of3</strong> и <strong>S3of3</strong>, для внешних кнопок — функции <strong>S1</strong>, <strong>S2</strong> и <strong>S3</strong>.
+</p>
+
+<p>
+Если внешний переключатель подключен в Бортовой компьютер, то посмотреть какие порты активируются при нажатии кнопок на нем можно в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">меню</a> <strong>Бортовой компьютер</strong> &gt; <strong>Информация</strong>, если переключатель подключен в Контроллер, то в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">меню</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> &gt; <strong>Состояние портов</strong>. 
+</p>
+
+<p>
+Также можно настроить отключение одного из контроллеров внешней кнопкой, без необходимости настройки дополнительных режимов. Для этого надо назначить на порт кнопки функцию <strong>DTH</strong> (отключение ручки газа) в разделе <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">меню</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u043e\u0432 \u043f\u0440\u0438 \u0434\u0432\u0443\u0445\u043c\u043e\u0442\u043e\u0440\u043d\u043e\u0439 \u0441\u0445\u0435\u043c\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u043e\u0432_\u043f\u0440\u0438_\u0434\u0432\u0443\u0445\u043c\u043e\u0442\u043e\u0440\u043d\u043e\u0439_\u0441\u0445\u0435\u043c\u0435_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;17467-23710&quot;} -->
+<h2 id="настройка_рекуперативного_торможения">Настройка рекуперативного торможения</h2>
+<div class="level2">
+
+<p>
+Это инструкция для Контроллеров с прошивкой v7.18 и для Бортового компьютера с v0.60B. Если у Вас прошивка v0.8.4 и v0.71B соответственно, а ручка тормоза подключена напрямую к Бортовому компьютеру, то необходимо настраивать ручку тормоза в <a href="/doku.php?id=ru:display:start#настройка_управления" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">разделе</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка управления</strong>. Рекуперация позволяет тормозить электромотором и заряжать батарею. Данная функция не может быть реализована на редукторных мотор-колесах. <br/>
+
+</p>
+
+<p>
+Для включения рекуперативного торможения можно использовать два способа: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#торможение_отдельной_ручкой_тормоза" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Отдельный курок (аналоговый тормоз)</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#торможение_при_отпускании_ручки_газа" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">При отпускании ручки/курка газа</a>. <br/>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0440\u0435\u043a\u0443\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0440\u0435\u043a\u0443\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u0433\u043e_\u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;23711-25121&quot;} -->
+<h3 id="торможение_отдельной_ручкой_тормоза">Торможение отдельной ручкой тормоза</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа рекуперативного торможения применяется отдельная ручка или курок аналогового тормоза.
+</p>
+<ol>
+<li class="level1"><div class="li"> Сначала необходимо подключить ручку тормоза в Бортовой компьютер в порт <strong>BRK</strong> или к Контроллеру в порт <strong>Control</strong> через провода управления (опция) согласно <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">схеме</a> подключения. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Если вы ранее уже <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">сделали</a> полную автонастройку всех систем, то переходите сразу к п.6. Если вы устанавливаете ручку тормоза после прохождения автонастройки — переходите к п.3. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong>, в пункте <strong>Ручка тормоза</strong> выберите <strong>Вкл</strong>, далее следуйте инструкциям на экране для автодетекта ручки тормоза. После успешной настройки вы увидите сообщение <strong>ОК</strong>. Далее переходите к п.6. Если в процессе автодетекта возникли ошибки (зависло значение <strong>P</strong>), переходите к п.4. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Информация</strong>, найдите параметр <strong>Brake V</strong> и проверьте, что меняется диапазон напряжений ручки тормоза при ее нажатии и отпускании от ~ <strong>0.8V</strong> до ~ <strong>4,2V</strong>. Если диапазон не меняется, значит вы неправильно подключили ручку или она не исправна. Если диапазон меняется, то переходим к п.5. Если вы подключили ручку тормоза напрямую в Контроллер, то ее диапазон напряжений можно проверить в пункте <strong># Ручка тормоза</strong> в <a href="/doku.php?id=ru:controller:setup#настройка_диапазонов_ручек_газа_и_тормоза" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">разделе</a> меню <strong>Контроллер</strong> &gt; <strong>Управление</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_диапазонов_ручек_газа_и_тормоза" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Управление</strong> и в пункте <strong>Тормоз мин</strong> выставите на <strong>150mV</strong> больше, чем указанное минимальное значение, а в пункте <strong>Тормоз макс</strong> выставите на <strong>150mV</strong> меньше, чем указанное максимальное значение. Далее переходите пункту 6. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Для настройки уровня рекуперации перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_торможения" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">пункт</a> меню <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> &gt; <strong>Фазный торможения</strong> и настройте уровень фазного тока торможения. Если у вас самокат, то можно начать с <strong>20А</strong>, для электровелосипеда можно начать с <strong>50А</strong>, для Sur-Ron c <strong>70А</strong>. Далее, протестируйте настройки и при необходимости, увеличьте или уменьшите фазный ток для достижения желаемого результата. <br/>
+</div>
+</li>
+</ol>
+
+<p>
+Имейте ввиду, что при полностью заряженной батарее рекуперация будет невозможна.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0422\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u0435 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0439 \u0440\u0443\u0447\u043a\u043e\u0439 \u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;hid&quot;:&quot;\u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u0435_\u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0439_\u0440\u0443\u0447\u043a\u043e\u0439_\u0442\u043e\u0440\u043c\u043e\u0437\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;25122-29390&quot;} -->
+<h3 id="торможение_при_отпускании_ручки_газа">Торможение при отпускании ручки газа</h3>
+<div class="level3">
+
+<p>
+При данном способе торможения, рекуперация включается при отпускании ручки газа. Эффект аналогичен езде на электромобиле с использованием одной педали газа, при нажатии — ускоряетесь, от отпускании — тормозите. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Сначала необходимо подключить ручку газа в Бортовой компьютер в порт <strong>THR</strong> или к Контроллеру в порт <strong>Control</strong> через провода управления (опция) согласно <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">схеме</a> подключения. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Если вы ранее уже <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">сделали</a> полную автонастройку всех систем, то переходите сразу к п.6. Если вы подключаете ручку газа и не подключаете ручку тормоза — переходите к п.3. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#автонастройка" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Автонастройка</strong>, в пункте <strong>Ручка газа</strong> выберите <strong>Вкл</strong>, далее следуйте инструкциям на экране для автодетекта ручки газа. После успешной настройки вы увидите сообщение <strong>ОК</strong>. Далее переходите к п.6. Если в процессе автодетекта возникли ошибки, переходите к п.4. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Информация</strong>, найдите параметр <strong>Throttle V</strong> и проверьте, что меняется диапазон напряжений ручки газа при ее нажатии и отпускании от ~ <strong>0.75V</strong> до ~ <strong>4,35V</strong>. Если диапазон не меняется, значит вы неправильно подключили ручку или она не исправна. Если диапазон меняется, то переходим к п.5. Если вы подключили ручку газа напрямую в Контроллер, то ее диапазон напряжений можно проверить в пункте <strong># Ручка газа</strong> в <a href="/doku.php?id=ru:controller:setup#настройка_диапазонов_ручек_газа_и_тормоза" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">разделе</a> меню <strong>Контроллер</strong> &gt; <strong>Управление</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_диапазонов_ручек_газа_и_тормоза" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Управление</strong> и в пункте <strong>Газ мин</strong> выставите на <strong>150mV</strong> больше, чем указанное минимальное значение, а в пункте <strong>Газ макс</strong> выставите на <strong>50mV</strong> меньше, чем указанное максимальное значение. Далее переходите пункту 6. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> В пункте меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Реж. ручки газа</strong> выберите один из двух режимов работы ручки газа — <strong>Скорость</strong> или <strong>Скорость и тяга</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее в <a href="/doku.php?id=ru:controller:setup#настройка_режима_ручки_газа" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">пункте</a> меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Лимит ск. при 0% газа</strong> выберите <strong>Вкл</strong>, чтобы включить лимит скорости при 0% газа для торможения при отпущенной ручке газа. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Для настройки уровня рекуперации перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_режимов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">пункт</a> меню <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong> &gt; <strong>Фаз.торм. при упр.скор.</strong> и настройте фазный ток торможения при управлении скоростью. Данная функция позволяет снижать скорость при сбросе ручки газа. Если у вас самокат, то можно начать с <strong>20А</strong>, для электровелосипеда можно начать с <strong>50А</strong>, для Sur-Ron c <strong>70А</strong>. Далее, протестируйте настройки и при необходимости, увеличьте или уменьшите фазный ток для достижения желаемого результата. <br/>
+</div>
+</li>
+</ol>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0422\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u0435 \u043f\u0440\u0438 \u043e\u0442\u043f\u0443\u0441\u043a\u0430\u043d\u0438\u0438 \u0440\u0443\u0447\u043a\u0438 \u0433\u0430\u0437\u0430&quot;,&quot;hid&quot;:&quot;\u0442\u043e\u0440\u043c\u043e\u0436\u0435\u043d\u0438\u0435_\u043f\u0440\u0438_\u043e\u0442\u043f\u0443\u0441\u043a\u0430\u043d\u0438\u0438_\u0440\u0443\u0447\u043a\u0438_\u0433\u0430\u0437\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;29391-34404&quot;} -->
+<h2 id="настройка_заднего_хода">Настройка заднего хода</h2>
+<div class="level2">
+
+<p>
+Имейте ввиду, что функция заднего хода не может быть реализована на редукторных мотор-колесах. Для включения заднего хода вы можете использовать несколько способов: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#включение_с_кнопки_бортового_компьютера" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Кнопку Бортового компьютера</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#включение_с_внешней_кнопки_подключенной_к_бортовому_компьютеру" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Внешнюю кнопку, подключенную к Бортовому компьютеру</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#включение_с_внешней_кнопки_подключенной_к_контроллеру" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Внешнюю кнопку, подключенную к Контроллеру</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#включение_через_выбор_режима_управления_с_активированной_функцией_реверс" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Выбор режима управления с активированной функцией &quot;Реверс&quot;</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=ru:controller:examples#включение_через_выбор_режима_управления_с_активированной_функцией_обратный_ход_при_тормозе" class="wikilink1" title="ru:controller:examples" data-wiki-id="ru:controller:examples">Выбор режима управления с активированной функцией &quot;Обратный ход при тормозе&quot;</a>. <br/>
+</div>
+</li>
+</ol>
+
+<p>
+При желании, п.1 можно совмещать с другими вариантами, чтобы иметь несколько способов включения заднего хода.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0437\u0430\u0434\u043d\u0435\u0433\u043e \u0445\u043e\u0434\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0437\u0430\u0434\u043d\u0435\u0433\u043e_\u0445\u043e\u0434\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;34405-36226&quot;} -->
+<h3 id="включение_с_кнопки_бортового_компьютера">Включение с кнопки Бортового компьютера</h3>
+<div class="level3">
+
+<p>
+Данный способ включения заднего хода самый простой в настройке и активируется с помощью одной из четырех кнопок Бортового компьютера. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">пункт</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong> и выберите на какую из четырех кнопок Бортового компьютера вы хотите назначить функцию включения заднего хода. Например, на первую кнопку. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Напротив пункта меню <strong>Хоткей 1 тип</strong> выберите тип сигнала управления <strong>Кнопка</strong>, а в пункте <strong>Хоткей 1 функц.</strong> выберите свободный номер CAN-входа, например, <strong>CAN_4</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, чтобы настроить функцию заднего хода на выбранный СAN порт. Для этого напротив пункта меню <strong>CAN_4</strong> выберите значение <strong>RV</strong> (reverse, задний ход). <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. Настройка завершена, теперь для включения заднего хода необходимо нажать и удерживать в течение двух секунд первую кнопку Бортового компьютера. При активации функции вы увидите значок <strong>R</strong> в верхней части экрана.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0441 \u043a\u043d\u043e\u043f\u043a\u0438 \u0411\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;hid&quot;:&quot;\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0441_\u043a\u043d\u043e\u043f\u043a\u0438_\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u0433\u043e_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;36227-38373&quot;} -->
+<h3 id="включение_с_внешней_кнопки_подключенной_к_бортовому_компьютеру">Включение с внешней кнопки, подключенной к Бортовому компьютеру</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа необходима внешняя кнопки или переключатель. Для подключения к Бортовому компьютеру провод необходимо обжать пинами по <a href="/doku.php?id=ru:display:start#схема_подключения" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">схеме</a> и вставить в разъем PHD 2.0, которые входят в комплект к Бортовому компьютеру.
+</p>
+<ol>
+<li class="level1"><div class="li"> Провод от переключателя необходимо подключить к задней панели Бортового компьютера в порты <strong>I/O1</strong>  или <strong>I/O2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо проверить работоспособность подключенной кнопки и активацию входа по замыканию контакта. Перейдите в <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong>  &gt; <strong>Информация</strong>  и нажмите кнопку. В зависимости от того, в какой порт подключен провод, при подаче сигнала значения в пунктах меню <strong>IO1 состояние</strong>  - <strong>IO8 состояние</strong>  будут меняться с <strong>0</strong>  на <strong>1</strong>  при нажатии подключенной в Бортовой компьютер кнопки. Если значение не меняется, значит сигнал не поступает и надо проверить правильность подключения, контакты в коннекторе, провод, и саму кнопку. Если все в порядке, переходим к пункту 3. Также вы можете проверить работу кнопки в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>, напротив пунктов <strong>IO1 состояние</strong>  - <strong>IO8 состояние</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Допустим, вы подключили кнопку ко <strong>IO2 состояние</strong>, это вход <strong>IO2</strong>  порта <strong>I/O1</strong>. Теперь необходимо назначить данному входу Бортового компьютера номер CAN-входа для управления по CAN-шине и выбрать тип сигнала управления. Перейдите в <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">раздел</a> меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>, и напротив пункта меню <strong>IO2 тип</strong>, выберите тип сигнала управления, например, <strong>Обычный</strong>, а в пункте <strong>IO2 функц.</strong>  выберите свободный номер CAN-входа, например, <strong>CAN_4</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong>  &gt; <strong>Настройка портов</strong>, чтобы настроить функцию заднего хода на выбранный СAN порт. Для этого напротив пункта меню <strong>CAN_4</strong>  выберите значение <strong>RV</strong>  (reverse, задний ход).</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. Настройка завершена. Теперь для включения заднего хода необходимо нажать на кнопку. При активации функции вы увидите значок <strong>R</strong>  в верхней части экрана. Чтобы отключить задний ход нажмите кнопку повторно.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0441 \u0432\u043d\u0435\u0448\u043d\u0435\u0439 \u043a\u043d\u043e\u043f\u043a\u0438, \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u043e\u0439 \u043a \u0411\u043e\u0440\u0442\u043e\u0432\u043e\u043c\u0443 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0443&quot;,&quot;hid&quot;:&quot;\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0441_\u0432\u043d\u0435\u0448\u043d\u0435\u0439_\u043a\u043d\u043e\u043f\u043a\u0438_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u043e\u0439_\u043a_\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u043c\u0443_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0443&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;38374-42487&quot;} -->
+<h3 id="включение_с_внешней_кнопки_подключенной_к_контроллеру">Включение с внешней кнопки, подключенной к Контроллеру</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа необходима внешняя кнопки или переключатель. Для подключения к Контроллеру необходимо использовать провода управления (опция) с коннекторами SM 2.54 3P. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Провод от переключателя необходимо подключить согласно <a href="/doku.php?id=ru:controller:setup#схема_подключения" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">схеме</a> в один из портов на проводах управления Контроллера. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо проверить работоспособность подключенной кнопки и активацию входа по замыканию контакта. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> &gt; <strong>Состояние портов</strong> и нажмите кнопку. В зависимости от того, в какой порт подключен провод, при подаче сигнала значения в пунктах меню <strong>S1</strong>, <strong>S3</strong>, <strong>RV</strong>, <strong>CR</strong> будут меняться с <strong>0</strong> на <strong>1</strong>. Если значение не меняется, значит сигнал не поступает и надо проверить правильность подключения, контакты в коннекторе, провод, и саму кнопку. Если все в порядке, переходим к пункту 3. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Допустим, вы подключили кнопку ко входу <strong>RV</strong>. Теперь необходимо назначить данному порту Контроллера функцию заднего хода. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong> и напротив пункта <strong>Порт RV</strong> выберите значение <strong>RV</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. Настройка завершена. Теперь для включения заднего хода необходимо нажать на кнопку. При активации функции вы увидите значок <strong>R</strong> в верхней части экрана. Чтобы отключить задний ход нажмите кнопку повторно. <br/>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0441 \u0432\u043d\u0435\u0448\u043d\u0435\u0439 \u043a\u043d\u043e\u043f\u043a\u0438, \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u043e\u0439 \u043a \u041a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u0443&quot;,&quot;hid&quot;:&quot;\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0441_\u0432\u043d\u0435\u0448\u043d\u0435\u0439_\u043a\u043d\u043e\u043f\u043a\u0438_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u043e\u0439_\u043a_\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u0443&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;42488-45232&quot;} -->
+<h3 id="включение_через_выбор_режима_управления_с_активированной_функцией_реверс">Включение через выбор режима управления с активированной функцией &quot;Реверс&quot;</h3>
+<div class="level3">
+
+<p>
+При данной настройке задний ход активируется при включении одного из режимов управления с помощью одной из четырех кнопок Бортового компьютера. Для использования данного способа необходимо активировать функцию включения заднего хода при выборе режима управления.
+</p>
+<ol>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#дополнительные_режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> и выберите один из режимов  управления <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> в котором будет активирован задний ход. Например, <strong>S2</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в раздел меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Режим S2</strong> в пункт <strong>Реверс</strong> и выберите значений <strong>Вкл.</strong> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее активируйте режимы, для этого в пункте меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Включить доп.режимы</strong> установить значение <strong>Вкл.</strong> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо выбрать какой кнопкой Бортового компьютера будет включаться <strong>Режим S2</strong> и настроить данную функцию. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, выберите один из СAN портов, например <strong>СAN порт 1</strong>, напротив данного пункта меню выберите значение <strong>S2</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">пункт</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong>, выберите, какой кнопкой Бортового компьютера будет включаться режим <strong>S2</strong>, например, второй. Для настройки напротив пункта меню <strong>Хоткей 2 тип</strong> выберите тип сигнала управления <strong>Кнопка</strong>, а в пункте <strong>Хоткей 2 функц.</strong> выберите ранее настроенный в контроллере номер CAN-входа — <strong>CAN_1</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>. Настройка завершена. Теперь для включения заднего хода необходимо нажать на вторую кнопку Бортового компьютера для активации режима управления <strong>S2</strong> с активированным задним ходом. При активации режима вы увидите значок <strong>R</strong> в верхней части экрана. Чтобы отключить задний ход необходимо переключиться на другой режим управления, <strong>S1</strong> или <strong>S3</strong>, который должен быть заранее настроен на другие кнопки Бортового компьютера.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0447\u0435\u0440\u0435\u0437 \u0432\u044b\u0431\u043e\u0440 \u0440\u0435\u0436\u0438\u043c\u0430 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0441 \u0430\u043a\u0442\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0444\u0443\u043d\u043a\u0446\u0438\u0435\u0439 \&quot;\u0420\u0435\u0432\u0435\u0440\u0441\&quot;&quot;,&quot;hid&quot;:&quot;\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0447\u0435\u0440\u0435\u0437_\u0432\u044b\u0431\u043e\u0440_\u0440\u0435\u0436\u0438\u043c\u0430_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f_\u0441_\u0430\u043a\u0442\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439_\u0444\u0443\u043d\u043a\u0446\u0438\u0435\u0439_\u0440\u0435\u0432\u0435\u0440\u0441&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;45233-49058&quot;} -->
+<h3 id="включение_через_выбор_режима_управления_с_активированной_функцией_обратный_ход_при_тормозе">Включение через выбор режима управления с активированной функцией &quot;Обратный ход при тормозе&quot;</h3>
+<div class="level3">
+
+<p>
+Для использования данного способа необходимо включение с помощью одной из четырех кнопок Бортового компьютера одного из режимов управления с активированной функцией <strong>Обратный ход при тормозе</strong>. После активации данной функции, повторное нажатие ручки тормоза после остановки включает задний ход. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:controller:setup#дополнительные_режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> и выберите один из режимов управления <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> в котором будет активирован обратный ход при тормозе. Например, <strong>S2</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в раздел меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Режим S2</strong> в пункт <strong>Обратный ход при тормозе</strong> и выберите значений <strong>Вкл.</strong> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее активируйте режимы, для этого в пункте меню <strong>Контроллер</strong> &gt; <strong>Дополнительные режимы</strong> &gt; <strong>Включить доп.режимы</strong> установить значение <strong>Вкл</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Далее необходимо выбрать какой кнопкой Бортового компьютера будет включаться <strong>Режим S2</strong> и настроить данную функцию. Перейдите в <a href="/doku.php?id=ru:controller:setup#настройка_портов" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">раздел</a> меню <strong>Контроллер</strong> &gt; <strong>Настройка портов</strong>, выберите один из СAN портов, например <strong>СAN_1</strong>, напротив данного пункта меню выберите значение <strong>S2</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Контроллер</strong> &gt; <strong>Сохранить настройки</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в <a href="/doku.php?id=ru:display:start#настройка_кнопок" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">пункт</a> меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка кнопок</strong>, выберите, какой кнопкой Бортового компьютера будет включаться режим <strong>S2</strong>, например, второй. Для настройки напротив пункта меню <strong>Хоткей 2</strong> тип выберите тип сигнала управления <strong>Обычный</strong>, а в пункте <strong>Хоткей 2 функц.</strong> выберите ранее настроенный в контроллере номер CAN-входа — <strong>CAN_1</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Сохраните настройки в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>. Настройка завершена. Теперь, когда у вас включен режим управления <strong>S2</strong>, после нажатия ручки тормоза и полной остановки, вы можете в течение 4 секунд повторно нажать ручку тормоза и удерживая ее — активировать задний ход. Если пройдет больше времени между нажатиями, то задний ход активирован не будет и надо будет опять нажать на тормоз и повторно для включения заднего хода. При активации режима вы увидите значок <strong>R</strong> в верхней части экрана. Чтобы отключить задний ход необходимо отпустить ручку тормоза, Контроллер вернется в режим управления <strong>S2</strong>. </div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u0447\u0435\u0440\u0435\u0437 \u0432\u044b\u0431\u043e\u0440 \u0440\u0435\u0436\u0438\u043c\u0430 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0441 \u0430\u043a\u0442\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0444\u0443\u043d\u043a\u0446\u0438\u0435\u0439 \&quot;\u041e\u0431\u0440\u0430\u0442\u043d\u044b\u0439 \u0445\u043e\u0434 \u043f\u0440\u0438 \u0442\u043e\u0440\u043c\u043e\u0437\u0435\&quot;&quot;,&quot;hid&quot;:&quot;\u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435_\u0447\u0435\u0440\u0435\u0437_\u0432\u044b\u0431\u043e\u0440_\u0440\u0435\u0436\u0438\u043c\u0430_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f_\u0441_\u0430\u043a\u0442\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439_\u0444\u0443\u043d\u043a\u0446\u0438\u0435\u0439_\u043e\u0431\u0440\u0430\u0442\u043d\u044b\u0439_\u0445\u043e\u0434_\u043f\u0440\u0438_\u0442\u043e\u0440\u043c\u043e\u0437\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;49059-&quot;} -->

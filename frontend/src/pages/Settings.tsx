@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { products } from "../data/products";
+import DocsLanguageToggle, { useDocsLanguage } from "../components/DocsLanguageToggle";
 import "./ControllerSettings.css";
 
 export default function Settings() {
@@ -9,94 +10,71 @@ export default function Settings() {
   const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { language } = useDocsLanguage();
   const cards = useMemo(
     () => [
       {
         key: "bluetooth",
-        title: "Bluetooth",
-        text: "How to connect the Bluetooth module to the controller and display.",
+        title: language === "ru" ? "Bluetooth" : "Bluetooth",
+        text:
+          language === "ru"
+            ? "Как подключить Bluetooth модуль к контроллеру и дисплею."
+            : "How to connect the Bluetooth module to the controller and display.",
         onClick: () => navigate("/settings/bluetooth")
       },
       {
         key: "cadmodels",
-        title: "CAD files / 3D models",
-        text: "STEP/STL models for printing and mounts.",
+        title: language === "ru" ? "CAD файлы / 3D модели для печати" : "CAD files / 3D models for printing",
+        text:
+          language === "ru"
+            ? "STEP/STL модели для печати и креплений."
+            : "STEP/STL models for printing and mounts.",
         onClick: () => navigate("/settings/cad-models")
       },
       {
         key: "controller",
-        title: "Controller",
-        text: "Settings and connection diagrams for 6F, 12F, and 24F controllers.",
-        onClick: () => navigate("/settings/controller#setup")
-      },
-      {
-        key: "configs",
-        title: "Configuration files",
-        text: "Ready-made configurations for different motors and vehicles.",
-        onClick: () => navigate("/settings/controller#configs")
-      },
-      {
-        key: "diagnostics",
-        title: "Diagnostics",
-        text: "Diagnostics of controller malfunctions and troubleshooting.",
-        onClick: () => navigate("/settings/controller#diagnostics")
-      },
-      {
-        key: "examples",
-        title: "Examples of settings",
-        text: "Examples and explanations of settings for various functions.",
-        onClick: () => navigate("/settings/controller#examples")
-      },
-      {
-        key: "fan",
-        title: "Fan and light control",
-        text: "Stoplight and fan wiring and setup (PWM outputs).",
-        onClick: () => navigate("/settings/controller#fan")
-      },
-      {
-        key: "schematic",
-        title: "Connection schematic",
-        text: "Connection schematic PDFs and pinouts.",
-        onClick: () => navigate("/settings/connection-schematic")
-      },
-      {
-        key: "setup",
-        title: "Controller setup",
-        text: "Full controller setup and parameters reference.",
-        onClick: () => navigate("/settings/controller#setup")
+        title: language === "ru" ? "Контроллер" : "Controller",
+        text:
+          language === "ru"
+            ? "Настройки и схемы подключения для контроллеров 6F, 12F и 24F."
+            : "Settings and connection diagrams for 6F, 12F, and 24F controllers.",
+        onClick: () => navigate("/settings/controller")
       },
       {
         key: "onboard",
-        title: "On-board computer",
-        text: "On-board computer settings and connection guide.",
+        title: language === "ru" ? "Бортовой компьютер" : "Onboard computer",
+        text: language === "ru" ? "Схема подключения дисплея." : "Display wiring diagram.",
         onClick: () => navigate("/settings/onboard-computer")
       },
       {
         key: "firmware",
-        title: "Firmware",
-        text: "Firmware files and update instructions.",
+        title: language === "ru" ? "Прошивки" : "Firmware",
+        text: language === "ru" ? "Инструкции по обновлению прошивок." : "Firmware files and update instructions.",
         onClick: () => navigate("/settings/firmware")
       },
       {
         key: "motors",
-        title: "Motor information",
-        text: "Pole pairs and measured motor parameters.",
+        title: language === "ru" ? "Информация по моторам" : "Motor information",
+        text:
+          language === "ru"
+            ? "Пары полюсов и измеренные параметры моторов."
+            : "Pole pairs and measured motor parameters.",
         onClick: () => navigate("/settings/motor-information")
       },
       {
-        key: "ulight",
-        title: "uLight",
-        text: "uLight settings and connection diagram.",
-        onClick: () => navigate("/settings/ulight")
+        key: "microlight",
+        title: language === "ru" ? "Микролайт" : "Microlight",
+        text: language === "ru" ? "Схема подключения uLight." : "uLight wiring diagram.",
+        onClick: () => navigate("/settings/microlight")
       },
       {
         key: "usb2can",
-        title: "USB2CAN module",
-        text: "USB2CAN module information and usage.",
+        title: language === "ru" ? "USB2CAN модуль" : "USB2CAN module",
+        text: language === "ru" ? "Информация и использование USB2CAN." : "USB2CAN module information and usage.",
         onClick: () => navigate("/settings/usb2can")
       }
     ],
-    [navigate]
+    [language, navigate]
   );
 
   const results = useMemo(() => {
@@ -110,19 +88,30 @@ export default function Settings() {
       { type: "support", label: "Malfunctions", path: "/support#malfunctions" },
       { type: "support", label: "Feedback", path: "/support#feedback" },
       { type: "support", label: "For developers", path: "/support#developers" },
-      { type: "settings", label: "Bluetooth", path: "/settings/bluetooth" },
-      { type: "settings", label: "CAD files / 3D models", path: "/settings/cad-models" },
-      { type: "settings", label: "Controller setup", path: "/settings/controller#setup" },
-      { type: "settings", label: "Fan and light control", path: "/settings/controller#fan" },
-      { type: "settings", label: "Examples of settings", path: "/settings/controller#examples" },
-      { type: "settings", label: "Diagnostics", path: "/settings/controller#diagnostics" },
-      { type: "settings", label: "Configuration files", path: "/settings/controller#configs" },
-      { type: "settings", label: "On-board computer", path: "/settings/onboard-computer" },
-      { type: "settings", label: "uLight", path: "/settings/ulight" },
-      { type: "settings", label: "Firmware", path: "/settings/firmware" },
-      { type: "settings", label: "Motor information", path: "/settings/motor-information" },
-      { type: "settings", label: "USB2CAN module", path: "/settings/usb2can" },
-      { type: "settings", label: "Connection schematic", path: "/settings/connection-schematic" }
+      { type: "settings", label: language === "ru" ? "Bluetooth" : "Bluetooth", path: "/settings/bluetooth" },
+      {
+        type: "settings",
+        label: language === "ru" ? "CAD файлы / 3D модели для печати" : "CAD files / 3D models for printing",
+        path: "/settings/cad-models"
+      },
+      { type: "settings", label: language === "ru" ? "Контроллер" : "Controller", path: "/settings/controller" },
+      {
+        type: "settings",
+        label: language === "ru" ? "Бортовой компьютер" : "Onboard computer",
+        path: "/settings/onboard-computer"
+      },
+      { type: "settings", label: language === "ru" ? "Прошивки" : "Firmware", path: "/settings/firmware" },
+      {
+        type: "settings",
+        label: language === "ru" ? "Информация по моторам" : "Motor information",
+        path: "/settings/motor-information"
+      },
+      {
+        type: "settings",
+        label: language === "ru" ? "USB2CAN модуль" : "USB2CAN module",
+        path: "/settings/usb2can"
+      },
+      { type: "settings", label: language === "ru" ? "Микролайт" : "Microlight", path: "/settings/microlight" }
     ];
 
     const productItems = products.map((p) => ({
@@ -136,7 +125,7 @@ export default function Settings() {
     return all
       .filter((item) => item.label.toLowerCase().includes(q))
       .slice(0, 5);
-  }, [query]);
+  }, [language, query]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,6 +155,7 @@ export default function Settings() {
             </button>
             <span className="support-breadcrumb-separator">/</span>
             <span className="support-breadcrumb-current">Settings</span>
+            <DocsLanguageToggle />
           </div>
           <div className="support-inner">
             <h1 className="support-title">Settings</h1>

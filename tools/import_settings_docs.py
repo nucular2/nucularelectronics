@@ -9,14 +9,19 @@ BASE = "https://docs.nucular.tech"
 FETCH = BASE + "/lib/exe/fetch.php?media="
 
 PAGES = {
-    "bluetooth": "en:bluetooth",
-    "cad-models": "en:cadmodels",
-    "onboard-computer": "en:display:start",
-    "ulight": "en:ulight",
-    "usb2can": "en:usb2can",
-    "firmware": "en:firmware",
-    "motor-information": "en:motor_information",
-    "connection-schematic": "en:controller:schematic",
+    "bluetooth": {"en": "en:bluetooth", "ru": "ru:bluetooth"},
+    "cad-models": {"en": "en:cadmodels", "ru": "ru:cadmodels"},
+    "onboard-computer": {"en": "en:display:start", "ru": "ru:display:start"},
+    "ulight": {"en": "en:ulight", "ru": "ru:ulight"},
+    "usb2can": {"en": "en:usb2can", "ru": "ru:usb2can"},
+    "firmware": {"en": "en:firmware", "ru": "ru:firmware"},
+    "motor-information": {"en": "en:motor_information", "ru": "ru:motor_information"},
+    "connection-schematic": {"en": "en:controller:schematic", "ru": "ru:controller:schematic"},
+    "controller-setup": {"en": "en:controller:setup", "ru": "ru:controller:setup"},
+    "controller-config-files": {"en": "en:controller:config-files", "ru": "ru:controller:config-files"},
+    "controller-diagnostics": {"en": "en:controller:diagnostics", "ru": "ru:controller:diagnostics"},
+    "controller-examples": {"en": "en:controller:examples", "ru": "ru:controller:examples"},
+    "controller-light-fan-pwm": {"en": "en:controller:light-fan-pwm", "ru": "ru:controller:light-fan-pwm"},
 }
 
 UA = {"User-Agent": "Mozilla/5.0"}
@@ -47,8 +52,8 @@ def download_media(media: str, dest_path: Path) -> int:
     return len(data)
 
 
-def rewrite_images(slug: str, html: str, out_root: Path) -> Tuple[str, int]:
-    images_dir = out_root / slug / "images"
+def rewrite_images(slug: str, lang: str, html: str, out_root: Path) -> Tuple[str, int]:
+    images_dir = out_root / slug / lang / "images"
     images_dir.mkdir(parents=True, exist_ok=True)
 
     seen: Dict[str, str] = {}
@@ -61,7 +66,7 @@ def rewrite_images(slug: str, html: str, out_root: Path) -> Tuple[str, int]:
         if media in seen:
             return prefix + seen[media] + suffix
         base_name = safe_name(media.split(":")[-1])
-        local = f"/docs/settings-pages/{slug}/images/{base_name}"
+        local = f"/docs/settings-pages/{slug}/{lang}/images/{base_name}"
         dest = images_dir / base_name
         if not dest.exists():
             try:
@@ -75,8 +80,8 @@ def rewrite_images(slug: str, html: str, out_root: Path) -> Tuple[str, int]:
     return rewritten, len(seen)
 
 
-def rewrite_download_links(slug: str, html: str, out_root: Path) -> str:
-    downloads_dir = out_root / slug / "downloads"
+def rewrite_download_links(slug: str, lang: str, html: str, out_root: Path) -> str:
+    downloads_dir = out_root / slug / lang / "downloads"
     downloads_dir.mkdir(parents=True, exist_ok=True)
 
     def repl(m: re.Match) -> str:
@@ -87,7 +92,7 @@ def rewrite_download_links(slug: str, html: str, out_root: Path) -> str:
         if not media:
             return m.group(0)
         base_name = safe_name(media.split(":")[-1])
-        local = f"/docs/settings-pages/{slug}/downloads/{base_name}"
+        local = f"/docs/settings-pages/{slug}/{lang}/downloads/{base_name}"
         dest = downloads_dir / base_name
         if not dest.exists():
             try:
@@ -99,28 +104,29 @@ def rewrite_download_links(slug: str, html: str, out_root: Path) -> str:
     return re.sub(r'(<a[^>]+href=")([^"]+)(")', repl, html, flags=re.I)
 
 
-def generate(slug: str, page_id: str, out_root: Path) -> None:
+def generate(slug: str, lang: str, page_id: str, out_root: Path) -> None:
     url = f"{BASE}/doku.php?id={quote(page_id, safe=':')}&do=export_xhtmlbody"
     raw = get(url).decode("utf-8", "ignore")
 
-    html_with_images, img_count = rewrite_images(slug, raw, out_root)
-    html_with_downloads = rewrite_download_links(slug, html_with_images, out_root)
+    html_with_images, img_count = rewrite_images(slug, lang, raw, out_root)
+    html_with_downloads = rewrite_download_links(slug, lang, html_with_images, out_root)
     cleaned = re.sub(r'\s+class="sectionedit\d+"', "", html_with_downloads)
 
-    target = out_root / slug / "content.html"
+    target = out_root / slug / lang / "content.html"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(cleaned, encoding="utf-8")
-    print("generated", slug, "images", img_count, "len", len(cleaned))
+    print("generated", slug, lang, "images", img_count, "len", len(cleaned))
 
 
 def main() -> None:
     out_root = Path("frontend/public/docs/settings-pages")
     out_root.mkdir(parents=True, exist_ok=True)
-    for slug, page_id in PAGES.items():
-        try:
-            generate(slug, page_id, out_root)
-        except Exception as e:
-            print("failed", slug, page_id, type(e).__name__, str(e))
+    for slug, langs in PAGES.items():
+        for lang, page_id in langs.items():
+            try:
+                generate(slug, lang, page_id, out_root)
+            except Exception as e:
+                print("failed", slug, lang, page_id, type(e).__name__, str(e))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,34 @@
+
+<h1 id="fan_and_light_control">Fan and Light Control</h1>
+<div class="level1">
+
+<p>
+It is possible to connect stoplight or fan to controller port P1/P2. Configuration described in <a href="/doku.php?id=en:controller:setup#pwm_output_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Controller setup</a>.<br/>
+
+Please note that controller outputs are open-drain 5V max, 220R resistor on the line. Don&#039;t use controller logic ground for loads more than 0.5A, use power ground instead. System (CAN) cable uses power ground.
+</p>
+
+<p>
+You can connect small power light directly to controller with this scheme, 1khz operation is enough:
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-light-fan-pwm/en/images/mosfet-lamp.png" class="media" title="non-isolated%20pwm.png" alt="non-isolated%20pwm.png" width="438" height="325" />
+</p>
+
+<p>
+If you are using something more powerful, isolated scheme recommended, you can also buy this kind of boards on aliexpress (Mosfet Optocoupler Isolation Driver):
+</p>
+
+<p>
+<img src="/docs/settings-pages/controller-light-fan-pwm/en/images/opto-mosfet.png" class="media" title="isolated%20pwm.png" alt="isolated%20pwm.png" width="717" height="532" />
+</p>
+
+<p>
+Fan control requires 4-wire Fan, or you can try to use same scheme as for light. 20khz is default, but you can try any lower. 4-wire fan scheme:<br/>
+
+<img src="/docs/settings-pages/controller-light-fan-pwm/en/images/fan.png" class="media" title="fan%204-wire.png" alt="fan%204-wire.png" width="381" height="199" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fan and Light Control&quot;,&quot;hid&quot;:&quot;fan_and_light_control&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;35-&quot;} -->

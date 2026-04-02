@@ -1,0 +1,1000 @@
+
+<h1 id="бортовой_компьютер_v082b">Бортовой компьютер (v0.82B)</h1>
+<div class="level1">
+
+<p>
+Бортовой компьютер служит для отображения на большом, видимом на ярком солнце экране основных параметров, установки режимов движения, обновления ПО всех компонентов системы, управления батареей, заряда устройств по USB. На левой стороне Бортового компьютера расположен слот для microSD карты, которая используется для обновления прошивки, сохранения скриншотов экрана, импорта и экспорта конфигураций и настроек Бортового компьютера и Контроллера. На задней стороне Бортового компьютера есть кнопка включения, которая <a href="/doku.php?id=ru:controller:setup#кнопка_включения_и_сон" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">настраивается</a> в меню <strong>Устройства</strong> &gt; <strong>Контроллер</strong> &gt; <strong>Доп.настройки</strong> &gt; <strong>Кнопка включения</strong>.
+</p>
+
+<p>
+<em>Технические характеристики:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> Размер дисплея 3.6 дюйма</div>
+</li>
+<li class="level1"><div class="li"> Тип дисплея FSTN, монохромный</div>
+</li>
+<li class="level1"><div class="li"> Разрешение 240×128 пикселей</div>
+</li>
+<li class="level1"><div class="li"> Подогрев экрана</div>
+</li>
+<li class="level1"><div class="li"> RGB-подсветка кнопок</div>
+</li>
+<li class="level1"><div class="li"> Разъем для карты microSD</div>
+</li>
+<li class="level1"><div class="li"> USB-зарядка 5.2V 2А</div>
+</li>
+<li class="level1"><div class="li"> Пароль от несанкционированного запуска</div>
+</li>
+<li class="level1"><div class="li"> Мультиязычное меню</div>
+</li>
+<li class="level1"><div class="li"> Защита по классу IP54</div>
+</li>
+</ul>
+
+<p>
+<em>Что в комплекте:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> Крепление на шток вилки.</div>
+</li>
+<li class="level1"><div class="li"> USB-провод для зарядки</div>
+</li>
+<li class="level1"><div class="li"> Разъем PHD 2.0 4P — 4 шт.</div>
+</li>
+<li class="level1"><div class="li"> Разъем PHD 2.0 6P — 1 шт.</div>
+</li>
+<li class="level1"><div class="li"> Разъем PHD 2.0 8P — 1 шт.</div>
+</li>
+<li class="level1"><div class="li"> Контакты для обжима под провод 26 AWG — 26 шт. Если у Вас нет обжимного инструмента, необходимо заказать «Обжатые провода для дисплея».</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0411\u043e\u0440\u0442\u043e\u0432\u043e\u0439 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440 (v0.82B)&quot;,&quot;hid&quot;:&quot;\u0431\u043e\u0440\u0442\u043e\u0432\u043e\u0439_\u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440_v082b&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;49-2302&quot;} -->
+<h2 id="схема_подключения">Схема подключения</h2>
+<div class="level2">
+
+<p>
+Ознакомиться со схемами подключения остальных устройств вы можете по этой <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">ссылке</a>. По умолчанию, вся периферия (газ, тормоз, переключатели и т.д.) подключается в порты, расположенные на задней стороне Бортового компьютера. Для доступа к ним необходимо открутить пять винтов и снять пластиковую крышку. Для подключения используются разъемы PHD 2.0 и пины для обжимки, которые входят в комплект поставки. Если у вас нет обжимного инструмента, например, Кримпер SN-2549, то необходимо заказать «Обжатые провода для дисплея». Бортовой компьютер соединяется с контроллером одним CAN-проводом длиной 1,2 метра, который входит в комплект Контроллера. Будьте внимательны, CAN-провод от Контроллера подключается в разъем <strong>SYSTEM</strong>.
+</p>
+
+<p>
+Если вы хотите подключить периферию напрямую в Контроллер, необходимо заказать «Провода управления», на схеме по ссылке выше этот вариант коммутации обозначен как «Альтернативное подключение». Вы также можете использовать смешанный вариант подключения, например, ручку газа подключить в Бортовой компьютер, а ручку тормоза в Контроллер.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/_-_-_-_ru.png" class="media" alt="" /> <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u0445\u0435\u043c\u0430 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0441\u0445\u0435\u043c\u0430_\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;2303-4426&quot;} -->
+<h2 id="описание_главного_экрана">Описание главного экрана</h2>
+<div class="level2">
+
+<p>
+На скриншоте ниже один из вариантов конфигурации главного экрана. Расположение элементов на экране зависит от темы и настроек. В данном примере установлена тема Hurma.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/display_ru_0803_3.png" class="medialeft" alt="" width="400" />
+</p>
+
+<p>
+<strong>1.</strong> Информационная строка, содержание которой меняется клавишами вверх и вниз. По умолчанию отображается напряжение питания в Вольтах (<strong>V</strong>). Настройка в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Инфо строки</strong> (параметр слева). <br/>
+
+<strong>2.</strong> Активный в данный момент режим управления. Настройка разделе <a href="/doku.php?id=ru:controller:setup#режимы_управления" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">меню</a> <strong>Контроллер</strong> &gt; <strong>Режимы управления</strong>. <br/>
+
+<strong>3.</strong> Информационная строка, содержание которой меняется клавишами вверх и вниз. По умолчанию отображается Батарейный ток в Амперах (<strong>A</strong>). Настройка в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Инфо строки</strong> (параметр справа). <br/>
+
+<strong>4.</strong> График температуры контроллера. <br/>
+
+<strong>5.</strong> Уровень температуры контроллера в градусах Цельсия (<strong>°C</strong>). Настройка уровней в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Настройка графиков</strong>. Поменять на градусы Фаренгейта (<strong>°F</strong>) можно в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Единицы измерения температуры</strong>. <br/>
+
+<strong>6.</strong> Уровень температуры электромотора в градусах Цельсия (<strong>°C</strong>). Настройка уровней в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Настройка графиков</strong>. Поменять на градусы Фаренгейта (<strong>°F</strong>) можно в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Единицы измерения температуры</strong>. <br/>
+
+<strong>7.</strong> Значок <strong>Двигатель</strong> — ошибка мотора/контроллера. Причину ошибки смотрите в меню <strong>Контроллер</strong> &gt; <strong>Флаги статуса</strong>. <br/>
+
+<strong>8.</strong> График температуры электромотора. <br/>
+
+<strong>9.</strong> Значок <strong>В</strong> — торможение. Означает, что в данный активирован тормоз. <br/>
+
+<strong>10.</strong> Значок <strong>Батарея</strong> — неисправность батареи. Проверяйте правильность подключения батареи и исправность BMS. <br/>
+
+<strong>11.</strong> Показание спидометра в <strong>км/ч</strong> или отображение быстрой статистики, когда скорость равна нулю. Поменять на мили в час (<strong>mph</strong>) можно в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Единицы измерения скорости</strong>. Отображение быстрой статистики включается в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Быстрая статистика</strong>. <br/>
+
+<strong>12.</strong> Значок <strong>Черепашка</strong> — лимит напряжения по батарее. Срабатывает по нижнему лимиту. Настройка лимита в разделе меню <strong>Контроллер</strong> &gt; <strong>Батарея</strong>. Если «черепашка» загорается на наполовину заряженной батарее — уменьшайте батарейный ток. <br/>
+
+<strong>13.</strong> Значок <strong>В!</strong> — лимит торможения. Означает, что батарея полностью заряжена и рекуперация невозможна. <br/>
+
+<strong>14.</strong> График заряда батареи. <br/>
+
+<strong>15.</strong> Значок <strong>Спидометр</strong> — активирован круиз-контроль. Настройка в меню <strong>Контроллер</strong> &gt; <strong>Управление</strong> &gt; <strong>Круиз</strong>. <br/>
+
+<strong>16.</strong> Остаточная ёмкость батареи в Ватт-час (<strong>Wh</strong>). Настройка в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Емкость батареи</strong>. <br/>
+
+<strong>17.</strong> Фазный ток в Амперах (<strong>А</strong>). <br/>
+
+<strong>18.</strong> График фазного тока. <br/>
+
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435_\u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;4427-9687&quot;} -->
+<h2 id="навигация">Навигация</h2>
+<div class="level2">
+
+<p>
+Навигация по экрану Бортового компьютера осуществляется четырьмя нижними кнопками. Удержанием двух центральных кнопок можно сделать скриншот экрана, файл будет сохранен в формате .bmp на microSD карте (если она вставлена в Бортовой компьютер). Функции кнопок Бортового компьютера, слева направо:
+</p>
+<ul>
+<li class="level1"><div class="li"> Переключение меню экрана, отмена, возврат в предыдущее меню</div>
+</li>
+<li class="level1"><div class="li"> Переключение вверх, меньше</div>
+</li>
+<li class="level1"><div class="li"> Переключение вниз, больше</div>
+</li>
+<li class="level1"><div class="li"> Выбрать, применить</div>
+</li>
+</ul>
+
+<p>
+На картинке ниже схема навигации по меню, красная стрелка — левая кнопка, синие стрелки — две центральные кнопки, зеленая стрелка — правая кнопка Бортового компьютера. <br/>
+ <br/>
+<img src="/docs/settings-pages/onboard-computer/ru/images/menu_layout.png" class="media" alt="" width="808" height="435" /> <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;9688-10884&quot;} -->
+<h2 id="статистика">Статистика</h2>
+<div class="level2">
+
+<p>
+Чтобы перейти из главного экрана в раздел статистики нажмите два раза левую кнопку Бортового компьютера. Далее второй и третьей кнопками вы можете переключать экраны со статистикой <strong>Статистика общая</strong>  &gt; <strong>Статистика пользовательская</strong>  &gt; <strong>Статистика за поездку</strong>  &gt; <strong>Статистика после зарядки</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/statistics.png" class="medialeft" alt="" />Всего доступно четыре вида статистики: <br/>
+<strong>Статистика общая</strong>  — статистика за все время использования Контроллера и Бортового компьютера. <br/>
+<strong>Статистика пользовательская</strong>  — статистика за любой, выбранный вами промежуток времени. Просто сбросьте данные, когда вам необходимо. <br/>
+<strong>Статистика за поездку</strong>  — статистика с момента включения Контроллера. <br/>
+<strong>Статистика после зарядки</strong>  — статистика между зарядами батареи.
+</p>
+
+<p>
+Список параметров, которые выводятся для каждого типа статистики одинаковы и рассчитываются исходя из типа статистики, за исключением пункта <strong>Циклов зарядки</strong>  в общей статистики, вместо него во всех остальных видах статистики используется показатель <strong>Средняя скорость</strong>, которая рассчитывается за время в движении.
+</p>
+
+<p>
+<strong>Пробег</strong>  — пробег в километрах. <br/>
+<strong>Время в пути</strong>  — время движения, часы, минуты, секунды. <br/>
+<strong>Макс.скорость</strong>  — максимальная скорость, в км/ч. <br/>
+<strong>Циклов зарядки</strong>  — число циклов зарядки батареи (только для общей статистики). <br/>
+<strong>Сред. скорость</strong>  — средняя скорость, в км/ч. <br/>
+<strong>Рекуперация Wh</strong>  — количество энергии, возвращенный в батарею при рекуперативном торможении, в ватт-часах (Вт*ч). <br/>
+<strong>Исп. Wh</strong>  — количество потребленной энергии, в ватт-часах (Вт*ч). <br/>
+<strong>Макс. W</strong>  — максимальная мощность, в ваттах (Вт). <br/>
+<strong>Wh/km</strong>  — количество израсходованных ватт-часов батареи на километр пробега, (Вт*ч/км). <br/>
+<strong>Макс. фазный ток, А</strong>  — максимальный фазный ток, в амперах (А).
+</p>
+
+<p>
+<strong>Сброс статистики:</strong> <br/>
+<strong>Общая</strong>  — перейдите на экран <strong>Статистика общая</strong>, нажмите и удерживайте левую кнопку Бортового компьютера, система запросит пароль, введите пароль по умолчанию или ваш пользовательский. Подробнее о настройке пароля читайте в разделе <strong><a href="/doku.php?id=ru:display:start#установка_пароля" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Установка пароля</a></strong>. После ввода пароля статистика сбросится. Если вы не введете пароль, то вернуться в главное меню можно только через перезагрузку Бортового компьютера. Вы можете сделать это либо отключением, либо с помощью кнопки на задней стороне Бортового компьютера, при условии, что вы настроили ее в разделе <strong>Контроллер</strong>  &gt; <strong>Доп. настройки</strong>  &gt; <strong>Кнопка включения</strong>. <br/>
+<strong>Пользовательская</strong>  — перейдите на экран <strong>Статистика пользовательская</strong>, нажмите и удерживайте левую кнопку Бортового компьютера, статистика сбросится. <br/>
+<strong>За поездку</strong>  — статистика сбрасывается автоматически после отключения Контроллера. <br/>
+<strong>После зарядки</strong>  — статистика сбрасывается автоматически после зарядки батареи.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;hid&quot;:&quot;\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;10885-15841&quot;} -->
+<h2 id="описание_меню_и_настроек">Описание меню и настроек</h2>
+<div class="level2">
+
+<p>
+При нажатии левой кнопки Бортового компьютера на главном экране вы перейдете в меню <strong>Настройка</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/menu_1_bk.png" class="medialeft" alt="" /><strong>Бортовой компьютер</strong>  — настройка параметров и функций Бортового компьютера. <br/>
+<strong>Включить USB зарядку</strong>  — включение USB зарядки, описание настройки см. ниже. <br/>
+<strong>Устройства</strong>  — список всех подключенных устройств и переход в меню каждого из них для настройки.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u043c\u0435\u043d\u044e \u0438 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;hid&quot;:&quot;\u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435_\u043c\u0435\u043d\u044e_\u0438_\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;15842-16595&quot;} -->
+<h3 id="настройка_usb-зарядки">Настройка USB-зарядки</h3>
+<div class="level3">
+
+<p>
+USB-провод для зарядки ваших гаджетов входит в комплект поставки и подключается в разъем <strong>USB</strong>  на задней панели Бортового компьютера. Чтобы включить зарядку, перейдите в меню <strong>Настройка</strong>  &gt; <strong>Включить USB зарядку</strong>, нажмите правую кнопку для выбора и далее третьей кнопкой измените значение с <strong>0</strong>  на <strong>1</strong>. Потом нажимаем правую кнопку, чтобы сохранить значение и включить USB-зарядку. Если вы хотите, чтобы USB-зарядка была постоянно активна при включении Бортового компьютера, перейдите в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохраните эту настройку. Если этого не сделать, то при повторном включении Бортового компьютера USB-зарядка будет отключена.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_1.png" class="medialeft" alt="" /> Вы также можете настроить включение зарядки нажатием и удержанием одной из кнопок на Бортовом компьютере (Хоткей). Чтобы настроить эту функцию, перейдите в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>, выберите какой кнопкой вы хотите включать зарядку. Далее выбираем тип <strong>С фиксацией</strong>  и назначаем функцию <strong>Зарядка_USB</strong>. На скриншоте мы сделали такую настройку для первой кнопки Бортового компьютера (Хоткей 1). После настройки переходим в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохраняем. Готово. Теперь зарядку можно включить/выключить нажатием и удержанием первой кнопки Бортового компьютера во время отображения главного экрана.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 USB-\u0437\u0430\u0440\u044f\u0434\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_usb-\u0437\u0430\u0440\u044f\u0434\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;16596-19047&quot;} -->
+<h3 id="информация">Информация</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong> &gt; <strong>Информация</strong> отображаются данные со всех датчиков и устройств, подключенных к Бортовому компьютеру.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_2.png" class="medialeft" alt="" />
+<strong>Supply V</strong> — напряжение питания CAN-шины, Вольты (<strong>V</strong>). <br/>
+
+<strong>Int V</strong> — напряжение внутреннего питания и USB-выхода, Вольты (<strong>V</strong>). <br/>
+
+<strong>Light V</strong> — напряжение на датчике освещенности, вольты (<strong>V</strong>). <br/>
+
+<strong>Throttle V</strong> — напряжение ручки газа, Вольты (<strong>V</strong>). <br/>
+
+<strong>Brake V</strong> — напряжение ручки тормоза, Вольты (<strong>V</strong>). <br/>
+
+<strong>ACC X</strong> — показания акселерометра по оси X. <br/>
+
+<strong>ACC Y</strong> — показания акселерометра по оси Y. <br/>
+
+<strong>ACC Z</strong> — показания акселерометра по оси Z. <br/>
+
+<strong>Comp t</strong> — температура процессора экрана, градусы Цельсия (<strong>°C</strong>). <br/>
+
+<strong>IO1 состояние</strong> — вход <strong>IO1</strong>  порта <strong>I/O1</strong>  на задней панели Бортового компьютера (см.схему в разделе <strong><a href="/doku.php?id=ru:display:start#подключение" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Подключение</a></strong>), значение меняется с <strong>0</strong> на <strong>1</strong> при нажатии подключенной в Бортовой компьютер кнопки, см. раздел <strong>Настройка кнопок</strong>, остальные входы аналогично. <br/>
+
+<strong>IO2 состояние</strong> — вход <strong>IO2</strong>  порта <strong>I/O1</strong>. <br/>
+
+<strong>IO3 состояние</strong> — вход <strong>IO3</strong>  порта <strong>I/O1</strong>. <br/>
+
+<strong>IO4 состояние</strong> — вход <strong>IO4</strong>  порта <strong>I/O2</strong>. <br/>
+
+<strong>IO5 состояние</strong> — вход <strong>IO5</strong>  порта <strong>I/O2</strong>. <br/>
+
+<strong>IO6 состояние</strong> — вход <strong>IO6</strong>  порта <strong>I/O2</strong>. <br/>
+
+<strong>IO7 состояние</strong> — вход <strong>IO7</strong>  порта <strong>Газ</strong>. <br/>
+
+<strong>IO8 состояние</strong> — вход <strong>IO8</strong>  порта <strong>Тормоз</strong>. <br/>
+
+<strong>CAN_OVR</strong>  — ошибка CAN-шины. <br/>
+
+<strong>CAN_LEC</strong>  — ошибка CAN-шины. Сообщите нам, если возникнет одна из ошибок <br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> 0: No Error</div>
+</li>
+<li class="level1"><div class="li"> 1: Stuff Error</div>
+</li>
+<li class="level1"><div class="li"> 2: Form Error</div>
+</li>
+<li class="level1"><div class="li"> 3: Acknowledgment Error</div>
+</li>
+<li class="level1"><div class="li"> 4: Bit recessive Error</div>
+</li>
+<li class="level1"><div class="li"> 5: Bit dominant Error</div>
+</li>
+<li class="level1"><div class="li"> 6: CRC Error </div>
+</li>
+</ul>
+
+<p>
+<strong>CAN_TEC</strong>  — ошибка CAN-шины. <br/>
+
+<strong>CAN_REC</strong>  — ошибка CAN-шины. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;19048-21691&quot;} -->
+<h3 id="сохранение_настроек">Сохранение настроек</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  можно сохранить все сделанные настройки. Нажмите правую кнопку Бортового компьютера, чтобы сохранить. Если вы не сохраните настройки, они будут сброшены после перезапуска.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0421\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;hid&quot;:&quot;\u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435_\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;21692-22150&quot;} -->
+<h3 id="подсветка_кнопок">Подсветка кнопок</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Цвет и яркость кнопок</strong>  можно настроить цвет кнопок Бортового компьютера.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/buttons_light.png" class="medialeft" alt="" /><strong>Оттенок</strong>  — настройка цвета подсветки кнопок, выбор значений от <strong>0</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Насыщенность</strong>  — настройка насыщенности подсветки кнопок, выбор значений от <strong>0</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Яркость</strong>  — настройка яркости подсветки кнопок, выбор значений от <strong>0</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. 
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+Также в этом меню можно включить автоматическую настройку яркости свечения кнопок с помощью датчика освещенности, расположенного на передней панели Бортового компьютера. Пункт меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Цвет и яркость кнопок</strong>  &gt; <strong>Автонастройка яркости</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/buttons_light_auto.png" class="medialeft" alt="" /><strong>Автонастройка яркости</strong>  — выбор значений <strong>Откл</strong>  (Отключено) и <strong>Вкл</strong>  (Включено). Выберите <strong>Вкл</strong>, чтобы включить. <br/>
+<strong>Яркость кнопок макс.</strong>  — максимальная яркость кнопок, выбор значений от <strong>1</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Яркость кнопок мин</strong>. — минимальная яркость кнопок, выбор значений от <strong>1</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения макс</strong>. — максимальный уровень освещения, выбор значений от <strong>1</strong>  до <strong>300</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения мин.</strong>  — минимальный уровень освещения, выбор значений от <strong>1</strong>  до <strong>300</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения текущий</strong>  — текущий уровень освещения.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430 \u043a\u043d\u043e\u043f\u043e\u043a&quot;,&quot;hid&quot;:&quot;\u043f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430_\u043a\u043d\u043e\u043f\u043e\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;22151-24684&quot;} -->
+<h3 id="подсветка_экрана">Подсветка экрана</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Подсветка экрана</strong>  можно отрегулировать яркость подсветки экрана Бортового компьютера.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/screen_light.png" class="medialeft" alt="" /><strong>Яркость подсветки</strong>  — яркость подсветки, выбор значений от <strong>1</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. 
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+<p>
+При желании вы можете включить автоматическую регулировку яркости экрана с помощью датчика освещенности в меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Подсветка экрана</strong> &gt; <strong>Автонастройка яркости</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/screen_auto_light.png" class="medialeft" alt="" /><strong>Автонастройка яркости</strong>  — выбор значений <strong>Откл</strong>  (Отключено) и <strong>Вкл</strong>  (Включено). Выберите <strong>Вкл</strong>, чтобы включить. <br/>
+<strong>Подсветка экрана макс.</strong>  — максимальная яркость экрана, при хорошем освещении, выбор значений от <strong>0</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Подсветка экрана мин.</strong>  — минимальная яркость экрана, при плохом освещении, выбор значений от <strong>0</strong>  до <strong>255</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения макс.</strong>  — значение с датчика освещенности, при котором считается максимальная яркость, выбор значений от <strong>1</strong>  до <strong>300</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения мин.</strong>  — значение с датчика освещенности, при котором считается минимальная яркость от <strong>1</strong>  до <strong>300</strong>, с шагом <strong>1</strong>. <br/>
+<strong>Уровень освещения текущий</strong>  — показывает текущее значение с датчика освещенности.
+</p>
+
+<p>
+Рекомендуем сначала настроить уровень освещения мин/макс закрыв датчик освещенности пальцем. После этого можно отрегулировать яркость подсветки. Оптимальные значения яркость ночь/день — 30/255. Датчик освещенности необходимо настраивать индивидуально, т.к. возможен большой разброс показаний. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430 \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u043f\u043e\u0434\u0441\u0432\u0435\u0442\u043a\u0430_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;24685-27548&quot;} -->
+<h3 id="контраст_экрана">Контраст экрана</h3>
+<div class="level3">
+
+<p>
+Пункт меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Контраст</strong>. Выбор уровня контраста экрана Бортового компьютера, значения от <strong>30</strong>  до <strong>100</strong>, с шагом <strong>1</strong>. После установки уровня контраста сохраните настройки в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041a\u043e\u043d\u0442\u0440\u0430\u0441\u0442 \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u043a\u043e\u043d\u0442\u0440\u0430\u0441\u0442_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;27549-28083&quot;} -->
+<h3 id="подогрев_экрана">Подогрев экрана</h3>
+<div class="level3">
+
+<p>
+В раздел меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройка бортового компьютера</strong> &gt; <strong>Подогрев экрана</strong> можно включить подогрев экрана Бортового компьютера. Данная функция используется для корректного отображения информации на экране в холодное время года или при запотевании экрана. Потребление примерно <strong>6W</strong>. Подогрев работает автоматически, при достижении указанной температуры подогрев отключается, при снижении температуры — включается снова.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/heater.png" class="medialeft" alt="" /><strong>Подогрев экрана</strong>  — выбор значений <strong>Откл</strong>  (Отключено) и <strong>Вкл</strong>  (Включено). <br/>
+<strong>Температура подогрева</strong>  — выбор значений температуры в градусах Цельсия (<strong>°C</strong>) от <strong>0</strong>°C до <strong>60</strong>°C, с шагом <strong>1</strong>°C. 
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u043e\u0434\u043e\u0433\u0440\u0435\u0432 \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u043f\u043e\u0434\u043e\u0433\u0440\u0435\u0432_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;28084-29320&quot;} -->
+<h3 id="настройка_главного_экрана">Настройка главного экрана</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  настраивается интерфейс главного экрана Бортового компьютера. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;29321-29625&quot;} -->
+<h3 id="информационные_строки">Информационные строки</h3>
+<div class="level3">
+
+<p>
+В меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Инфо строки</strong> настраиваются информационные строки на главном экране, показания которых переключаются двумя центральными клавишами вправо и влево. Доступно отображение до пяти строк. Отображаться могут один или два параметра одновременно. Все строки настраиваются одинаково. После внесения изменений необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохранить настройки.
+</p>
+
+<p>
+<strong>#Строка 1</strong>  — <strong>#Строка 5</strong>. Выбор номера строки, если указать только один параметр для строки, то на главном экране будет показываться только одно значение. <br/>
+<strong>Левый пар.</strong>  — параметр слева в строке. <br/>
+<strong>Правый пар.</strong>  — параметр справа в строке.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/info_lines_4_2_.png" class="medialeft" alt="" />
+</p>
+
+<p>
+Список доступных для отображения параметров: <br/>
+<strong>Ничего</strong>  — параметр не отображается. <br/>
+<strong>Вольты</strong>  — напряжение батареи, Вольты (<strong>V</strong>). <br/>
+<strong>Амперы</strong>  — батарейный ток, Амперы (<strong>A</strong>). <br/>
+<strong>Амперы фазные</strong>  — фазный ток, Амперы (<strong>A</strong>). <br/>
+<strong>Ватты</strong>  — мощность электродвигателя, Ватты (<strong>W</strong>). <br/>
+<strong>Остаток Втч</strong>  — остаток емкости батареи, Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Исп.ВтЧ за поездку</strong>  — потребление энергии за поездку, Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Исп.ВтЧ за общий</strong>  — потребление энергии за все время, Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Исп.ВтЧ за пользов</strong>  — потребление энергии за пользовательский промежуток времени (сброс по желанию), Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Исп.ВтЧ с зарядки</strong>  — потребление энергии с момента заряда, Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Остаток в %</strong>  — остаток заряда батареи в процентах, (<strong>%</strong>) <br/>
+<strong>Втч/км за поезд</strong>  — расход энергии на километр пробега за поездку, Ватт-часы на километр (<strong>Wh/km</strong>). <br/>
+<strong>Втч/км общий</strong>  — расход энергии на километр пробега за все время, Ватт-часы на километр (<strong>Wh/km</strong>). <br/>
+<strong>Втч/км пользов</strong>  — расход энергии за пользовательский промежуток времени на километр пробега (сброс по желанию), Ватт-часы на километр (<strong>Wh/km</strong>). <br/>
+<strong>Втч/км с зарядки</strong>  — расход энергии на километр пробега с момента зарядки, Ватт-часы на километр (<strong>Wh/km</strong>). <br/>
+<strong>Пробег за поездку</strong>  — пробег за поездку, Километры (<strong>km</strong>). <br/>
+<strong>Пробег общий</strong>  — пробег за все время, Километры (<strong>km</strong>). <br/>
+<strong>Пробег пользов</strong>  — пробег за пользовательский промежуток времени (сброс по желанию), Километры (<strong>km</strong>). <br/>
+<strong>Пробег с зарядки</strong>  — пробег с момента зарядки, Километры (<strong>km</strong>). <br/>
+<strong>Запас хода за поезд</strong>  — запас хода за поездку, Километры (<strong>km</strong>). <br/>
+<strong>Запас хода общий</strong>  — запас хода за все время, Километры (<strong>km</strong>). <br/>
+<strong>Запас хода пользов</strong>  — запас хода за пользовательский промежуток времени (сброс по желанию), Километры (<strong>km</strong>). <br/>
+<strong>Запас хода с заряд</strong>  — запас хода с момента зарядки, Километры (<strong>km</strong>). <br/>
+<strong>Сред.скор.за поезд</strong>  — средняя скорость за поездку, Километры в час (<strong>km/h</strong>). <br/>
+<strong>Сред.скор.общий</strong>  — средняя скорость за все время, Километры в час (<strong>km/h</strong>). <br/>
+<strong>Сред.скор.пользов</strong>  — средняя скорость за пользовательский промежуток времени (сброс по желанию), Километры в час (<strong>km/h</strong>). <br/>
+<strong>Сред.скор.с заряд</strong>  — средняя скорость с момента зарядки, Километры в час (<strong>km/h</strong>). <br/>
+<strong>Т-ра мотора</strong>  — температура мотора, Градусы Цельсия (<strong>°C</strong>). <br/>
+<strong>Т-ра контр-ра</strong>  — температура контроллера, Градусы Цельсия (<strong>°C</strong>). <br/>
+<strong>Обороты мотора</strong>  — обороты мотора, Об/мин. (<strong>RPM</strong>)
+</p>
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Инфостроки</strong>  &gt; <strong>Циклирование</strong>  можно настроить автоматическую прокрутку информационных строк на главном экране в указанном диапазоне.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/cycling.png" class="medialeft" alt="" />Вы можете выбрать один из следующих <strong>Режимов переключения</strong>  информационных строк: <br/>
+<strong>Вручную</strong>  — без автоматической прокрутки, переключение вручную кнопками на Бортовом компьютере. <br/>
+<strong>Авто диапазон</strong>  — автоматическая прокрутка в указанном диапазоне строк. <br/>
+<strong>Авто все</strong>  — автоматическая прокрутка всех информационных строк. <br/>
+<strong>Начало для авт.</strong>  — от какой строки будет прокручиваться, значения от <strong># Строка 1</strong>  до <strong># Строка 5</strong>. <br/>
+<strong>Конец для авт.</strong>  — до какой строки будет прокручиваться, значения от <strong># Строка 1</strong>  до <strong># Строка 5</strong>. <br/>
+<strong>Время авт. перекл.</strong>  — период времени автоматической прокрутки всех значений по кругу в секундах, выбор значений от <strong>1</strong>  сек до <strong>255</strong>  сек, с шагом <strong>1</strong>  сек.
+</p>
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Инфостроки</strong>  &gt; <strong>Сообщения</strong>  можно будет включить или отключить всплывающие сообщения по их приоритету. Данный функционал пока не реализован.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/message.png" class="medialeft" alt="" />
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0435 \u0441\u0442\u0440\u043e\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0435_\u0441\u0442\u0440\u043e\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;29626-37299&quot;} -->
+<h3 id="настройка_графиков">Настройка графиков</h3>
+<div class="level3">
+
+<p>
+Пункты меню для настройки пределов отображения для графиков температур на главном экране находятся в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong> &gt; <strong>Настройка графиков</strong>. Если подключено несколько контроллеров, будет отображаться самая максимальная температура мотора или контроллера. После внесения изменений необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохранить настройки.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/graph_030323.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Начало мотора t°</strong> — минимальная отображаемая температура мотора в градусах Цельсия (<strong>°C</strong>), выбор значений от <strong>5</strong>°C до <strong>250</strong>°C, с шагом <strong>5</strong>°C. <br/>
+
+<strong>Конец мотора t°</strong> — максимальная отображаемая температура мотора в градусах Цельсия (<strong>°C</strong>), выбор значений от <strong>5</strong>°C до <strong>250</strong>°C, с шагом <strong>5</strong>°C. <br/>
+
+<strong>Начало контроллера t°</strong> — минимальная отображаемая температура контроллера в градусах Цельсия (<strong>°C</strong>), выбор значений от <strong>5</strong>°C до <strong>100</strong>°C, с шагом <strong>5</strong>°C. <br/>
+
+<strong>Конец контроллера t°</strong> — максимальная отображаемая температура контроллера в градусах Цельсия (<strong>°C</strong>), выбор значений от <strong>5</strong>°C до <strong>100</strong>°C, с шагом <strong>5</strong>°C. <br/>
+
+<strong>Начало фазный ток t°</strong> — минимальная отображаемая сила тока в Амперах (<strong>А</strong>), выбор значений от <strong>5</strong>А до <strong>500</strong>А, с шагом <strong>5</strong>А. <br/>
+
+<strong>Конец фазный ток t°</strong> — минимальная отображаемая сила тока в Амперах (<strong>А</strong>), выбор значений от <strong>5</strong>А до <strong>500</strong>А, с шагом <strong>5</strong>А.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0433\u0440\u0430\u0444\u0438\u043a\u043e\u0432&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0433\u0440\u0430\u0444\u0438\u043a\u043e\u0432&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;37300-39656&quot;} -->
+<h3 id="единицы_измерения">Единицы измерения</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong> вы можете выбрать единицы измерения скорости и температуры. После внесения изменений необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong> и сохранить настройки. <br/>
+
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/main_screen_0803.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Eдиницы измерения скорости</strong> — в километрах в час (<strong>km_h</strong>) или в милях в час (<strong>mph</strong>).<br/>
+
+<strong>Eдиницы измерения температуры</strong> — в градусах Цельсия (<strong>°C</strong>) или градусах Фаренгейта (<strong>°F</strong>). <br/>
+
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0415\u0434\u0438\u043d\u0438\u0446\u044b \u0438\u0437\u043c\u0435\u0440\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u0435\u0434\u0438\u043d\u0438\u0446\u044b_\u0438\u0437\u043c\u0435\u0440\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;39657-40518&quot;} -->
+<h3 id="емкость_батареи">Емкость батареи</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Емкость батареи</strong> настраивается отображение емкости батареи на главном экране. После внесения изменений необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохранить настройки.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/battery_030323.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Емкость батареи</strong>  — запасаемая батареей энергия, в Ватт-час (Вт*ч), выбор значений от <strong>5</strong>  Вт*ч до <strong>10000</strong>  Вт*ч, с шагом <strong>5</strong>  Вт*ч.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0415\u043c\u043a\u043e\u0441\u0442\u044c \u0431\u0430\u0442\u0430\u0440\u0435\u0438&quot;,&quot;hid&quot;:&quot;\u0435\u043c\u043a\u043e\u0441\u0442\u044c_\u0431\u0430\u0442\u0430\u0440\u0435\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:18,&quot;range&quot;:&quot;40519-41319&quot;} -->
+<h3 id="тема_главного_экрана">Тема главного экрана</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Тема</strong> вы можете выбрать тему интерфейса главного экрана. На данный момент доступно три темы, предложенные пользователями телеграм канала — <strong>VasiliSk</strong>, <strong>Vitz</strong>, <strong>Hurma</strong>. После выбора темы необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохранить настройки.
+</p>
+
+<p>
+<strong>VasiliSk</strong>
+</p>
+
+<p>
+<a href="/docs/settings-pages/onboard-computer/ru/downloads/vasilisk.jpg" class="media" title="ru:display:vasilisk.jpg"><img src="/docs/settings-pages/onboard-computer/ru/images/vasilisk.jpg" class="media" title="VasiliSk.BMP" alt="VasiliSk.BMP" width="240" height="128" /></a>
+</p>
+
+<p>
+<strong>Vitz</strong>
+</p>
+
+<p>
+<a href="/docs/settings-pages/onboard-computer/ru/downloads/vitz.jpg" class="media" title="ru:display:vitz.jpg"><img src="/docs/settings-pages/onboard-computer/ru/images/vitz.jpg" class="media" title="Vitz.BMP" alt="Vitz.BMP" width="240" height="128" /></a>
+</p>
+
+<p>
+<strong>Hurma</strong>
+</p>
+
+<p>
+<a href="/docs/settings-pages/onboard-computer/ru/downloads/hurma.jpg" class="media" title="ru:display:hurma.jpg"><img src="/docs/settings-pages/onboard-computer/ru/images/hurma.jpg" class="media" title="Hurma.BMP" alt="Hurma.BMP" width="240" height="128" /></a> <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0422\u0435\u043c\u0430 \u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e \u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;hid&quot;:&quot;\u0442\u0435\u043c\u0430_\u0433\u043b\u0430\u0432\u043d\u043e\u0433\u043e_\u044d\u043a\u0440\u0430\u043d\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:19,&quot;range&quot;:&quot;41320-42177&quot;} -->
+<h3 id="быстрая_статистика">Быстрая статистика</h3>
+<div class="level3">
+
+<p>
+Пункт меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Быстрая статистика</strong>. Быстрая статистика отображается прямо на главном экране вместо спидометра, когда скорость равна нулю. По умолчанию быстрая статистика отключена.
+</p>
+
+<p>
+<a href="/docs/settings-pages/onboard-computer/ru/downloads/fast_stats.jpg" class="media" title="ru:display:fast_stats.jpg"><img src="/docs/settings-pages/onboard-computer/ru/images/fast_stats.jpg" class="medialeft" title="stat_fast.BMP" alt="stat_fast.BMP" width="240" height="128" /></a>Вы можете выбрать отображение параметров нескольких видов статистики: <strong>Общая</strong>, <strong>Пользовательская</strong>, <strong>За поездку</strong>, <strong>С зарядки</strong>. Подробное описание см. в разделе «Статистика». На главном экране отображается пять параметров: <br/>
+<strong>Пробег</strong>  — пробег в километрах (<strong>km</strong>). <br/>
+<strong>Макс скор</strong>  — максимальная скорость, в километрах в час (<strong>km/h</strong>). <br/>
+<strong>Сред скор</strong>  — средняя скорость, в километрах в час (<strong>km/h</strong>). <br/>
+<strong>Исп.Wh</strong>  — потребление энергии за поездку, Ватт-часы (<strong>Wh</strong>). <br/>
+<strong>Wh\km</strong>  — расход энергии на километр пробега за поездку, Ватт-часы на километр (<strong>Wh/km</strong>). <br/>
+В будущем список отображаемых элементов можно будет менять. <br/>
+ <br/>
+После включения отображения быстрой статистики необходимо перейти в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>  и сохранить настройки. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0411\u044b\u0441\u0442\u0440\u0430\u044f \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;hid&quot;:&quot;\u0431\u044b\u0441\u0442\u0440\u0430\u044f_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:20,&quot;range&quot;:&quot;42178-44060&quot;} -->
+<h3 id="анимация_на_главном_экране">Анимация на главном экране</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка главного экрана</strong>  &gt; <strong>Демо. режим</strong> можно включить анимацию статус-баров на главном экране при запуске Бортового компьютера. Выбор значений <strong>Вкл</strong>  и <strong>Откл</strong>. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0410\u043d\u0438\u043c\u0430\u0446\u0438\u044f \u043d\u0430 \u0433\u043b\u0430\u0432\u043d\u043e\u043c \u044d\u043a\u0440\u0430\u043d\u0435&quot;,&quot;hid&quot;:&quot;\u0430\u043d\u0438\u043c\u0430\u0446\u0438\u044f_\u043d\u0430_\u0433\u043b\u0430\u0432\u043d\u043e\u043c_\u044d\u043a\u0440\u0430\u043d\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:21,&quot;range&quot;:&quot;44061-44496&quot;} -->
+<h3 id="настройка_кнопок">Настройка кнопок</h3>
+<div class="level3">
+
+<p>
+Меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong> позволяет настроить функции кнопок Бортового компьютера или подключенные к Бортовому компьютеру внешние кнопки управления, переключатели, ключ зажигания. См. схему в разделе <strong><a href="/doku.php?id=ru:display:start#подключение" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Подключение</a></strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_3.png" class="medialeft" alt="" />
+Пункты меню <strong>Хоткей 1</strong>  — <strong>Хоткей 4</strong>  — четыре кнопки Бортового компьютера, слева направо, настраиваются одинаково. Назначенная на них функция включается нажатием и удержанием кнопки в течение 2 сек или коротким нажатием при активированной функции <strong>Хоткей коротким нажатием</strong>. После настройки необходимо сохранить параметры в разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Сохранить</strong>. <br/>
+
+</p>
+
+<p>
+В пунктах <strong>Хоткей 1 тип</strong>  — <strong>Хоткей 4 тип</strong> выбирается тип сигнала управления, который идет на Контроллер. Варианты значений: <br/>
+
+<strong>Откл</strong>  — выключено. <br/>
+
+<strong>С фиксацией</strong>  — выбираем, если необходимо чтобы Контроллер, при нажатии и отпускании кнопки, получил сигнал «включено». При нажатии и отпускании повторно — сигнал «выключено». <br/>
+
+<strong>Обычный</strong>  — выбираем, если необходимо чтобы Контроллер, при включении тумблера переключателя, получал сигнал «включено», при отключении тумблера — сигнал «выключено». Например, если вы хотите включать кнопкой с Бортового компьютера один из режимом скорости на Контроллере. Также, значение <strong>Переключатель</strong>  надо выбирать если подключаете ручки тормоза с нормально открытыми (разомкнутыми) контактами (NO). <br/>
+
+<strong>Инвертированный</strong>  — инвертированное состояние переключателя. Это значение надо выбирать если подключаете ручки тормоза с нормально закрытыми (замкнутыми) контактами (NC).
+</p>
+
+<p>
+В пунктах <strong>Хоткей 1 функц.</strong>  — <strong>Хоткей 4 функц.</strong>  выбирается функция, назначенная на кнопку Бортового компьютера. <br/>
+
+<strong>Откл</strong>  — выключено. <br/>
+
+<strong>Зарядка_USB</strong> — функция включения и выключения USB зарядки по нажатию и удержанию кнопки Бортового компьютера. Также включить зарядку можно принудительно в меню «Настройка». См. выше пункт «Настройка USB-зарядки». <br/>
+
+<strong>Активация защиты</strong> — включение пароля во время зарядки, чтобы нельзя было поменять какие-либо настройки пока идет зарядка батареи через мотор. <br/>
+
+<strong>Откл. подсветку</strong> — отключение подсветки экрана одной кнопкой, например, при зарядке. <br/>
+
+<strong>CAN_1</strong>  — <strong>CAN_16</strong>  — выбор номера CAN-входа при управление по CAN-шине. Это программные значения, физических входов на платах меньше, в данный момент доступно восемь CAN-портов <strong>IO1</strong>-<strong>IO8</strong>  в Бортовом компьютере (см. <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">схему</a>).
+</p>
+
+<p>
+Пункты меню <strong>IO1</strong> — <strong>IO8</strong>  — номера входов <strong>IO1</strong> — <strong>IO8</strong>  в Бортовом компьютере. На задней стороне Бортового компьютера расположена панель с разъемами. К ним можно подключить кнопки управления и настроить их функции. Все входы настраиваются одинаково. См. раздел <strong><a href="/doku.php?id=ru:display:start#схема_подключения" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Подключение</a></strong>. В пунктах меню <strong>IO1 состояние</strong> — <strong>IO8 состояние</strong> вы можете посмотреть, какой номер входа имеет кнопка, при нажатии кнопки значение <strong>0</strong> будет меняться на <strong>1</strong> напротив номера входа, куда подключена кнопка. Аналогичную проверку вы можете сделать в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Информация</strong>, нажмите на кнопку и смотрите, для какого номера входа значение <strong>0</strong>  меняется на <strong>1</strong>. См. раздел <strong><a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Информация</a></strong>. 
+</p>
+
+<p>
+В пунктах <strong>IO1 тип.</strong>  — <strong>IO8 тип.</strong>  выбирается тип сигнала управления, который отправляется на контроллер со входов <strong>IO1</strong>-<strong>IO8</strong>  соответственно. Варианты выбора значений аналогичны настройке <strong>Хоткей 1 тип</strong>  — <strong>Откл</strong>, <strong>С фиксацией</strong>, <strong>Обычный</strong>, <strong>Инвертированный</strong>.
+</p>
+
+<p>
+В пунктах <strong>IO1 функц.</strong>  — <strong>IO8 функц.</strong>  выбирается функция, назначенная на кнопку, подключенную в Бортовой компьютер. Варианты выбора значений аналогичны настройке <strong>Хоткей 1 тип</strong>  — <strong>Откл</strong>, <strong>Зарядка_USB</strong>, <strong>Активация защиты</strong>, <strong>Откл. подсветку</strong>,  <strong>CAN_1</strong>  — <strong>CAN_16</strong>.
+</p>
+
+<p>
+Пункт меню <strong>Хоткей в режиме зарядки</strong> позволяет настроить функционал кнопок Бортового компьютера в режиме зарядки, что позволяет использовать одну и ту же кнопку для включения разных функций в процессе движения и при зарядке. Настройки аналогичны пунктам меню <strong>Хоткей 1 тип</strong>  — <strong>Хоткей 4 тип</strong> и <strong>Хоткей 1 функц.</strong>  — <strong>Хоткей 4 функц.</strong>.
+</p>
+
+<p>
+<strong>Пульт верхняя</strong>, <strong>пульт средняя</strong>, <strong>пульт нижняя</strong>  — настройка функций трехкнопочного пульта управления. Схема подключения будет доступна позже. Варианты выбора значений аналогичны настройке <strong>Хоткей 1 тип</strong>  — <strong>Хоткей 1 тип</strong>  — <strong>Откл</strong>, <strong>Зарядка_USB</strong>, <strong>Активация защиты</strong>, <strong>Откл. подсветку</strong>, <strong>CAN_1</strong>  — <strong>CAN_16</strong>.
+</p>
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>  &gt; <strong>Фильтр переключателей</strong>  можно настроить фильтр для более стабильной работы кнопок. Выбор значений от <strong>0</strong>  до <strong>10</strong>. Данная настройка относится к четырем кнопкам Бортового компьютера <strong>Хоткей 1</strong>  — <strong>Хоткей 4</strong>. Иногда, особенно, если настроены функции на все четыре кнопки, могут возникать помехи, которые будут влиять на стабильность включения кнопок. В этом случае, можно увеличить значение фильтра. Кнопка будет включаться медленнее (ее надо будет дольше держать), но стабильнее. <br/>
+
+</p>
+
+<p>
+Пункт меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка кнопок</strong>  &gt; <strong>Хоткей коротким нажатием</strong> позволяет настроить включение функции коротким нажатием кнопок Бортового компьютера, без удержания в течение 2 секунд. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u043a\u043d\u043e\u043f\u043e\u043a&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u043a\u043d\u043e\u043f\u043e\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:22,&quot;range&quot;:&quot;44497-53726&quot;} -->
+<h3 id="настройка_управления">Настройка управления</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройка управления</strong> настраиваются параметры ручек газа и тормоза, подключенных напрямую в Бортовой компьютер. Если ручки газа и тормоза подключены к Контроллеру через провода управления, то их настройку необходимо делать в <a href="/doku.php?id=ru:controller:setup#настройка_диапазонов_ручек_газа_и_тормоза" class="wikilink1" title="ru:controller:setup" data-wiki-id="ru:controller:setup">разделе</a> меню <strong>Контроллер</strong> &gt; <strong>Управление</strong>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_4.png" class="medialeft" alt="" />
+<strong>ThrottleV</strong> — текущее напряжение ручки газа, подключенной к Бортовому компьютеру, в вольтах (<strong>V</strong>). <br/>
+
+<strong>Ручка газа V max</strong> и <strong>Ручка газа V min</strong> — диапазон работы ручки газа, в вольтах (<strong>V</strong>), выбор значений от <strong>0.01V</strong> до <strong>5.00V</strong>, с шагом <strong>0.01V</strong>. При превышении максимального значения на 5% будет включена защита от сломанной ручки газа. Если у вас неправильно выставлен диапазон, то при полном нажатии ручки газа будет выключаться электродвигатель, в данном случае необходимо увеличить значение диапазона. <br/>
+
+</p>
+
+<p>
+<strong>BrakeV</strong> — текущее напряжение ручки тормоза, подключенной к Бортовому компьютеру, в вольтах (<strong>V</strong>). <br/>
+
+<strong>Ручка тормоза V max</strong> и <strong>Ручка тормоза V min</strong> — диапазон работы ручки тормоза, в вольтах (<strong>V</strong>), выбор значений от <strong>0.01V</strong> до <strong>5.00V</strong>, с шагом <strong>0.01V</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Ручка газа автонастройка</strong> — режим автоматической настройки диапазона ручки газа. Для запуска режима нажмите правую кнопку Бортового компьютера и следуйте инструкциям на экране. <br/>
+
+<strong>Ручка тормоза автонастройка</strong> — режим автоматической настройки диапазона ручки тормоза. Для запуска режима нажмите правую кнопку Бортового компьютера и следуйте инструкциям на экране. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:23,&quot;range&quot;:&quot;53727-56479&quot;} -->
+<h3 id="настройка_источников_данных">Настройка источников данных</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Установка источников данных</strong>  настраиваются источники данных для различных показателей Бортового компьютера.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_5.png" class="medialeft" alt="" />
+<strong>Источник скорости</strong>  — выбор источника данных по скорости <strong>Контроллер</strong>  или <strong>Борт.комп</strong>. <br/>
+
+<strong>Источник тока</strong>  — выбор источника данных силы тока <strong>Контроллер</strong> или <strong>BMS</strong>. <br/>
+
+<strong>Источник U батареи</strong>  — выбор источника данных напряжения батареи <strong>Контроллер</strong> или <strong>BMS</strong>. <br/>
+
+<strong>Источник W/H исп.</strong>  — выбор источника данных потребления энергии батареей <strong>Контроллер</strong> или <strong>BMS</strong>. <br/>
+
+<strong>Длина окружности</strong>  — длина окружности колеса в миллиметрах, выбор значений от <strong>100</strong>  до <strong>3000</strong>, с шагом <strong>1</strong>. Данная настройка используется при выборе в качестве источника скорости внешнего датчика, подключенного к Бортовому компьютеру. <br/>
+
+<strong>Пробег общий</strong> — пробег контроллера в километрах (<strong>км</strong>).
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+<strong>Бортовой компьютер поддерживает два способа определения скорости:</strong> <br/>
+
+— по информации с Контроллера. <br/>
+
+— по датчику скорости (геркон), который подключается в Бортовой компьютер.
+</p>
+
+<p>
+При выборе значения <strong>Контроллер</strong>, в качестве источника данных скорости будут использоваться показания Контроллера. Данный способ подходит для direct-drive или mid-drive моторов без обгонной муфты. После выбора значения <strong>Контроллер</strong>  необходимо:
+</p>
+
+<p>
+1. Указать количество пар полюсов магнитов в меню <strong>Контроллер</strong>  &gt; <strong>Настройка мотора</strong>  &gt; <strong>Пар полюсов</strong>. Количество пар полюсов для различных моделей моторов вы можете посмотреть в разделе <a href="/doku.php?id=ru:motor_information" class="wikilink1" title="ru:motor_information" data-wiki-id="ru:motor_information">Информация по моторам</a>. Если вашего мотора нет в списке, уточняйте информацию у производителя или воспользуйтесь поиском в интернет.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/pola_pair_cont.png" class="media" alt="" />
+</p>
+
+<p>
+2. Включить расчет скорости (если был отключен) в меню <strong>Контроллер</strong>  &gt; <strong>Доп. настройки</strong>  &gt; <strong>Расчет скорости</strong>  и указать длину окружности колеса в миллиметрах в меню <strong>Контроллер</strong>  <strong>Доп. настройки</strong>  &gt; <strong>Длина окружности</strong>. Для расчета длины окружности можете воспользоваться <a href="https://mnogoformul.ru/dlina-okruzhnosti-ili-perimetr-kruga" class="urlextern" title="https://mnogoformul.ru/dlina-okruzhnosti-ili-perimetr-kruga" rel="ugc nofollow">онлайн-калькулятором</a>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/speed_cont.png" class="media" alt="" />
+</p>
+
+<p>
+При выборе значения <strong>Борт.комп</strong>, скорость будет определяться с внешнего датчика, который используется, например, в велокомпьютере. Датчик скорости необходимо подключить согласно <a href="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" class="urlextern" title="https://drive.google.com/file/d/1tPvklo1WM3gSz3ATWM-RHvi0NTxHEgYc/view" rel="ugc nofollow">схеме</a> в разъем <strong>SPEED</strong>  на задней панели Бортового компьютера. После установки значения <strong>Борт.комп</strong>  и подключения датчика скорости необходимо указать длину окружности колеса в миллиметрах в меню <strong>Бортовой компьютер</strong>  &gt; <strong>Установка источников данных</strong>. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430_\u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a\u043e\u0432_\u0434\u0430\u043d\u043d\u044b\u0445&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:24,&quot;range&quot;:&quot;56480-60983&quot;} -->
+<h3 id="безопасность_и_установка_пароля">Безопасность и установка пароля</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Безопасность</strong>  можно установить пароль, который будет запрашиваться при включении Контроллера. Без ввода пароля Контроллер не будет реагировать на органы управления.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/secure.png" class="medialeft" alt="" />
+<strong>Пароль при включении</strong> — включение запроса пароля при запуске контроллера. Выбор значений <strong>Откл</strong>  и <strong>Вкл</strong>. Пароль задается в разделе <strong>Изменить пароль</strong> — изменение стандартного пароля. Чтобы установить свой пароль перейдите в пункт <strong>Изменить пароль</strong>, будет запрошен ввод пароля. Введите стандартный пароль <strong>1234</strong>  нажатием кнопок Бортового компьютера слева-направо. Введите новый пароль, вы можете назначить до 10 нажатий. Например, 10 нажатий на кнопку 1 или 5 нажатий на кнопку 2 и 5 на кнопку 3. После ввода нового пароля нажмите и удерживайте правую кнопку. Повторно введите новый пароль. Сохраните настройки в меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>, чтобы запомнить новый пароль.
+</p>
+
+<p>
+<strong>Внимание! Самостоятельно восстановить забытый пароль нет никакой возможности.</strong>  Позже будет добавлена функция восстановления пароля по серийному номеру контроллера. <br/>
+
+</p>
+
+<p>
+<strong>Пароль при входе в устройство</strong> — включение запроса пароля на вход в настройки любого устройства, подключенного по CAN-шине и видимого в меню <strong>Настройка</strong> &gt; <strong>Устройства</strong>. Выбор значений <strong>Откл</strong>, <strong>Один раз</strong> и <strong>Постоянно</strong>. При выборе значения <strong>Один раз</strong> пароль будет запрашиваться только один раз при попытке зайти в меню устройства после включения контроллера. При выборе значения <strong>Постоянно</strong> пароль будет запрашиваться каждый раз при попытке зайти в меню устройства после включения контроллера. Для настройки пароля используйте пункт меню <strong>Мастер-пароль</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Пароль главного экрана</strong> — включение запроса пароля при попытке входа в меню Бортового компьютера с главного экрана. Выбор значений <strong>Откл</strong>, <strong>Один раз</strong> и <strong>Постоянно</strong>. При выборе значения <strong>Один раз</strong> пароль будет запрашиваться один раз при попытке зайти в меню экрана после включения Бортового компьютера. При выборе значения <strong>Постоянно</strong> пароль будет запрашиваться каждый раз при попытке зайти в меню экрана после включения Бортового компьютера. Для настройки пароля используйте пункт меню <strong>Мастер-пароль</strong>. <br/>
+
+</p>
+
+<p>
+<strong>Изменить мастер-пароль</strong> — настройка мастер-пароля, который используется для настройки <strong>Пароль при входе в устройство</strong> и <strong>Пароль главного экрана</strong>. Используется один и тот же пароль для обоих настроек. Чтобы установить свой пароль перейдите в пункт <strong>Изменить мастер-пароль</strong>, будет запрошен ввод пароля. Введите стандартный пароль <strong>1234</strong>  нажатием кнопок Бортового компьютера слева-направо. Введите новый пароль, вы можете назначить до 10 нажатий. Например, 10 нажатий на кнопку 1 или 5 нажатий на кнопку 2 и 5 на кнопку 3. После ввода нового пароля нажмите и удерживайте правую кнопку. Повторно введите новый пароль. Сохраните настройки в меню <strong>Бортовой компьютер</strong> &gt; <strong>Сохранить</strong>, чтобы запомнить новый пароль.
+</p>
+
+<p>
+<strong>Стат. ограничение скорости</strong> — ограничение значения максимальной скорости, которое будет отображаться в статистике Бортового компьютера. Значения от <strong>1</strong> до <strong>255</strong>, с шагом <strong>1</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0411\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c \u0438 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u043f\u0430\u0440\u043e\u043b\u044f&quot;,&quot;hid&quot;:&quot;\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c_\u0438_\u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430_\u043f\u0430\u0440\u043e\u043b\u044f&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:25,&quot;range&quot;:&quot;60984-66599&quot;} -->
+<h3 id="обновление_прошивки">Обновление прошивки</h3>
+<div class="level3">
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> &gt; <strong>Обновить ПО с microSD</strong>  можно обновить прошивку Бортового компьютера. Скачивайте актуальную версию прошивки в разделе <a href="/doku.php?id=ru:firmware" class="wikilink1" title="ru:firmware" data-wiki-id="ru:firmware">Прошивки</a>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/update.png" class="medialeft" alt="" />Для обновления загрузите файл прошивки в корневой каталог карты microSD с файловой системой Fat/Fat32. Вставьте карту контактами вверх в разъем на Бортовом компьютере. Это можно сделать не отключая Бортовой компьютер, но в этом случае необходимо выйти из меню <strong>Обновить ПО с microSD</strong>  и зайти заново. После этого Бортовой компьютер определит microSD карту, в пункте <strong>Размер файла</strong>  появится число (размер файла в байтах) и пункт <strong>Обновить?</strong>  Нажмите правую кнопку Бортового компьютера для запуска обновления. После перезапуска, проверьте версию прошивки в разделе <strong>Бортовой компьютер</strong>  &gt; <strong>Информация об устройстве</strong>.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+<p>
+В пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> &gt; <strong>Принудительное обновление устройств</strong> вы можете принудительно обновить прошивку любого устройства, видимого в меню <strong>Настройка</strong> &gt; <strong>Устройства</strong>, без необходимости переходить в меню каждого устройства отдельно для его обновления. Данная функция также будет полезна в случае, когда вы обновили Бортовой компьютер до последней прошивки, а контроллер имеет прошивку v.7.18 (и ниже) и не виден в меню <strong>Настройка</strong> &gt; <strong>Устройства</strong> из-за нового протокола.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/update_030323.png" class="medialeft" alt="" /> Для обновления загрузите файл прошивки устройства в корневой каталог карты microSD с файловой системой Fat/Fat32. Вставьте карту контактами вверх в разъем на Бортовом компьютере. После этого перейдите в пункте меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> &gt; <strong>Принудительное обновление устройств</strong> и выберите устройство, которое хотите обновить. Нажмите правую кнопку Бортового компьютера для запуска обновления. После перезапуска, проверьте версию прошивки в меню устройства в разделе <strong>Информация об устройстве</strong>.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0448\u0438\u0432\u043a\u0438&quot;,&quot;hid&quot;:&quot;\u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435_\u043f\u0440\u043e\u0448\u0438\u0432\u043a\u0438&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:26,&quot;range&quot;:&quot;66600-70091&quot;} -->
+<h3 id="настройки_по_умолчанию">Настройки по умолчанию</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Настройки и обновление</strong> &gt;  <strong>Настройки по умолчанию</strong>  можно сделать сброс всех настроек до заводских. Для сброса нажмите правую кнопку Бортового компьютера. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e&quot;,&quot;hid&quot;:&quot;\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438_\u043f\u043e_\u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:27,&quot;range&quot;:&quot;70092-70507&quot;} -->
+<h3 id="импорт_и_экспорт_настроек">Импорт и экспорт настроек</h3>
+<div class="level3">
+
+<p>
+В пунктах меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> &gt; <strong>Экспорт параметров</strong> и <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> &gt; <strong>Импорт параметров</strong> вы можете экспортировать и импортировать на microSD карту ранее сделанные настройки Бортового компьютера.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/v08_6.png" class="medialeft" alt="" />
+<strong>Экспорт параметров</strong> — вставьте microSD карту в слот Бортового компьютера и нажмите правую кнопку. На microSD карте будет создан файл с названием <strong>NDconf0.cfg</strong> — <strong>NDconf9.cfg</strong>, максимум до 9 различных конфигураций. Созданный файл вы можете открыть программой «Блокнот», посмотреть все ваши настройки, внести какие-либо изменения, сохранить. Аналогично, вы можете импортировать в Бортовой компьютер ранее сохраненную конфигурацию. <br/>
+
+</p>
+
+<p>
+<strong>Импорт параметров</strong> — импорт конфигурации настроек Бортового компьютера с microSD карты, название файла для импорта только <strong>NDconf0.cfg</strong>! Для импорта нажмите на правую кнопку. При импорте будет показано сообщение с количеством возможных ошибок, найденных и принятых параметров.
+</p>
+<div class="clearer"></div>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u043c\u043f\u043e\u0440\u0442 \u0438 \u044d\u043a\u0441\u043f\u043e\u0440\u0442 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;hid&quot;:&quot;\u0438\u043c\u043f\u043e\u0440\u0442_\u0438_\u044d\u043a\u0441\u043f\u043e\u0440\u0442_\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:28,&quot;range&quot;:&quot;70508-72357&quot;} -->
+<h3 id="информация_об_устройстве">Информация об устройстве</h3>
+<div class="level3">
+
+<p>
+В разделе меню <strong>Бортовой компьютер</strong>  &gt; <strong>Информация об устройстве</strong>  можно посмотреть основные данные по Бортовому компьютеру. В этом меню вы можете посмотреть какая версия прошивки загружена в ваш Бортовой компьютер.
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/device_info_bk.png" class="medialeft" alt="" />
+<strong>Nucular Display</strong>  — название устройства. <br/>
+
+<strong>Версия железа</strong>  — версия печатной платы. <br/>
+
+<strong>Дата изготовления</strong>  — дата изготовления Бортового компьютера. <br/>
+
+<strong>Версия программы</strong>  — версия прошивки, проверить наличие обновлений можно в разделе <a href="/doku.php?id=ru:firmware" class="wikilink1" title="ru:firmware" data-wiki-id="ru:firmware">Прошивки</a>. <br/>
+
+<strong>Дата программы</strong>  — дата компиляции прошивки.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u043e\u0431 \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435&quot;,&quot;hid&quot;:&quot;\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f_\u043e\u0431_\u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:29,&quot;range&quot;:&quot;72358-73409&quot;} -->
+<h3 id="память">Память</h3>
+<div class="level3">
+
+<p>
+Внизу раздела меню <strong>Бортовой компьютер</strong> &gt; <strong>Настройки и обновление</strong> находятся пункты меню для работы с памятью. 
+</p>
+
+<p>
+<img src="/docs/settings-pages/onboard-computer/ru/images/memory.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Копировать память данных</strong>  — копирование информации о состоянии системы (дампа) на SD-карту. Данная функция используется разработчиками для поиска ошибок в коде устройства. <br/>
+
+<strong>Очистить память</strong>  — стирание памяти и всех настроек Бортового компьютера. <br/>
+
+</p>
+
+<p>
+ <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u041f\u0430\u043c\u044f\u0442\u044c&quot;,&quot;hid&quot;:&quot;\u043f\u0430\u043c\u044f\u0442\u044c&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:30,&quot;range&quot;:&quot;73410-74150&quot;} -->
+<h3 id="gps_модуль">GPS модуль</h3>
+<div class="level3">
+
+<p>
+В бортовой компьютер возможно подключение внешнего GPS модуля, который добавляет возможность отображения скорости времени и курса. <br/>
+
+В эксперементальном обновлении в строки информации были добавлены GPS часы и курс.  <br/>
+
+Для включения модуля в меню <strong>Бортового комьютера</strong> &gt; <strong>Настройки бортового компьютера</strong> включите <strong>Внешний GPS модуль</strong>. Также в этом меню можно выбрать <strong>Часовой пояс</strong>
+<a href="/doku.php?id=ru:display:scheme" class="wikilink1" title="ru:display:scheme" data-wiki-id="ru:display:scheme">Для подключения воспользуйтесь схемой подключения экрана</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;GPS \u043c\u043e\u0434\u0443\u043b\u044c&quot;,&quot;hid&quot;:&quot;gps_\u043c\u043e\u0434\u0443\u043b\u044c&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:31,&quot;range&quot;:&quot;74151-&quot;} -->

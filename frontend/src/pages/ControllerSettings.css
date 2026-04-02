@@ -85,6 +85,35 @@
   white-space: nowrap;
 }
 
+.docs-lang-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid #e9e9e9;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.docs-lang-pill {
+  border: none;
+  background: transparent;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #666;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.docs-lang-pill--active {
+  background: #222;
+  color: #fff;
+}
+
 .support-breadcrumb-link {
   background: none;
   border: none;

@@ -1,0 +1,139 @@
+
+<h1 id="diagnostics_of_controller_malfunctions">Diagnostics of controller malfunctions</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Diagnostics of controller malfunctions&quot;,&quot;hid&quot;:&quot;diagnostics_of_controller_malfunctions&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;52-104&quot;} -->
+<h2 id="how_to_export_configuration">How to export configuration?</h2>
+<div class="level2">
+
+<p>
+- Get a micro SD card, up to 32G will be enough.<br/>
+
+- Format it to filesystem FAT32 (<a href="https://www.lifewire.com/format-sd-card-to-fat32-6666166" class="urlextern" title="https://www.lifewire.com/format-sd-card-to-fat32-6666166" rel="ugc nofollow">howto</a>).<br/>
+
+- Insert in the Display contacts on top.<br/>
+
+- Go to “Controller &gt; Settings and Update”.<br/>
+
+- Select “Export config.” and a .cfg file will be created on the SD card.<br/>
+
+- Copy this file from the SD card to the computer and send file to support.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;How to export configuration?&quot;,&quot;hid&quot;:&quot;how_to_export_configuration&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;105-542&quot;} -->
+<h2 id="pressing_the_throttle_handle_all_the_way_turns_off_the_motor">Pressing the throttle handle all the way turns off the motor</h2>
+<div class="level2">
+
+<p>
+If protection is triggered, go to the <strong>Controller</strong> &gt; <strong>Status flags</strong> &gt; <strong>Throttle error</strong>, if <strong>On</strong> is set, then it is required to calibrate the throttle or increase the maximum throttle voltage in the <strong>Controller</strong> &gt; <strong>Throttle</strong> <strong>max mV.</strong> You can increase it gradually in steps of <strong>100mV</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pressing the throttle handle all the way turns off the motor&quot;,&quot;hid&quot;:&quot;pressing_the_throttle_handle_all_the_way_turns_off_the_motor&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;543-917&quot;} -->
+<h2 id="motor_does_not_spin_when_throttle_is_activated">Motor does not spin when throttle is activated</h2>
+<div class="level2">
+
+<p>
+Check battery settings (minimum/maximum voltage).<br/>
+
+Check the temperature sensor of the motor (the temperature value must not be outside the limits).<br/>
+
+Check the kV of the motor in the <strong>Motor</strong> section, it should not be zero, otherwise launch motor detection and correct the angles again.<br/>
+
+Check throttle setting, throttle error flag should not be present.
+</p>
+
+<p>
+Check if the brake is pressed, the main screen will show the <strong>P</strong> icon, check the range of the analog brake sensor if connected.<br/>
+
+Check if neutral is turned on, the main screen will show <strong>N</strong>.<br/>
+
+Check the <strong>Controller flag</strong> &gt; <strong>Status flags</strong> &gt; <strong>Overcurrent</strong>, if it is <strong>On</strong> then try to turn the motor by hand, if it resists - disconnect the controller phases from the motor and twist by hand again if the torsion resistance remains then the motor is faulty, if the motor starts to rotate freely — contact for technical support, the controller may be faulty.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Motor does not spin when throttle is activated&quot;,&quot;hid&quot;:&quot;motor_does_not_spin_when_throttle_is_activated&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;918-1905&quot;} -->
+<h2 id="regenerative_braking_is_missing_shuts-off">Regenerative braking is missing / shuts-off</h2>
+<div class="level2">
+
+<p>
+Check the battery charging current and maximum voltage settings.<br/>
+
+Check <strong>Controller</strong> &gt; <strong>Status flags</strong> &gt; <strong>U power supply exceeded</strong> flag, if <strong>On</strong> is present, it may mean that the BMS disconnected the charging channel due to the overvoltage on the cells and the controller went into protection. In this case, it is recommended to lower the maximum battery voltage setting for a smoother and more predictable limitation of the regenerative current.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regenerative braking is missing \/ shuts-off&quot;,&quot;hid&quot;:&quot;regenerative_braking_is_missing_shuts-off&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1906-2416&quot;} -->
+<h2 id="motor_autosetup_returns_error">Motor autosetup returns error</h2>
+<div class="level2">
+
+<p>
+Check if the motor turns freely by hand, if not, see the <strong>Overcurrent flag</strong> above.<br/>
+
+Increase detection current (for example, twice), you can also push the motor with your hand at the start (be careful).<br/>
+
+Check the performance of the hall sensors in the <strong>Controller</strong> &gt; <strong>Debug information</strong> &gt; <strong>Hall input</strong> section, this parameter has three digits, each shows the signal level, if you rotate the motor slowly by hand, then all three digits should change. If none of them changes, check if the hall connector is connected or the ground may be broken. If one of the numbers does not change, there is no contact or the sensor wire is broken. To check the contacts in the controller, you need to disconnect the hall connector and measure the voltage at the controller connector. There should be about 4V on the signal lines of the halls, 5V on the power supply and about 3V on the temperature sensor line.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Motor autosetup returns error&quot;,&quot;hid&quot;:&quot;motor_autosetup_returns_error&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2417-3367&quot;} -->
+<h2 id="display_turns_off_when_accelerating">Display turns off when accelerating</h2>
+<div class="level2">
+
+<p>
+Try decrease battery current in <strong>Сontrol modes</strong> in controller menu or check you battery BMS settings for maximum allowable current.<br/>
+
+Usually this happens when BMS turns off everything in case of overload.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Display turns off when accelerating&quot;,&quot;hid&quot;:&quot;display_turns_off_when_accelerating&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;3368-3626&quot;} -->
+<h2 id="battery_wh_usage_does_not_reset_at_full_charge">Battery Wh usage does not reset at full charge</h2>
+<div class="level2">
+
+<p>
+The display calculates the remaining battery capacity based on Wh consumption from the controller(s). If your statistics do not reset at full battery charge, check that in the Controller-<strong><a href="/doku.php?id=en:controller:setup#battery" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Battery</a></strong> menu, your <strong>Full charge</strong> delta is sufficient to trigger a reset at full charge, or ensure that your battery min-max voltage is configured correctly.<br/>
+
+Reset calculated as: <strong>Supply max</strong> - <strong>Full charge</strong> = reset threshold.<br/>
+
+It happens only when the controller turns on, and if the voltage is above the threshold, consumption will be reset.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Battery Wh usage does not reset at full charge&quot;,&quot;hid&quot;:&quot;battery_wh_usage_does_not_reset_at_full_charge&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;3627-4265&quot;} -->
+<h2 id="writing_a_log_to_file">Writing a log to file</h2>
+<div class="level2">
+
+<p>
+In the <strong>Controller </strong>  &gt; <strong>Logger</strong>  menu section, you can enable and configure the data logging during the operation of the Controller. Full documentation about logger <a href="/doku.php?id=en:controller:setup#logger" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">here</a>.<br/>
+
+For this you will need microSD card or bluetooth dongle with app.
+</p>
+<ol>
+<li class="level1"><div class="li"> Navigate to <strong>Controller</strong> &gt; <strong>Logger</strong> and select <strong>Start logging = On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Logging will start automatically when the bike is in motion by default.</div>
+</li>
+<li class="level1"><div class="li"> Reproduce the problem or perform a full-power acceleration to reach the top speed.</div>
+</li>
+<li class="level1"><div class="li"> Stop the vehicle.</div>
+</li>
+<li class="level1"><div class="li"> Go to <strong>Controller</strong> &gt; <strong>Logger</strong> and select <strong>Stop logging = On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> (Optionally) If the problem did not occur, repeat the process to write additional logs. Return to step 2.</div>
+</li>
+<li class="level1"><div class="li"> Copy the files from the microSD card or from the phone and send all NClogX.csv files to support.</div>
+</li>
+</ol>
+
+<p>
+<br/>
+
+Note: Log rates faster than 10ms (e.g., 1ms and less) may result in gaps in logger data due to the limits of the CAN bus speed. You can select &#039;Mode = Max rate&#039; to attempt recording at the maximum possible data rate.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Writing a log to file&quot;,&quot;hid&quot;:&quot;writing_a_log_to_file&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;4266-&quot;} -->

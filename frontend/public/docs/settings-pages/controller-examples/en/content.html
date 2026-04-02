@@ -1,0 +1,433 @@
+
+<h1 id="examples_of_settings">Examples of settings</h1>
+<div class="level1">
+
+<p>
+In this section, we provide examples of various typical Controller settings and some non-obvious functions. The section is constantly being supplemented, if you have an example of your own settings of any function, you can send us a description on <a href="https://nucular.tech" class="urlextern" title="https://nucular.tech" rel="ugc nofollow">website</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Examples of settings&quot;,&quot;hid&quot;:&quot;examples_of_settings&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;34-353&quot;} -->
+<h2 id="configuring_the_config_loading_with_the_can_button">Configuring the config loading with the CAN button</h2>
+<div class="level2">
+
+<p>
+In the settings of the controller with firmware version 0.8.7 and newer, it became possible to instantly download the desired configuration from the SD card to the Controller by pressing a button. This can be useful when using several different batteries, so that when you change batteries, you can quickly load new settings without using the import and export menus. Or, if you want to quickly change the controller settings from low power to high power config. The configuration loaded in this way is not saved in the Controller upon restart, unless it is specifically saved in the Controller menu after import. To download, the SD card must be in the on-board computer and the number in the configuration file name must match the number of the function configured in the Controller. You can use several methods to load the configuration: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#loading_the_config_using_the_on-board_computer_buttons" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">On-board computer buttons</a>.</div>
+</li>
+<li class="level1"><div class="li"> External switch, connected to On-board computer.</div>
+</li>
+<li class="level1"><div class="li"> External switch, connected to Controller.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configuring the config loading with the CAN button&quot;,&quot;hid&quot;:&quot;configuring_the_config_loading_with_the_can_button&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;354-1474&quot;} -->
+<h3 id="loading_the_config_using_the_on-board_computer_buttons">Loading the config using the on-board computer buttons</h3>
+<div class="level3">
+
+<p>
+This method is the easiest to set up, configuration loading is activated by one of the four buttons on the On-board computer.
+</p>
+<ol>
+<li class="level1"><div class="li"> Make sure you set up and export the configuration to the SD-card to a file <strong>NCconf1.cfg</strong> — <strong>NCconf5.cfg</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> For example, you want to load the configuration <strong>NCconf3.cfg</strong> on pressing the first button on the On-board Computer. Go to the <strong>Controller</strong> &gt; <strong>I/O configuration</strong> menu section, then assign the <strong>CL3</strong> function to the <strong>CAN port 1</strong> menu item. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>Controller</strong> &gt; <strong>Save settings</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Go to the menu section <strong>On-board computer</strong> &gt; <strong>Button setup</strong> and for the button <strong>Hot key 1 func.</strong> assign <strong>CAN_1</strong>. Button type <strong>Hotkey 1 type</strong> select <strong>Normal</strong>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>On-board computer</strong> &gt; <strong>Save</strong>. Setup completed. Go to the main screen. Now by pressing and holding the first button of the On-board computer you will be able to instantly import the <strong>NCconf3.cfg</strong> configuration from the SD-card. After importing, you will see a notification with the name of the loaded configuration. <br/>
+</div>
+</li>
+</ol>
+
+<p>
+If you specifically do not save the loaded configuration in the Controller settings, then after switching off and on the Controller, your previous configuration, which was used before the import, will be automatically loaded.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Loading the config using the on-board computer buttons&quot;,&quot;hid&quot;:&quot;loading_the_config_using_the_on-board_computer_buttons&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1475-2890&quot;} -->
+<h2 id="control_modes_switching_setting">Control modes switching setting</h2>
+<div class="level2">
+
+<p>
+Three control modes are available in the Controller settings, for which you can make different power and speed settings. To switch modes <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> you can use several methods: <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#control_modes_switching_by_on-board_computer_buttons" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">On-board computer buttons</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#control_modes_switching_with_external_switch_connected_to_the_on-board_computer" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">External switch, connected to On-board computer</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#control_modes_switching_with_external_switch_connected_to_the_controller" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">External switch, connected to Controller</a>.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control modes switching setting&quot;,&quot;hid&quot;:&quot;control_modes_switching_setting&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2891-3546&quot;} -->
+<h3 id="control_modes_switching_with_the_on-board_computer_buttons">Control modes switching with the On-board computer buttons</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Make sure you have <a href="/doku.php?id=en:controller:setup#control_modes" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">configured</a> the control modes. </div>
+</li>
+<li class="level1"><div class="li"> Go to the menu section <strong>Controller</strong> &gt; <strong>I/O configuration</strong>, select <strong>Buttons</strong> in the <strong>Speeds mode</strong> menu item, then assign the <strong>S1</strong> function to the <strong>CAN Port 1</strong> menu item. For <strong>CAN Port 2</strong> and <strong>CAN Port 3</strong> functions <strong>S2</strong> and <strong>S3</strong>, respectively. Make sure the <strong>S1</strong>, <strong>S2</strong>, and <strong>S3</strong> functions are not configured on any other ports in the list.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>Controller</strong> &gt; <strong>Save settings</strong>. </div>
+</li>
+<li class="level1"><div class="li"> Go to the menu section <strong>On-board computer</strong> &gt; <strong>Button setup</strong> and for each <strong>Hot key</strong> button of the screen, assign the <strong>CAN Port</strong> to which the mode was configured. For <strong>Hot key 1 func.</strong> assign <strong>CAN_1</strong>, for <strong>Hot key 2 func.</strong> and <strong>Hot key 3 func</strong>. - <strong>CAN_2</strong> and <strong>CAN_3</strong>, respectively. Select the button type for all three Hot keys as <strong>Normal</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>On-board computer</strong> &gt; <strong>Save</strong>. Setup completed. Go to the main screen. Now by pressing and holding one of the buttons on the On-board computer, you can activate the control mode configured for it. The selected mode will be shown at the top in the middle of the screen with the numbers <strong>1</strong>, <strong>2</strong> or <strong>3</strong>. In our example, the first button activates the <strong>S1</strong> mode, the second and third <strong>S2</strong> and <strong>S3</strong> respectively.</div>
+</li>
+</ol>
+
+<p>
+If after setting you cannot switch modes, then go to the menu <strong>Controller</strong> &gt; <strong>Updates and settings</strong>, select the item <strong>Load defaults</strong>, reset, then save the settings in the menu item <strong>Controller</strong> &gt; <strong>Save settings</strong>, return to the menu <strong>Controller</strong> &gt; <strong>Updates and settings</strong>, select the item <strong>Reboot</strong> and restart your device. Then repeat all the settings from the beginning.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control modes switching with the On-board computer buttons&quot;,&quot;hid&quot;:&quot;control_modes_switching_with_the_on-board_computer_buttons&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3547-5369&quot;} -->
+<h3 id="control_modes_switching_with_external_switch_connected_to_the_on-board_computer">Control modes switching with external switch connected to the On-board computer</h3>
+<div class="level3">
+
+<p>
+To use this method, you need an external 3-position switch. To connect to the On-board computer you need to crimp the wire with pins according to the <a href="/doku.php?id=en:display:start#connection_diagram" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">diagram</a> and insert them into the PHD 2.0 connector, which is included in the kit of the On-board Computer.
+</p>
+<ol>
+<li class="level1"><div class="li"> The wire from the switch must be connected to the rear panel of the On-board computer in the <strong>I/O1</strong> or <strong>I/O2</strong> ports.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to check the functionality of the connected button and the activation of the input by closing the contact. Go to the <strong>On-board computer</strong> &gt; <strong>Information</strong> menu and press the button on the switch. Depending on which port the wire is connected to, the values in the menu items <strong>IO1 state</strong> - <strong>IO8 state</strong> will change from <strong>0</strong> to <strong>1</strong> when the button of switch connected to the On-board computer is pressed. If the value does not change, then the signal does not come and it is necessary to check the correct connection, contacts in the connector, wire, and the switch itself. If everything is OK, go to point 3.</div>
+</li>
+<li class="level1"><div class="li"> Let&#039;s assume you have connected one of the switch buttons to the IO2 state, it is the <strong>IO2</strong> input of the <strong>I/O1 port</strong>. Now you need to assign to this On-board computer input the number of the CAN input for CAN-bus control and select the control signal type. Go to <a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a> item <strong>On-board computer</strong> &gt; <strong>Buttons setup</strong>, and in the menu item <strong>IO2 type</strong>, select the control signal type, e.g. <strong>Normal</strong>, and in menu item <strong>IO2 state</strong> select a free CAN input number, e.g. <strong>CAN_1</strong>. For the rest of the switch buttons, make similar settings by selecting other CAN port numbers.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>On-Board Computer</strong> &gt; <strong>Save</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Go to the menu item <strong>Controller</strong> &gt; <strong>I/O configuration</strong> to configure the <strong>S1</strong>, <strong>S2</strong> or <strong>S3</strong> mode function on the selected CAN port. To do this, opposite the menu item <strong>CAN Port 1</strong>, select the value <strong>S1</strong>. Now the button configured in the previous paragraph, when pressed, will activate the <strong>S1</strong> mode in the Controller. Next, configure the rest of the buttons in the same way, choosing the appropriate modes for the configured CAN ports. If you use a 3-position switch, then you need to select the functions <strong>S1of3</strong> and <strong>S3of3</strong> in the CAN ports, which will be activated when the switch is closed in the extreme left and right positions. In the center position, <strong>S2</strong> mode will be activated.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>Controller</strong> &gt; <strong>Save settings</strong>. Setup completed. Go to the main screen. Now by pressing one of the external buttons you can activate the control mode configured for it. The selected mode will be shown at the top middle of the screen as <strong>1</strong>,<strong>2</strong> or <strong>3</strong>.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control modes switching with external switch connected to the On-board computer&quot;,&quot;hid&quot;:&quot;control_modes_switching_with_external_switch_connected_to_the_on-board_computer&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;5370-8224&quot;} -->
+<h3 id="control_modes_switching_with_external_switch_connected_to_the_controller">Control modes switching with external switch connected to the Controller</h3>
+<div class="level3">
+
+<p>
+This method requires an external 3-position switch. To connect to the Controller, use “controller-side inputs” wires (optional) with SM 2.54 3P connectors.
+</p>
+<ol>
+<li class="level1"><div class="li"> The wire from the switch must be connected according to the <a href="/doku.php?id=en:display:start#connection_diagram" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">diagram</a> to the ports <strong>S1</strong>, <strong>S3</strong> and <strong>GND</strong> on the control wires of the Controller.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to check the functionality of the connected switch and the activation of the input by closing the contact. Go to <strong>Controller</strong> &gt; <strong>I/O configuration</strong> &gt; <strong>Port state</strong> and click the button on the switch. Depending on which port the wire is connected to, when a signal is applied, the values in menu items <strong>S1</strong> and <strong>S3</strong> will change from <strong>Off</strong> to <strong>On</strong>. the switch itself. If everything is in order, go to step 3.</div>
+</li>
+<li class="level1"><div class="li"> Now you need to assign the desired function to the Controller ports. Go to <strong>Controller</strong> &gt; <strong>I/O configuration</strong> and select <strong>S1of3</strong> for <strong>Port S1</strong>, and <strong>S3of3</strong> for <strong>Port S3</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>Controller</strong> &gt; <strong>Save settings</strong>. Setup completed. Now, when the switch is closed in the extreme left and right positions, control modes <strong>S1</strong> and <strong>S3</strong> will be activated. In the center position, <strong>S2</strong> mode will be activated.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Control modes switching with external switch connected to the Controller&quot;,&quot;hid&quot;:&quot;control_modes_switching_with_external_switch_connected_to_the_controller&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;8225-9555&quot;} -->
+<h2 id="setting_up_controllers_with_a_two-motor_connection_scheme">Setting up controllers with a two-motor connection scheme</h2>
+<div class="level2">
+
+<p>
+First, you need to carefully read the <a href="/doku.php?id=en:controller:setup#connecting_multiple_controllers" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">wiring diagram</a> for the multi-motor configuration. Before describing the settings, here are the answers to two frequently asked questions:
+</p>
+
+<p>
+<strong>Is it possible to connect two controllers to one motor?</strong><br/>
+
+</p>
+
+<p>
+It is possible, but in this case, you need to divide the motor windings into two independent and then add the second controller. In addition-two complects of hall sensors are needed for each controller.<br/>
+
+</p>
+
+<p>
+<strong>Is it possible to connect two motors to the same controller?</strong><br/>
+
+</p>
+
+<p>
+No, but out of sync when rotating the motors will cause one of them to slow down.<br/>
+
+</p>
+
+<p>
+<strong>Setting up controllers with a two-motor connection scheme</strong>
+</p>
+
+<p>
+After connecting the electric motors to the controllers, it is necessary to configure each controller individually through the Auto-setup <a href="/doku.php?id=en:controller:setup#auto-setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a>. The throttle and brake levers connected to the On-board computer are configured in the On-board computer <a href="/doku.php?id=en:display:start#control_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a>.
+</p>
+
+<p>
+If the throttle and brake levers are connected to one of the controllers via the “Controller-side inputs”, then this controller must be assigned the function of controlling other controllers from the current one — the <a href="/doku.php?id=en:controller:setup#master-controller1" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Master controller</a>.
+</p>
+
+<p>
+Next, you can configure the <a href="/doku.php?id=en:controller:setup#other_settings1" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Prefix</a> — the name of the controller for multi-motor configurations. Using the prefixes together or separately, you can specify where the electric motor controlled by the Controller is located.
+</p>
+
+<p>
+<strong>Drive mode setting — four-wheel drive, front or rear</strong>
+</p>
+
+<p>
+To select the driving mode and type of drive, you can use the On-board computer buttons or an external switch (connected to the Controller via control wires or to the On-board computer). To do this, you need to disable the throttle on the controller that should not rotate the electric motor at the moment.
+</p>
+
+<p>
+When using the On-board computer buttons to switch, the controller disable setting can be made in the <strong>Controller</strong> &gt; <strong>Advanced modes</strong> menu. You must select a mode, for example, <strong>S1</strong> and enable the <a href="/doku.php?id=en:controller:setup#advanced_control_modes" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Disable throttle</a> lever function in it. Now, when <strong>S1</strong> mode is selected, the controller where throttle cut is activated will not respond to the throttle lever.
+</p>
+
+<p>
+Thus, by combining three modes — <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong>, you can configure all-wheel drive (2WD), rear-wheel drive (RWD) and front-wheel drive (FWD).
+</p>
+
+<p>
+When using an external switch to switch modes, the mode selection is configured in the <strong>Controller</strong> &gt; <strong>I/O configuration</strong> <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a>. For a 3-position switch, you need to set the functions <strong>S1of3</strong> and <strong>S3of3</strong>, for external buttons — the functions <strong>S1</strong>, <strong>S2</strong> and <strong>S3</strong>.
+</p>
+
+<p>
+If an external switch is connected to the On-board computer, then you can see which ports are activated when you press the buttons on it in the <strong>On-board computer</strong> &gt; <strong>Information</strong> <a href="/doku.php?id=en:display:start#information" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a>, if the switch is connected to the Controller, then in the <strong>Controller</strong> &gt; <strong>I/O configuration</strong> <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a>.
+</p>
+
+<p>
+You can also configure the shutdown of one of the controllers with an external button, without the need to configure additional modes. To do this, you need to assign the function <strong>DTH</strong> (disable the throttle lever) to the port of the button in the <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a> section <strong>Controller</strong> &gt; <strong>I/O configuration</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Setting up controllers with a two-motor connection scheme&quot;,&quot;hid&quot;:&quot;setting_up_controllers_with_a_two-motor_connection_scheme&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;9556-13204&quot;} -->
+<h2 id="regenerative_braking_setting">Regenerative braking setting</h2>
+<div class="level2">
+
+<p>
+It is instructions for Controllers with firmware v7.18 and for the On-board computer with v0.60B. If you have firmware v0.8.4 and v0.71B respectively, and a brake lever connected directly to the On-board computer, you need to set up a brake lever setting in the menu <a href="/doku.php?id=en:display:start#control_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">section</a> <strong>On-board computer</strong> &gt; <strong>Control setup</strong>. Regeneration allows you to brake with an electric motor and charge the battery. This function cannot be implemented on geared wheel motors.
+</p>
+
+<p>
+There are two ways to enable regenerative braking:
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#braking_with_separate_thumb_brake" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">By pressing a separate thumb brake (analog brake)</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#braking_by_releasing_the_throttle_lever" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">By releasing the throttle grip</a>.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regenerative braking setting&quot;,&quot;hid&quot;:&quot;regenerative_braking_setting&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;13205-14015&quot;} -->
+<h3 id="regenerative_braking_by_separate_thumb_brake">Regenerative braking by separate thumb brake</h3>
+<div class="level3">
+
+<p>
+This regenerative braking method uses a separate analog brake lever or thumb brake.
+</p>
+<ol>
+<li class="level1"><div class="li"> First connect the thumb brake to the On-Board Computer to the <strong>BRK</strong> port or to the Controller to the <strong>Control</strong> port via the controller-side inputs wires (option) according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">wiring</a> diagram. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> If you have already <a href="/doku.php?id=en:controller:setup#auto-setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">done</a> a full auto-setup of all systems earlier, then go directly to step 6. If you connect the thumb brake after going through auto-setup, go to step 3. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Go to the <strong>Controller</strong> &gt; <strong>Auto-setup menu</strong> <a href="/doku.php?id=en:controller:setup#auto-setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">section</a>, select <strong>On</strong> under <strong>Brake</strong>, then follow the on-screen instructions for Brake autodetection. After successful configuration, you will see an <strong>OK</strong> message. Then go to step 6. If errors occur during the auto-detect process (value <strong>P</strong> was frozen), go to step 4. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:display:start#information" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Go to</a> the <strong>On-board computer</strong> &gt; <strong>Information</strong>, find the <strong>Brake V</strong> parameter and check that the voltage range of the brake lever changes when it is pressed and released from ~ <strong>0.8V</strong> to ~ <strong>4.2V</strong>. If the range does not change, then you connected the thumb brake incorrectly or it is not working properly. If the range changes, then go to step 5. If you connected the brake lever directly to the Controller, then its voltage range can be checked in the <strong>#Brake</strong> menu item in the <strong>Controller</strong> &gt; <strong>Control</strong> menu <a href="/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">section</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>Control</strong> section and in the <strong>Brake min</strong> item set it to <strong>150mV</strong> more than the specified minimum value, and in the <strong>Brake max</strong> item set it to <strong>150mV</strong> less than the specified maximum value. Then go to step 6. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> To set the regeneration level, <a href="/doku.php?id=en:controller:setup#electric_brake_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">go to</a> <strong>Controller</strong> &gt; <strong>Control modes</strong> &gt; <strong>Braking phase</strong> and set up the level of phase current of braking. If you have a scooter, you can start with <strong>20A</strong>, for an electric bike you can start with <strong>50A</strong>, for a Sur-Ron with <strong>70A</strong>. Next, test the settings and, if necessary, increase or decrease the phase current to achieve the desired result.</div>
+</li>
+</ol>
+
+<p>
+Keep in mind that recuperation will not be possible with a fully charged battery.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regenerative braking by separate thumb brake&quot;,&quot;hid&quot;:&quot;regenerative_braking_by_separate_thumb_brake&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;14016-16478&quot;} -->
+<h3 id="regenerative_braking_by_releasing_the_throttle_grip">Regenerative braking by releasing the throttle grip</h3>
+<div class="level3">
+
+<p>
+With this type of braking, recuperation is activated when the throttle lever is released. The effect is similar to driving an electric car using one gas pedal, when pressed, accelerate, when released, slow down. <br/>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> First, connect the thumb throttle or twist throttle to the On-Board Computer to the <strong>THR</strong> port or to the Controller to the <strong>Control</strong> port via the controller-side inputs wires (option) according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">wiring</a> diagram. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> If you have already <a href="/doku.php?id=en:controller:setup#auto-setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">done</a> a full auto-setup of all systems earlier, then go directly to step 6. If you connect the throttle lever and do not connect the brake lever, go to step 3.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#auto-setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>Auto-setup menu</strong> section, select <strong>On</strong> under <strong>Throttle</strong>, then follow the on-screen instructions for Brake autodetection. After successful configuration, you will see an <strong>OK</strong> message. Then go to step 6. Then go to step 6. If errors occur during the autodetect process, go to step 4. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:display:start#information" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Go to</a> the <strong>On-board computer</strong> &gt; <strong>Information</strong> menu, find the <strong>ThrottleV</strong> parameter and check that the voltage range of the throttle stick changes when it is pressed and released from ~ <strong>0.75V</strong> to ~ <strong>4.35V</strong>. If the range does not change, then you connected the handle incorrectly or it is not working properly. If the range changes, then go to step 5. If you connected the throttle lever directly to the Controller, then its voltage range can be checked in the <strong># Throttle</strong> menu item under the <strong>Controller</strong> &gt; <strong>Control</strong> menu <a href="/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">section</a>. <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>Control</strong> section and in the <strong>Throttle min</strong> menu item set it to <strong>150mV</strong> more than the specified minimum value, and in the <strong>Throttle max</strong> item set it to <strong>50mV</strong> less than the specified maximum value. Then go to step 6.</div>
+</li>
+<li class="level1"><div class="li"> In the <a href="/doku.php?id=en:controller:setup#throttle_control_mode_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">menu</a> item <strong>Controller</strong> &gt; <strong>Control</strong> &gt; <strong>Throttle mode</strong> select one of two throttle modes - <strong>Speed</strong> or <strong>Speed+torque</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, <a href="/doku.php?id=en:controller:setup#setup_100_speed_value" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">under</a> <strong>Controller</strong> &gt; <strong>Control</strong> &gt; <strong>Speed Lim. at 0% throttle</strong>, select <strong>On</strong> to enable the speed limit at 0% throttle for braking with the throttle lever released.</div>
+</li>
+<li class="level1"><div class="li"> To set the regeneration level, <a href="/doku.php?id=en:controller:setup#electric_brake_setup" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">go to</a> <strong>Controller</strong> &gt; <strong>Control modes</strong> &gt; <strong>Braking phase</strong> and set up the level of phase current of braking. If you have a scooter, you can start with <strong>20A</strong>, for an electric bike you can start with <strong>50A</strong>, for a Sur-Ron with <strong>70A</strong>. Next, test the settings and, if necessary, increase or decrease the phase current to achieve the desired result.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Regenerative braking by releasing the throttle grip&quot;,&quot;hid&quot;:&quot;regenerative_braking_by_releasing_the_throttle_grip&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;16479-19457&quot;} -->
+<h2 id="reverse_setting">Reverse setting</h2>
+<div class="level2">
+
+<p>
+Keep in mind that the reverse function cannot be implemented on geared motor wheels. You can use several methods to engage reverse:
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#switching_on_reverse_with_the_on-board_computer_button" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">The On-board computer button</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#switching_on_reverse_with_external_button_connected_to_the_on-board_computer" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">External button connected to the On-board computer</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#switching_on_reverse_with_external_button_connected_to_the_controller" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">External button connected to the Controller</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">Selecting the control mode with activated function &quot;Reverse&quot;</a>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:examples#switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse_on_brake" class="wikilink1" title="en:controller:examples" data-wiki-id="en:controller:examples">Selecting the control mode with activated function &quot;Reverse on brake&quot;</a>.</div>
+</li>
+</ol>
+
+<p>
+If desired, item 1 can be combined with other options to have several ways of reversing.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Reverse setting&quot;,&quot;hid&quot;:&quot;reverse_setting&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;19458-20502&quot;} -->
+<h3 id="switching_on_reverse_with_the_on-board_computer_button">Switching on reverse with the On-Board Computer button</h3>
+<div class="level3">
+
+<p>
+This method of switching on the reverse is the easiest to set up and is activated by one of the four buttons on the On-Board Computer.
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Go to</a> the <strong>On-Board Computer</strong> &gt; <strong>Buttons setup</strong> menu and select which of the four On-Board Computer buttons you want to assign the reverse function to. For example, to the first button.</div>
+</li>
+<li class="level1"><div class="li"> In <strong>Hot key 1 type</strong> menu item select the control signal type <strong>Button</strong>, and in the item <strong>Hot key 1 func.</strong> select the free number of the CAN input, e.g. <strong>CAN_4</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>On-Board Computer</strong> &gt; <strong>Save</strong>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> <strong>Controller</strong> &gt; <strong>I/O Configuration</strong> to configure the reverse function for the selected CAN port. To do this, in <strong>CAN Port 4</strong> menu item, select the <strong>RV</strong> (reverse) value.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the <strong>Controller</strong> &gt; <strong>Save settings</strong> menu item. The setup is complete, now you must press and hold the first On-board computer button for two seconds to activate reverse. When the function is activated, you will see the <strong>R</strong> icon at the top of the screen.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Switching on reverse with the On-Board Computer button&quot;,&quot;hid&quot;:&quot;switching_on_reverse_with_the_on-board_computer_button&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;20503-21697&quot;} -->
+<h3 id="switching_on_reverse_with_external_button_connected_to_the_on-board_computer">Switching on reverse with external button connected to the On-board computer</h3>
+<div class="level3">
+
+<p>
+To use this method you need an external button or switch. To connect to the On-board computer, the wire must be crimped with pins according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">diagram</a> and inserted into the PHD 2.0 connector, which are included in the package of the On-board computer.
+</p>
+<ol>
+<li class="level1"><div class="li"> The wire from the switch must be connected to the rear panel of the On-board computer in ports <strong>I/O1</strong> or <strong>I/O2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to check the functionality of the connected button and the activation of the input by closing the contact. <a href="/doku.php?id=ru:display:start#информация" class="wikilink1" title="ru:display:start" data-wiki-id="ru:display:start">Go to</a> the <strong>On-board computer</strong> &gt; <strong>Information</strong> menu and press the button. Depending on which port the wire is connected to, the values in the menu items <strong>IO1 state</strong> - <strong>IO8 state</strong> will change from <strong>0</strong> to <strong>1</strong> when the button connected to the On-board computer is pressed. If the value does not change, then the signal does not come and it is necessary to check the correct connection, contacts in the connector, wire, and the button itself. If everything is OK, go to point 3.</div>
+</li>
+<li class="level1"><div class="li"> Let&#039;s assume you have connected the button to the <strong>IO2 state</strong>, it is the <strong>IO2</strong> input of the <strong>I/O1</strong> port. Now you need to assign to this On-board computer input the number of the CAN input for CAN-bus control and select the control signal type. Go to menu item <strong>On-board computer</strong> &gt; <strong>Buttons setup</strong>, and in the menu item <strong>IO2 type</strong>, select the control signal type, e.g. <strong>Button</strong>, and in menu item <strong>IO2 func.</strong> select a free CAN input number, e.g. <strong>CAN_4</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the menu item <strong>On-Board Computer</strong> &gt; <strong>Save</strong>.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> <strong>Controller</strong> &gt; <strong>I/O Configuration</strong> to configure the reverse function for the selected CAN port. To do this, in <strong>CAN Port 4</strong> menu item, select the <strong>RV</strong> (reverse) value.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the <strong>Controller</strong> &gt; <strong>Save settings</strong> menu item. The setup is complete, now you must press the button to activate reverse. When the function is activated, you will see the <strong>R</strong> icon at the top of the screen</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Switching on reverse with external button connected to the On-board computer&quot;,&quot;hid&quot;:&quot;switching_on_reverse_with_external_button_connected_to_the_on-board_computer&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;21698-23910&quot;} -->
+<h3 id="switching_on_reverse_with_external_button_connected_to_the_controller">Switching on reverse with external button connected to the Controller</h3>
+<div class="level3">
+
+<p>
+This method requires an external button or switch. To connect to the Controller, use controller-side inputs wires (optional) with SM 2.54 3P connectors.
+</p>
+<ol>
+<li class="level1"><div class="li"> The wire from the switch should be connected <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">according</a> to the diagram to one of the ports on the controller-side inputs wires.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to check the functionality of the connected button and the activation of the input by closing the contact. Go to menu <strong>Controller</strong> &gt; <strong>I/O configuration</strong> &gt; <strong>Port state</strong> and press the button. Depending on which port the wire is connected to, the values in <strong>S1</strong>, <strong>S3</strong>, <strong>RV</strong>, <strong>CR</strong> will change from <strong>0</strong> to <strong>1</strong> when a signal is applied. If the value does not change, then the signal is not coming and you need to check the correct connection, contacts in the connector, wire, and the button itself. If everything is OK, go to point 3.</div>
+</li>
+<li class="level1"><div class="li"> Let&#039;s assume you have connected a button to the <strong>RV</strong> input. Now you need to assign the reverse function to this port on the Controller. Go to <strong>Controller</strong> &gt; <strong>I/O configuration</strong> and select <strong>RV</strong> for the <strong>Port RV</strong> menu item.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the <strong>Controller</strong> &gt; <strong>Save settings</strong> menu item. The setup is complete. Now you need to press the button to activate reverse. When the function is activated, you will see the <strong>R</strong> icon at the top of the screen. To disable reverse press the button again.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Switching on reverse with external button connected to the Controller&quot;,&quot;hid&quot;:&quot;switching_on_reverse_with_external_button_connected_to_the_controller&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;23911-25435&quot;} -->
+<h3 id="switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse">Switching on reverse by selecting the control mode with activated function &quot;Reverse&quot;</h3>
+<div class="level3">
+
+<p>
+With this setting, reverse is activated when one of the four On-board computer buttons is activated in one of the control modes. To use this method it is necessary to activate the reverse function when selecting the control mode.
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#advanced_control_modes" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>Advanced modes</strong> menu and select one of the control modes <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> in which the reverse will be activated. For example, <strong>S2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Go to <strong>Controller</strong> &gt; <strong>Advanced modes</strong> &gt; <strong>Mode S2</strong> to <strong>Reverse</strong> menu item and select <strong>On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, activate the advanced modes, for this, in the menu item <strong>Controller</strong> &gt; <strong>Advanced modes</strong> &gt; <strong>Enable add. modes</strong>, set the value to <strong>On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to select which on-board computer button will enable <strong>Mode S2</strong> and configure this function. <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>I/O configuration</strong> menu section, select one of the CAN ports, for example <strong>CAN Port 1</strong> and select <strong>S2</strong> in this menu item.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the <strong>Controller</strong> &gt; <strong>Save settings</strong> menu item.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Go to</a> the menu item <strong>On-board сomputer</strong> &gt; <strong>Buttons setup</strong>, select which On-board Computer button will activate <strong>Mode S2</strong>, e.g. second. To configure in the menu item <strong>Hot key 2 type</strong>, select the control signal type <strong>Normal</strong>, and in the item <strong>Hotkey 2 func.</strong> select the number of CAN input previously configured in the controller — <strong>CAN_1</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings under the <strong>On-board computer</strong> &gt; <strong>Save</strong> menu item. The setup is complete. Now you have to press the second button of the On-Board Computer to activate the control <strong>Mode S2</strong> with activated reverse. When the mode is activated you will see the <strong>R</strong> icon at the top of the screen. To disable reverse you need to switch to another control mode, <strong>S1</strong> or <strong>S3</strong>, which must be pre-set to other buttons of the On-Board Computer.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Switching on reverse by selecting the control mode with activated function \&quot;Reverse\&quot;&quot;,&quot;hid&quot;:&quot;switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;25436-27479&quot;} -->
+<h3 id="switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse_on_brake">Switching on reverse by selecting the control mode with activated function &quot;Reverse on brake&quot;</h3>
+<div class="level3">
+
+<p>
+To use this method it is necessary to activate one of the control modes with activated function <strong>Reverse on brake</strong> using one of the four buttons of the On-Board Computer. After activating this function, pressing the brake lever again after stopping will engage reverse.
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:controller:setup#advanced_control_modes" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>Advanced modes</strong> menu and select one of the control modes <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong> in which the reverse will be activated. For example, <strong>S2</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Go to <strong>Controller</strong> &gt; <strong>Advanced modes</strong> &gt; <strong>Mode S2</strong> to <strong>Reverse on brake</strong> menu item and select <strong>On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, activate the advanced modes, for this, in the menu item <strong>Controller</strong> &gt; <strong>Advanced modes</strong> &gt; <strong>Enable add. modes</strong>, set the value to <strong>On</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Next, you need to select which on-board computer button will enable <strong>Mode S2</strong> and configure this function. <a href="/doku.php?id=en:controller:setup#i_o_port_configuration" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Go to</a> the <strong>Controller</strong> &gt; <strong>I/O configuration</strong> menu section, select one of the CAN ports, for example <strong>CAN Port 1</strong> and select <strong>S2</strong> in this menu item.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings in the <strong>Controller</strong> &gt; <strong>Save settings</strong> menu item.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=en:display:start#buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Go to</a> the menu item <strong>On-board сomputer</strong> &gt; <strong>Buttons setup</strong>, select which On-board Computer button will activate <strong>Mode S2</strong>, e.g. second. To configure in the menu item <strong>Hot key 2 type</strong>, select the control signal type <strong>Normal</strong>, and in the item <strong>Hotkey 2 func.</strong> select the number of CAN input previously configured in the controller — <strong>CAN_1</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Save the settings under the <strong>On-board computer</strong> &gt; <strong>Save</strong> menu item. The setup is complete. Now, when you have <strong>Mode S2</strong> enabled, after you have pressed the brake lever and completely stopping, you can press the brake lever again within 4 seconds and hold it down to activate reverse. If more time passes between presses, the reverse will not be activated and you will have to press the brake again and again to activate the reverse. You will see <strong>R</strong> at the top of the screen when the mode is activated. To disable reverse you must release the brake lever, the controller will return to control <strong>Mode S2</strong>.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Switching on reverse by selecting the control mode with activated function \&quot;Reverse on brake\&quot;&quot;,&quot;hid&quot;:&quot;switching_on_reverse_by_selecting_the_control_mode_with_activated_function_reverse_on_brake&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;27480-&quot;} -->

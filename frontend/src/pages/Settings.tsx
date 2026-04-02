@@ -9,6 +9,95 @@ export default function Settings() {
   const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const navigate = useNavigate();
+  const cards = useMemo(
+    () => [
+      {
+        key: "bluetooth",
+        title: "Bluetooth",
+        text: "How to connect the Bluetooth module to the controller and display.",
+        onClick: () => navigate("/settings/bluetooth")
+      },
+      {
+        key: "cadmodels",
+        title: "CAD files / 3D models",
+        text: "STEP/STL models for printing and mounts.",
+        onClick: () => navigate("/settings/cad-models")
+      },
+      {
+        key: "controller",
+        title: "Controller",
+        text: "Settings and connection diagrams for 6F, 12F, and 24F controllers.",
+        onClick: () => navigate("/settings/controller#setup")
+      },
+      {
+        key: "configs",
+        title: "Configuration files",
+        text: "Ready-made configurations for different motors and vehicles.",
+        onClick: () => navigate("/settings/controller#configs")
+      },
+      {
+        key: "diagnostics",
+        title: "Diagnostics",
+        text: "Diagnostics of controller malfunctions and troubleshooting.",
+        onClick: () => navigate("/settings/controller#diagnostics")
+      },
+      {
+        key: "examples",
+        title: "Examples of settings",
+        text: "Examples and explanations of settings for various functions.",
+        onClick: () => navigate("/settings/controller#examples")
+      },
+      {
+        key: "fan",
+        title: "Fan and light control",
+        text: "Stoplight and fan wiring and setup (PWM outputs).",
+        onClick: () => navigate("/settings/controller#fan")
+      },
+      {
+        key: "schematic",
+        title: "Connection schematic",
+        text: "Connection schematic PDFs and pinouts.",
+        onClick: () => navigate("/settings/connection-schematic")
+      },
+      {
+        key: "setup",
+        title: "Controller setup",
+        text: "Full controller setup and parameters reference.",
+        onClick: () => navigate("/settings/controller#setup")
+      },
+      {
+        key: "onboard",
+        title: "On-board computer",
+        text: "On-board computer settings and connection guide.",
+        onClick: () => navigate("/settings/onboard-computer")
+      },
+      {
+        key: "firmware",
+        title: "Firmware",
+        text: "Firmware files and update instructions.",
+        onClick: () => navigate("/settings/firmware")
+      },
+      {
+        key: "motors",
+        title: "Motor information",
+        text: "Pole pairs and measured motor parameters.",
+        onClick: () => navigate("/settings/motor-information")
+      },
+      {
+        key: "ulight",
+        title: "uLight",
+        text: "uLight settings and connection diagram.",
+        onClick: () => navigate("/settings/ulight")
+      },
+      {
+        key: "usb2can",
+        title: "USB2CAN module",
+        text: "USB2CAN module information and usage.",
+        onClick: () => navigate("/settings/usb2can")
+      }
+    ],
+    [navigate]
+  );
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -20,7 +109,20 @@ export default function Settings() {
       { type: "support", label: "Connection diagrams", path: "/support#diagrams" },
       { type: "support", label: "Malfunctions", path: "/support#malfunctions" },
       { type: "support", label: "Feedback", path: "/support#feedback" },
-      { type: "support", label: "For developers", path: "/support#developers" }
+      { type: "support", label: "For developers", path: "/support#developers" },
+      { type: "settings", label: "Bluetooth", path: "/settings/bluetooth" },
+      { type: "settings", label: "CAD files / 3D models", path: "/settings/cad-models" },
+      { type: "settings", label: "Controller setup", path: "/settings/controller#setup" },
+      { type: "settings", label: "Fan and light control", path: "/settings/controller#fan" },
+      { type: "settings", label: "Examples of settings", path: "/settings/controller#examples" },
+      { type: "settings", label: "Diagnostics", path: "/settings/controller#diagnostics" },
+      { type: "settings", label: "Configuration files", path: "/settings/controller#configs" },
+      { type: "settings", label: "On-board computer", path: "/settings/onboard-computer" },
+      { type: "settings", label: "uLight", path: "/settings/ulight" },
+      { type: "settings", label: "Firmware", path: "/settings/firmware" },
+      { type: "settings", label: "Motor information", path: "/settings/motor-information" },
+      { type: "settings", label: "USB2CAN module", path: "/settings/usb2can" },
+      { type: "settings", label: "Connection schematic", path: "/settings/connection-schematic" }
     ];
 
     const productItems = products.map((p) => ({
@@ -149,72 +251,27 @@ export default function Settings() {
             </form>
 
             <div className="settings-grid">
-              <div
-                className={`settings-card${activeCard === "controller" ? " settings-card-active" : ""}`}
-                onClick={() => {
-                  setActiveCard("controller");
-                  navigate("/settings/controller");
-                }}
-              >
-                <div className="settings-card-title">Controller</div>
-                <div className="settings-card-text">
-                  Description of settings and connection diagrams for 6F, 12F, and 24F controllers.
+              {cards.map((card) => (
+                <div
+                  key={card.key}
+                  className={`settings-card${activeCard === card.key ? " settings-card-active" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setActiveCard(card.key);
+                    card.onClick();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key !== "Enter" && e.key !== " ") return;
+                    e.preventDefault();
+                    setActiveCard(card.key);
+                    card.onClick();
+                  }}
+                >
+                  <div className="settings-card-title">{card.title}</div>
+                  <div className="settings-card-text">{card.text}</div>
                 </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "onboard" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("onboard")}
-              >
-                <div className="settings-card-title">On-board computer</div>
-                <div className="settings-card-text">
-                  Description of settings and connection diagram of the On-board computer.
-                </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "ulight" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("ulight")}
-              >
-                <div className="settings-card-title">uLight</div>
-                <div className="settings-card-text">
-                  Description of settings and connection diagram of the uLight controller.
-                </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "fan" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("fan")}
-              >
-                <div className="settings-card-title">Fan and light control</div>
-                <div className="settings-card-text">
-                  Description of settings and connection diagram for the stoplight and fans.
-                </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "configs" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("configs")}
-              >
-                <div className="settings-card-title">Configuration files</div>
-                <div className="settings-card-text">
-                  Examples of ready-made configurations for different types of electric motors.
-                </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "motors" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("motors")}
-              >
-                <div className="settings-card-title">Motors information</div>
-                <div className="settings-card-text">
-                  Data on the number of pole pairs on different brands of electric motors.
-                </div>
-              </div>
-              <div
-                className={`settings-card${activeCard === "examples" ? " settings-card-active" : ""}`}
-                onClick={() => setActiveCard("examples")}
-              >
-                <div className="settings-card-title">Examples of settings</div>
-                <div className="settings-card-text">
-                  Descriptions of the settings for the various functions.
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="support-help-banner support-help-banner--narrow">

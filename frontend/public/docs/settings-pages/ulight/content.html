@@ -1,0 +1,580 @@
+
+<h2 id="ulight_v063">uLight (v.0.6.3)</h2>
+<div class="level2">
+
+<p>
+The uLight is a controller designed to control lighting equipment, such as turn signals, brake lights, headlights, or LED strips. The uLight board has three CAN inputs and can function as a CAN splitter. Video <a href="https://www.youtube.com/watch?v=B626PakSvSk" class="urlextern" title="https://www.youtube.com/watch?v=B626PakSvSk" rel="ugc nofollow">review</a> on YouTube. The uLight does not have its own power supply.
+</p>
+
+<p>
+<em>Technical specifications:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> <em>Size 55x30x13 mm, weight 25 g</em></div>
+</li>
+<li class="level1"><div class="li"> <em>Input 10-15V</em></div>
+</li>
+<li class="level1"><div class="li"> <em>The current of one channel 3A, 6 outputs</em></div>
+</li>
+<li class="level1"><div class="li"> <em>Total current ~ 10A (with external supply)</em></div>
+</li>
+<li class="level1"><div class="li"> <em>6 digital inputs</em></div>
+</li>
+<li class="level1"><div class="li"> <em>2 thermosensor inputs</em></div>
+</li>
+<li class="level1"><div class="li"> <em>2 digital outputs</em></div>
+</li>
+<li class="level1"><div class="li"> <em>3 CAN bus connectors</em></div>
+</li>
+</ul>
+
+<p>
+<em>In the kit:</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> uLight controller — 1 pcs.</div>
+</li>
+<li class="level1"><div class="li"> PHD 2.0 4P connector — 4 pcs.</div>
+</li>
+<li class="level1"><div class="li"> PHD 2.0 6P connector — 4 pcs.</div>
+</li>
+<li class="level1"><div class="li"> Power wires 22AWG 2×200 mm with connectors XH 2.54 2P — 6 pcs.</div>
+</li>
+<li class="level1"><div class="li"> Power wires 22AWG 300 mm with pins, crimped on both sides — 8 pcs.</div>
+</li>
+<li class="level1"><div class="li"> Wires 26AWG 300 mm with pins, crimped on both sides — 20 pcs.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;uLight (v.0.6.3)&quot;,&quot;hid&quot;:&quot;ulight_v063&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-990&quot;} -->
+<h3 id="connection">Connection</h3>
+<div class="level3">
+
+<p>
+You can look at the connection diagrams for other devices at this <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">link</a>.
+</p>
+
+<p>
+<img src="/docs/settings-pages/ulight/images/ulight_en_0109_2.png" class="medialeft" alt="" />
+</p>
+<div class="clearer"></div>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+Connecting uLight to the Controller and the On-Board computer is possible in different ways:
+</p>
+<ol>
+<li class="level1"><div class="li"> By CAN-wire, which is purchased separately (not included in the kit). In this case, the standard CAN-wire from the Controller is connected to one of the CAN-ports on the uLight board, and the second CAN-wire from the uLight is connected to the On-board computer.</div>
+</li>
+<li class="level1"><div class="li"> By standard CAN-wire between the On-board computer and the Controller. In this case, the CAN wire must be cut and crimped with two PHD 2.0 6P connectors (included in the kit).</div>
+</li>
+<li class="level1"><div class="li"> By CAN wire through a CAN splitter, if it is used in your connection scheme, as a rule, such a scheme is used in all-wheel drive scooters with two controllers. In this case, it is better to connect the On-board computer directly to uLight, which is connected via a CAN wire to a CAN splitter, to which the Controllers are connected.</div>
+</li>
+</ol>
+
+<p>
+If necessary, you can connect all peripherals to the uLight board to control the Controller (throttle levers, brakes, switch buttons) via the CAN bus without using the On-Board Computer. But, setting up the uLight and the Controller is possible only from the On-Board Computer. When all devices have been configured, the On-board computer can be disconnected.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Connection&quot;,&quot;hid&quot;:&quot;connection&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;991-2451&quot;} -->
+<h3 id="the_logic_diagram">The logic diagram</h3>
+<div class="level3">
+
+<p>
+<img src="/docs/settings-pages/ulight/images/ulight_logic_en.png" class="media" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The logic diagram&quot;,&quot;hid&quot;:&quot;the_logic_diagram&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2452-2517&quot;} -->
+<h3 id="setup">Setup</h3>
+<div class="level3">
+
+<p>
+The uLight setup menu is located under <strong>Settings </strong>&gt;<strong> Devices </strong>&gt;<strong> Nucular uLight</strong>. Below you can find a detailed description of the menu items. <br/>
+ <br/>
+<img src="/docs/settings-pages/ulight/images/menu_1.png" class="media" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Setup&quot;,&quot;hid&quot;:&quot;setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2518-2718&quot;} -->
+<h3 id="save_settings">Save settings</h3>
+<div class="level3">
+
+<p>
+Saving all settings made. Select <strong>On</strong>  to save. If you do not save the settings, they will be reset after restarting of uLight.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Save settings&quot;,&quot;hid&quot;:&quot;save_settings&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2719-2874&quot;} -->
+<h3 id="firmware_updates">Firmware updates</h3>
+<div class="level3">
+
+<p>
+Section for working with firmware updates and settings.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:update_settings.bmp" class="media" title="en:update_settings.bmp"><img src="/docs/settings-pages/ulight/images/update_settings.bmp" class="medialeft" alt="" /></a><strong>Reboot</strong>  — some parameter settings, such as PWM and frequency, will be applied only after a reboot. <br/>
+<strong>Load defaults</strong>  — reset all settings made. <br/>
+<strong>Update firmware</strong>  — when you select <strong>On</strong>, the uLight firmware update will start, provided that an SD card with the firmware file is inserted into the On-board computer. You can download the current firmware version and read the update instructions in the <strong><a href="/doku.php?id=en:firmware" class="wikilink1" title="en:firmware" data-wiki-id="en:firmware">Firmware</a></strong> section.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Firmware updates&quot;,&quot;hid&quot;:&quot;firmware_updates&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2875-3457&quot;} -->
+<h3 id="inputs_configuration">Inputs configuration</h3>
+<div class="level3">
+
+<p>
+The functions of inputs <strong>I1-I6 </strong>  (see diagram above) are selected in the <strong>Function setup</strong>  section. Two thermal sensors can be connected to uLight.
+</p>
+
+<p>
+<img src="/docs/settings-pages/ulight/images/ulight_2en.jpg" class="medialeft" title="ulight_2en.jpg" alt="ulight_2en.jpg" width="241" height="142" /><strong>T-sensor T1 type</strong>  — selection of <strong>NTC10K3950</strong>  or <strong>NTC10K3380</strong>  thermal sensor. Select <strong>Off</strong>  if no sensor is connected. <br/>
+<strong># T-sensor T1</strong>  — current temperature of the thermal sensor Т1 in degrees Celsius (°C). <br/>
+<strong>T1 Threshold (port I7)</strong>  — I7 is a virtual port intended to function setup (see Function setup). Values ​​from 0°C to 250°C, in 1°C increments. <br/>
+<strong>Т1 Threshold mode</strong>  — signal operation mode from the thermal sensor, selection of values ​​<strong>Normal</strong>  (the signal state is first “off” when triggered is “on”) and <strong>Inverted</strong>  (the signal state is first “on”, when triggered is “off”). <br/>
+The settings for Temperature sensor T2 are similar to those for Temperature sensor T1. <br/>
+<strong>CAN-Control</strong>  — this setting refers to the <strong>THR</strong>  (throttle), <strong>BRK</strong>  (brakes), <strong>IO2</strong>, and <strong>IO3</strong>  inputs on the uLight board and is used when the throttle, brakes and switches are connected directly to the uLight board. When you select the <strong>On</strong>  setting, control signals from the inputs will be transmitted via the CAN bus and you will be able to control the Controller from the uLight board using the throttle, brake and switch inputs. <br/>
+<strong>CAN ports</strong>  — redirecting inputs to groups of CAN ports for controlling the controller. Selectable values — <strong>OFF</strong>, <strong>CAN 1-8</strong>  and <strong>CAN 9-16</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Inputs configuration&quot;,&quot;hid&quot;:&quot;inputs_configuration&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;3458-5041&quot;} -->
+<h3 id="function_setup">Function setup</h3>
+<div class="level3">
+
+<p>
+Function setup allows you to select which function each input on the uLight board or CAN input in the Controller or On-board computer corresponds to. All settings in this section of the menu have the same selection of functions: <br/>
+<strong>Off </strong>— disabled. <br/>
+<strong>On</strong>  — enabled. If the lights are connected, they will light constantly. <br/>
+<strong>I1-I6</strong>  — select the number of the input on the uLight board to which the switchch for turning on the lights is connected. You can check the operation of the button in the menu section <strong>Inputs values</strong>, items <strong>Input I1-Input I6</strong>, when the button is turned on, the values ​​will change to <strong>On</strong>. <br/>
+<strong>I7_T1</strong>  and <strong>I8_T2</strong>  — selection of the virtual port of the temperature sensor <strong>T1</strong>  and <strong>T2</strong>. <br/>
+<strong>C1-C16</strong>  — selection of the CAN input number when controlling via the CAN bus. It is used when <a href="/doku.php?id=en:display:start#display_buttons_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">connecting</a> external control buttons to the On-board computer or when using the On-board computer buttons (Hot key). <strong>C1-C16</strong>  are software values, there are fewer physical inputs on the boards, currently, eight CAN ports <strong>IO1-IO8</strong>  are available on the On-board computer (see <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">diagram</a>).
+</p>
+
+<p>
+<img src="/docs/settings-pages/ulight/images/output_config.png" class="medialeft" alt="" />
+</p>
+
+<p>
+<strong>Shutdown by CAN</strong>  — this setting allows you to turn off all lighting equipment if you turned off the Controller but didn&#039;t turn off the power supply to the uLight board. The shutdown signal will be transmitted via the CAN bus and all lighting equipment will be turned off. The default is <strong>Off</strong>  (Disabled). This setting is used if the uLight board has a separate power supply from an external direct current (DC) source. With the setting <strong>On </strong>  (Enabled), the lighting equipment will continue to work when you turn off the power of the Controller and the On-Board Computer. If the uLight board receives power via the CAN bus and the<strong> On</strong>  value is selected, uLight will turn off the power if it does not receive a CAN bus signal from any of the devices (Controller or On-board computer).
+</p>
+
+<p>
+<strong># Turn signals setup #</strong> <br/>
+Settings for the left and right turn signals. Read more about the setup below in the section <strong>Turn signals setup</strong>. <br/>
+<strong>Left turn switch</strong>  — setting for the left turn signal button. <br/>
+<strong>Right turn switch</strong>  — setting for the left turn signal button. <br/>
+<strong>Warning switch</strong>  — setting for the hazard warning light switch. <br/>
+<strong>Turn brightness</strong>  — select the brightness of the turn signals from 0% to 100% in 5% steps. <br/>
+<strong>Time on-time</strong>  — the speed of turning on the turn signals, together with setting the off time, allows you to control the speed of blinking of the turn signals. Values ​​from 0.1 sec to 1 sec, in 0.1-sec increments. <br/>
+<strong>Turn off-time</strong>  — turn off speed. Values ​​from 0.0 sec to 1 sec, in 0.1-sec increments. Setting the value to 0.0 sec will disable the blinking function of the turn signals.
+</p>
+
+<p>
+<strong># Brake signal setup #</strong> <br/>
+The brake signal is adjustable in two brightness levels. <br/>
+<strong>Off-brake brightness</strong>  — the brightness of the brake light when the brake is not pressed, for use as taillights, a value from 0% to 100% in 5% increments. <br/>
+<strong>On-brake brightness</strong>  — the brightness of the brake light when the brake is pressed, a value from 0% to 100% in 5% increments.
+</p>
+
+<p>
+<strong># Reverse signal setup #</strong> <br/>
+Adjust the brightness of the light of reverse. The uLight board does not have an input for the switch of reverse, therefore, this function is controlled from a switch connected to the On-board computer or Controller. When the Controller is turn on reverse, the signal on the uLight board will also be active. <br/>
+<strong>Off-revers bright.</strong>  — the brightness of the reversing light without engaging reverse, a value from 0% to 100% in 5% increments. <br/>
+<strong>On-revers bright.</strong>  — the brightness of the reversing light when reverse is engaged, a value from 0% to 100% in 5% increments.
+</p>
+
+<p>
+<strong># Beam setup #</strong> <br/>
+<strong>Low beam switch</strong>  — the select setting for the low beam switch. <br/>
+<strong>High beam switch</strong>  — the select setting for the high beam switch. <br/>
+<strong>Beam mode</strong>  — this setting is selected depending on how the headlight is connected with one or two wires. <strong>Single</strong>  — it is used if one headlamp performs the functions of low and high beam and is connected with one wire to one of the power outputs on the uLight board, for example, <strong>OUT1</strong>. <strong>Separate</strong>  — if two different headlights are used for low and high beam, or when one headlight is used, which has two lamps inside and is connected with two wires to two power outputs on the Microlight board, for example, <strong>OUT1</strong>  and <strong>OUT2</strong>. <br/>
+<strong>Beam min brightness</strong>  — the brightness of the headlight when the power button is deactivated, for example for use as daytime running lights. Value from 0% to 100% in 5% increments. When using a headlamp with a converter, the minimum brightness must be set to either 0% or 100%, the headlamp will flicker at intermediate values. <br/>
+<strong>Low beam brightness</strong>  — select the brightness of the low beam, values ​​from 0% to 100% in 5% increments. <br/>
+<strong>High beam brightness</strong>  — select the brightness of the high beam, values ​​from 0% to 100% in 5% increments.
+</p>
+
+<p>
+<strong># Horn setup #</strong> <br/>
+A horn can be connected to the uLight board, if necessary. <br/>
+<strong>Horn switch</strong>  — the select setting for horn switch.
+</p>
+
+<p>
+<strong># Fan control #</strong> <br/>
+Fan control allows you to adjust the cooling of the motor or Controller or using other scenarios using temperature sensors. Two temperature sensors can be connected to the uLight board. The setup menus for all temperature sensors are the same. <br/>
+<strong>Motor T-sensor </strong>— motor temperature sensor. <br/>
+<strong>Controller T-sensor</strong>  — temperature sensor of the controller. <br/>
+<strong>Т1 Т-sensor</strong>  — external temperature sensor Т1. <br/>
+<strong>Т2 Т-sensor</strong>  — external temperature sensor Т2.
+</p>
+
+<p>
+The setup menus for all temperature sensors are the same. Below is a description of the menu using the example of a <strong>T1 T-sensor</strong>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:t-sensor.bmp" class="media" title="en:t-sensor.bmp"><img src="/docs/settings-pages/ulight/images/t-sensor.bmp" class="medialeft" alt="" /></a>
+</p>
+
+<p>
+<strong>Temperature min</strong>  — minimum temperature, values from -30 °C to 125 °C, in 5 °C increments. <br/>
+<strong>Temperature max</strong>  — maximum temperature, values from -30 °C to 125 °C, in 5 °C increments. <br/>
+<strong>Output min</strong>  — minimum output (PWM), values from 0% to 100%, in 5% increments. <br/>
+<strong>Output max</strong>  — maximum output (PWM), values from 0% to 100%, in 5% increments.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Function setup&quot;,&quot;hid&quot;:&quot;function_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;5042-11532&quot;} -->
+<h3 id="output_configuration">Output configuration</h3>
+<div class="level3">
+
+<p>
+In this section, you can configure which output each function belongs to. The uLight has six power outputs <strong>OUT1-OUT6</strong>  (see the diagram above). All outputs are PWM frequency adjustable. <br/>
+ <br/>
+<img src="/docs/settings-pages/ulight/images/outpur_config.png" class="medialeft" alt="" /><strong>PWM 1-2 freq</strong>  — a setting for advanced users. Selectable PWM frequency values ​​— <strong>100Hz</strong>, <strong>500Hz</strong>, <strong>1kHz</strong>, <strong>5kHz</strong>, <strong>10kHz</strong>, <strong>24kHz (FAN)</strong>. For the usual light bulb, large values ​​are not needed. Select a frequency of 100Hz, this will be enough not to see flicker. The high-frequency marked FAN is used to control the fans, this is their standard frequency.
+</p>
+
+<p>
+<strong>Output 1</strong>  — setting the function of output 1 (<strong>OUT1</strong>) of the uLight board. Selectable values ​​— <strong>OFF</strong>  (Disabled), <strong>ON</strong>  (Always on), <strong>Bttn</strong>  (Button, not yet implemented), <strong>TurnL</strong>  (Left turn signal), <strong>TurnR</strong>  (Right turn signal), <strong>Brk</strong>  (Brake), <strong>LBeam</strong>  (Low beam), <strong>HBeam</strong>  (High beam), <strong>Rev</strong>  (Reverse), <strong>Horn</strong>, <strong>TMot</strong>  (Motor temperature), <strong>TCont</strong>  (Controller temperature), <strong>T1</strong>  (External temperature sensor T1), <strong>T2</strong>  (External temperature sensor T2).
+</p>
+
+<p>
+<strong>Output 2</strong>  — the setting is similar to <strong>Output 1</strong>.
+</p>
+
+<p>
+The frequency of <strong>PWM 3-4</strong>  and <strong>PWM 5-6</strong>  and their outputs <strong>Output 3-6</strong>  are configured in the same way. <br/>
+ <br/>
+There is an <strong>IO1</strong>  port on the uLight, in which there are four low-power PWM outputs <strong>O1-O4</strong>. They can connect, for example, an optocoupler. In the menu, you can select the mode of operation of the PWM at the outputs, its frequency, and the value of the function for each output. Outputs <strong>O1</strong>  and <strong>O2</strong>, <strong>O3</strong>  and <strong>O4</strong>  can be connected in parallel to increase the total current.
+</p>
+
+<p>
+<strong>PWM IO mode </strong>— is a setting for advanced users. Selecting the PWM mode of the <strong>IO</strong>  outputs — <strong>OFF</strong>,<strong> Open-drain</strong>, <strong>Push-Pull</strong>.
+</p>
+
+<p>
+<strong>PWM IO freq</strong>  — is a setting for advanced users. Selecting the frequency values of the PWM <strong>IO</strong>  outputs — <strong>100Hz</strong>, <strong>500Hz</strong>, <strong>1kHz</strong>, <strong>5kHz</strong>, <strong>10kHz</strong>, <strong>24kHz (FAN)</strong>.
+</p>
+
+<p>
+<strong>Output P1</strong>  — setting the function of the PWM output of the low power <strong>IO1</strong>  of the uLight. Selectable values — <strong>OFF</strong>  (Disabled), <strong>ON</strong>  (Enabled), <strong>Bttn</strong>  (Button, not yet implemented), <strong>TurnL</strong>  (Left turn signal), <strong>TurnR</strong>  (Right turn signal), <strong>Brk</strong>  (Brake), <strong>LBeam</strong>  (Low beam), <strong>HBeam</strong>  (High beam), <strong>Rev</strong>  (Reverse), <strong>Horn</strong>, <strong>TMot</strong>  (Motor temperature), <strong>TCont</strong>  (Controller temperature), <strong>T1</strong>  (External temperature sensor T1), <strong>T2</strong>  (External temperature sensor T2).
+</p>
+
+<p>
+<strong>Outputs P3-P4</strong>  are configured in the same way as <strong>Output P1</strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Output configuration&quot;,&quot;hid&quot;:&quot;output_configuration&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;11533-14173&quot;} -->
+<h3 id="input_values">Input values</h3>
+<div class="level3">
+
+<p>
+In this section of the menu you can see the values of the indicators at each input of the uLight board. This menu is similar to the <strong>Debug information</strong>  item in the Controller menu. <br/>
+ <br/>
+<img src="/docs/settings-pages/ulight/images/inputs.png" class="medialeft" alt="" /><strong>Current</strong>  — current consumption of headlights, Amperes (<strong>A</strong>). <br/>
+<strong>Voltage</strong>  — supply voltage of the uLight board, Volts (<strong>V</strong>). <br/>
+<strong>Throttle</strong>  — voltage on the throttle levers connected to the Microlight board, Volts (<strong>V</strong>). <br/>
+<strong>Brake</strong>  — voltage on the throttle levers connected to the uLight board, Volts (<strong>V</strong>). <br/>
+<strong>T-sensor internal</strong>  — the temperature at the uLight board temperature sensor, degrees Celsius (<strong>°C</strong>). <br/>
+<strong>T-sensor T1</strong>  — temperature at the external temperature sensor T1 connected to the uLight board, degrees Celsius (<strong>°C</strong>). <br/>
+<strong>T-sensor T2</strong>  — temperature at the external temperature sensor T1 connected to the uLight board, degrees Celsius (<strong>°C</strong>). <br/>
+<strong>Input I1-Input I6</strong>  — values ​​of buttons or switches connected to the uLight board, <strong>Off</strong>  or <strong>On</strong>. When you turn on the button or switch connected to the uLight board, the values ​​will change from <strong>Off </strong>to <strong>On</strong>, this functionality allows you to check the operation of the buttons and to which board inputs they were connected.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Input values&quot;,&quot;hid&quot;:&quot;input_values&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;14174-15493&quot;} -->
+<h3 id="device_information">Device information</h3>
+<div class="level3">
+
+<p>
+Basic information about the uLight controller. In this menu, you can see what version of the firmware is loaded into your uLight controller. <br/>
+ <br/>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:device_info.bmp" class="media" title="en:device_info.bmp"><img src="/docs/settings-pages/ulight/images/device_info.bmp" class="medialeft" alt="" /></a><strong>Nucular uLight </strong>— is the name of the device. <br/>
+<strong>Firmware date</strong>  — date of compilation of the firmware. <br/>
+<strong>Firmware ver</strong>  — firmware version, you can check for updates in the <a href="/doku.php?id=en:firmware" class="wikilink1" title="en:firmware" data-wiki-id="en:firmware">Firmware</a> section. <br/>
+
+<strong>Loader date</strong>  — date of compilation of the loader. <br/>
+<strong>Loader version</strong>  — the version of the data loader. <br/>
+<strong>Power cycle</strong>  — the number of uLight board power-ups. <br/>
+<strong>Power-on time</strong>  — the operating time of your uLight, minutes, hours, days.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Device information&quot;,&quot;hid&quot;:&quot;device_information&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;15494-16192&quot;} -->
+<h2 id="settings_examples">Settings examples</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Settings examples&quot;,&quot;hid&quot;:&quot;settings_examples&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;16193-16223&quot;} -->
+<h3 id="connecting_and_set_up_the_headlight">Connecting and set up the headlight</h3>
+<div class="level3">
+
+<p>
+In this example, we will look at the connection and setup of the headlight. To control the headlamp, we will use a three-wire, three-position switch. Turn signals and brake light are set up in the same way. Depending on the way the headlight is controlled, you can choose several settings:
+</p>
+<ul>
+<li class="level1"><div class="li"> control from external buttons of the switch connected to the uLight board.</div>
+</li>
+<li class="level1"><div class="li"> control from external buttons of the switch connected to the On-board computer.</div>
+</li>
+<li class="level1"><div class="li"> control from the buttons on the On-board computer.</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="supply_connection">Supply connection</h4>
+<div class="level4">
+
+<p>
+Connect the headlamp according to the diagram (see above) to one of the <strong>OUT1-OUT6</strong>  power outputs on the uLight board. Maximum current per channel 3A, total no more than 10A, which are available only when using an external DC converter. To connect, use the supplied uLight power wires 22AWG 2×200 mm with connectors XH 2.54 2P. Solder them to the headlight wires, “+” and “-” respectively. If four wires are used to connect the headlight, then you can connect them to the power outputs of the uLight board in parallel vertically, <strong>OUT1-OUT2</strong>, <strong>OUT3-OUT4</strong>, <strong>OUT5-OUT6</strong>.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h4 id="control_from_external_buttons_of_the_switch_connected_to_the_ulight_board">Control from external buttons of the switch connected to the uLight board</h4>
+<div class="level4">
+
+<p>
+After connecting the headlight power supply, need to connect an external switch to the uLight board to control the headlight. For connection according to the diagram (see above) use inputs <strong>I3-I4</strong>  of port <strong>IO2</strong>  or <strong>I5-I6</strong>  of port <strong>IO3</strong>.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:input_value_switch.bmp" class="media" title="en:input_value_switch.bmp"><img src="/docs/settings-pages/ulight/images/input_value_switch.bmp" class="medialeft" alt="" /></a>You can check the operation of the connected switch in the <strong>Inputs values</strong>  ​​menu section, when you turn the switch buttons on and off, the value of one of the inputs <strong>I1-I6</strong>  to which you connected the switch will change from <strong>Off</strong>  to <strong>On</strong>. You can also use this menu to see what input number the connected switch has before the output configuration setup. In the example on the screenshot the left, we see that one of the switch buttons is connected to <strong>Input I5</strong>, the second button will change the value of <strong>Input I6</strong>. Next, you need to configure the outputs and their functions in the menu of the uLight board. The order of settings does not matter, the main thing is that the output corresponds to the function and vice versa.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="function_setup1">Function setup</h5>
+<div class="level5">
+
+<p>
+You need to go to the <strong>Function setup</strong>  menu and then, go to the <strong>Beam setup</strong>  section.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:functions_setup_exam.bmp" class="media" title="en:functions_setup_exam.bmp"><img src="/docs/settings-pages/ulight/images/functions_setup_exam.bmp" class="medialeft" alt="" /></a>Next, select which output the low beam switch is connected to, for example, you connected a switch button to <strong>Output I3</strong>. Next, select which output the high beam switch is connected to, for example, to <strong>Output I4</strong>. It is impossible to assign the inclusion of low and high beam to one button, only to a switch or to two separate buttons. For a description of the <strong>Single</strong>  and <strong>Separate</strong>  beam modes, see above in the <strong>Beam setup</strong>  menu section.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="output_setup">Output setup</h5>
+<div class="level5">
+
+<p>
+Go to the <strong>Outputs configuration</strong>  menu, select the numbers of the <strong>OUT1-OUT6</strong>  outputs to which the headlight is connected and assign them a function. For example, you connected a headlight with two pairs of wires to the <strong>OUT1</strong>  and <strong>OUT2</strong>  outputs.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:beam_exam.bmp" class="media" title="en:beam_exam.bmp"><img src="/docs/settings-pages/ulight/images/beam_exam.bmp" class="medialeft" alt="" /></a>Taking into account the previously made settings for the functions, go to <strong>Output 1</strong>  and select the value <strong>LBeam</strong>  (Low beam). Next, go to <strong>Output 2</strong>  and select the <strong>HBeam</strong>  (High beam) value. You can leave the PWM frequency for a regular bulb at <strong>100Hz</strong>.
+</p>
+
+<p>
+Then return to the main menu, go to the <strong>Save settings</strong>  item and select <strong>On</strong>  to save the settings. Done. Check the operation of the headlight in the low and high beam mode by turning on the switch buttons.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h4 id="control_from_external_buttons_of_the_switch_connected_to_the_on-board_computer">Control from external buttons of the switch connected to the On-board computer</h4>
+<div class="level4">
+
+<p>
+After connecting the power supply for the headlight power supply, need to connect an external headlight control switch to the On-board computer. For connection according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">diagram</a>, use the inputs <strong>IO1-IO3</strong>  of the <strong>I/O1</strong>  port or <strong>IO4-IO6</strong>  of the <strong>I/O2</strong>  port located on the rear side of the On-board computer.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:display_switch.bmp" class="media" title="en:display_switch.bmp"><img src="/docs/settings-pages/ulight/images/display_switch.bmp" class="medialeft" alt="" /></a>You can check the operation of the connected switch in the <strong>On-board computer</strong>  &gt; <strong>Information</strong>  menu section, when you turn on and off the switch buttons, the value of one of the inputs <strong>Input 1 func-Input 8 func</strong>  to which you connected the button will change from <strong>0</strong>  to <strong>1</strong>. You can also use this menu to see what input number the connected switch button has before the stage of setting the outputs. In the screenshot on the left, the switch is connected to the On-board computer to the <strong>I/O2</strong>  port and one of its buttons to the <strong>IO2</strong>  input. Next, you need to configure the inputs in the On-board computer and their functions in uLight. The order of settings does not matter, the main thing is that the output corresponds to the function and vice versa.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="setup_inputs_in_the_on-board_computer">Setup inputs in the On-board computer</h5>
+<div class="level5">
+
+<p>
+Need to go to the On-board computer menu and go to the <strong>Button setup</strong>  <a href="https://docs.nucular.tech/doku.php?id=en:display:start#display_buttons_setup" class="urlextern" title="https://docs.nucular.tech/doku.php?id=en:display:start#display_buttons_setup" rel="ugc nofollow">menu</a> section.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:button_setup_exam.bmp" class="media" title="en:button_setup_exam.bmp"><img src="/docs/settings-pages/ulight/images/button_setup_exam.bmp" class="medialeft" alt="" /></a>Next, need to select which input the <strong>Low beam button</strong>  is connected to, for example, you connected the button to the <strong>Input 2</strong>  input as in the example above. Go to the menu item <strong>Input 2 func</strong>  and configure the function of the button, <strong>CAN button 2</strong>. Next, select the type of switch <strong>Switch</strong>  in the menu item <strong>Input 2 type</strong>.
+</p>
+
+<p>
+Next, select which input the <strong>High beam button</strong>  on the switch is connected to, for example, to <strong>Input 3</strong>. Go to the <strong>Input 3 func</strong>  menu section. and configure the function of the <strong>CAN button 3</strong>. Next, select the type of button <strong>Switch</strong>  in the menu item <strong>Input 3 type</strong>.
+</p>
+
+<p>
+After all the settings, go to the <strong>Save settings</strong>  menu item and save the settings. This completes the setting of the switch connected to the On-board computer. Next, you need to configure the outputs and their functions in the menu of the uLight board. The order of settings does not matter, the main thing is that the output corresponds to the function and vice versa.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="setup_functions_in_the_ulight">Setup functions in the uLight</h5>
+<div class="level5">
+
+<p>
+You need to go to the <strong>Function setup</strong>  menu and go to the <strong>Beam setup</strong>  menu section.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:beam_setup_exam.bmp" class="media" title="en:beam_setup_exam.bmp"><img src="/docs/settings-pages/ulight/images/beam_setup_exam.bmp" class="medialeft" alt="" /></a>Next, we select which input the <strong>Low beam button</strong>  is connected to in the On-board computer, previously we connected the button to the <strong>Input2</strong>  input and assigned the <strong>CAN button2</strong>  function, which means we select the <strong>C2</strong>  value. Next, select which input the <strong>High beam button</strong>  is connected to, for example, to the <strong>Input3</strong>  input and you assigned the <strong>CAN button3</strong>  function, which means we select the <strong>C3</strong>  value. It is impossible to assign the inclusion of <strong>Low and high beam</strong>  to one button, only to a switch or to two separate buttons.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="output_setup1">Output setup</h5>
+<div class="level5">
+
+<p>
+Go to the <strong>Output configuration</strong>  menu, select the numbers of the <strong>OUT1-OUT6</strong>  outputs to which the headlight is connected and assign them a function.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:output_beam.bmp" class="media" title="en:output_beam.bmp"><img src="/docs/settings-pages/ulight/images/output_beam.bmp" class="medialeft" alt="" /></a>For example, you connected a headlight with two pairs of wires to the <strong>OUT1</strong>  and <strong>OUT2</strong>  outputs. Taking into account the previously made settings for the functions, go to the <strong>Output 1</strong>  section and select the <strong>LBeam</strong>  (Low beam) value. Next, go to the <strong>Output 2</strong>  section and select the <strong>HBeam</strong>  (High beam) value. You can setup the PWM frequency for a regular bulb at <strong>100Hz</strong>.
+</p>
+
+<p>
+Then return to the main menu, go to the <strong>Save settings</strong>  section and select <strong>On</strong>  to save the settings. Done. We check the operation of the low and high beam headlights by turning on the switch buttons.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h4 id="control_from_the_buttons_on_the_on-board_computer">Control from the buttons on the On-board computer</h4>
+<div class="level4">
+
+<p>
+After connecting the headlight power supply, it is necessary to configure the On-board computer buttons. Go to the menu <strong>On-board computer</strong>  &gt; <strong>Buttons setup</strong>. All four front buttons of the On-board computer can be configured in the <strong>Hot key1-Hot key4</strong>  menu sections. Buttons activate functions when pressed and held while the Main screen is displayed.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:button_setup_hotkey.bmp" class="media" title="en:button_setup_hotkey.bmp"><img src="/docs/settings-pages/ulight/images/button_setup_hotkey.bmp" class="medialeft" alt="" /></a>For example, you want to control the inclusion of the low beam with the first button on the screen. Go to the <strong>Hot key 1 type</strong>  section, select the <strong>Button</strong>. Next, assign a function to the button in the <strong>Hot key 1 func</strong>, for example, <strong>CAN Button1</strong>. Similarly, we set up the second screen button to turn on the high beam on <strong>CAN Button2</strong>. After all the settings, go to the <strong>Save</strong>  section menu and save the settings. This completes the configuration of the On-board computer buttons. Next, you need to configure the outputs and their functions in the menu of the uLight board. The order of settings does not matter, the main thing is that the output corresponds to the function and vice versa.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="setup_functions_in_the_ulight1">Setup functions in the uLight</h5>
+<div class="level5">
+
+<p>
+You need to go to the <strong>Functions setup</strong>  menu section and go to the <strong>Beam setup</strong>  section.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:beam_setup_exam_hotkey.bmp" class="media" title="en:beam_setup_exam_hotkey.bmp"><img src="/docs/settings-pages/ulight/images/beam_setup_exam_hotkey.bmp" class="medialeft" alt="" /></a>Next, select which button of the On-board computer the Low beam switch is connected to, we assigned the function <strong>CAN Button1</strong>  to the first button, need to select the value <strong>C1</strong>. Next, we select which button of the On-board computer the High beam switch is connected to, we assigned the function <strong>CAN Button2</strong>  to the second button, need to select the value <strong>C2</strong>. It is impossible to assign the inclusion of low and high beam to one button, only to two separate buttons.
+</p>
+<div class="clearer"></div>
+
+</div>
+
+<h5 id="output_setup2">Output setup</h5>
+<div class="level5">
+
+<p>
+Go to the <strong>Outputs configuration</strong>  menu section, select the numbers of the <strong>OUT1-OUT6</strong>  outputs to which the headlight is connected and assign them a function.
+</p>
+
+<p>
+<a href="/lib/exe/detail.php?id=en%3Aulight&amp;media=en:output_beam.bmp" class="media" title="en:output_beam.bmp"><img src="/docs/settings-pages/ulight/images/output_beam.bmp" class="medialeft" alt="" /></a>For example, you connected a headlight with two pairs of wires to the <strong>OUT1</strong>  and <strong>OUT2</strong>  outputs. Taking into account the previously made settings for the functions, go to the <strong>Output 1</strong>  section and select the <strong>LBeam</strong>  (Low beam) value. Next, go to the <strong>Output 2</strong>  section and select the <strong>HBeam</strong>  (High beam) value. You can set up the PWM frequency for a regular bulb at <strong>100Hz</strong>.
+</p>
+
+<p>
+Then return to the main menu, go to the <strong>Save settings</strong>  section and select <strong>On</strong>  to save the settings. Done. We check the operation of the low and high beam headlights by turning on the switch buttons.
+</p>
+<div class="clearer"></div>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Connecting and set up the headlight&quot;,&quot;hid&quot;:&quot;connecting_and_set_up_the_headlight&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:13,&quot;range&quot;:&quot;16224-26669&quot;} -->
+<h3 id="brake_light_setup">Brake light setup</h3>
+<div class="level3">
+
+<p>
+The setting is carried out in the same way as for connecting and setting up the headlight, except for the section <strong>Control from external buttons of the switch connected to the uLight board</strong>. Also read the description of the <strong>Brake signal setup</strong>  menu section.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Brake light setup&quot;,&quot;hid&quot;:&quot;brake_light_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;26670-26963&quot;} -->
+<h3 id="reverse_signal_setup">Reverse signal setup</h3>
+<div class="level3">
+
+<p>
+Similar to connecting and setup the headlight. Also, read the description of the <strong>Reverse signal setup</strong>  menu section.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Reverse signal setup&quot;,&quot;hid&quot;:&quot;reverse_signal_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:15,&quot;range&quot;:&quot;26964-27117&quot;} -->
+<h3 id="turn_signal_setup">Turn signal setup</h3>
+<div class="level3">
+
+<p>
+Similar to connecting and setup the headlight. Also, read the description of the <strong>Turn signal setup</strong>  menu section.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Turn signal setup&quot;,&quot;hid&quot;:&quot;turn_signal_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:16,&quot;range&quot;:&quot;27118-27265&quot;} -->
+<h3 id="horn_setup">Horn setup</h3>
+<div class="level3">
+
+<p>
+Similar to connecting and setup the headlight. Also, read the description of the <strong>Horn setup</strong>  menu section.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Horn setup&quot;,&quot;hid&quot;:&quot;horn_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;27266-27399&quot;} -->
+<h3 id="fan_setup">Fan setup</h3>
+<div class="level3">
+
+<p>
+Similar to connecting and setup the headlight. Also, read the description of the <strong>Fan control</strong>  menu section. You can connect the fans directly to the controller through the <strong>P1/P2</strong>  inputs of the <strong>PWM</strong>  port (optional, need to order PWM wire). Detailed description in the section <strong><a href="https://docs.nucular.tech/doku.php?id=en:controller:light-fan-pwm" class="urlextern" title="https://docs.nucular.tech/doku.php?id=en:controller:light-fan-pwm" rel="ugc nofollow">Fan and Light Control</a></strong>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Fan setup&quot;,&quot;hid&quot;:&quot;fan_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:18,&quot;range&quot;:&quot;27400-27805&quot;} -->
+<h3 id="temperature_sensors_setup">Temperature sensors setup</h3>
+<div class="level3">
+
+<p>
+Read the description of the <strong>Inputs configuration</strong>  menu section. When the temperature sensors are connected to the uLight board, their temperature will not be displayed on the Main screen of the On-board computer, this functionality has not yet been released.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Temperature sensors setup&quot;,&quot;hid&quot;:&quot;temperature_sensors_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:19,&quot;range&quot;:&quot;27806-28106&quot;} -->
+<h3 id="throttle_setup">Throttle setup</h3>
+<div class="level3">
+
+<p>
+Connect the throttle levers according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">diagram</a> to the <strong>THR</strong>  input on the uLight board. Next, go to the <strong>Input values</strong>  menu section and check the operation of the throttle levers by switching it, the voltage value in the <strong>Throttle</strong>  item should change. Next, go to the <strong>Input configuration</strong>  menu section, then the <strong>CAN control</strong>  section and select <strong>On</strong>. Next, you need to <a href="https://docs.nucular.tech/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="urlextern" title="https://docs.nucular.tech/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" rel="ugc nofollow">set up</a> the voltage range of the throttle in the Controller.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Throttle setup&quot;,&quot;hid&quot;:&quot;throttle_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:20,&quot;range&quot;:&quot;28107-28761&quot;} -->
+<h3 id="brake_setup">Brake setup</h3>
+<div class="level3">
+
+<p>
+Connect the brake levers according to the <a href="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" class="urlextern" title="https://drive.google.com/file/d/1KkEgWcJ5U-AEkk6GrXhDNlYXFCcsjpUQ/view" rel="ugc nofollow">diagram</a> to the <strong>BRK</strong>  input on the uLight board. Next, go to the <strong>Input values</strong>  menu section and check the operation of the brake levers by switching it, the voltage value in the <strong>Throttle</strong>  item should change. Next, go to the <strong>Input configuration</strong>  menu section, then the <strong>CAN control</strong>  section and select <strong>On</strong>. Next, you need to <a href="https://docs.nucular.tech/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" class="urlextern" title="https://docs.nucular.tech/doku.php?id=en:controller:setup#throttle_and_brake_voltage_range_setup" rel="ugc nofollow">set up</a> the voltage range of the brake in the Controller.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Brake setup&quot;,&quot;hid&quot;:&quot;brake_setup&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:21,&quot;range&quot;:&quot;28762-&quot;} -->

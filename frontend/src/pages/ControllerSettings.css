@@ -698,6 +698,14 @@
   margin-bottom: 16px;
 }
 
+.controller-section-subtitle {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 20px;
+  color: #222;
+  margin: 24px 0 16px;
+}
+
 .controller-content-text {
   font-family: var(--font-family);
   font-size: 16px;

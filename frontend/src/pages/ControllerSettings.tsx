@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import "./ControllerSettings.css";
@@ -16,10 +16,20 @@ export default function ControllerSettings() {
   const [activeSection, setActiveSection] = useState<ControllerSection | null>(
     initialIsMobile ? null : "setup"
   );
+  const [query, setQuery] = useState("");
+  const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const navigate = useNavigate();
   const location = useLocation();
   const setupImageRef = useRef<HTMLImageElement | null>(null);
   const diagnosticsTitleRef = useRef<HTMLDivElement | null>(null);
+  const setupTitleRef = useRef<HTMLDivElement | null>(null);
+  const fanTitleRef = useRef<HTMLDivElement | null>(null);
+  const examplesTitleRef = useRef<HTMLDivElement | null>(null);
+  const configsTitleRef = useRef<HTMLDivElement | null>(null);
+  const fanIntroRef = useRef<HTMLDivElement | null>(null);
+  const fanSmallLoadRef = useRef<HTMLDivElement | null>(null);
+  const fanIsolatedRef = useRef<HTMLDivElement | null>(null);
+  const fanFanRef = useRef<HTMLDivElement | null>(null);
 
   const handleGoToSetupImage = () => {
     setActiveSection("setup");
@@ -32,15 +42,83 @@ export default function ControllerSettings() {
 
   useEffect(() => {
     const hash = location.hash;
-    if (hash === "#problems_and_diagnostics" || hash === "#diagnostics") {
-      setActiveSection("diagnostics");
+    const go = (section: ControllerSection, ref?: React.RefObject<HTMLElement | null>) => {
+      setActiveSection(section);
       setTimeout(() => {
-        if (diagnosticsTitleRef.current) {
-          diagnosticsTitleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        (ref?.current ?? document.body).scrollIntoView({ behavior: "smooth", block: "start" });
       }, 0);
-    }
+    };
+
+    if (hash === "#problems_and_diagnostics" || hash === "#diagnostics") return go("diagnostics", diagnosticsTitleRef);
+    if (hash === "#fan") return go("fan", fanTitleRef);
+    if (hash === "#examples") return go("examples", examplesTitleRef);
+    if (hash === "#configs") return go("configs", configsTitleRef);
+    if (hash === "#setup") return go("setup", setupTitleRef);
   }, [location.hash]);
+
+  const fanDocItems = useMemo(
+    () => [
+      {
+        id: "fan_intro",
+        label: "Fan and light connection",
+        section: "fan" as const,
+        ref: fanIntroRef,
+        text:
+          "It is possible to connect stoplight or fan to controller port P1/P2. Please note that controller outputs are open-drain 5V max, 220R resistor on the line. Don't use controller logic ground for loads more than 0.5A, use power ground instead. System (CAN) cable uses power ground.",
+      },
+      {
+        id: "fan_small_load",
+        label: "Small load (simplified scheme)",
+        section: "fan" as const,
+        ref: fanSmallLoadRef,
+        text:
+          "You can connect small power light directly to controller with this scheme, 1kHz operation is enough.",
+      },
+      {
+        id: "fan_isolated",
+        label: "Power load (isolated scheme)",
+        section: "fan" as const,
+        ref: fanIsolatedRef,
+        text:
+          "If you are using something more powerful, isolated scheme recommended, you can also buy this kind of boards on aliexpress (Mosfet Optocoupler Isolation Driver). In some cases for isolated driver you need to invert min and max.",
+      },
+      {
+        id: "fan_fan",
+        label: "4-wire fan scheme",
+        section: "fan" as const,
+        ref: fanFanRef,
+        text:
+          "Fan control requires 4-wire fan. 20kHz is default, but you can try any lower.",
+      },
+    ],
+    []
+  );
+
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return fanDocItems
+      .filter((item) => (item.label + " " + item.text).toLowerCase().includes(q))
+      .slice(0, 5);
+  }, [fanDocItems, query]);
+
+  const scrollTo = (target: React.RefObject<HTMLElement | null>, section: ControllerSection) => {
+    setActiveSection(section);
+    setTimeout(() => {
+      const el = target.current;
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    setSearchPhase("loading");
+    window.setTimeout(() => {
+      setSearchPhase("done");
+    }, 250);
+  };
 
   return (
     <>
@@ -66,6 +144,78 @@ export default function ControllerSettings() {
             <span className="support-breadcrumb-separator">/</span>
             <span className="support-breadcrumb-current">Controller</span>
           </div>
+
+          <form className="support-search-row" onSubmit={handleSubmit}>
+            <div className="support-search-stack">
+              <div className={`support-search-input ${query.trim() ? "support-search-input--filled" : ""}`}>
+                <svg className="support-search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9.16667 3.33333C5.94501 3.33333 3.33333 5.94501 3.33333 9.16667C3.33333 12.3883 5.94501 15 9.16667 15C12.3883 15 15 12.3883 15 9.16667C15 5.94501 12.3883 3.33333 9.16667 3.33333ZM1.66667 9.16667C1.66667 5.02454 5.02454 1.66667 9.16667 1.66667C13.3088 1.66667 16.6667 5.02454 16.6667 9.16667C16.6667 10.9569 16.0403 12.6018 14.992 13.89L18.0892 16.9872C18.4146 17.3126 18.4146 17.8403 18.0892 18.1657C17.7638 18.4911 17.2362 18.4911 16.9108 18.1657L13.8136 15.0685C12.5253 16.1168 10.8804 16.7432 9.09012 16.7432C4.94799 16.7432 1.59012 13.3853 1.59012 9.2432L1.66667 9.16667Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <input
+                  className="support-search-field"
+                  type="text"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    if (searchPhase !== "idle") setSearchPhase("idle");
+                  }}
+                  placeholder="What are you looking for?"
+                />
+                {query.trim() ? (
+                  <button
+                    type="button"
+                    className="support-search-clear"
+                    aria-label="Clear search"
+                    onClick={() => {
+                      setQuery("");
+                      setSearchPhase("idle");
+                    }}
+                  >
+                    ×
+                  </button>
+                ) : null}
+              </div>
+              {query.trim() ? (
+                <div className="support-search-results">
+                  {searchResults.length > 0 ? (
+                    <>
+                      {searchResults.map((item) => (
+                        <button
+                          key={item.id}
+                          className="support-search-result-item"
+                          type="button"
+                          onClick={() => {
+                            setQuery("");
+                            setSearchPhase("idle");
+                            scrollTo(item.ref as any, item.section);
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </>
+                  ) : (
+                    <div className="support-search-not-found">Not found</div>
+                  )}
+                </div>
+              ) : null}
+            </div>
+            <button
+              className={`support-search-button ${searchPhase === "loading" ? "is-loading" : ""} ${
+                searchPhase === "done" ? "is-done" : ""
+              }`}
+              type="submit"
+              disabled={searchPhase !== "idle"}
+            >
+              Search
+            </button>
+          </form>
+
           <div className="controller-layout">
             <div className="controller-list">
                 <button
@@ -131,7 +281,9 @@ export default function ControllerSettings() {
                     <div className="controller-content">
                       {activeSection === "setup" && (
                         <>
-                          <div className="controller-content-title">Controller setup</div>
+                          <div ref={setupTitleRef} className="controller-content-title">
+                            Controller setup
+                          </div>
                           <div className="controller-content-subtitle">Controller (v.0.8.13)</div>
                           <div className="controller-content-text">
                             The controller allows you to control BLDC (Brushless Direct Current Motor) and PMSM
@@ -219,27 +371,71 @@ export default function ControllerSettings() {
                       )}
                       {activeSection === "fan" && (
                         <>
-                          <div className="controller-content-title">Fan and Light Control</div>
-                          <div className="controller-content-text">
+                          <div ref={fanTitleRef} className="controller-content-title">
+                            Fan and Light Control
+                          </div>
+                          <div ref={fanIntroRef} id="fan_intro" className="controller-content-text">
                             It is possible to connect stoplight or fan to controller port P1/P2. Configuration
                             described in{" "}
                             <span className="controller-content-link" onClick={handleGoToSetupImage}>
                               Controller setup
                             </span>
-                            . Please note that controller outputs are open-drain 5V max, 220R resistor on the line.
+                            .
+                          </div>
+                          <div className="controller-content-text">
+                            Please note that controller outputs are open-drain 5V max, 220R resistor on the line.
                             Don&apos;t use controller logic ground for loads more than 0.5A, use power ground
                             instead. System (CAN) cable uses power ground.
                           </div>
-                          <div className="controller-content-text" style={{ marginTop: 24 }}>
-                            You can connect small power light directly to controller with this scheme, 1khz
+
+                          <div ref={fanSmallLoadRef} id="fan_small_load" className="controller-section-subtitle">
+                            Small load (simplified scheme)
+                          </div>
+                          <div className="controller-content-text">
+                            You can connect small power light directly to controller with this scheme, 1kHz
                             operation is enough:
                           </div>
-                          <img src="/photo2.png" alt="" className="controller-photo" />
+                          <img
+                            src="/docs/controller/light-fan-pwm/mosfet-lamp.png"
+                            alt="Small load wiring scheme"
+                            className="controller-photo"
+                          />
+
+                          <div ref={fanIsolatedRef} id="fan_isolated" className="controller-section-subtitle">
+                            Power load (isolated scheme)
+                          </div>
+                          <div className="controller-content-text">
+                            If you are using something more powerful, isolated scheme recommended, you can also
+                            buy this kind of boards on aliexpress (Mosfet Optocoupler Isolation Driver):
+                          </div>
+                          <img
+                            src="/docs/controller/light-fan-pwm/opto-mosfet.png"
+                            alt="Isolated wiring scheme"
+                            className="controller-photo"
+                          />
+                          <div className="controller-content-text">
+                            In some cases for isolated driver you need to invert min and max.
+                          </div>
+
+                          <div ref={fanFanRef} id="fan_fan" className="controller-section-subtitle">
+                            Fan control (4-wire fan)
+                          </div>
+                          <div className="controller-content-text">
+                            Fan control requires 4-wire fan. 20kHz is default, but you can try any lower. 4-wire
+                            fan scheme:
+                          </div>
+                          <img
+                            src="/docs/controller/light-fan-pwm/fan.png"
+                            alt="Fan wiring scheme"
+                            className="controller-photo"
+                          />
                         </>
                       )}
                       {activeSection === "examples" && (
                         <>
-                          <div className="controller-content-title">Examples of settings</div>
+                          <div ref={examplesTitleRef} className="controller-content-title">
+                            Examples of settings
+                          </div>
                         </>
                       )}
                       {activeSection === "diagnostics" && (
@@ -255,7 +451,9 @@ export default function ControllerSettings() {
                       )}
                       {activeSection === "configs" && (
                         <>
-                          <div className="controller-content-title">Configuration files</div>
+                          <div ref={configsTitleRef} className="controller-content-title">
+                            Configuration files
+                          </div>
                         </>
                       )}
                     </div>
@@ -265,6 +463,23 @@ export default function ControllerSettings() {
                       <div className="controller-page-toc-title">On this page</div>
                       <div className="controller-page-toc-item">Controller (v.0.8.13)</div>
                       <div className="controller-page-toc-item">Connecting multiple controllers</div>
+                    </div>
+                  )}
+                  {activeSection === "fan" && (
+                    <div className="controller-page-toc">
+                      <div className="controller-page-toc-title">On this page</div>
+                      <div className="controller-page-toc-item" onClick={() => scrollTo(fanIntroRef as any, "fan")}>
+                        Fan and light connection
+                      </div>
+                      <div className="controller-page-toc-item" onClick={() => scrollTo(fanSmallLoadRef as any, "fan")}>
+                        Small load
+                      </div>
+                      <div className="controller-page-toc-item" onClick={() => scrollTo(fanIsolatedRef as any, "fan")}>
+                        Power load
+                      </div>
+                      <div className="controller-page-toc-item" onClick={() => scrollTo(fanFanRef as any, "fan")}>
+                        Fan
+                      </div>
                     </div>
                   )}
                 </>

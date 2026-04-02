@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import Support from './pages/Support';
 import Settings from './pages/Settings';
 import ControllerSettings from './pages/ControllerSettings';
+import SettingsDocPage from './pages/SettingsDocPage';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Reviews from './pages/Reviews';
@@ -143,6 +144,7 @@ export default function App() {
             <Route path="/support" element={<Support />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/settings/controller" element={<ControllerSettings />} />
+            <Route path="/settings/:slug" element={<SettingsDocPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/login" element={<Login />} />

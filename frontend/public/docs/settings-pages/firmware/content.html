@@ -1,0 +1,1313 @@
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:1,&quot;range&quot;:&quot;0-&quot;} --><div class="wrap_important plugin_wrap" style="width: 60%;">
+<p>
+<br/>
+
+<strong>Do not downgrade firmware that was installed by the manufacturer! You may get a brick</strong> 
+</p>
+</div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+Each device has its own firmware and is updated separately from different menus. It does not matter in what order you update the firmware of the devices. If you have older firmware, you can install the latest firmware at once, without having to install the firmware one by one.
+</p>
+
+<p>
+If you already have firmware version <strong>v0.75B</strong> and higher installed in the On-board computer, then the order in which devices are updated does not matter, since in firmware <strong>v0.75B</strong> the ability to force the update of the controller and other devices connected to the CAN bus through the menu of the On-board computer was added. You can read more about <strong>Forced update of devices</strong> in this <a href="/doku.php?id=en:display:start#firmware_update" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">section</a>.
+</p>
+
+<p>
+If your On-board computer has firmware <strong>v0.60B</strong> or lower and Controller <strong>v.7.18</strong> and lower, first, need to update all devices but display. Because menu protocol is new and old devices will not be visible in the menu. After the update is finished hold the left button few seconds to exit the updated device menu. If the button does not work you may need to reset the power supply or replug CAN cable in the On-board computer. After everything is updated — update the On-board computer. Make a controller reset (load defaults) after the update. We recommend running motor detects again on controllers. Detection of throttle/brake connected to display should be done in the On-board computer menu.
+</p>
+
+<p>
+Copy files to the root directory of the microSD card with FAT32 filesystem (how to format microSD to FAT32 on Windows and Mac you can read <a href="https://www.lifewire.com/format-sd-card-to-fat32-6666166" class="urlextern" title="https://www.lifewire.com/format-sd-card-to-fat32-6666166" rel="ugc nofollow">here</a>), insert into On-board computer (contacts on top) and run the update process.<br/>
+
+</p>
+
+<p>
+Instruction of update of firmware:<br/>
+
+1. <a href="/doku.php?id=en:display:start#firmware_update" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Description</a> of the On-Board Computer update menu.<br/>
+
+2. <a href="/doku.php?id=en:controller:setup#firmware_update" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Description</a> of the Controller update menu.<br/>
+
+3. <a href="/doku.php?id=en:ulight#firmware_updates" class="wikilink1" title="en:ulight" data-wiki-id="en:ulight">Description</a> of the uLight update menu.
+</p>
+
+<p>
+To check the current firmware version, go to the <strong>Device Information</strong> menu, each device has a separate menu.<br/>
+
+1. <a href="/doku.php?id=en:display:start#device_information" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">Information</a> about the firmware version of the On-Board Computer.<br/>
+
+2. <a href="/doku.php?id=en:controller:setup#device_information" class="wikilink1" title="en:controller:setup" data-wiki-id="en:controller:setup">Information</a> about the firmware version of the Controller.<br/>
+
+3. <a href="/doku.php?id=en:ulight#device_information" class="wikilink1" title="en:ulight" data-wiki-id="en:ulight">Information</a> about the firmware version of the uLight.
+</p>
+
+<p>
+The list of actual firmware to be downloaded:<br/>
+
+</p>
+
+<h2 id="april_2024">8 April 2024</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.8</strong> <a href="https://drive.google.com/file/d/1jCYlLt1iZDSI1UAnWz7-A2rj4AgU_0-h/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1jCYlLt1iZDSI1UAnWz7-A2rj4AgU_0-h/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Unzip before update!<br/>
+
+Added brake &#039;Brk&#039; to button inputs for functions.<br/>
+
+Removed reverse when CAN buttons active.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 April 2024&quot;,&quot;hid&quot;:&quot;april_2024&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2616-2909&quot;} -->
+<h2 id="feb_2024">2 Feb 2024</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.6</strong> <a href="https://drive.google.com/file/d/1UuvFxdCsQaef-B8nJTGs6R1u6aOT_ZpW/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1UuvFxdCsQaef-B8nJTGs6R1u6aOT_ZpW/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+LEVCAN updated.<br/>
+
+Added to functions 4 configurable signals with button input.<br/>
+
+Added configurable logic: AND, NOT, OR, XOR, as another button type.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;2 Feb 2024&quot;,&quot;hid&quot;:&quot;feb_2024&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2910-3234&quot;} -->
+<h2 id="dec_2023">22 Dec 2023</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.5</strong> <a href="https://drive.google.com/file/d/1PTKczUdl8sG7CAF8gYwZN_qpFoxGPooY/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1PTKczUdl8sG7CAF8gYwZN_qpFoxGPooY/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Small update:<br/>
+
+Added brake button selection for only light indication without actual braking.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;22 Dec 2023&quot;,&quot;hid&quot;:&quot;dec_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3235-3506&quot;} -->
+<h2 id="september_2023">30 September 2023</h2>
+<div class="level2">
+
+<p>
+Recommended to update display first! Export configurations before update and import after to save your settings.
+</p>
+
+<p>
+<strong>Controller v0.8.13</strong> <a href="https://drive.google.com/file/d/13-ASUymV1ibcfdqHU3tDsIVBs2fyGhqX/view?usp=sharing" class="media" title="https://drive.google.com/file/d/13-ASUymV1ibcfdqHU3tDsIVBs2fyGhqX/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:7,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Added reset handlers<br/>
+
+Added quick battery voltage setup<br/>
+
+Fixed dc-dc mode for P24F<br/>
+
+Added LR detect indication<br/>
+
+Throttle/brake error replaced with &#039;not connected&#039;<br/>
+
+Added temperature sensor detect logic when sensor disabled<br/>
+
+Added access level selection<br/>
+
+Added boost mode duration<br/>
+
+Fixed active braking stutter<br/>
+
+Adjusted square control duty cycle<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:8,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+</p>
+
+<p>
+<strong>Display v0.82B</strong> <a href="https://drive.google.com/file/d/1gXyGXUsIkZL6e9F7os2gl7ZMKsPlCJWi/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1gXyGXUsIkZL6e9F7os2gl7ZMKsPlCJWi/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:9,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Added access level menu support<br/>
+
+Fixed some freezes<br/>
+
+Fixed displayed mode with multiple motors<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:10,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;30 September 2023&quot;,&quot;hid&quot;:&quot;september_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3507-4527&quot;} -->
+<h2 id="july_2023">21 July 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.12</strong> <a href="https://drive.google.com/file/d/1U9SJjcYBt30ljX7s3964X8MJ8dTuhn5V/view?usp=drive_link" class="media" title="https://drive.google.com/file/d/1U9SJjcYBt30ljX7s3964X8MJ8dTuhn5V/view?usp=drive_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:12,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Added MPPT solar logic<br/>
+
+Added throttle lock when brake pressed<br/>
+
+Fixed FOC &#039;square&#039; noise<br/>
+
+The added neutral mode by timer<br/>
+
+The button now turns off without the need to release it<br/>
+
+Active braking fix when not enabled (stutter fix too?)<br/>
+
+Added motor gear ratio<br/>
+
+Speed kp changed the default to 0.1<br/>
+
+Added separate throttle mode power+torque<br/>
+
+Fixed storage erase when both banks are full<br/>
+
+Increased ampere offset at startup for plate<br/>
+
+Added power indication in the Converter menu<br/>
+
+Small parameter text fixes<br/>
+
+Added continuous logging mode<br/>
+
+Temperature calculation moved to a separate file<br/>
+
+Current calibration now only saved when the test finished<br/>
+
+Added error when current calibration out of range<br/>
+
+Battery min charge current can be set to 0 now<br/>
+
+Added NTC10k3500<br/>
+
+Added file flush when log rate slow<br/>
+
+Added ADC sample timetable<br/>
+
+Logger settings offset calculated automatically<br/>
+
+FOC ADC current sample for P24F changed from ADC3 to ADC1+2<br/>
+
+Remove low speed for changing HZ mode<br/>
+
+Added cruise-ready flag<br/>
+
+Added throttle lock when brake pressed<br/>
+
+Added low ripple PWM mode (for FOC)<br/>
+
+DMA removed, because of triple buffering (noise fix)<br/>
+
+Added throttle-locked flag<br/>
+
+SVM sector selection moved to a separate function<br/>
+
+Added lock flags index by function name<br/>
+
+Increased default throttle response<br/>
+
+Advanced modes now have default throttle = torque<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:13,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;21 July 2023&quot;,&quot;hid&quot;:&quot;july_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;4528-6140&quot;} -->
+<h2 id="july_20231">1 July 2023</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.4</strong> <a href="https://drive.google.com/file/d/1dg9E3XgZGXgRIvXZxEi_dLgEqXYJwoki/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1dg9E3XgZGXgRIvXZxEi_dLgEqXYJwoki/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:15,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Added export/import<br/>
+
+Added kty84 tsensor<br/>
+
+Added hazard switch logic, works when everything is off<br/>
+
+Added brake strobe effect<br/>
+
+Added data that can be requested over LEVCAN<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:16,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;1 July 2023&quot;,&quot;hid&quot;:&quot;july_20231&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:14,&quot;range&quot;:&quot;6141-6547&quot;} -->
+<h2 id="may_2023">7 May 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.11</strong> <a href="https://drive.google.com/file/d/1F4npstGr8xUNLhIMTHmfKwvUwPzQjh13/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1F4npstGr8xUNLhIMTHmfKwvUwPzQjh13/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:18,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ v0.8.10:<br/>
+
+Added Adaptive throttle mode (by default with 6%)<br/>
+
+Added Power throttle mode<br/>
+
+Added PAS scaling with buttons<br/>
+
+Added Torque sensor minimal pressure for insta-start<br/>
+
+Forwarded hall error to display flag<br/>
+
+Changed hall error detection logic<br/>
+
+DC-DC now shows current on each phase<br/>
+
+Added TF21904M potential driver fix<br/>
+
+PhaseResponse added phase selection<br/>
+
+Updated flag names for sensor errors<br/>
+
+Added phase currents and voltages for LR detect<br/>
+
+Added PAS voltage filter<br/>
+
+Added PAS voltage selection (throttle or vpas)<br/>
+
+Added new inputs (I1-I13)<br/>
+
+Inputs renamed<br/>
+
+Added checks to HWPort HAL<br/>
+
+Added t-sensor resistance compensation<br/>
+
+Added DAC current protection temperature correction, needs optimization<br/>
+
+Added 5V for FW<br/>
+
+VBUS calculation moved to RAM<br/>
+
+Added FreeRTOS-gcc workaround<br/>
+
+R detection now uses 50% pwm as offset<br/>
+
+New timer sync method for upcounter mode (R detect)<br/>
+
+Motor LR auto detect enabled<br/>
+
+Added AN brake input &#039;switch&#039; detect by dV<br/>
+
+Added MTPA enable detect when inductance is 30% bigger<br/>
+
+Added hall input filter<br/>
+
+Added hall step forward filter with min step time<br/>
+
+Added fallthrough directives<br/>
+
+Added parameters size check as warning<br/>
+
+Fixed inputs array position<br/>
+
+Motor LR moved to the last detection position<br/>
+
+Added local port input filter<br/>
+
+Added Enable Throttle function (opposite to Disable Throttle)<br/>
+
+Added Hall sensor minimal step time<br/>
+
+Added wait code for R detect<br/>
+
+Fixed voltage error on R detect<br/>
+
+Fixed negative flux linkage<br/>
+
+Disabled MTPA, FW, and other options for hall calibration<br/>
+
+Added Adaptive throttle to adv. modes<br/>
+
+Control structure optimized<br/>
+
+FOC FW improved, should not stuck<br/>
+
+Vq limit removed, now it is by default<br/>
+
+Added (by default) MTPA mode by real Q current<br/>
+
+Small FOC optimizations<br/>
+
+Added TIM1 as a variable to linker script<br/>
+
+Hall code moved to upcounter while FOC in down-counter (buzz fix #1)<br/>
+
+DMA is now in circular mode, it needs less code with same effect.<br/>
+
+Added noise suppression in vq vd to decrease sector change (buzz fix #2)<br/>
+
+Storage updated, improved reliability, and now with version system<br/>
+
+Fixed invisible fault flag in logger<br/>
+
+Updated logger defaults<br/>
+
+v0.8.11:<br/>
+
+Small optimizations<br/>
+
+Logger FOC parameters replaced to filtered values in fast mode<br/>
+
+Data Storage unit-test updated<br/>
+
+Fixed a few bugs in Data Storage<br/>
+
+LEVCAN updated with recent bugfixes<br/>
+
+Added additional tests for Data Storage<br/>
+
+Startup junk removed<br/>
+
+Logger fixed hang-on display disconnect<br/>
+
+Logger cache moved to SRAM2<br/>
+
+FOC pids rolled back to v0.8.9<br/>
+
+Speed max increased to 200%<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:19,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+<strong>Display v0.80B</strong> <a href="https://drive.google.com/file/d/1Qx8F2xWjExG4ivIftwxbXBRI-vnmy3ez/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1Qx8F2xWjExG4ivIftwxbXBRI-vnmy3ez/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:20,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Changed voltage drop saving<br/>
+
+Fixes in LEVCAN<br/>
+
+Fixes in flash saving<br/>
+
+Fixed RPM in info lines<br/>
+
+v0.80B: Data Storage updated with latest fixes 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:21,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;7 May 2023&quot;,&quot;hid&quot;:&quot;may_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:17,&quot;range&quot;:&quot;6548-9710&quot;} -->
+<h2 id="febrary_2023">8 Febrary 2023</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.9</strong> <a href="https://drive.google.com/file/d/1qrIzC1ltyHSpGUUpHo1zEFtmRm8IzpJF/view?usp=share_link" class="media" title="https://drive.google.com/file/d/1qrIzC1ltyHSpGUUpHo1zEFtmRm8IzpJF/view?usp=share_link" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+You will need to run new motor detection after update!<br/>
+
+This update fixes issues with the reverse function of the previous release and also some problems with recently made controllers. There are known issues with starting under high currents that will be investigated later. 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:23,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Added interrupt setup logic.<br/>
+
+Added High V ripple flag for plate controller.<br/>
+
+Added middle DAC offset from raw ampere calibration.<br/>
+
+Fixed EXTI-PR register reset in the main logger.<br/>
+
+Fixed Neutral for the master controller.<br/>
+
+DAC offset updated for the plate.<br/>
+
+Fixed square wave plate reverse.<br/>
+
+Fixed reverse sensorless startup logic.<br/>
+
+Added hall idle parameter.<br/>
+
+Hall angle fixed, now transition with offset, when not interpolated — no offset.<br/>
+
+Added fix in HW config for TF21904 drivers (shipped after Dec 2022 till Feb 2023).<br/>
+
+Added fault flag to the logger.<br/>
+
+FOC has removed the extra current at the start.<br/>
+
+FOC angle now has no offsets.<br/>
+
+FOC sectors moved to match the square wave.<br/>
+
+FOC added an additional dead time gap.<br/>
+
+Added load defaults by section. 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:24,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 Febrary 2023&quot;,&quot;hid&quot;:&quot;febrary_2023&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:22,&quot;range&quot;:&quot;9711-11003&quot;} -->
+<h2 id="october_2022">14 October 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Display v0.75B</strong> <a href="https://drive.google.com/file/d/1266zWRtfSzO2eQZDraTvtPVFfwfYSEXp/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1266zWRtfSzO2eQZDraTvtPVFfwfYSEXp/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Export configuration before the update, update the Display, and then import your config!<br/>
+
+Added menu for forced device update. 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:26,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ - Added passwords for devices menu and main menu.<br/>
+
+Configurable max visible speed in statistics.<br/>
+
+Fixed some SD card issues, and added exFAT support (not for display update).<br/>
+
+Added phase current bar min/max setting.<br/>
+
+Added menu for forced device update.<br/>
+
+Fixed brake voltage inversion.<br/>
+
+Fixed Wh calculator for high power.<br/>
+
+Removed info line scroll in info line theme.<br/>
+
+Phase current now showed as Ap.<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:27,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;14 October 2022&quot;,&quot;hid&quot;:&quot;october_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:25,&quot;range&quot;:&quot;11004-11780&quot;} -->
+<h2 id="september_2022">26 September 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.8</strong> <a href="https://drive.google.com/file/d/1DIuZTQzRFiOUM7wewNQ99gMvH6UnPTxo/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1DIuZTQzRFiOUM7wewNQ99gMvH6UnPTxo/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Export configuration before the update, update controller, load default settings, and then import your config! 
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:29,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Added motor angle to logger<br/>
+
+Fixed errors in combined transition logic<br/>
+
+Fixed clutch negative current spike<br/>
+
+Added FOC vq limit parameter for QS165 motor<br/>
+
+Fixed reverse operation for vq limit<br/>
+
+Current calibration fix for shunt<br/>
+
+Levcan got an update on ParseParameterValue<br/>
+
+Fixed PWM minimum time for TF driver (FOC)<br/>
+
+DAC constant updated with calibrated value<br/>
+
+Position sensor temporary fix for FOC when not interpolated<br/>
+
+Added remote throttle timeout (locked screen full throttle bug)<br/>
+
+Many small fixes for assembly testing<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:30,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;26 September 2022&quot;,&quot;hid&quot;:&quot;september_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:28,&quot;range&quot;:&quot;11781-12670&quot;} -->
+<h2 id="august_2022">8 August 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.7</strong> <a href="https://drive.google.com/file/d/136vrimQnIqCqcv7z7e-1gfkyKnk48VsW/view?usp=sharing" class="media" title="https://drive.google.com/file/d/136vrimQnIqCqcv7z7e-1gfkyKnk48VsW/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:32,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Fixed sensor logic for square wave<br/>
+
+Fixed adc issues but still should be improved<br/>
+
+ADC logic changed to more future-proof<br/>
+
+Added configuration import with button<br/>
+
+Added import lock when motor spinning<br/>
+
+Moved PLLs to separate file<br/>
+
+Fixed current spike on brake press (filter abs duty)<br/>
+
+Removed &#039;hall invalid&#039; logic from interpolation start<br/>
+
+Improved speed control for reverse from forward movement<br/>
+
+Position sensor logic separated<br/>
+
+USB code deleted<br/>
+
+Stop PWM on debug added to pwm hal<br/>
+
+SQ have sensorless interpolation<br/>
+
+Interpolation logic improved<br/>
+
+Deleted global PositionSensor variables<br/>
+
+Fixed speed reference NaN<br/>
+
+Added diagnostic mode to state machine switch<br/>
+
+Fixed few diagnostic issues<br/>
+
+Live hall angle update in menu<br/>
+
+Added NaN checks for hall<br/>
+
+Adjusted detected angle for first step<br/>
+
+BEMF now have one extra step to skip spike, in case if it falls slowly<br/>
+
+Detection sensor state fixed, caused motor to stall<br/>
+
+Added frequency startup logic for sensorless square wave (yay!)<br/>
+
+Frequency control used for sensorless startup now, default changed to 2<br/>
+
+Added encoder position sensor<br/>
+
+Pullup control removed<br/>
+
+Added encoder menu<br/>
+
+Added encoder detection<br/>
+
+Updated position sensor logic, detection routed through it<br/>
+
+Added hall detect quick fail<br/>
+
+Swapped hall inputs to match timer index<br/>
+
+Speed calculation changed<br/>
+
+Rads calculation moved to Position sensor file<br/>
+
+ERPS counter upgraded with direction filter<br/>
+
+Encoder angle calibration added<br/>
+
+RCPWM disable-exit added<br/>
+
+Added pwm port assignment to encoder<br/>
+
+Torq sensor exit added<br/>
+
+ADC ports reassigned<br/>
+
+Few parameters live update fixed<br/>
+
+Added encoder info to device info menu<br/>
+
+Added E suffix for Encoder<br/>
+
+OV and UV flags separated<br/>
+
+Test bench code moved to separate file<br/>
+
+Includes optimised everywhere<br/>
+
+Square wave current offset disabled on next step now<br/>
+
+FW added better enable logic, to help avoid extreme brake power on FW<br/>
+
+Added few FOC optimisations<br/>
+
+Added FOC vq limit before vd-vq vector limit, to let vd do field weakening more (unlimited vq caused worse FW perfomance and sometimes it was stuck)<br/>
+
+SQ added DC current dead time compensation<br/>
+
+Added out of control detection logic<br/>
+
+Added serial number<br/>
+
+Added calibration constants<br/>
+
+Added calibration logic when checking hardware<br/>
+
+Added FreeRTOS stack monitor<br/>
+
+Optimised testing procedure for faster test<br/>
+
+Updated critical task enter routines<br/>
+
+Fixed field weakening integral kick if foc is forced shutdown<br/>
+
+Changed PWM Freq to constant<br/>
+
+Position sensor menu updated<br/>
+
+Over-Field weakening flag logic fixed<br/>
+
+Fixed PAS menu parameter update<br/>
+
+Moved foc square-boost to sector switch logic<br/>
+
+Added PLL low speed smoother logic<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:33,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8 August 2022&quot;,&quot;hid&quot;:&quot;august_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:31,&quot;range&quot;:&quot;12671-15597&quot;} -->
+<h2 id="april_2022">6 April 2022</h2>
+<div class="level2">
+
+<p>
+<strong>uLight v0.6.3</strong> <a href="https://drive.google.com/file/d/1xAy7qZc2wz3HCwktdhPCHHF1W1252mkA/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1xAy7qZc2wz3HCwktdhPCHHF1W1252mkA/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+Fixed T1/T2 settings menu.<br/>
+
+Now possible to disable the turn signal blinking by setting 0 sec.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;6 April 2022&quot;,&quot;hid&quot;:&quot;april_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:34,&quot;range&quot;:&quot;15598-15866&quot;} -->
+<h2 id="march_2022">23 March 2022</h2>
+<div class="level2">
+
+<p>
+<strong>Controller v0.8.6</strong> <a href="https://drive.google.com/file/d/1OX5BMtsRoXTDNT-MfgYeGwyKAfPmqV9e/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1OX5BMtsRoXTDNT-MfgYeGwyKAfPmqV9e/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:36,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Field Weakening PID updated.<br/>
+
+Added FW limit based on motor temp limit.<br/>
+
+Decreased allowed FW vector size to 80%.<br/>
+
+Config defaults decreased.<br/>
+
+Added locks 10 seconds on temperature exceeding.<br/>
+
+Small menu changes and export fixes.<br/>
+
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:37,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;23 March 2022&quot;,&quot;hid&quot;:&quot;march_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:35,&quot;range&quot;:&quot;15867-16340&quot;} -->
+<h2 id="january_2022">20 January 2022</h2>
+<div class="level2">
+
+<p>
+Critical update for new controllers and hotfix for controllers 6F/12F and old 24F. Export config before the update, load defaults after the update, and import your config.
+</p>
+
+<p>
+<strong>Important!</strong> <br/>
+
+If your On-board computer has firmware <strong>v0.60B</strong> or lower and Controller <strong>v.7.18</strong> and lower, first, need to update all devices but display. Because menu protocol is new and old devices will not be visible in the menu. After the update is finished hold the left button few seconds to exit the updated device menu. If the button does not work you may need to reset the power supply or replug CAN cable in the On-board computer. After everything is updated — update the On-board computer. Make a controller reset (load defaults) after the update. We recommend running motor detects again on controllers. Detection of throttle/brake connected to display should be done in the On-board computer <a href="/doku.php?id=en:display:start#control_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a>.
+</p>
+
+<p>
+<strong>Controller v0.8.5</strong> <a href="https://drive.google.com/file/d/1RymXEmpfeqX2pidFOEWLzLv3JJD0O104/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1RymXEmpfeqX2pidFOEWLzLv3JJD0O104/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a>
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:39,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Save system updated, added unit tests.<br/>
+
+Added clutch shutdown when brake pressed.<br/>
+
+Added option to enable MTPA.<br/>
+
+USB for computers disabled by default, will be removed in the future Fixed P1 P2 PWM mode.<br/>
+
+Lifetime temperature now calculates only when motor powered.<br/>
+
+Added hall pullup disable option.<br/>
+
+Various save system fixes.<br/>
+
+Fixed NaN for resistance detection.<br/>
+
+Fixed import of 1st parameter in every section.<br/>
+
+<br/>
+
+Hotfix for 6F/12F and old 24F. 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:40,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;20 January 2022&quot;,&quot;hid&quot;:&quot;january_2022&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:38,&quot;range&quot;:&quot;16341-17967&quot;} -->
+<h2 id="october_2021">18 October 2021</h2>
+<div class="level2">
+
+<p>
+First, need to update all devices but display. Because menu protocol is new and old devices will not be visible in the menu. After the update is finished hold the left button few seconds to exit the updated device menu. If the button does not work you may need to reset the power supply or replug CAN cable in the On-board computer. After everything is updated — update the On-board computer. Make a controller reset (load defaults) after the update. We recommend running motor detects again on controllers. Detection of throttle/brake connected to display should be done in the On-board computer <a href="/doku.php?id=en:display:start#control_setup" class="wikilink1" title="en:display:start" data-wiki-id="en:display:start">menu</a>.
+</p>
+
+<p>
+<strong>Display v0.71B</strong> <a href="https://drive.google.com/file/d/1ovS69DDlp8CWkGI_f8p2SqxJ34OMwFQ-/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1ovS69DDlp8CWkGI_f8p2SqxJ34OMwFQ-/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:42,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Menu redesigned.<br/>
+
+All display settings moved to separate menu.<br/>
+
+Added port input state in port settings.<br/>
+
+Added port functions: disable backlight, lock screen.<br/>
+
+Added separate hotkeys while charging.<br/>
+
+Added option to use hotkeys with a short click.<br/>
+
+Added throttle/brake settings which are connected to display.<br/>
+
+Added global odometer setting.<br/>
+
+Global stats reset will not reset odometer now.<br/>
+
+Added parameters import/export.<br/>
+
+Added icons on the main screen (brake, brake limit, turtle mode, motor/controller fault, battery fault).<br/>
+
+With new controllers update speed is 6 times faster now.<br/>
+
+Logger speed should work faster too.<br/>
+
+Added text scroll in the menu.<br/>
+
+Logo updated.<br/>
+
+Added more informative messages for resets with a password request.<br/>
+
+Added parameters that could be requested from display on CAN bus.\\&lt;/WRAP&gt; === v0.71<br/>
+
+Fixed some parameter editing.<br/>
+
+Updated import/export.<br/>
+
+Odometer now can be imported, value is not decimal now.<br/>
+
+Fixed button blinking while typing a password.<br/>
+
+Fixed charge screen, button blinking fixed.<br/>
+
+Fixed info-lines names.<br/>
+
+Fixed header for password message.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:43,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<strong>Controller v0.8.2</strong> <a href="https://drive.google.com/file/d/1YSXYo-rFaoJGbonGJ67kvWs_ExoZz5vH/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1YSXYo-rFaoJGbonGJ67kvWs_ExoZz5vH/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:44,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Added glitchy USB to controller (needs a USB cable connected to PWM port).<br/>
+
+Completely new LEVCAN parameters protocol with more possibilities.<br/>
+
+Added trip statistics menu to controller:<br/>
+
+-Wh regen/used/total.<br/>
+
+-Ah regen/used/total.<br/>
+
+-Estimated motor efficiency realtime and average.<br/>
+
+-Calculated motor torque (on shaft).<br/>
+
+Temperature measurement now calculates t-sensor resistance.<br/>
+
+Improved kV detection.<br/>
+
+Fixed &#039;bug&#039; with long brake response on slow current change speed for acceleration limit.<br/>
+
+Defaults for all ports now OFF.<br/>
+
+Added brake button % (percentage of brake phase current for button-brake).<br/>
+
+Added brake on released throttle (brake phase current).<br/>
+
+Motor inductance and resistance detection for MTPA.<br/>
+
+MTPA logic (works good only with IPM motors).<br/>
+
+Fixed FOC FW to be triggered at stop when braking.<br/>
+
+Added more control CAN commands.<br/>
+
+Added more parameters that could be requested from controller on CAN bus.<br/>
+
+Added more logger parameters.<br/>
+
+Added hall filter settings to debug stuttering.<br/>
+
+Added prefix selection for controller name.<br/>
+
+=== v0.8.2<br/>
+
+Added log header option.<br/>
+
+Added translation for some messages (RU).<br/>
+
+Added error messages for throttle/brake detection.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:45,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<strong>uLight v0.6.1</strong> <a href="https://drive.google.com/file/d/1o9B2Rp_icaKo9ZB6FUlDLZCm2CMNcFtG/view?usp=sharing" class="media" title="https://drive.google.com/file/d/1o9B2Rp_icaKo9ZB6FUlDLZCm2CMNcFtG/view?usp=sharing" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:46,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+New LEVCAN parameters protocol.<br/>
+
+Fixed PWM IO settings, now they do work.<br/>
+
+Added temperature sensor thresholds, they work as virtual button for functions.<br/>
+
+Added ability to send button inputs to CAN bus.<br/>
+
+Main program source code published on GitHub:<br/>
+
+<a href="https://github.com/Nucular-tech/uLight" class="urlextern" title="https://github.com/Nucular-tech/uLight" rel="ugc nofollow">https://github.com/Nucular-tech/uLight</a>
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:47,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;18 October 2021&quot;,&quot;hid&quot;:&quot;october_2021&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:41,&quot;range&quot;:&quot;17968-21946&quot;} -->
+<h2 id="august_2020">31 August 2020</h2>
+<div class="level2">
+
+<p>
+Use configuration export before update, reset defaults after update and import configuration.<br/>
+
+<strong>Display v0.60B</strong> <a href="https://drive.google.com/open?id=1t3RWRRvL1RXPV7PmtLbE3XSfVM8-fswz" class="media" title="https://drive.google.com/open?id=1t3RWRRvL1RXPV7PmtLbE3XSfVM8-fswz" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:49,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Fixed throttle drop.<br/>
+
+Small menu fixes.<br/>
+
+LEVCAN updated.<br/>
+
+Button setup simplified, by default all set to CAN mode.<br/>
+
+Added exFAT support (but display still can be updated only from FAT32).<br/>
+
+Added charge screen.<br/>
+
+Added fast statistics type selection.<br/>
+
+Added wider event window.<br/>
+
+Mph stats fixed. 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:50,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+<strong>Controller v0.7.18</strong> <a href="https://drive.google.com/open?id=1WrKhLdjaPhV9bVOsywYRIUo4UPyyqCl7" class="media" title="https://drive.google.com/open?id=1WrKhLdjaPhV9bVOsywYRIUo4UPyyqCl7" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:51,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Experimental logger added.<br/>
+
+Fixed many charger glitches, however still have few.<br/>
+
+Added soft start to charger and more safe phase detect.<br/>
+
+Completely reworked field weakening, now should not have any hard braking after release.<br/>
+
+Added minimum speed reference for speed PID.<br/>
+
+Added RC PWM control on P1 port (throttle/brake).<br/>
+
+Added more logger parameters.<br/>
+
+Few important FOC control fixes, DC current should be calculated better under field weakening.<br/>
+
+Fixed one weird ultra-rare bug in square mode.<br/>
+
+LEVCAN operates on queues now, log time 2x faster when display updated.<br/>
+
+Decreased DCi Ki default from 500 to 200.<br/>
+
+Slightly decreased FW start point.<br/>
+
+Added full debug info export.<br/>
+
+Added logger mode selection and tuned logger start.<br/>
+
+Removed first line from log for easy datazap upload.<br/>
+
+Throttle / brake curves added (8 point configuration) with presets.<br/>
+
+PAS extra scale added for additional modes.<br/>
+
+Soft acceleration for cruise added, more shutdown triggers.<br/>
+
+Cruise logic updated - phase current limited by selected mode, not throttle position.<br/>
+
+Minimum cruise speed - limits cruise activation.<br/>
+
+Cruise increment/decrement - control cruise speed with buttons ( port = CR+/CR-)<br/>
+
+Cruise restore - recovery last saved cruise speed with button, activated only above min cruise speed. (port = CRr)<br/>
+
+Power limit added to modes and battery configuration. 0 = power limit disabled.<br/>
+
+Small menu fixes.<br/>
+
+CAN inputs increased to 16.<br/>
+
+Parameters export / import fixes.<br/>
+
+12V shutdown fix.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:52,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;31 August 2020&quot;,&quot;hid&quot;:&quot;august_2020&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:48,&quot;range&quot;:&quot;21947-24275&quot;} -->
+<h2 id="march_2020">18 March 2020</h2>
+<div class="level2">
+
+<p>
+<strong>Display v0.59B</strong> <a href="https://drive.google.com/open?id=1_qsufu1Xr6UQd-7GQBOX6ZCTGvvCfgOh" class="media" title="https://drive.google.com/open?id=1_qsufu1Xr6UQd-7GQBOX6ZCTGvvCfgOh" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+HOTFIX for display speed sensor
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;18 March 2020&quot;,&quot;hid&quot;:&quot;march_2020&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:53,&quot;range&quot;:&quot;24276-24475&quot;} -->
+<h2 id="march_20201">11 March 2020</h2>
+<div class="level2">
+
+<p>
+<strong>Display v0.58B</strong> <a href="https://drive.google.com/open?id=1flG5lh38JXpiff5m9LARawtYWax2_UW-" class="media" title="https://drive.google.com/open?id=1flG5lh38JXpiff5m9LARawtYWax2_UW-" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:55,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ Fixed 0V throttle issue.<br/>
+
+Fixed charge statistics reset.<br/>
+
+Added kmh/mph switch.<br/>
+
+Added more parameters to info. lines on main screen.<br/>
+
+Added hotkey mode for compatibility with controller speed functions.<br/>
+
+Fixed contrast setting.<br/>
+
+Added driving range, calculated from WH usage.<br/>
+
+A lot of tiny fixes.
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:56,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+<strong>Controller v0.7.12</strong> <a href="https://drive.google.com/open?id=1CWe2jjZY92I95DE0Lcbp8z7g3EMlYwB0" class="media" title="https://drive.google.com/open?id=1CWe2jjZY92I95DE0Lcbp8z7g3EMlYwB0" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" alt="" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:57,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Torque PAS fixes<br/>
+
+Fixed configuration import for advanced modes<br/>
+
+Added configuration selector from 1 to 9<br/>
+
+Import will show first line of configuration, you can put a comment here<br/>
+
+Fixed N mode<br/>
+
+Fixed motor wiggle at charger mode<br/>
+
+Added more debug information
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:58,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;11 March 2020&quot;,&quot;hid&quot;:&quot;march_20201&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:54,&quot;range&quot;:&quot;24476-25467&quot;} -->
+<h2 id="nov_2019">21 Nov 2019</h2>
+<div class="level2">
+
+<p>
+HOTFIX, fixed NaN error for analog inputs.<br/>
+
+<strong>Controller v0.7.9</strong> <a href="https://drive.google.com/open?id=1C1fyi0ObSEc6bLKHCOQkymivMKTvnHkq" class="media" title="https://drive.google.com/open?id=1C1fyi0ObSEc6bLKHCOQkymivMKTvnHkq" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;21 Nov 2019&quot;,&quot;hid&quot;:&quot;nov_2019&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:59,&quot;range&quot;:&quot;25468-25679&quot;} -->
+<h2 id="nov_20191">20 Nov 2019</h2>
+<div class="level2">
+
+<p>
+Export configuration (or make screenshots), after controller update do “Erase data storage” and reboot. Configuration will not be imported fully, some values will need to enter manually.<br/>
+
+<strong>Display v0.57B</strong> <a href="https://drive.google.com/open?id=167Q_b2u363rgh6cu8HtXs1czgpUmATZW" class="media" title="https://drive.google.com/open?id=167Q_b2u363rgh6cu8HtXs1czgpUmATZW" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:61,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+ CAN buttons setup<br/>
+
+Inverted inputs setup<br/>
+
+Statistics reworked<br/>
+
+Added filters for analog inputs 
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:62,&quot;range&quot;:&quot;0-&quot;} -->
+<p>
+<br/>
+
+<strong>Controller v0.7.8</strong> <a href="https://drive.google.com/open?id=1ecEndmMDlQ72-T18sJv5FfIhTUcqlRLr" class="media" title="https://drive.google.com/open?id=1ecEndmMDlQ72-T18sJv5FfIhTUcqlRLr" rel="ugc nofollow"><img src="/docs/settings-pages/firmware/images/file.png" class="media" title="Download" alt="Download" width="23" height="32" /></a><br/>
+
+</p>
+<!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_start&quot;,&quot;secid&quot;:63,&quot;range&quot;:&quot;0-&quot;} --><div class="plugin_wrap"><div class="hiddenGlobal  hiddenActive"><div class="hiddenElements"></div><div class="hiddenHead  hiddenSinceBeginning"><div class="hiddenOnHidden">
+<p>
+Show change log
+</p>
+</div><div class="hiddenOnVisible">
+<p>
+Click to hide ⇱
+</p>
+</div></div> <!-- .hiddenHead --><div class="hiddenBody">
+<p>
+Big menu update<br/>
+
+Control logic completely reworked for future compatibility with BMS<br/>
+
+New default values for PIDs<br/>
+
+DC-DC low voltage difference charge fixed<br/>
+
+Inverted brake input added<br/>
+
+Specific setup for 3 positional speed switch added (can work now as 1-2-3)<br/>
+
+Button/switch select for usual speed select input<br/>
+
+Save CRC calculation fixed<br/>
+
+New speed mode - neutral<br/>
+
+Speed increment and decrement added<br/>
+
+Added t-sensor NTC 10k B:3380<br/>
+
+Reboot command added<br/>
+
+Fixed field weakening over 126%<br/>
+
+Fixed VBUS measuring, now it is at PWM frequency, significantly improved overvoltage protection<br/>
+
+Added median VBUS filter<br/>
+
+Added averaging of N-X ADC samples filter for throttle and brake<br/>
+
+Fixed brake glitches<br/>
+
+Current measuring fixes for better measuring on 6F board<br/>
+
+When enable button configured controller will not turn-on anymore when power applied<br/>
+
+Autodetect improved, more informative, short-circuit detect added and timeout fixed<br/>
+
+Added lock-at-turn-on, will lock throttle untill password on-screen is entered<br/>
+
+Voltage on phases detect added, will lock controls<br/>
+
+UVLO added<br/>
+
+Added “Advanced modes” menu with more specific options per mode<br/>
+
+Personal throttle protection lock for CAN source or local<br/>
+
+Motor temperature limit for charger (DC-DC)
+</p>
+</div></div></div><!-- EDIT{&quot;target&quot;:&quot;plugin_wrap_end&quot;,&quot;secid&quot;:64,&quot;range&quot;:&quot;0-&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;20 Nov 2019&quot;,&quot;hid&quot;:&quot;nov_20191&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:60,&quot;range&quot;:&quot;25680-&quot;} -->

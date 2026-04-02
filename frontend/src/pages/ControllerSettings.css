@@ -650,6 +650,9 @@
 .controller-page-toc {
   grid-column: 10 / span 3;
   display: none;
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+  align-self: start;
 }
 
 @media (min-width: 1200px) {

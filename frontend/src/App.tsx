@@ -90,7 +90,14 @@ export default function App() {
         window.history.scrollRestoration = 'manual';
       }
     } catch {}
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    window.requestAnimationFrame(() => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
   }, [location.pathname, location.search]);
 
   useEffect(() => {

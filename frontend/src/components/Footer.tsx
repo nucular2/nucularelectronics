@@ -4,6 +4,8 @@ import ChevronDown from './icons/ChevronDown';
 
 export default function Footer() {
   const navigate = useNavigate();
+  const privacyUrl =
+    'https://docs.google.com/document/d/1ptx1uhCI4Qq6pbMqCIg2_DpCn005wHe1/edit?usp=sharing&ouid=117928452438503793466&rtpof=true&sd=true';
 
   const goTo = (e: React.MouseEvent, path: string) => {
     e.preventDefault();
@@ -113,7 +115,9 @@ export default function Footer() {
         <div className="footer-bottom-links">
           <a href="/careers">Careers</a>
           <a href="/terms">Terms and Conditions</a>
-          <a href="/privacy">Privacy policy</a>
+          <a href={privacyUrl} target="_blank" rel="noopener noreferrer">
+            Privacy policy
+          </a>
           <span className="copyright">© 2025 Nucular Limited. All Rights Reserved.</span>
         </div>
       </div>

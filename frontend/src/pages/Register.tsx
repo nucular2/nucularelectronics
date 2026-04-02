@@ -12,6 +12,8 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const privacyUrl =
+    'https://docs.google.com/document/d/1ptx1uhCI4Qq6pbMqCIg2_DpCn005wHe1/edit?usp=sharing&ouid=117928452438503793466&rtpof=true&sd=true';
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,7 +132,10 @@ export default function Register() {
                 />
                 <span className="checkmark"></span>
                 <span className="checkbox-label">
-                  By creating an account you accept our <Link to="/privacy-policy" className="highlight">Privacy policy</Link>
+                  By creating an account you accept our{' '}
+                  <a className="highlight" href={privacyUrl} target="_blank" rel="noopener noreferrer">
+                    Privacy policy
+                  </a>
                 </span>
               </label>
             </div>

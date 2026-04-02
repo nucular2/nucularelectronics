@@ -24,9 +24,10 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const stickySentinelRef = useRef<HTMLDivElement | null>(null);
 
   const resolvedProductId = productId ?? Number(id);
-  const product = products.find((p) => p.id === resolvedProductId) ?? products[0];
+  const isProductsReady = products.length > 0;
+  const product = products.find((p) => p.id === resolvedProductId);
   const productContent = Number.isFinite(resolvedProductId) ? getContent(resolvedProductId) : undefined;
-  const inCart = items.some((i) => i.id === product.id);
+  const inCart = product ? items.some((i) => i.id === product.id) : false;
 
   const isP24F = product?.id === 1;
   const isOnBoardComputer = product?.id === 2;
@@ -52,7 +53,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     ? "NUCP24FSUR"
     : isBaseballCap
     ? "7459066"
-    : product.title.toUpperCase();
+    : product?.title?.toUpperCase?.() || "";
   const displayPrice = !product ? "" : isP24F ? "$610.00" : product.price;
 
   const controllerSpecs = [
@@ -296,10 +297,6 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) {
-      setIsStickyBarVisible(false);
-      return;
-    }
     const handleScroll = () => {
       setIsStickyBarVisible(window.scrollY > 260);
     };
@@ -307,6 +304,19 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isDesktop]);
+
+  if (!isProductsReady) {
+    return (
+      <>
+        <Header variant="white" />
+        <div className="product-page">
+          <div className="product-container">
+            <div className="product-title">Loading...</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   if (!product) {
     return (
@@ -323,7 +333,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
 
   return (
     <>
-      {isDesktop && isStickyBarVisible && (
+      {isStickyBarVisible && (
         <div className="product-sticky-bar">
           <div className="product-sticky-title">{displayTitle}</div>
           <div className="product-sticky-right">
@@ -806,7 +816,6 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                     <CardBase
                       key={item.id}
                       className="product-add-card"
-                      height={420}
                       onClick={() => navigate(`/product/${item.id}`)}
                     >
                       <div className="product-add-image">
@@ -842,7 +851,7 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
                 <div className="product-add-grid">
                   <CardBase className="product-add-card">
                     <div className="product-add-image">
-                      <img className="card-image" src="/miniature.svg" alt="On-board computer" style={{ background: 'transparent', mixBlendMode: 'multiply' }} />
+                      <img className="card-image" src="/miniature.svg" alt="On-board computer" />
                     </div>
                     <div className="product-add-name">On-board computer</div>
                     <div className="product-add-price">$110.00</div>

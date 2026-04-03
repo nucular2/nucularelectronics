@@ -156,9 +156,23 @@ app.post("/api/checkout/session", async (req: Request, res: Response) => {
       }
     }
 
+    const orderNumber = String(order?.contacts?.crm?.number || order.id).split("-")[0].toUpperCase();
+    const firstTitle = String(items?.[0]?.title || items?.[0]?.name || items?.[0]?.productName || "").trim();
+    const descriptionBase = firstTitle ? `Order ${orderNumber}: ${firstTitle}` : `Order ${orderNumber}`;
+    const description = descriptionBase.length <= 200 ? descriptionBase : `${descriptionBase.slice(0, 197)}...`;
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
+      client_reference_id: orderNumber,
+      payment_intent_data: {
+        description,
+        metadata: {
+          order_id: String(order.id),
+          order_number: String(orderNumber),
+          user_id: String(order.user_id),
+        },
+      },
       line_items: lineItems,
       success_url: `${frontendUrl}/orders?payment=success`,
       cancel_url: `${frontendUrl}/cart?payment=canceled`,

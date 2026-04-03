@@ -47,6 +47,12 @@ function displayOrderNumber(order: any) {
   return id.includes("-") ? id.split("-")[0].toUpperCase() : id;
 }
 
+function stripePaymentDescription(params: { orderNumber: string; items: any[] }) {
+  const firstTitle = String(params.items?.[0]?.title || params.items?.[0]?.name || params.items?.[0]?.productName || "").trim();
+  const base = firstTitle ? `Order ${params.orderNumber}: ${firstTitle}` : `Order ${params.orderNumber}`;
+  return base.length <= 200 ? base : base.slice(0, 197) + "...";
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -130,10 +136,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const stripeClient = await getStripe();
+    const description = stripePaymentDescription({ orderNumber, items });
     const session = await stripeClient.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       client_reference_id: orderNumber,
+      payment_intent_data: {
+        description,
+        metadata: {
+          order_id: String((order as any).id),
+          order_number: String(orderNumber),
+          user_id: String((order as any).user_id || ""),
+        },
+      },
       line_items: lineItems,
       success_url: `${frontendUrl}/orders?payment=success&orderId=${encodeURIComponent(String(orderId))}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${frontendUrl}/cart?payment=canceled&orderId=${encodeURIComponent(String(orderId))}`,

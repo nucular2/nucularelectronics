@@ -249,13 +249,40 @@ export default function Checkout() {
     return refreshed.session;
   };
 
+  const getCartFallback = () => {
+    try {
+      const raw = localStorage.getItem("cart");
+      if (!raw) return { items: [] as any[], total: 0 };
+      const parsed = JSON.parse(raw);
+      const fallbackItems = Array.isArray(parsed) ? parsed : [];
+      const total = fallbackItems.reduce((sum: number, it: any) => {
+        const price = String(it?.price || "");
+        if (price === "Preorder") return sum;
+        const qty = typeof it?.quantity === "number" && Number.isFinite(it.quantity) && it.quantity > 0 ? it.quantity : 1;
+        const n = parseFloat(price.replace("$", "").replace(",", ""));
+        if (!Number.isFinite(n)) return sum;
+        return sum + n * qty;
+      }, 0);
+      return { items: fallbackItems, total: Math.round(total * 100) / 100 };
+    } catch {
+      return { items: [] as any[], total: 0 };
+    }
+  };
+
   const createOrder = async (params?: { initialStatus?: string; itemsOverride?: any[]; totalOverride?: number }) => {
     if (!contacts.termsAccepted) {
       setError("Please accept the Terms and Conditions.");
       throw new Error("Terms not accepted");
     }
-    const orderItems = params?.itemsOverride ?? items;
-    const orderTotal = typeof params?.totalOverride === "number" ? params.totalOverride : totalPrice;
+    let orderItems = params?.itemsOverride ?? items;
+    let orderTotal = typeof params?.totalOverride === "number" ? params.totalOverride : totalPrice;
+    if (!Array.isArray(orderItems) || orderItems.length === 0 || !(typeof orderTotal === "number") || orderTotal <= 0) {
+      const fallback = getCartFallback();
+      if (Array.isArray(fallback.items) && fallback.items.length > 0 && fallback.total > 0) {
+        orderItems = fallback.items;
+        orderTotal = fallback.total;
+      }
+    }
     if (!Array.isArray(orderItems) || orderItems.length === 0 || !(typeof orderTotal === "number") || orderTotal <= 0) {
       setError("Your cart is empty. Please add items before checkout.");
       throw new Error("Cart is empty");

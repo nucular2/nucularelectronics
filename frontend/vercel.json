@@ -2,6 +2,8 @@
   "version": 2,
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
+    { "src": "api/ping.ts", "use": "@vercel/node" },
+    { "src": "api/checkout-session.ts", "use": "@vercel/node" },
     { "src": "api/webhook.ts", "use": "@vercel/node" },
     { "src": "api/[...path].ts", "use": "@vercel/node" }
   ],
@@ -23,6 +25,8 @@
     }
   ],
   "routes": [
+    { "src": "/api/ping", "dest": "/api/ping.ts" },
+    { "src": "/api/checkout-session", "dest": "/api/checkout-session.ts" },
     { "src": "/api/webhook", "dest": "/api/webhook.ts" },
     { "src": "/api/(.*)", "dest": "/api/[...path].ts?path=$1" },
     { "handle": "filesystem" },

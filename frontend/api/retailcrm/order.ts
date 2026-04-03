@@ -37,6 +37,32 @@ function normalizePaymentType(typeIn: any, fallbackCode: string) {
   return code ? { code } : undefined;
 }
 
+function fnv1aHex(input: string) {
+  let h1 = 2166136261;
+  let h2 = 2166136261 ^ 0x9e3779b9;
+  for (let i = 0; i < input.length; i += 1) {
+    const c = input.charCodeAt(i);
+    h1 ^= c;
+    h1 = Math.imul(h1, 16777619);
+    h2 ^= c;
+    h2 = Math.imul(h2, 2166136261);
+  }
+  const a = (h1 >>> 0).toString(16).padStart(8, "0");
+  const b = (h2 >>> 0).toString(16).padStart(8, "0");
+  return `${a}${b}`;
+}
+
+function safePaymentExternalId(params: { provider: string; orderId: string }) {
+  const base = `pending_${params.provider}_${params.orderId}`;
+  const max = 50;
+  const normalizedBase = base.replace(/[^a-zA-Z0-9_]/g, "_");
+  if (normalizedBase.length <= max) return normalizedBase;
+  const hash = fnv1aHex(base).slice(0, 10);
+  const orderPart = String(params.orderId || "").replace(/[^a-zA-Z0-9]/g, "").slice(0, 12) || "order";
+  const compact = `pending_${params.provider}_${orderPart}_${hash}`.replace(/[^a-zA-Z0-9_]/g, "_");
+  return compact.length <= max ? compact : compact.slice(0, max);
+}
+
 async function parseCrmApiResult(r: Response) {
   const text = await r.text();
   let data: any = {};
@@ -255,7 +281,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             : pm === "no_payment"
             ? paymentTypeNoPayment
             : paymentTypeStripe;
-        const paymentExternalId = `pending_${pm || "card"}_${String(order.id)}`.slice(0, 60);
+        const paymentExternalId = safePaymentExternalId({ provider: pm || "card", orderId: String(order.id) });
         await crmUpsertOrderPayment({
           apiUrl,
           apiKey,

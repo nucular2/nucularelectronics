@@ -1489,7 +1489,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(405).end('Method Not Allowed');
     }
 
-    const { orderId } = req.body as any;
+    const body = getBodyAny(req);
+    const orderId = String(body?.orderId || body?.order_id || '').trim();
     if (!orderId) {
       return res.status(400).json({ message: 'Missing orderId' });
     }

@@ -22,6 +22,21 @@ type DocsConfig = {
   pages: DocsPage[];
 };
 
+const DEFAULT_DOC_PAGES: Array<{ slug: string; titleEn: string; titleRu: string }> = [
+  { slug: "bluetooth", titleEn: "Bluetooth", titleRu: "Bluetooth" },
+  { slug: "cad-models", titleEn: "CAD files / 3D models", titleRu: "CAD файлы / 3D модели" },
+  { slug: "onboard-computer", titleEn: "On-board computer", titleRu: "Бортовой компьютер" },
+  { slug: "firmware", titleEn: "Firmware", titleRu: "Прошивки" },
+  { slug: "motor-information", titleEn: "Motor information", titleRu: "Информация по моторам" },
+  { slug: "usb2can", titleEn: "USB2CAN module", titleRu: "USB2CAN модуль" },
+  { slug: "connection-schematic", titleEn: "Connection schematic", titleRu: "Схема подключения" },
+  { slug: "controller-setup", titleEn: "Controller setup", titleRu: "Настройка контроллера" },
+  { slug: "controller-config-files", titleEn: "Configuration files", titleRu: "Файлы настроек" },
+  { slug: "controller-diagnostics", titleEn: "Controller fault diagnosis", titleRu: "Диагностика неисправностей" },
+  { slug: "controller-examples", titleEn: "Configuration examples", titleRu: "Примеры настроек" },
+  { slug: "controller-light-fan-pwm", titleEn: "Connecting brake lights and fans", titleRu: "Стоп-сигналы и вентиляторы" },
+];
+
 const INTERNAL_LINKS: Array<{ label: string; href: string }> = [
   { label: "Settings", href: "/settings" },
   { label: "Settings · Controller", href: "/settings/controller" },
@@ -37,6 +52,132 @@ const INTERNAL_LINKS: Array<{ label: string; href: string }> = [
 
 function newId(prefix: string) {
   return `${prefix}-${Math.random().toString(16).slice(2)}-${Date.now()}`;
+}
+
+async function safeReadJson(res: Response) {
+  const text = await res.text();
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { __raw: text };
+  }
+}
+
+function paragraphTextFromElement(el: HTMLElement) {
+  const parts: string[] = [];
+  const walk = (node: ChildNode) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const v = (node.textContent || "").replace(/\s+/g, " ");
+      if (v) parts.push(v);
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const e = node as HTMLElement;
+    const tag = e.tagName.toLowerCase();
+    if (tag === "br") {
+      parts.push("\n");
+      return;
+    }
+    if (tag === "a") {
+      const text = (e.textContent || "").trim();
+      const href = e.getAttribute("href") || "";
+      if (text && href) {
+        parts.push(`${text} (${href})`);
+        return;
+      }
+    }
+    for (const child of Array.from(e.childNodes)) walk(child);
+  };
+  for (const child of Array.from(el.childNodes)) walk(child);
+  return parts.join("").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function blocksFromStaticHtml(html: string) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const blocks: NewsBlock[] = [];
+
+  const visit = (node: Element) => {
+    for (const child of Array.from(node.children)) {
+      const tag = child.tagName.toLowerCase();
+      if (tag === "h1" || tag === "h2" || tag === "h3" || tag === "h4") {
+        const text = (child.textContent || "").trim();
+        if (!text) continue;
+        const level = tag === "h3" ? 3 : tag === "h4" ? 4 : 2;
+        const id = (child.getAttribute("id") || "").trim() || newId("h");
+        blocks.push({ id, type: "heading", text, level });
+        continue;
+      }
+      if (tag === "hr") {
+        blocks.push({ id: newId("d"), type: "divider" });
+        continue;
+      }
+      if (tag === "img") {
+        const src = (child.getAttribute("src") || "").trim();
+        if (!src) continue;
+        const alt = (child.getAttribute("alt") || "").trim();
+        blocks.push({ id: newId("img"), type: "image", url: src, alt });
+        continue;
+      }
+      if (tag === "ul" || tag === "ol") {
+        const items = Array.from(child.querySelectorAll(":scope > li"))
+          .map((li) => (li.textContent || "").trim())
+          .filter(Boolean);
+        if (items.length > 0) {
+          blocks.push({ id: newId("l"), type: "list", items, ordered: tag === "ol" });
+        }
+        continue;
+      }
+      if (tag === "p") {
+        const imgs = Array.from(child.querySelectorAll("img"));
+        for (const img of imgs) {
+          const src = (img.getAttribute("src") || "").trim();
+          if (!src) continue;
+          const alt = (img.getAttribute("alt") || "").trim();
+          blocks.push({ id: newId("img"), type: "image", url: src, alt });
+        }
+
+        const anchors = Array.from(child.querySelectorAll("a"));
+        const onlyLink =
+          anchors.length === 1 &&
+          (child.textContent || "").trim() === (anchors[0].textContent || "").trim() &&
+          Boolean((anchors[0].getAttribute("href") || "").trim());
+        if (onlyLink) {
+          blocks.push({
+            id: newId("a"),
+            type: "link",
+            text: (anchors[0].textContent || "").trim(),
+            href: (anchors[0].getAttribute("href") || "").trim(),
+          });
+          continue;
+        }
+
+        const text = paragraphTextFromElement(child as HTMLElement);
+        if (text) blocks.push({ id: newId("p"), type: "paragraph", text });
+        continue;
+      }
+      visit(child);
+    }
+  };
+
+  visit(doc.body);
+  return blocks;
+}
+
+async function loadStaticDocBlocks(slug: string, lang: DocsLang) {
+  const primary = `/docs/settings-pages/${slug}/${lang}/content.html`;
+  const legacy = `/docs/settings-pages/${slug}/content.html`;
+  const fallback = `/docs/settings-pages/${slug}/en/content.html`;
+
+  const tryFetch = async (url: string) => {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    return await r.text();
+  };
+
+  const html = (await tryFetch(primary)) || (await tryFetch(legacy)) || (lang === "ru" ? await tryFetch(fallback) : null);
+  if (!html) return [];
+  return blocksFromStaticHtml(html);
 }
 
 function ensurePage(raw: Partial<DocsPage> & { slug: string }): DocsPage {
@@ -114,9 +255,16 @@ export default function SupportManager() {
       try {
         const token = await getAdminToken();
         const res = await fetch("/api/admin/docs", { headers: { Authorization: `Bearer ${token}` } });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Failed to load docs");
-        const next: DocsConfig = json?.config && typeof json.config === "object" ? json.config : { version: 1, pages: [] };
+        const json = await safeReadJson(res);
+        if (!res.ok) {
+          const msg =
+            (json as any)?.message ||
+            (typeof (json as any)?.__raw === "string" ? (json as any).__raw.slice(0, 180) : "") ||
+            `Failed to load docs (${res.status})`;
+          throw new Error(msg);
+        }
+        const next: DocsConfig =
+          (json as any)?.config && typeof (json as any).config === "object" ? (json as any).config : { version: 1, pages: [] };
         const pages = Array.isArray(next.pages) ? next.pages.map((p: any) => ensurePage(p)) : [];
         if (!isActive) return;
         setConfig({ version: typeof next.version === "number" ? next.version : 1, pages });
@@ -282,6 +430,40 @@ export default function SupportManager() {
     updateBlocks(blocks);
   };
 
+  const importDefaultsFromStatic = async () => {
+    setSaving(true);
+    setError(null);
+    try {
+      const existing = new Set(config.pages.map((p) => p.slug));
+      const created: DocsPage[] = [];
+      for (const def of DEFAULT_DOC_PAGES) {
+        if (existing.has(def.slug)) continue;
+        created.push(
+          ensurePage({
+            slug: def.slug,
+            route: def.slug.startsWith("controller-") || def.slug === "connection-schematic" ? "/settings/controller" : `/settings/${def.slug}`,
+            title: { en: def.titleEn, ru: def.titleRu },
+            status: { en: "draft", ru: "draft" },
+            blocks: { en: [], ru: [] },
+          })
+        );
+      }
+
+      const pages = [...config.pages, ...created];
+      for (const p of pages) {
+        if (p.blocks.en.length === 0) p.blocks.en = await loadStaticDocBlocks(p.slug, "en");
+        if (p.blocks.ru.length === 0) p.blocks.ru = await loadStaticDocBlocks(p.slug, "ru");
+      }
+
+      setConfig((prev) => ({ ...prev, pages }));
+      setSelectedSlug((prev) => prev || pages[0]?.slug || "");
+    } catch (e: any) {
+      setError(e?.message || String(e));
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (loading) {
     return <div className="admin-card">Loading…</div>;
   }
@@ -294,9 +476,14 @@ export default function SupportManager() {
             <div className="admin-card-title">Support</div>
             <div className="admin-card-subtitle">Docs pages with draft/publish and preview</div>
           </div>
-          <button className="admin-button" onClick={addPage}>
-            Add
-          </button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button className="admin-button" onClick={importDefaultsFromStatic} disabled={saving}>
+              Import existing
+            </button>
+            <button className="admin-button" onClick={addPage}>
+              Add
+            </button>
+          </div>
         </div>
 
         <div style={{ marginTop: 12 }}>
@@ -304,19 +491,25 @@ export default function SupportManager() {
         </div>
 
         <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 6 }}>
-          {visiblePages.map((p) => (
-            <button
-              key={p.slug}
-              className={p.slug === selectedSlug ? "admin-button active" : "admin-button"}
-              style={{ justifyContent: "flex-start", textAlign: "left" } as any}
-              onClick={() => setSelectedSlug(p.slug)}
-            >
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <div style={{ fontWeight: 700 }}>{p.slug}</div>
-                <div className="admin-card-subtitle">{p.title.en}</div>
-              </div>
-            </button>
-          ))}
+          {visiblePages.length > 0 ? (
+            visiblePages.map((p) => (
+              <button
+                key={p.slug}
+                className={p.slug === selectedSlug ? "admin-button active" : "admin-button"}
+                style={{ justifyContent: "flex-start", textAlign: "left" } as any}
+                onClick={() => setSelectedSlug(p.slug)}
+              >
+                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <div style={{ fontWeight: 700 }}>{p.slug}</div>
+                  <div className="admin-card-subtitle">{p.title.en}</div>
+                </div>
+              </button>
+            ))
+          ) : (
+            <div className="admin-muted" style={{ marginTop: 8 }}>
+              No pages yet. Click “Import existing” to pull current docs.
+            </div>
+          )}
         </div>
       </div>
 
@@ -685,4 +878,3 @@ export default function SupportManager() {
     </div>
   );
 }
-

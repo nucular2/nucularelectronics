@@ -80,7 +80,7 @@ async function pushPaymentToRetailCrm(params: {
     externalId: candidate?.externalId || params.paymentExternalId,
     order: { externalId: params.orderExternalId },
     amount: normalizedAmount,
-    paidAt: params.paidAtIso,
+    paidAt: crmDatetime(params.paidAtIso),
     type: candidate?.type || paymentType,
     status: paymentStatusPaid,
   };
@@ -117,6 +117,27 @@ async function pushPaymentToRetailCrm(params: {
     const text = await r.text();
     throw new Error(text || 'RetailCRM payments create failed');
   }
+}
+
+function crmDatetime(input?: string) {
+  const d = input ? new Date(input) : new Date();
+  if (!Number.isFinite(d.getTime())) {
+    const now = new Date();
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(now.getUTCDate()).padStart(2, "0");
+    const hh = String(now.getUTCHours()).padStart(2, "0");
+    const mm = String(now.getUTCMinutes()).padStart(2, "0");
+    const ss = String(now.getUTCSeconds()).padStart(2, "0");
+    return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+  }
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  const ss = String(d.getUTCSeconds()).padStart(2, "0");
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
 }
 
 async function buffer(readable: any) {

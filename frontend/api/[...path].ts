@@ -721,7 +721,7 @@ async function crmUpsertOrderPayment(params: {
     type: candidate?.type || params.paymentType,
     status: params.status,
   };
-  if (params.paidAtIso) paymentBase.paidAt = params.paidAtIso;
+  if (params.paidAtIso) paymentBase.paidAt = crmDatetime(params.paidAtIso);
 
   if (candidate?.id) {
     const editUrl = `${params.apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(params.apiKey)}${

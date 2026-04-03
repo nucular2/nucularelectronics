@@ -42,6 +42,27 @@ async function parseCrmApiResult(r: Response) {
   return { ok, status: r.status, data, message: data?.errorMsg || data?.errors?.[0] || (r.ok ? "" : "RetailCRM request failed") };
 }
 
+function crmDatetime(input?: string) {
+  const d = input ? new Date(input) : new Date();
+  if (!Number.isFinite(d.getTime())) {
+    const now = new Date();
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(now.getUTCDate()).padStart(2, "0");
+    const hh = String(now.getUTCHours()).padStart(2, "0");
+    const mm = String(now.getUTCMinutes()).padStart(2, "0");
+    const ss = String(now.getUTCSeconds()).padStart(2, "0");
+    return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+  }
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  const ss = String(d.getUTCSeconds()).padStart(2, "0");
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+}
+
 async function fetchCrmOrderByExternalId(params: { apiUrl: string; apiKey: string; externalId: string; site?: string }) {
   const url =
     `${params.apiUrl}/api/v5/orders/${encodeURIComponent(params.externalId)}` +
@@ -89,7 +110,7 @@ async function crmUpsertOrderPayment(params: {
     externalId: candidate?.externalId || params.paymentExternalId,
     order: { externalId: params.orderExternalId },
     amount: normalizedAmount,
-    paidAt: params.paidAtIso,
+    paidAt: crmDatetime(params.paidAtIso),
     type: candidate?.type || params.paymentType,
     status: params.status,
   };
@@ -238,4 +259,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ message: "Handler exception", details: e?.message || String(e) });
   }
 }
-

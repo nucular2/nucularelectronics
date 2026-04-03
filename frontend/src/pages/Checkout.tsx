@@ -72,6 +72,8 @@ export default function Checkout() {
     termsAccepted: false,
   });
 
+  const cartSnapshotRef = useRef<{ items: any[]; totalPrice: number }>({ items: [], totalPrice: 0 });
+
   const hasPreorder = useMemo(() => items.some((it: any) => Boolean(it?.isPreorder)), [items]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(hasPreorder ? "bank" : "card");
   const [promoCode, setPromoCode] = useState('');
@@ -162,6 +164,13 @@ export default function Checkout() {
   }, [contacts]);
 
   useEffect(() => {
+    cartSnapshotRef.current = {
+      items: Array.isArray(items) ? items : [],
+      totalPrice: typeof totalPrice === "number" && Number.isFinite(totalPrice) ? totalPrice : 0,
+    };
+  }, [items, totalPrice]);
+
+  useEffect(() => {
     if (!import.meta.env.PROD) return;
     if (!user) navigate("/login?redirect=/checkout");
   }, [user, navigate]);
@@ -240,12 +249,14 @@ export default function Checkout() {
     return refreshed.session;
   };
 
-  const createOrder = async (params?: { initialStatus?: string }) => {
+  const createOrder = async (params?: { initialStatus?: string; itemsOverride?: any[]; totalOverride?: number }) => {
     if (!contacts.termsAccepted) {
       setError("Please accept the Terms and Conditions.");
       throw new Error("Terms not accepted");
     }
-    if (!items.length || totalPrice <= 0) {
+    const orderItems = params?.itemsOverride ?? items;
+    const orderTotal = typeof params?.totalOverride === "number" ? params.totalOverride : totalPrice;
+    if (!Array.isArray(orderItems) || orderItems.length === 0 || !(typeof orderTotal === "number") || orderTotal <= 0) {
       setError("Your cart is empty. Please add items before checkout.");
       throw new Error("Cart is empty");
     }
@@ -264,8 +275,8 @@ export default function Checkout() {
     if (isProduction) {
       const payload = {
         user_id: user.id,
-        items,
-        total_amount: totalPrice,
+        items: orderItems,
+        total_amount: orderTotal,
         status: params?.initialStatus || "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
@@ -293,8 +304,8 @@ export default function Checkout() {
         .from("orders")
         .insert({
           user_id: user.id,
-          items: items,
-          total_amount: totalPrice,
+          items: orderItems,
+          total_amount: orderTotal,
           status: params?.initialStatus || "New",
           customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
           customer_phone: fullPhone,
@@ -314,8 +325,8 @@ export default function Checkout() {
       .from("orders")
       .insert({
         user_id: user.id,
-        items: items,
-        total_amount: totalPrice,
+        items: orderItems,
+        total_amount: orderTotal,
         status: params?.initialStatus || "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
@@ -931,7 +942,8 @@ export default function Checkout() {
                         <PayPalButtons
                           style={{ layout: "horizontal", color: "gold", shape: "rect", label: "paypal", height: 44, tagline: false }}
                           createOrder={async (_data, actions) => {
-                            const order = await createOrder();
+                            const snap = cartSnapshotRef.current;
+                            const order = await createOrder({ itemsOverride: snap.items, totalOverride: snap.totalPrice });
                             currentOrderId.current = order.id;
                             try {
                               await sendOrderToCrm(order);
@@ -943,7 +955,7 @@ export default function Checkout() {
                               purchase_units: [
                                 {
                                   description: `Order ${String(order.id).slice(0, 12)}`,
-                                  amount: { currency_code: "USD", value: totalPrice.toFixed(2) },
+                                  amount: { currency_code: "USD", value: Number(order.total_amount).toFixed(2) },
                                 },
                               ],
                             });

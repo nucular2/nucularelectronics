@@ -40,6 +40,13 @@ function asArray(value: any) {
   return Array.isArray(value) ? value : [];
 }
 
+function displayOrderNumber(order: any) {
+  const crmNumber = order?.contacts?.crm?.number;
+  if (crmNumber) return String(crmNumber);
+  const id = typeof order?.id === "string" ? order.id : "";
+  return id.includes("-") ? id.split("-")[0].toUpperCase() : id;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -70,13 +77,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const totalCents = cents((order as any).total_amount);
     const items = asArray((order as any).items);
-    const crmNumber = (order as any)?.contacts?.crm?.number ? String((order as any).contacts.crm.number) : null;
+    const orderNumber = displayOrderNumber(order);
 
     const lineItems: any[] = [];
     let itemsSumCents = 0;
     for (const raw of items) {
       const baseName = String(raw?.title || raw?.name || raw?.productName || "Item").slice(0, 120);
-      const name = crmNumber ? `Order ${crmNumber}: ${baseName}`.slice(0, 120) : baseName;
+      const name = `Order ${orderNumber}: ${baseName}`.slice(0, 120);
       const quantityRaw = raw?.quantity;
       const quantity =
         typeof quantityRaw === "number" && Number.isFinite(quantityRaw) && quantityRaw > 0 ? Math.floor(quantityRaw) : 1;
@@ -103,7 +110,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       lineItems.push({
         price_data: {
           currency: "usd",
-          product_data: { name: `Order #${String((order as any).id).slice(0, 8)}` },
+          product_data: { name: `Order ${orderNumber}`.slice(0, 120) },
           unit_amount: totalCents,
         },
         quantity: 1,
@@ -126,6 +133,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const session = await stripeClient.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
+      client_reference_id: orderNumber,
       line_items: lineItems,
       success_url: `${frontendUrl}/orders?payment=success&orderId=${encodeURIComponent(String(orderId))}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${frontendUrl}/cart?payment=canceled&orderId=${encodeURIComponent(String(orderId))}`,
@@ -140,4 +148,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ message: "Server error", details: e?.message || String(e) });
   }
 }
-

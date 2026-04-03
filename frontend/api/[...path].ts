@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { createHash, timingSafeEqual } from 'node:crypto';
 import type Stripe from 'stripe';
 import { countries as knownCountries } from '../src/data/countries';
 
@@ -17,8 +16,40 @@ const supabaseServiceKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
   'placeholder-key';
 
-const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
-const supabaseService = createClient(supabaseUrl, supabaseServiceKey);
+let supabaseAnonClient: any = null;
+let supabaseServiceClient: any = null;
+
+function getSupabaseAnon() {
+  if (!supabaseAnonClient) {
+    supabaseAnonClient = createClient(supabaseUrl, supabaseAnonKey);
+  }
+  return supabaseAnonClient;
+}
+
+function getSupabaseService() {
+  if (!supabaseServiceClient) {
+    supabaseServiceClient = createClient(supabaseUrl, supabaseServiceKey);
+  }
+  return supabaseServiceClient;
+}
+
+const supabaseAnon: any = new Proxy(
+  {},
+  {
+    get(_target, prop) {
+      return (getSupabaseAnon() as any)[prop as any];
+    },
+  }
+);
+
+const supabaseService: any = new Proxy(
+  {},
+  {
+    get(_target, prop) {
+      return (getSupabaseService() as any)[prop as any];
+    },
+  }
+);
 
 const CMS_BUCKET = process.env.CMS_BUCKET || 'cms';
 
@@ -35,7 +66,7 @@ async function ensureCmsBucket() {
   try {
     const { data, error } = await supabaseService.storage.listBuckets();
     if (error) return;
-    const exists = (data || []).some((b) => b.name === CMS_BUCKET);
+    const exists = (data || []).some((b: any) => b.name === CMS_BUCKET);
     if (exists) return;
     await supabaseService.storage.createBucket(CMS_BUCKET, { public: true });
   } catch {
@@ -474,11 +505,35 @@ function safePaymentExternalId(params: { provider: string; paymentId?: string; o
   const max = 50;
   const normalizedBase = base.replace(/[^a-zA-Z0-9_]/g, '_');
   if (normalizedBase.length <= max) return normalizedBase;
-  const hash = createHash('sha1').update(base).digest('hex').slice(0, 10);
+  const hash = fnv1aHex(base).slice(0, 10);
   const orderPart = String(params.orderId || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 12) || 'order';
   const payPart = String(params.paymentId || '').replace(/[^a-zA-Z0-9]/g, '').slice(-12) || 'pay';
   const compact = `${params.provider}_${orderPart}_${payPart}_${hash}`.replace(/[^a-zA-Z0-9_]/g, '_');
   return compact.length <= max ? compact : compact.slice(0, max);
+}
+
+function fnv1aHex(input: string) {
+  let h1 = 2166136261;
+  let h2 = 2166136261 ^ 0x9e3779b9;
+  for (let i = 0; i < input.length; i += 1) {
+    const c = input.charCodeAt(i);
+    h1 ^= c;
+    h1 = Math.imul(h1, 16777619);
+    h2 ^= c;
+    h2 = Math.imul(h2, 2166136261);
+  }
+  const a = (h1 >>> 0).toString(16).padStart(8, '0');
+  const b = (h2 >>> 0).toString(16).padStart(8, '0');
+  return `${a}${b}`;
+}
+
+function constantTimeEqual(a: Uint8Array, b: Uint8Array) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    diff |= a[i] ^ b[i];
+  }
+  return diff === 0;
 }
 
 function flattenCrmErrors(errors: any): string[] {
@@ -521,7 +576,7 @@ function requirePaymentModuleToken(req: VercelRequest) {
     const a = Buffer.from(got);
     const b = Buffer.from(expected);
     if (a.length !== b.length) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
-    if (!timingSafeEqual(a, b)) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
+    if (!constantTimeEqual(a, b)) return { ok: false as const, status: 403 as const, message: 'Forbidden' };
   } catch {
     return { ok: false as const, status: 403 as const, message: 'Forbidden' };
   }

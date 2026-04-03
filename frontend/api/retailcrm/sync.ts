@@ -51,6 +51,131 @@ async function fetchCrmOrderByExternalIdStrict(params: { apiUrl: string; apiKey:
   return parsed.data?.order ?? null;
 }
 
+function crmDatetime(input?: string) {
+  const d = input ? new Date(input) : new Date();
+  if (!Number.isFinite(d.getTime())) {
+    const now = new Date();
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(now.getUTCDate()).padStart(2, "0");
+    const hh = String(now.getUTCHours()).padStart(2, "0");
+    const mm = String(now.getUTCMinutes()).padStart(2, "0");
+    const ss = String(now.getUTCSeconds()).padStart(2, "0");
+    return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+  }
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  const ss = String(d.getUTCSeconds()).padStart(2, "0");
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+}
+
+function normalizePaymentType(typeIn: any, fallbackCode: string) {
+  if (typeIn && typeof typeIn === "object") {
+    const code = String((typeIn as any).code || "").trim();
+    if (code) return { code };
+  }
+  const code = String(typeIn || fallbackCode || "").trim();
+  return code ? { code } : undefined;
+}
+
+function pickPaymentTypeCode(contacts: any) {
+  const byProvider = String(contacts?.payment?.provider || "").trim().toLowerCase();
+  const byMethod = String(contacts?.paymentMethod || "").trim().toLowerCase();
+  const stripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || "stripe-payment";
+  const paypal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || "paypal";
+  const bank = process.env.RETAILCRM_PAYMENT_TYPE_BANK || "bank-transfer";
+  const noPayment = process.env.RETAILCRM_PAYMENT_TYPE_NO_PAYMENT || "no-payment";
+  if (byProvider === "paypal") return paypal;
+  if (byProvider === "stripe") return stripe;
+  if (byMethod === "paypal") return paypal;
+  if (byMethod === "bank") return bank;
+  if (byMethod === "no_payment") return noPayment;
+  return stripe;
+}
+
+async function crmUpsertOrderPayment(params: {
+  apiUrl: string;
+  apiKey: string;
+  site?: string;
+  orderExternalId: string;
+  paymentExternalId: string;
+  paymentType: string;
+  status: string;
+  amount: number;
+  paidAtIso?: string;
+}) {
+  const fetchOrderUrl =
+    `${params.apiUrl}/api/v5/orders/${encodeURIComponent(params.orderExternalId)}` +
+    `?apiKey=${encodeURIComponent(params.apiKey)}` +
+    `&by=externalId` +
+    (params.site ? `&site=${encodeURIComponent(params.site)}` : "");
+
+  let crmOrder: any = null;
+  try {
+    const r = await fetch(fetchOrderUrl, { headers: { Accept: "application/json" } });
+    const parsed = await parseCrmApiResult(r);
+    crmOrder = parsed.ok ? parsed.data?.order : null;
+  } catch {
+    crmOrder = null;
+  }
+
+  const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const paidCodes = ["paid", "payment-paid", "payment_paid", "succeeded"];
+  const normalizedAmount = Math.round(params.amount * 100) / 100;
+  const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
+
+  const candidate =
+    payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
+    payments.find((p: any) => {
+      const status = String(p?.status || "").toLowerCase();
+      if (paidCodes.includes(status)) return false;
+      if (!exactMatch(p?.amount)) return false;
+      return true;
+    }) ||
+    null;
+
+  const paymentBase: any = {
+    externalId: candidate?.externalId || params.paymentExternalId,
+    order: { externalId: params.orderExternalId },
+    amount: normalizedAmount,
+    type: normalizePaymentType(candidate?.type, params.paymentType),
+    status: params.status,
+  };
+  if (params.paidAtIso) paymentBase.paidAt = crmDatetime(params.paidAtIso);
+
+  if (candidate?.id) {
+    const editUrl = `${params.apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(params.apiKey)}${
+      params.site ? `&site=${encodeURIComponent(params.site)}` : ""
+    }`;
+    const form = new URLSearchParams();
+    form.set("payment", JSON.stringify(paymentBase));
+    const r = await fetch(editUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+      body: form.toString(),
+    });
+    const parsed = await parseCrmApiResult(r);
+    if (!parsed.ok) throw new Error(parsed.message || "RetailCRM payments edit failed");
+    return;
+  }
+
+  const createUrl = `${params.apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(params.apiKey)}${
+    params.site ? `&site=${encodeURIComponent(params.site)}` : ""
+  }`;
+  const form = new URLSearchParams();
+  form.set("payment", JSON.stringify(paymentBase));
+  const r = await fetch(createUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+    body: form.toString(),
+  });
+  const parsed = await parseCrmApiResult(r);
+  if (!parsed.ok) throw new Error(parsed.message || "RetailCRM payments create failed");
+}
+
 function mapCrmStatusToUiStatus(input?: string): OrderStatus | null {
   if (!input) return null;
   const code = input.trim().toLowerCase();
@@ -170,6 +295,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const stripePaid = Boolean((prevContacts as any)?.payment?.paidAt) || String((prevContacts as any)?.payment?.status || "").toLowerCase() === "paid";
       const dbPaid = (row as any).status === "Paid";
       const keepPaid = stripePaid || dbPaid;
+      const crmHasPaid =
+        Boolean(fullPaidAt) || paymentStatuses.some((s) => ["paid", "payment-paid", "payment_paid", "succeeded"].includes((s || "").toLowerCase()));
+
+      if (keepPaid && !crmHasPaid) {
+        try {
+          const paidAtIso =
+            String((prevContacts as any)?.payment?.paidAt || "").trim() ||
+            String((prevContacts as any)?.payment?.updatedAt || "").trim() ||
+            new Date().toISOString();
+          const amount =
+            typeof (prevContacts as any)?.payment?.amount === "number" && Number.isFinite((prevContacts as any).payment.amount)
+              ? Math.round((prevContacts as any).payment.amount * 100) / 100
+              : Math.round(Number((row as any).total_amount || 0) * 100) / 100;
+          if (Number.isFinite(amount) && amount > 0) {
+            const paymentStatusPaid = process.env.RETAILCRM_PAYMENT_STATUS_PAID || "paid";
+            const paymentType = pickPaymentTypeCode(prevContacts);
+            const provider = String((prevContacts as any)?.payment?.provider || "").trim().toLowerCase();
+            const paymentExternalId = `reconcile_${provider || paymentType}_${externalId}`.slice(0, 60);
+            await crmUpsertOrderPayment({
+              apiUrl,
+              apiKey,
+              site,
+              orderExternalId: externalId,
+              paymentExternalId,
+              paymentType,
+              status: paymentStatusPaid,
+              amount,
+              paidAtIso,
+            });
+          }
+        } catch {
+        }
+      }
 
       let nextStatus = deriveUiStatus({ crmStatus, fullPaidAt, paymentStatuses });
       if (keepPaid && !["Canceled", "Delivered", "Shipped", "Awaiting pickup"].includes(nextStatus)) {
@@ -206,4 +364,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ message: "Handler exception", details: e?.message || String(e) });
   }
 }
-

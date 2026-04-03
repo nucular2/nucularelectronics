@@ -880,12 +880,13 @@ function getRouteParts(req: VercelRequest) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const parts = getRouteParts(req);
-  const route = parts.join('/');
+  try {
+    const parts = getRouteParts(req);
+    const route = parts.join('/');
 
-  if (!route) {
-    return res.status(404).json({ message: 'Not Found' });
-  }
+    if (!route) {
+      return res.status(404).json({ message: 'Not Found' });
+    }
 
   if (route === 'ping') {
     return res.status(200).json({
@@ -2086,5 +2087,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ ok: true, vars });
   }
 
-  return res.status(404).json({ message: 'Not Found' });
+    return res.status(404).json({ message: 'Not Found' });
+  } catch (e: any) {
+    try {
+      console.error('API handler crashed', e);
+    } catch {}
+    if (res.headersSent) return;
+    return res.status(500).json({ message: 'Server error', details: e?.message || String(e) });
+  }
 }

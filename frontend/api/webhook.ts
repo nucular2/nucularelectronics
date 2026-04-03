@@ -122,10 +122,9 @@ async function pushPaymentToRetailCrm(params: {
 function normalizePaymentType(typeIn: any, fallbackCode: string) {
   if (typeIn && typeof typeIn === 'object') {
     const code = String((typeIn as any).code || '').trim();
-    if (code) return { code };
+    if (code) return code;
   }
-  const code = String(typeIn || fallbackCode || '').trim();
-  return code ? { code } : undefined;
+  return String(typeIn || fallbackCode || '').trim();
 }
 
 function fnv1aHex(input: string) {

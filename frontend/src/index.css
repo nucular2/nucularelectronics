@@ -86,6 +86,10 @@
   row-gap: 24px;
 }
 @media (max-width: 900px) {
+  :root {
+    --header-h: 68px;
+  }
+
   .grid-12 {
     grid-template-columns: 1fr;
     column-gap: 0;

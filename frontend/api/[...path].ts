@@ -110,13 +110,31 @@ function sanitizeBlocks(blocks: any) {
     if (type === 'heading') {
       const text = String(b?.text || '').trim();
       if (!text) continue;
-      out.push({ id, type: 'heading', text });
+      const levelRaw = Number(b?.level);
+      const level = levelRaw === 3 || levelRaw === 4 ? levelRaw : undefined;
+      out.push({ id, type: 'heading', text, level });
       continue;
     }
     if (type === 'paragraph') {
       const text = String(b?.text || '').trim();
       if (!text) continue;
-      out.push({ id, type: 'paragraph', text });
+      const bold = Boolean(b?.bold) || undefined;
+      out.push({ id, type: 'paragraph', text, bold });
+      continue;
+    }
+    if (type === 'list') {
+      const items = Array.isArray(b?.items) ? b.items : [];
+      const cleaned = items.map((x: any) => String(x || '').trim()).filter(Boolean);
+      if (cleaned.length === 0) continue;
+      const ordered = Boolean(b?.ordered) || undefined;
+      out.push({ id, type: 'list', items: cleaned, ordered });
+      continue;
+    }
+    if (type === 'link') {
+      const href = String(b?.href || '').trim();
+      const text = String(b?.text || '').trim();
+      if (!href || !text) continue;
+      out.push({ id, type: 'link', href, text });
       continue;
     }
     if (type === 'image') {
@@ -127,8 +145,75 @@ function sanitizeBlocks(blocks: any) {
       out.push({ id, type: 'image', url, alt, caption });
       continue;
     }
+    if (type === 'video') {
+      const url = String(b?.url || '').trim();
+      if (!url) continue;
+      const title = String(b?.title || '').trim() || undefined;
+      out.push({ id, type: 'video', url, title });
+      continue;
+    }
+    if (type === 'quote') {
+      const text = String(b?.text || '').trim();
+      if (!text) continue;
+      const author = String(b?.author || '').trim() || undefined;
+      out.push({ id, type: 'quote', text, author });
+      continue;
+    }
+    if (type === 'slider') {
+      const rawImages = Array.isArray(b?.images) ? b.images : [];
+      const images = rawImages
+        .map((img: any) => ({ url: String(img?.url || img || '').trim(), alt: String(img?.alt || '').trim() || undefined }))
+        .filter((img: any) => Boolean(img.url));
+      if (images.length === 0) continue;
+      const caption = String(b?.caption || '').trim() || undefined;
+      out.push({ id, type: 'slider', images, caption });
+      continue;
+    }
+    if (type === 'divider') {
+      out.push({ id, type: 'divider' });
+      continue;
+    }
   }
   return out;
+}
+
+function sanitizeDocsConfig(input: any) {
+  const rawPages = Array.isArray(input?.pages) ? input.pages : [];
+  const pages = rawPages
+    .map((p: any) => {
+      const slug = String(p?.slug || '').trim();
+      const route = String(p?.route || '').trim();
+      const titleEn = String(p?.title?.en || p?.title_en || '').trim();
+      const titleRu = String(p?.title?.ru || p?.title_ru || '').trim();
+      const statusEn = String(p?.status?.en || '').trim() === 'published' ? 'published' : 'draft';
+      const statusRu = String(p?.status?.ru || '').trim() === 'published' ? 'published' : 'draft';
+      const blocksEn = sanitizeBlocks(p?.blocks?.en);
+      const blocksRu = sanitizeBlocks(p?.blocks?.ru);
+      const updatedAt = typeof p?.updatedAt === 'number' ? p.updatedAt : Date.now();
+      const createdAt = typeof p?.createdAt === 'number' ? p.createdAt : updatedAt;
+      if (!slug) return null;
+      return {
+        slug,
+        route: route || undefined,
+        title: { en: titleEn || slug, ru: titleRu || titleEn || slug },
+        status: { en: statusEn, ru: statusRu },
+        blocks: { en: blocksEn, ru: blocksRu },
+        createdAt,
+        updatedAt,
+      };
+    })
+    .filter(Boolean);
+
+  const seen = new Set<string>();
+  const uniq: any[] = [];
+  for (const p of pages as any[]) {
+    if (seen.has(p.slug)) continue;
+    seen.add(p.slug);
+    uniq.push(p);
+  }
+
+  const version = typeof input?.version === 'number' ? input.version : 1;
+  return { version, pages: uniq };
 }
 
 function sanitizeNews(items: any[]) {
@@ -606,6 +691,7 @@ function asArray(value: unknown): any[] {
 const NEWS_PATH = 'news.json';
 const HOME_PATH = 'home.json';
 const SHOP_PATH = 'shop.json';
+const DOCS_PATH = 'docs.json';
 
 const fallbackNews = [
   {
@@ -719,6 +805,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
+  if (route === 'content/docs') {
+    if (req.method !== 'GET') {
+      res.setHeader('Allow', 'GET');
+      return res.status(405).end('Method Not Allowed');
+    }
+
+    const slug = String((req.query as any)?.slug || '').trim();
+    const langRaw = String((req.query as any)?.lang || '').trim().toLowerCase();
+    const lang = langRaw === 'ru' ? 'ru' : 'en';
+    if (!slug) return res.status(400).json({ ok: false, message: 'Missing slug' });
+
+    try {
+      const stored = await readJson<any>(DOCS_PATH);
+      const config = stored && typeof stored === 'object' ? stored : { version: 1, pages: [] };
+      const pages = Array.isArray((config as any).pages) ? (config as any).pages : [];
+      const page = pages.find((p: any) => String(p?.slug || '').trim() === slug) || null;
+      if (!page) return res.status(404).json({ ok: false, message: 'Not found' });
+
+      const status = String(page?.status?.[lang] || '').trim();
+      if (status !== 'published') return res.status(404).json({ ok: false, message: 'Not published' });
+
+      const title = String(page?.title?.[lang] || page?.title?.en || slug).trim();
+      const blocks = sanitizeBlocks(page?.blocks?.[lang]);
+      return res.status(200).json({ ok: true, slug, lang, title, blocks });
+    } catch (e: any) {
+      return res.status(500).json({ ok: false, message: e?.message || String(e) });
+    }
+  }
+
   if (route === 'admin/news') {
     if (req.method !== 'POST') {
       res.setHeader('Allow', 'POST');
@@ -732,6 +847,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const body = (req.body || {}) as { news?: any[] };
       const news = sanitizeNews(Array.isArray(body.news) ? body.news : []);
       await writeJson(NEWS_PATH, news);
+      return res.status(200).json({ ok: true });
+    } catch (e: any) {
+      return res.status(500).json({ message: e?.message || String(e) });
+    }
+  }
+
+  if (route === 'admin/docs') {
+    if (req.method !== 'GET' && req.method !== 'POST') {
+      res.setHeader('Allow', 'GET, POST');
+      return res.status(405).end('Method Not Allowed');
+    }
+
+    const auth = await requireAdmin(req);
+    if (!auth.ok) return res.status(auth.status).json({ message: auth.message });
+
+    try {
+      if (req.method === 'GET') {
+        const stored = await readJson<any>(DOCS_PATH);
+        const config = stored && typeof stored === 'object' ? stored : { version: 1, pages: [] };
+        return res.status(200).json({ ok: true, config });
+      }
+
+      const body = (req.body || {}) as { config?: any };
+      const config = sanitizeDocsConfig(body?.config);
+      await writeJson(DOCS_PATH, config);
       return res.status(200).json({ ok: true });
     } catch (e: any) {
       return res.status(500).json({ message: e?.message || String(e) });

@@ -280,17 +280,17 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
   const [isCompatOpen, setIsCompatOpen] = useState(true);
   const [isDocsOpen, setIsDocsOpen] = useState(true);
   const [isReviewsOpen, setIsReviewsOpen] = useState(true);
-  const [isDesktop, setIsDesktop] = useState(() => {
+  const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") {
       return false;
     }
-    return window.matchMedia("(min-width: 901px)").matches;
+    return window.matchMedia("(max-width: 900px)").matches;
   });
   const [isStickyBarVisible, setIsStickyBarVisible] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 901px)");
-    const updateMatch = () => setIsDesktop(mediaQuery.matches);
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const updateMatch = () => setIsMobile(mediaQuery.matches);
     updateMatch();
     mediaQuery.addEventListener("change", updateMatch);
     return () => mediaQuery.removeEventListener("change", updateMatch);
@@ -298,12 +298,16 @@ export default function ProductDetail({ productId, imagesOverride }: ProductDeta
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isMobile) {
+        setIsStickyBarVisible(true);
+        return;
+      }
       setIsStickyBarVisible(window.scrollY > 260);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isDesktop]);
+  }, [isMobile]);
 
   if (!isProductsReady) {
     return (

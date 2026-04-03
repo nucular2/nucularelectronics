@@ -48,6 +48,7 @@ import AdminProductEditor from './admin/pages/ProductEditor';
 import AdminNewsManager from './admin/pages/NewsManager';
 import AdminHomeManager from './admin/pages/HomeManager';
 import AdminShopManager from './admin/pages/ShopManager';
+import AdminSupportManager from './admin/pages/SupportManager';
 import { AuthProvider as AdminAuthProvider, ProtectedRoute as AdminProtectedRoute } from './admin/context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
 import { ReviewsProvider } from './context/ReviewsContext';
@@ -188,6 +189,7 @@ export default function App() {
                   <Route path="news" element={<AdminNewsManager />} />
                   <Route path="home" element={<AdminHomeManager />} />
                   <Route path="shop" element={<AdminShopManager />} />
+                  <Route path="support" element={<AdminSupportManager />} />
                   <Route path="*" element={<AdminDashboard />} />
                 </Route>
               </>

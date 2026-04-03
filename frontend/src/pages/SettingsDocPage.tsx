@@ -2,14 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import DocsLanguageToggle, { useDocsLanguage } from "../components/DocsLanguageToggle";
+import DocsBlocks from "../components/docs/DocsBlocks";
+import type { NewsBlock } from "../context/NewsContext";
+import { searchItems as searchInItems, type SearchItem as SearchIndexItem } from "../utils/search";
 import "./ControllerSettings.css";
 import "./SettingsDocPage.css";
-
-type SearchItem = {
-  id: string;
-  label: string;
-  text: string;
-};
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -20,7 +17,7 @@ function scrollToId(id: string) {
 function buildSearchItems(html: string) {
   const doc = new DOMParser().parseFromString(html, "text/html");
   const headings = Array.from(doc.querySelectorAll("h2[id], h3[id]")) as HTMLHeadingElement[];
-  const items: SearchItem[] = [];
+  const items: SearchIndexItem[] = [];
 
   for (const heading of headings) {
     const id = heading.id;
@@ -44,6 +41,27 @@ function buildSearchItems(html: string) {
   return items;
 }
 
+function buildSearchItemsFromBlocks(blocks: NewsBlock[]) {
+  const items: SearchIndexItem[] = [];
+  for (let i = 0; i < blocks.length; i++) {
+    const b = blocks[i];
+    if (b.type !== "heading") continue;
+    const id = b.id;
+    const label = (b.text ?? "").trim();
+    if (!id || !label) continue;
+
+    let text = "";
+    for (let j = i + 1; j < blocks.length; j++) {
+      const next = blocks[j];
+      if (next.type === "heading") break;
+      if (next.type === "paragraph") text += (text ? " " : "") + next.text;
+      if (next.type === "list") text += (text ? " " : "") + (Array.isArray(next.items) ? next.items.join(" ") : "");
+    }
+    items.push({ id, label, text });
+  }
+  return items;
+}
+
 export default function SettingsDocPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -51,6 +69,7 @@ export default function SettingsDocPage() {
   const [query, setQuery] = useState("");
   const [searchPhase, setSearchPhase] = useState<"idle" | "loading" | "done">("idle");
   const [html, setHtml] = useState<string>("");
+  const [blocks, setBlocks] = useState<NewsBlock[] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const docs = useMemo(
@@ -91,14 +110,27 @@ export default function SettingsDocPage() {
     setQuery("");
     setSearchPhase("idle");
     setHtml("");
+    setBlocks(null);
     setLoadError(null);
 
     if (!docDef) return;
 
+    let isActive = true;
+    let cmsHasBlocks = false;
+    fetch(`/api/content/docs?slug=${encodeURIComponent(String(slug))}&lang=${encodeURIComponent(language)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!isActive) return;
+        if (data?.ok && Array.isArray(data?.blocks) && data.blocks.length > 0) {
+          cmsHasBlocks = true;
+          setBlocks(data.blocks);
+          setHtml("");
+        }
+      })
+      .catch(() => {});
+
     const langPath = `/docs/settings-pages/${slug}/${language}/content.html`;
     const legacyPath = docDef.htmlPath;
-
-    let isActive = true;
 
     fetch(langPath)
       .then((r) => {
@@ -111,15 +143,18 @@ export default function SettingsDocPage() {
       })
       .then((text) => {
         if (!isActive) return;
+        if (cmsHasBlocks) return;
         if (language === "ru" && text.trim().length < 400) {
           fetch(`/docs/settings-pages/${slug}/en/content.html`)
             .then((r) => (r.ok ? r.text() : text))
             .then((fallback) => {
               if (!isActive) return;
+              if (cmsHasBlocks) return;
               setHtml(fallback);
             })
             .catch(() => {
               if (!isActive) return;
+              if (cmsHasBlocks) return;
               setHtml(text);
             });
           return;
@@ -136,15 +171,13 @@ export default function SettingsDocPage() {
     };
   }, [docDef, language, slug]);
 
-  const searchItems = useMemo(() => (html ? buildSearchItems(html) : []), [html]);
+  const searchItems = useMemo(() => {
+    if (blocks && blocks.length > 0) return buildSearchItemsFromBlocks(blocks);
+    if (html) return buildSearchItems(html);
+    return [];
+  }, [blocks, html]);
 
-  const searchResults = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return searchItems
-      .filter((item) => (item.label + " " + item.text).toLowerCase().includes(q))
-      .slice(0, 8);
-  }, [query, searchItems]);
+  const searchResults = useMemo(() => searchInItems(searchItems, query, 8), [query, searchItems]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -216,12 +249,13 @@ export default function SettingsDocPage() {
                     setQuery(e.target.value);
                     if (searchPhase !== "idle") setSearchPhase("idle");
                   }}
-                  placeholder="What are you looking for?"
+                  placeholder={language === "ru" ? "Что вы ищете?" : "What are you looking for?"}
                 />
                 {query.trim() ? (
                   <button
                     type="button"
                     className="support-search-clear"
+                    aria-label={language === "ru" ? "Очистить поиск" : "Clear search"}
                     onClick={() => {
                       setQuery("");
                       setSearchPhase("idle");
@@ -246,12 +280,13 @@ export default function SettingsDocPage() {
                             scrollToId(item.id);
                           }}
                         >
-                          {item.label}
+                          <div className="support-search-result-title">{item.label}</div>
+                          {item.snippet ? <div className="support-search-result-snippet">{item.snippet}</div> : null}
                         </button>
                       ))}
                     </>
                   ) : (
-                    <div className="support-search-not-found">Not found</div>
+                    <div className="support-search-not-found">{language === "ru" ? "Ничего не найдено" : "Not found"}</div>
                   )}
                 </div>
               ) : null}
@@ -263,7 +298,7 @@ export default function SettingsDocPage() {
               type="submit"
               disabled={searchPhase !== "idle"}
             >
-              Search
+              {language === "ru" ? "Поиск" : "Search"}
             </button>
           </form>
 
@@ -271,6 +306,10 @@ export default function SettingsDocPage() {
             <div className="controller-content">
               {loadError ? (
                 <div className="controller-content-text">{loadError}</div>
+              ) : blocks && blocks.length > 0 ? (
+                <div className="settings-doc-content">
+                  <DocsBlocks blocks={blocks} />
+                </div>
               ) : html ? (
                 <div className="settings-doc-content" dangerouslySetInnerHTML={{ __html: html }} />
               ) : (

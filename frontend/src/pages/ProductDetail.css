@@ -1647,6 +1647,10 @@
 }
 
 @media (max-width: 900px) {
+  .product-page {
+    padding-top: calc(var(--header-h) + 68px);
+  }
+
   .product-sticky-bar {
     width: 414px;
     max-width: 100%;

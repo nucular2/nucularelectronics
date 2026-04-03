@@ -10,7 +10,10 @@ export default function Controller() {
   const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
   const { addToCart } = useCart();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 900px)").matches;
+  });
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 900px)");
@@ -43,6 +46,17 @@ export default function Controller() {
 
   return (
     <div className="onboard-page controller-page">
+      {isMobile && (
+        <div className="controller-sticky-bar">
+          <div className="controller-sticky-title">Nucular controller P24F</div>
+          <div className="controller-sticky-right">
+            <div className="controller-sticky-price">$610.00</div>
+            <button className="controller-sticky-cta" onClick={handleBuy}>
+              Buy
+            </button>
+          </div>
+        </div>
+      )}
       {/* Header with dynamic variant based on active tab */}
       <Header variant={activeTab === 'specifications' ? 'white' : 'transparent'} />
       

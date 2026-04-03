@@ -48,11 +48,27 @@
 }
 
 .settings-doc-content img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
   border-radius: 16px;
   display: block;
   margin: 16px 0 20px;
+}
+
+.settings-doc-content img:not([width]) {
+  width: 100%;
+}
+
+.settings-doc-content img[width="300"] {
+  display: inline-block;
+  width: calc(50% - 10px);
+  max-width: 220px;
+  margin: 10px 10px 14px 0;
+  vertical-align: top;
+}
+
+.settings-doc-content img[width="300"]:last-child {
+  margin-right: 0;
 }
 
 .settings-doc-content table {
@@ -63,6 +79,10 @@
   font-size: 14px;
   line-height: 1.4;
   color: #222;
+}
+
+.controller-content-wrap {
+  margin-top: 18px;
 }
 
 .settings-doc-content th,
@@ -89,5 +109,12 @@
   .settings-doc-content p,
   .settings-doc-content li {
     font-size: 14px;
+  }
+
+  .settings-doc-content img[width="300"] {
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: 12px 0 16px;
   }
 }

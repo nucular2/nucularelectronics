@@ -156,13 +156,53 @@ export default function Orders() {
         });
         if (!r.ok) {
           const text = await r.text();
-          setError(text || "Failed to sync payment with CRM");
+          let parsed: any = null;
+          try {
+            parsed = JSON.parse(text);
+          } catch {
+            parsed = null;
+          }
+
+          const { data: freshOrder } = await supabase
+            .from("orders")
+            .select("id,status")
+            .eq("id", orderId)
+            .eq("user_id", user.id)
+            .maybeSingle();
+          if (freshOrder?.status === "Paid") {
+            setError(null);
+            navigate("/orders", { replace: true });
+            return;
+          }
+
+          try {
+            const sync = await fetch("/api/retailcrm/sync", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ orderIds: [orderId] }),
+            });
+            if (sync.ok) {
+              const payload = await sync.json().catch(() => null);
+              const upd = payload?.updates?.[orderId];
+              if (upd?.status === "Paid") {
+                setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: "Paid" as OrderStatus } : o)));
+                setError(null);
+                navigate("/orders", { replace: true });
+                return;
+              }
+            }
+          } catch (_) {}
+
+          const msg = parsed?.message || text || "Failed to sync payment with CRM";
+          const details = parsed?.details ? `: ${parsed.details}` : "";
+          setError(`${msg}${details}`);
           return;
         }
 
         setOrders((prev) =>
           prev.map((o) => (o.id === orderId ? { ...o, status: "Paid" as OrderStatus } : o))
         );
+        setError(null);
         navigate("/orders", { replace: true });
       } catch (_) {}
     };

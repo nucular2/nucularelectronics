@@ -35,6 +35,8 @@ interface ContactsInfo {
   termsAccepted: boolean;
 }
 
+type PaymentMethod = "card" | "paypal" | "bank" | "no_payment";
+
 export default function Checkout() {
   const { user } = useAuth();
   const { items, totalPrice, clearCart } = useCart(); // Assuming clearCart exists, otherwise we'll handle it
@@ -70,9 +72,9 @@ export default function Checkout() {
     termsAccepted: false,
   });
 
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
+  const hasPreorder = useMemo(() => items.some((it: any) => Boolean(it?.isPreorder)), [items]);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(hasPreorder ? "bank" : "card");
   const [promoCode, setPromoCode] = useState('');
-  const [showPaymentMethods, setShowPaymentMethods] = useState(false);
 
   // Load saved data from localStorage
   useEffect(() => {
@@ -223,15 +225,8 @@ export default function Checkout() {
     e.preventDefault();
     if (shipping.country && shipping.zipCode && shipping.city && shipping.street) {
       setStep(3);
-      setShowPaymentMethods(false);
       window.scrollTo(0, 0);
     }
-  };
-
-  const goToPaymentMethods = (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowPaymentMethods(true);
-    window.scrollTo(0, 0);
   };
 
   const ensureSupabaseSession = async () => {
@@ -245,7 +240,7 @@ export default function Checkout() {
     return refreshed.session;
   };
 
-  const createOrder = async () => {
+  const createOrder = async (params?: { initialStatus?: string }) => {
     if (!contacts.termsAccepted) {
       setError("Please accept the Terms and Conditions.");
       throw new Error("Terms not accepted");
@@ -271,7 +266,7 @@ export default function Checkout() {
         user_id: user.id,
         items,
         total_amount: totalPrice,
-        status: "New",
+        status: params?.initialStatus || "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
         customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
@@ -300,7 +295,7 @@ export default function Checkout() {
           user_id: user.id,
           items: items,
           total_amount: totalPrice,
-          status: "New",
+          status: params?.initialStatus || "New",
           customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
           customer_phone: fullPhone,
           customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
@@ -321,7 +316,7 @@ export default function Checkout() {
         user_id: user.id,
         items: items,
         total_amount: totalPrice,
-        status: "New",
+        status: params?.initialStatus || "New",
         customer_name: `${recipient.firstName} ${recipient.lastName}`.trim(),
         customer_phone: fullPhone,
         customer_address: `${shipping.street}${shipping.buildingName ? `, ${shipping.buildingName}` : ''}${shipping.flat ? `, ${shipping.flat}` : ''}, ${shipping.city}, ${shipping.zipCode}, ${shipping.country}`,
@@ -360,8 +355,8 @@ export default function Checkout() {
     throw new Error(text || 'RetailCRM request failed');
   };
 
-  const handleCardCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCardCheckout = async (e?: any) => {
+    e?.preventDefault?.();
     setLoading(true);
     setError(null);
 
@@ -479,6 +474,45 @@ export default function Checkout() {
   };
   
   const currentOrderId = React.useRef<string | null>(null);
+
+  const handleOfflineCheckout = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const session = await ensureSupabaseSession();
+      const isNoPayment = paymentMethod === "no_payment";
+      const order = await createOrder({ initialStatus: "Awaiting payment" });
+
+      try {
+        await sendOrderToCrm(order);
+      } catch (crmErr) {
+        console.error("RetailCRM send error:", crmErr);
+      }
+
+      if (isNoPayment || hasPreorder) {
+        try {
+          await fetch("/api/clicksend/notify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+            body: JSON.stringify({
+              orderId: order.id,
+              reason: isNoPayment ? "no_payment" : "preorder",
+            }),
+          });
+        } catch (_) {}
+      }
+
+      clearCart();
+      localStorage.removeItem("checkout_recipient");
+      localStorage.removeItem("checkout_shipping");
+      localStorage.removeItem("checkout_contacts");
+      navigate("/orders", { state: { tab: "active" } });
+    } catch (e: any) {
+      setError(e?.message || "Failed to complete checkout");
+    } finally {
+      setLoading(false);
+    }
+  };
   const selectedCountry = useMemo(() => {
     return countries.find((c) => c.code === recipient.countryCode) ?? countries[0];
   }, [recipient.countryCode]);
@@ -791,15 +825,86 @@ export default function Checkout() {
               </div>
               
               <div className="checkout-step-content">
-                <form onSubmit={goToPaymentMethods} className="checkout-form-grid">
-                  <div className="checkout-preorder-note">
-                    <div className="checkout-preorder-note-icon" aria-hidden="true">
-                      i
-                    </div>
-                    <div className="checkout-preorder-note-text">
-                      All goods in the cart, are available only for pre-order. We don&apos;t charge pre-payment for pre-orders. We&nbsp;will contact you for confirmation when the goods will be in stock and agree on payment and delivery methods.
-                    </div>
+                <div className="checkout-form-grid">
+                  <div className="checkout-payment-options">
+                    {!hasPreorder ? (
+                      <>
+                        <button
+                          type="button"
+                          className={`checkout-payment-tile ${paymentMethod === "card" ? "checkout-payment-tile--active checkout-payment-tile--active-orange" : ""}`}
+                          onClick={() => setPaymentMethod("card")}
+                        >
+                          <div className="checkout-payment-tile-icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect x="3" y="6" width="18" height="12" rx="2" stroke="#F36F25" strokeWidth="1.5" />
+                              <path d="M3 10H21" stroke="#F36F25" strokeWidth="1.5" />
+                            </svg>
+                          </div>
+                          <div className="checkout-payment-tile-label">Credit card</div>
+                          <div className="checkout-payment-tile-sub">Stripe</div>
+                        </button>
+
+                        <button
+                          type="button"
+                          className={`checkout-payment-tile ${paymentMethod === "paypal" ? "checkout-payment-tile--active" : ""}`}
+                          onClick={() => setPaymentMethod("paypal")}
+                        >
+                          <div className="checkout-payment-tile-icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00072L7.72801 21.242C7.68905 21.5155 7.88384 21.75 8.19551 21.75H11.3511C11.7407 21.75 12.0524 21.4765 12.0913 21.1247L12.7536 16.9825C12.7926 16.6308 13.1432 16.3572 13.4939 16.3572H13.9614C17.0001 16.3572 19.4155 15.1067 20.1168 11.5115C20.3895 10.0266 20.2726 8.73697 19.4934 7.87725C19.2597 7.60371 18.987 7.40832 18.6364 7.21293" fill="#009CDE" />
+                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L8.89676 13.8171C8.97468 13.3873 9.3253 13.0746 9.75384 13.0746H11.5459C15.0522 13.0746 17.7793 11.6678 18.5584 7.52555C18.5974 7.44739 18.5974 7.33016 18.6364 7.21293Z" fill="#012169" />
+                              <path d="M9.94864 7.252C9.98759 6.97846 10.3382 6.62675 10.6888 6.62675H15.4418C15.9872 6.62675 16.5326 6.66583 17.0001 6.74399C17.4286 6.82214 18.2078 7.01753 18.5974 7.252C18.8312 5.72796 18.5974 4.71192 17.7793 3.77405C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L9.94864 7.252V7.252Z" fill="#003087" />
+                            </svg>
+                          </div>
+                          <div className="checkout-payment-tile-label">PayPal</div>
+                        </button>
+                      </>
+                    ) : null}
+
+                    <button
+                      type="button"
+                      className={`checkout-payment-tile ${paymentMethod === "bank" ? "checkout-payment-tile--active checkout-payment-tile--active-orange" : ""}`}
+                      onClick={() => setPaymentMethod("bank")}
+                    >
+                      <div className="checkout-payment-tile-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M4 10.25H20" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M6 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M10 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M14 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M18 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M3.5 18.25H20.5" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M4.5 9.75L12 5.75L19.5 9.75" stroke="#222222" strokeWidth="1.5" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <div className="checkout-payment-tile-label">Bank transfer</div>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`checkout-payment-tile ${paymentMethod === "no_payment" ? "checkout-payment-tile--active" : ""}`}
+                      onClick={() => setPaymentMethod("no_payment")}
+                    >
+                      <div className="checkout-payment-tile-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fillRule="evenodd" clipRule="evenodd" d="M1.46967 1.46967C1.76256 1.17678 2.23744 1.17678 2.53033 1.46967L22.5303 21.4697C22.8232 21.7626 22.8232 22.2374 22.5303 22.5303C22.2374 22.8232 21.7626 22.8232 21.4697 22.5303L18.6893 19.75H4C2.48122 19.75 1.25 18.5188 1.25 17V7C1.25 5.72904 2.11219 4.65946 3.28359 4.34425L1.46967 2.53033C1.17678 2.23744 1.17678 1.76256 1.46967 1.46967ZM4.68934 5.75H4C3.30964 5.75 2.75 6.30964 2.75 7V9.25H8.18934L4.68934 5.75ZM9.68934 10.75H2.75V17C2.75 17.6904 3.30964 18.25 4 18.25H17.1893L9.68934 10.75Z" fill="#222222" />
+                          <path d="M22.75 7V17.5C22.75 17.9142 22.4142 18.25 22 18.25C21.5858 18.25 21.25 17.9142 21.25 17.5V10.75H14.5C14.0858 10.75 13.75 10.4142 13.75 10C13.75 9.58579 14.0858 9.25 14.5 9.25H21.25V7C21.25 6.30964 20.6904 5.75 20 5.75H9.5C9.08579 5.75 8.75 5.41421 8.75 5C8.75 4.58579 9.08579 4.25 9.5 4.25H20C21.5188 4.25 22.75 5.48122 22.75 7Z" fill="#222222" />
+                        </svg>
+                      </div>
+                      <div className="checkout-payment-tile-label">No payment</div>
+                    </button>
                   </div>
+
+                  {hasPreorder ? (
+                    <div className="checkout-preorder-note">
+                      <div className="checkout-preorder-note-icon" aria-hidden="true">
+                        i
+                      </div>
+                      <div className="checkout-preorder-note-text">
+                        All goods in the cart, are available only for pre-order. We don&apos;t charge pre-payment for pre-orders. We&nbsp;will contact you for confirmation when the goods will be in stock and agree on payment and delivery methods.
+                      </div>
+                    </div>
+                  ) : null}
 
                   <textarea
                     name="comment"
@@ -810,10 +915,64 @@ export default function Checkout() {
                   />
                   <div className="checkout-field-hint">Optional</div>
 
-                  <button type="submit" className="checkout-next-btn checkout-next-btn--small">
-                    Continue
-                  </button>
-                </form>
+                  <div className="terms-checkbox">
+                    <label className="checkbox-container">
+                      <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
+                      <span className="checkmark"></span>
+                      <span style={{ fontSize: "14px", color: "#222" }}>
+                        By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
+                      </span>
+                    </label>
+                  </div>
+
+                  {paymentMethod === "paypal" && !hasPreorder ? (
+                    <div className="checkout-paypal-wrap">
+                      <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
+                        <PayPalButtons
+                          style={{ layout: "horizontal", color: "gold", shape: "rect", label: "paypal", height: 44, tagline: false }}
+                          createOrder={async (_data, actions) => {
+                            const order = await createOrder();
+                            currentOrderId.current = order.id;
+                            try {
+                              await sendOrderToCrm(order);
+                            } catch (e) {
+                              console.error("RetailCRM send error:", e);
+                            }
+                            return actions.order.create({
+                              intent: "CAPTURE",
+                              purchase_units: [
+                                {
+                                  description: `Order ${String(order.id).slice(0, 12)}`,
+                                  amount: { currency_code: "USD", value: totalPrice.toFixed(2) },
+                                },
+                              ],
+                            });
+                          }}
+                          onApprove={handlePayPalApprove}
+                          onError={(err: any) => {
+                            console.error("PayPal error:", err);
+                            setError(`PayPal payment failed: ${err.message || JSON.stringify(err)}`);
+                          }}
+                        />
+                      </PayPalScriptProvider>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="checkout-pay-btn"
+                      disabled={loading || !items.length || totalPrice <= 0 || (hasPreorder && paymentMethod !== "bank" && paymentMethod !== "no_payment")}
+                      onClick={() => {
+                        if (paymentMethod === "card") {
+                          void handleCardCheckout();
+                          return;
+                        }
+                        void handleOfflineCheckout();
+                      }}
+                    >
+                      {loading ? "Processing..." : "Pay"}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -887,95 +1046,6 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {showPaymentMethods ? (
-                <div className="checkout-payment-block">
-                  <div className="payment-method-section">
-                    <h3 className="step-subtitle">Payment Method</h3>
-                    <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                        <input
-                          type="radio"
-                          name="paymentMethod"
-                          value="card"
-                          checked={paymentMethod === 'card'}
-                          onChange={() => setPaymentMethod('card')}
-                          style={{ accentColor: '#F36F25' }}
-                        />
-                        <span style={{ fontSize: '16px', fontWeight: 500 }}>Credit Card (Stripe)</span>
-                      </label>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                        <input
-                          type="radio"
-                          name="paymentMethod"
-                          value="paypal"
-                          checked={paymentMethod === 'paypal'}
-                          onChange={() => setPaymentMethod('paypal')}
-                          style={{ accentColor: '#F36F25' }}
-                        />
-                        <span style={{ fontSize: '16px', fontWeight: 500 }}>PayPal</span>
-                      </label>
-                    </div>
-
-                    <div className="terms-checkbox">
-                      <label className="checkbox-container">
-                        <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
-                        <span className="checkmark"></span>
-                        <span style={{ fontSize: '14px', color: '#222' }}>
-                          By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
-                        </span>
-                      </label>
-                    </div>
-
-                    {paymentMethod === 'card' ? (
-                      <form onSubmit={handleCardCheckout} className="checkout-payment-action">
-                        <button
-                          type="submit"
-                          className="checkout-next-btn checkout-next-btn--small"
-                          disabled={loading || !items.length || totalPrice <= 0}
-                        >
-                          {loading ? 'Completing...' : 'Complete checkout'}
-                        </button>
-                      </form>
-                    ) : (
-                      <div style={{ marginTop: '16px' }}>
-                        <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
-                          <PayPalButtons
-                            style={{ layout: "vertical", color: "gold", shape: "rect", label: "paypal" }}
-                            createOrder={async (data, actions) => {
-                              try {
-                                const order = await createOrder();
-                                currentOrderId.current = order.id;
-                                try {
-                                  await sendOrderToCrm(order);
-                                } catch (e) {
-                                  console.error('RetailCRM send error:', e);
-                                }
-                                return actions.order.create({
-                                  intent: "CAPTURE",
-                                  purchase_units: [
-                                    {
-                                      description: `Order #${order.id}`,
-                                      amount: { currency_code: "USD", value: totalPrice.toFixed(2) },
-                                    },
-                                  ],
-                                });
-                              } catch (err) {
-                                console.error("Create order error", err);
-                                throw err;
-                              }
-                            }}
-                            onApprove={handlePayPalApprove}
-                            onError={(err: any) => {
-                              console.error("PayPal error:", err);
-                              setError(`PayPal payment failed: ${err.message || JSON.stringify(err)}`);
-                            }}
-                          />
-                        </PayPalScriptProvider>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : null}
             </div>
           </aside>
           </div>

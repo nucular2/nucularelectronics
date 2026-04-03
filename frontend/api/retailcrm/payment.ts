@@ -102,6 +102,7 @@ async function crmUpsertOrderPayment(params: {
     site: params.site,
   });
   const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const paidCodes = ["paid", "payment-paid", "payment_paid", "succeeded"];
   const normalizedAmount = Math.round(params.amount * 100) / 100;
   const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
 
@@ -109,7 +110,7 @@ async function crmUpsertOrderPayment(params: {
     payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
     payments.find((p: any) => {
       const status = String(p?.status || "").toLowerCase();
-      if (status.includes("paid") || status === "succeeded") return false;
+      if (paidCodes.includes(status)) return false;
       if (!exactMatch(p?.amount)) return false;
       return true;
     }) ||

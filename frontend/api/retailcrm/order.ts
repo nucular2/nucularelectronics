@@ -78,6 +78,7 @@ async function crmUpsertOrderPayment(params: {
     site: params.site,
   });
   const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const paidCodes = ["paid", "payment-paid", "payment_paid", "succeeded"];
   const normalizedAmount = Math.round(params.amount * 100) / 100;
   const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
 
@@ -85,7 +86,7 @@ async function crmUpsertOrderPayment(params: {
     payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
     payments.find((p: any) => {
       const status = String(p?.status || "").toLowerCase();
-      if (status.includes("paid") || status === "succeeded") return false;
+      if (paidCodes.includes(status)) return false;
       if (!exactMatch(p?.amount)) return false;
       return true;
     }) ||
@@ -141,6 +142,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const managerId = process.env.RETAILCRM_MANAGER_ID ? Number(process.env.RETAILCRM_MANAGER_ID) : undefined;
     const site = process.env.RETAILCRM_SITE || undefined;
     const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || "stripe-payment";
+    const paymentTypePayPal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || "paypal";
+    const paymentTypeBank = process.env.RETAILCRM_PAYMENT_TYPE_BANK || "bank-transfer";
+    const paymentTypeNoPayment = process.env.RETAILCRM_PAYMENT_TYPE_NO_PAYMENT || "no-payment";
     const paymentStatusNotPaid = process.env.RETAILCRM_PAYMENT_STATUS_NOT_PAID || "not-paid";
 
     if (!apiUrl || !apiKey) {
@@ -242,13 +246,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const amount = typeof orderTotal === "number" && orderTotal > 0 ? orderTotal : parseMoney(order.total_amount) || 0;
       if (amount > 0) {
+        const pm = String(order?.contacts?.paymentMethod || "").trim().toLowerCase();
+        const paymentType =
+          pm === "paypal"
+            ? paymentTypePayPal
+            : pm === "bank"
+            ? paymentTypeBank
+            : pm === "no_payment"
+            ? paymentTypeNoPayment
+            : paymentTypeStripe;
+        const paymentExternalId = `pending_${pm || "card"}_${String(order.id)}`.slice(0, 60);
         await crmUpsertOrderPayment({
           apiUrl,
           apiKey,
           site,
           orderExternalId: String(order.id),
-          paymentExternalId: `stripe_pending_${String(order.id)}`,
-          paymentType: paymentTypeStripe,
+          paymentExternalId,
+          paymentType,
           status: paymentStatusNotPaid,
           amount,
         });

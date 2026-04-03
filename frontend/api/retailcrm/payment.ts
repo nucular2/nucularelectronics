@@ -63,6 +63,15 @@ function crmDatetime(input?: string) {
   return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
 }
 
+function normalizePaymentType(typeIn: any, fallbackCode: string) {
+  if (typeIn && typeof typeIn === "object") {
+    const code = String((typeIn as any).code || "").trim();
+    if (code) return { code };
+  }
+  const code = String(typeIn || fallbackCode || "").trim();
+  return code ? { code } : undefined;
+}
+
 async function fetchCrmOrderByExternalId(params: { apiUrl: string; apiKey: string; externalId: string; site?: string }) {
   const url =
     `${params.apiUrl}/api/v5/orders/${encodeURIComponent(params.externalId)}` +
@@ -111,7 +120,7 @@ async function crmUpsertOrderPayment(params: {
     order: { externalId: params.orderExternalId },
     amount: normalizedAmount,
     paidAt: crmDatetime(params.paidAtIso),
-    type: candidate?.type || params.paymentType,
+    type: normalizePaymentType(candidate?.type, params.paymentType),
     status: params.status,
   };
 

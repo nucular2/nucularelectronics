@@ -81,7 +81,7 @@ async function pushPaymentToRetailCrm(params: {
     order: { externalId: params.orderExternalId },
     amount: normalizedAmount,
     paidAt: crmDatetime(params.paidAtIso),
-    type: candidate?.type || paymentType,
+    type: normalizePaymentType(candidate?.type, paymentType),
     status: paymentStatusPaid,
   };
 
@@ -117,6 +117,15 @@ async function pushPaymentToRetailCrm(params: {
     const text = await r.text();
     throw new Error(text || 'RetailCRM payments create failed');
   }
+}
+
+function normalizePaymentType(typeIn: any, fallbackCode: string) {
+  if (typeIn && typeof typeIn === 'object') {
+    const code = String((typeIn as any).code || '').trim();
+    if (code) return { code };
+  }
+  const code = String(typeIn || fallbackCode || '').trim();
+  return code ? { code } : undefined;
 }
 
 function crmDatetime(input?: string) {

@@ -28,6 +28,15 @@ function parseMoney(input: unknown): number | undefined {
   return Math.round(n * 100) / 100;
 }
 
+function normalizePaymentType(typeIn: any, fallbackCode: string) {
+  if (typeIn && typeof typeIn === "object") {
+    const code = String((typeIn as any).code || "").trim();
+    if (code) return { code };
+  }
+  const code = String(typeIn || fallbackCode || "").trim();
+  return code ? { code } : undefined;
+}
+
 async function parseCrmApiResult(r: Response) {
   const text = await r.text();
   let data: any = {};
@@ -86,7 +95,7 @@ async function crmUpsertOrderPayment(params: {
     externalId: candidate?.externalId || params.paymentExternalId,
     order: { externalId: params.orderExternalId },
     amount: normalizedAmount,
-    type: candidate?.type || params.paymentType,
+    type: normalizePaymentType(candidate?.type, params.paymentType),
     status: params.status,
   };
 
@@ -255,4 +264,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ message: "Handler exception", details: e?.message || String(e) });
   }
 }
-

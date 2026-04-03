@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Search, Calendar, Download, Eye, Edit2, Trash } from 'lucide-react';
+import { Search, Calendar, Download, Eye, Edit2, Trash, RefreshCw } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -41,7 +41,8 @@ function formatDate(value: string) {
 function isPaid(order: DbOrder) {
   if (order.status === 'Paid') return true;
   const status = order?.contacts?.payment?.status || order?.contacts?.crm?.paymentStatuses?.[0];
-  return String(status || '').toLowerCase() === 'paid';
+  const s = String(status || '').toLowerCase();
+  return s === 'paid' || s === 'succeeded' || s.includes('paid') || s.includes('оплачен');
 }
 
 function paidAt(order: DbOrder) {
@@ -68,8 +69,51 @@ const Orders: React.FC = () => {
   const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>('All');
   const [dateRange, setDateRange] = useState({ start: '', end: '' });
   const [loading, setLoading] = useState(false);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [orders, setOrders] = useState<DbOrder[]>([]);
+  const didAutoSyncRef = useRef(false);
+
+  const syncFromCrm = async (orderIds: string[]) => {
+    if (!orderIds.length) return;
+    setSyncing(true);
+    setError(null);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      if (!token) {
+        await logout();
+        return;
+      }
+      const r = await fetch('/api/retailcrm/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ orderIds }),
+      });
+      if (r.status === 401 || r.status === 403) {
+        await logout();
+        return;
+      }
+      if (!r.ok) {
+        const text = await r.text();
+        setError(text || 'Ошибка синхронизации CRM');
+        return;
+      }
+      const payload = await r.json().catch(() => null);
+      const updates = (payload?.updates && typeof payload.updates === 'object') ? payload.updates : {};
+      setOrders((prev) =>
+        prev.map((o) => {
+          const u = updates[o.id];
+          if (!u) return o;
+          return { ...o, status: u.status || o.status, contacts: u.contacts || o.contacts };
+        })
+      );
+    } catch (e: any) {
+      setError(e?.message || 'Ошибка синхронизации CRM');
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const filteredOrders = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -138,7 +182,12 @@ const Orders: React.FC = () => {
         setError(payload?.message || 'Ошибка загрузки');
         setOrders([]);
       } else {
-        setOrders((payload?.orders ?? []) as DbOrder[]);
+        const nextOrders = (payload?.orders ?? []) as DbOrder[];
+        setOrders(nextOrders);
+        if (!didAutoSyncRef.current && nextOrders.length > 0) {
+          didAutoSyncRef.current = true;
+          void syncFromCrm(nextOrders.map((o) => o.id).slice(0, 150));
+        }
       }
     } catch (e: any) {
       setError(e?.message || 'Ошибка загрузки');
@@ -261,6 +310,26 @@ const Orders: React.FC = () => {
           style={{ background: filteredOrders.length === 0 ? '#ccc' : '#2ecc71', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: filteredOrders.length === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 500, height: '40px' }}
         >
           <Download size={18} /> Экспорт
+        </button>
+
+        <button
+          onClick={() => void syncFromCrm(filteredOrders.map((o) => o.id).slice(0, 150))}
+          disabled={syncing || filteredOrders.length === 0}
+          style={{
+            background: syncing || filteredOrders.length === 0 ? '#ccc' : '#1e88e5',
+            color: '#fff',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '4px',
+            cursor: syncing || filteredOrders.length === 0 ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontWeight: 500,
+            height: '40px',
+          }}
+        >
+          <RefreshCw size={18} /> {syncing ? 'Синхронизация…' : 'Sync CRM'}
         </button>
       </div>
 

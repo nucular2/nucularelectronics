@@ -576,6 +576,92 @@ async function fetchCrmOrderByExternalId(params: {
   return data?.order ?? null;
 }
 
+async function crmUpsertOrderPayment(params: {
+  apiUrl: string;
+  apiKey: string;
+  site?: string;
+  orderExternalId: string;
+  paymentExternalId: string;
+  paymentType: string;
+  status: string;
+  amount: number;
+  paidAtIso?: string;
+}) {
+  const fetchOrderUrl =
+    `${params.apiUrl}/api/v5/orders/${encodeURIComponent(params.orderExternalId)}` +
+    `?apiKey=${encodeURIComponent(params.apiKey)}` +
+    `&by=externalId` +
+    (params.site ? `&site=${encodeURIComponent(params.site)}` : '');
+
+  let crmOrder: any = null;
+  try {
+    const r = await fetch(fetchOrderUrl, { headers: { Accept: 'application/json' } });
+    const text = await r.text();
+    const data = JSON.parse(text);
+    crmOrder = data?.success ? data?.order : null;
+  } catch {
+    crmOrder = null;
+  }
+
+  const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
+  const paidCodes = ['paid', 'payment-paid', 'payment_paid', 'succeeded'];
+  const normalizedAmount = Math.round(params.amount * 100) / 100;
+  const exactMatch = (value: unknown) => Math.abs(Number(value) - normalizedAmount) < 0.01;
+
+  const candidate =
+    payments.find((p: any) => p?.externalId && String(p.externalId) === params.paymentExternalId) ||
+    payments.find((p: any) => {
+      const status = String(p?.status || '').toLowerCase();
+      const isAlreadyPaid = paidCodes.includes(status);
+      if (isAlreadyPaid) return false;
+      if (!exactMatch(p?.amount)) return false;
+      return true;
+    }) ||
+    null;
+
+  const paymentBase: any = {
+    externalId: candidate?.externalId || params.paymentExternalId,
+    order: { externalId: params.orderExternalId },
+    amount: normalizedAmount,
+    type: candidate?.type || params.paymentType,
+    status: params.status,
+  };
+  if (params.paidAtIso) paymentBase.paidAt = params.paidAtIso;
+
+  if (candidate?.id) {
+    const editUrl = `${params.apiUrl}/api/v5/orders/payments/${encodeURIComponent(String(candidate.id))}/edit?apiKey=${encodeURIComponent(params.apiKey)}${
+      params.site ? `&site=${encodeURIComponent(params.site)}` : ''
+    }`;
+    const form = new URLSearchParams();
+    form.set('payment', JSON.stringify(paymentBase));
+    const r = await fetch(editUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body: form.toString(),
+    });
+    if (!r.ok) {
+      const text = await r.text();
+      throw new Error(text || 'RetailCRM payments edit failed');
+    }
+    return;
+  }
+
+  const createUrl = `${params.apiUrl}/api/v5/orders/payments/create?apiKey=${encodeURIComponent(params.apiKey)}${
+    params.site ? `&site=${encodeURIComponent(params.site)}` : ''
+  }`;
+  const form = new URLSearchParams();
+  form.set('payment', JSON.stringify(paymentBase));
+  const r = await fetch(createUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: form.toString(),
+  });
+  if (!r.ok) {
+    const text = await r.text();
+    throw new Error(text || 'RetailCRM payments create failed');
+  }
+}
+
 function mapCrmStatusToUiStatus(input?: string): OrderStatus | null {
   if (!input) return null;
   const code = input.trim().toLowerCase();
@@ -1579,6 +1665,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           },
         };
         await supabaseService.from('orders').update({ status: 'Sent', contacts: nextContacts }).eq('id', order.id);
+
+        try {
+          const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || 'stripe-payment';
+          const paymentStatusNotPaid = process.env.RETAILCRM_PAYMENT_STATUS_NOT_PAID || 'not-paid';
+          const amount =
+            typeof orderTotal === 'number' && Number.isFinite(orderTotal) && orderTotal > 0
+              ? Math.round(orderTotal * 100) / 100
+              : Math.round(Number(order.total_amount || 0) * 100) / 100;
+          if (Number.isFinite(amount) && amount > 0) {
+            await crmUpsertOrderPayment({
+              apiUrl,
+              apiKey,
+              site,
+              orderExternalId: String(order.id),
+              paymentExternalId: `stripe_pending_${String(order.id)}`,
+              paymentType: paymentTypeStripe,
+              status: paymentStatusNotPaid,
+              amount,
+            });
+          }
+        } catch {}
       } catch {
         try {
           await supabaseService.from('orders').update({ status: 'Sent' }).eq('id', order.id);
@@ -1662,66 +1769,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         paidAtIso = new Date().toISOString();
       }
 
-      const crmOrder = await fetchCrmOrderByExternalId({ apiUrl, apiKey, externalId: orderId, site });
-      const payments = Array.isArray(crmOrder?.payments) ? crmOrder.payments : [];
-
-      const paidCodes = ['succeeded', 'paid', 'payment-paid', 'payment_paid'];
-      const invoiceCandidate =
-        payments.find((p: any) => String(p?.type?.code || p?.type || '').toLowerCase() === String(paymentType).toLowerCase()) ||
-        payments.find((p: any) => String(p?.type || '').toLowerCase().includes('stripe')) ||
-        payments[0] ||
-        null;
-
-      const invoiceStatus = String(invoiceCandidate?.status || '').toLowerCase();
-      if (invoiceCandidate && paidCodes.includes(invoiceStatus)) {
-        const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
-        const nextContacts = {
-          ...prevContacts,
-          payment: {
-            ...(prevContacts?.payment && typeof prevContacts.payment === 'object' ? prevContacts.payment : {}),
-            provider,
-            status: 'paid',
-            paidAt: paidAtIso,
-            amount,
-            updatedAt: new Date().toISOString(),
-          },
-          crm: {
-            ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
-            paymentStatuses: payments.map((p: any) => p?.status).filter(Boolean),
-            fullPaidAt: crmOrder?.fullPaidAt || null,
-          },
-        };
-        await supabaseService.from('orders').update({ status: 'Paid', contacts: nextContacts }).eq('id', orderId);
-        return res.status(200).json({ ok: true, note: 'Invoice already marked paid in RetailCRM' });
-      }
-
-      const invoiceToUpdate: any = {
-        ...(invoiceCandidate?.invoice && typeof invoiceCandidate.invoice === 'object' ? invoiceCandidate.invoice : {}),
-        ...(invoiceCandidate?.invoiceUuid ? { uuid: invoiceCandidate.invoiceUuid } : {}),
-        ...(invoiceCandidate?.id ? { id: invoiceCandidate.id } : {}),
-        ...(invoiceCandidate?.externalId ? { externalId: invoiceCandidate.externalId } : {}),
-        ...(invoiceCandidate?.number ? { number: invoiceCandidate.number } : {}),
-        ...(invoiceCandidate?.type ? { paymentType: invoiceCandidate.type } : {}),
-        status: 'succeeded',
-        paidAt: crmDatetime(paidAtIso),
+      await crmUpsertOrderPayment({
+        apiUrl,
+        apiKey,
+        site,
+        orderExternalId: orderId,
+        paymentExternalId: provider === 'stripe' && paymentIdRaw ? `stripe_${paymentIdRaw}` : provider === 'paypal' && paymentIdRaw ? `paypal_${paymentIdRaw}` : `${provider}_${Date.now()}`,
+        paymentType,
+        status: paymentStatusPaid,
         amount,
-      };
-
-      const invoiceUpdate = await crmUpdateInvoice({ apiUrl, apiKey, site, invoice: invoiceToUpdate });
-      if (!invoiceUpdate.ok) {
-        const details = flattenCrmErrors((invoiceUpdate as any)?.data?.errors);
-        return res.status(400).json({
-          message: invoiceUpdate.message || 'RetailCRM updateInvoice failed',
-          details,
-          context: {
-            provider,
-            amount,
-            paidAt: crmDatetime(paidAtIso),
-            paymentType,
-            invoice: invoiceToUpdate,
-          },
-        });
-      }
+        paidAtIso,
+      });
 
       const prevContacts = orderRow?.contacts && typeof orderRow.contacts === 'object' ? orderRow.contacts : {};
       const nextContacts = {
@@ -1736,8 +1794,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         crm: {
           ...(prevContacts?.crm && typeof prevContacts.crm === 'object' ? prevContacts.crm : {}),
-          paymentStatuses: payments.map((p: any) => p?.status).filter(Boolean),
-          fullPaidAt: crmOrder?.fullPaidAt || null,
           syncedAt: new Date().toISOString(),
         },
       };

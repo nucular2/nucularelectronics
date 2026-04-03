@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
+import { RefreshCw } from 'lucide-react';
 
 type OrderStatus =
   | 'New'
@@ -58,6 +59,44 @@ export default function AdminOrderDetail() {
   const [order, setOrder] = useState<DbOrder | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+
+  const syncFromCrm = async () => {
+    if (!id) return;
+    setSyncing(true);
+    setError(null);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      if (!token) {
+        await logout();
+        return;
+      }
+      const r = await fetch('/api/retailcrm/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ orderIds: [id] }),
+      });
+      if (r.status === 401 || r.status === 403) {
+        await logout();
+        return;
+      }
+      if (!r.ok) {
+        const text = await r.text();
+        setError(text || 'Ошибка синхронизации CRM');
+        return;
+      }
+      const payload = await r.json().catch(() => null);
+      const upd = payload?.updates?.[id];
+      if (upd?.status || upd?.contacts) {
+        setOrder((prev) => (prev ? { ...prev, status: upd.status || prev.status, contacts: upd.contacts || prev.contacts } : prev));
+      }
+    } catch (e: any) {
+      setError(e?.message || 'Ошибка синхронизации CRM');
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -89,6 +128,7 @@ export default function AdminOrderDetail() {
         }
         if (cancelled) return;
         setOrder(payload?.order as DbOrder);
+        void syncFromCrm();
       } catch (e: any) {
         setError(e?.message || 'Ошибка загрузки');
         setOrder(null);
@@ -124,6 +164,9 @@ export default function AdminOrderDetail() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <button type="button" className="admin-button" onClick={() => void syncFromCrm()} disabled={syncing}>
+            <RefreshCw size={18} /> {syncing ? 'Синхронизация…' : 'Sync CRM'}
+          </button>
           <button type="button" className="admin-button" onClick={() => navigate('/admin/orders')}>
             Back
           </button>

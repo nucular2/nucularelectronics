@@ -169,6 +169,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const paymentTypeStripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || "stripe-payment";
     const paymentTypePayPal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || "paypal";
     const paymentTypeBank = process.env.RETAILCRM_PAYMENT_TYPE_BANK || "bank-transfer";
+    const paymentTypeCrypto = process.env.RETAILCRM_PAYMENT_TYPE_CRYPTO || "bank-transfer";
     const paymentTypeNoPayment = process.env.RETAILCRM_PAYMENT_TYPE_NO_PAYMENT || "no-payment";
     const paymentStatusNotPaid = process.env.RETAILCRM_PAYMENT_STATUS_NOT_PAID || "not-paid";
 
@@ -277,6 +278,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             ? paymentTypePayPal
             : pm === "bank"
             ? paymentTypeBank
+            : pm === "crypto"
+            ? paymentTypeCrypto
             : pm === "no_payment"
             ? paymentTypeNoPayment
             : paymentTypeStripe;

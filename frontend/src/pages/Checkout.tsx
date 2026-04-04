@@ -31,11 +31,12 @@ interface ShippingAddress {
 interface ContactsInfo {
   telegram?: string;
   whatsapp?: string;
+  reason?: string;
   comment?: string;
   termsAccepted: boolean;
 }
 
-type PaymentMethod = "card" | "paypal" | "bank" | "no_payment";
+type PaymentMethod = "card" | "paypal" | "bank" | "crypto" | "no_payment";
 
 export default function Checkout() {
   const { user } = useAuth();
@@ -68,11 +69,18 @@ export default function Checkout() {
   const [contacts, setContacts] = useState<ContactsInfo>({
     telegram: "",
     whatsapp: "",
+    reason: "",
     comment: "",
     termsAccepted: false,
   });
 
   const cartSnapshotRef = useRef<{ items: any[]; totalPrice: number }>({ items: [], totalPrice: 0 });
+  const [phoneVerifyOpen, setPhoneVerifyOpen] = useState(false);
+  const [phoneVerifyDigits, setPhoneVerifyDigits] = useState<string[]>(["", "", "", ""]);
+  const [phoneVerifyLoading, setPhoneVerifyLoading] = useState(false);
+  const [phoneVerifyError, setPhoneVerifyError] = useState<string | null>(null);
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const phoneVerifyInputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   const hasPreorder = useMemo(() => items.some((it: any) => Boolean(it?.isPreorder)), [items]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(hasPreorder ? "bank" : "card");
@@ -247,6 +255,66 @@ export default function Checkout() {
       throw new Error("Session expired. Please log in again.");
     }
     return refreshed.session;
+  };
+
+  const startPhoneVerification = async () => {
+    setPhoneVerifyLoading(true);
+    setPhoneVerifyError(null);
+    try {
+      const session = await ensureSupabaseSession();
+      const country = countries.find((c) => c.code === recipient.countryCode);
+      const dialCode = country ? country.dial_code : "";
+      const rawPhone = String(recipient.phone || "").trim();
+      const fullPhone = rawPhone.startsWith("+") ? rawPhone : `${dialCode}${rawPhone}`;
+      const r = await fetch("/api/twilio/verify/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ phone: fullPhone }),
+      });
+      if (!r.ok) {
+        const text = await r.text();
+        throw new Error(text || "Failed to start phone verification");
+      }
+      setPhoneVerifyDigits(["", "", "", ""]);
+      window.setTimeout(() => phoneVerifyInputRefs.current[0]?.focus?.(), 0);
+    } catch (e: any) {
+      setPhoneVerifyError(e?.message || "Failed to start phone verification");
+    } finally {
+      setPhoneVerifyLoading(false);
+    }
+  };
+
+  const confirmPhoneVerification = async () => {
+    setPhoneVerifyLoading(true);
+    setPhoneVerifyError(null);
+    try {
+      const session = await ensureSupabaseSession();
+      const code = phoneVerifyDigits.join("").trim();
+      if (code.length !== 4) throw new Error("Enter the 4-digit code");
+      const country = countries.find((c) => c.code === recipient.countryCode);
+      const dialCode = country ? country.dial_code : "";
+      const rawPhone = String(recipient.phone || "").trim();
+      const fullPhone = rawPhone.startsWith("+") ? rawPhone : `${dialCode}${rawPhone}`;
+      const r = await fetch("/api/twilio/verify/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ phone: fullPhone, code }),
+      });
+      if (!r.ok) {
+        const text = await r.text();
+        throw new Error(text || "Invalid code");
+      }
+      const payload = await r.json().catch(() => null);
+      if (!payload?.ok) throw new Error(payload?.message || "Invalid code");
+      setPhoneVerified(true);
+      setPhoneVerifyOpen(false);
+      setPhoneVerifyDigits(["", "", "", ""]);
+      await handleOfflineCheckout();
+    } catch (e: any) {
+      setPhoneVerifyError(e?.message || "Invalid code");
+    } finally {
+      setPhoneVerifyLoading(false);
+    }
   };
 
   const getCartFallback = () => {
@@ -702,7 +770,7 @@ export default function Checkout() {
                       <div className="phone-prefix">{selectedCountry?.dial_code}</div>
                     <input
                       name="phone"
-                      placeholder="(999) 999-9999"
+                      placeholder="Phone number"
                       value={recipient.phone}
                       onChange={handleRecipientChange}
                       required
@@ -869,13 +937,13 @@ export default function Checkout() {
                       <>
                         <button
                           type="button"
-                          className={`checkout-payment-tile ${paymentMethod === "card" ? "checkout-payment-tile--active checkout-payment-tile--active-orange" : ""}`}
+                          className={`checkout-payment-tile ${paymentMethod === "card" ? "checkout-payment-tile--active" : ""}`}
                           onClick={() => setPaymentMethod("card")}
                         >
                           <div className="checkout-payment-tile-icon" aria-hidden="true">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <rect x="3" y="6" width="18" height="12" rx="2" stroke="#F36F25" strokeWidth="1.5" />
-                              <path d="M3 10H21" stroke="#F36F25" strokeWidth="1.5" />
+                              <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                              <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5" />
                             </svg>
                           </div>
                           <div className="checkout-payment-tile-label">Credit card</div>
@@ -889,9 +957,9 @@ export default function Checkout() {
                         >
                           <div className="checkout-payment-tile-icon" aria-hidden="true">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00072L7.72801 21.242C7.68905 21.5155 7.88384 21.75 8.19551 21.75H11.3511C11.7407 21.75 12.0524 21.4765 12.0913 21.1247L12.7536 16.9825C12.7926 16.6308 13.1432 16.3572 13.4939 16.3572H13.9614C17.0001 16.3572 19.4155 15.1067 20.1168 11.5115C20.3895 10.0266 20.2726 8.73697 19.4934 7.87725C19.2597 7.60371 18.987 7.40832 18.6364 7.21293" fill="#009CDE" />
-                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L8.89676 13.8171C8.97468 13.3873 9.3253 13.0746 9.75384 13.0746H11.5459C15.0522 13.0746 17.7793 11.6678 18.5584 7.52555C18.5974 7.44739 18.5974 7.33016 18.6364 7.21293Z" fill="#012169" />
-                              <path d="M9.94864 7.252C9.98759 6.97846 10.3382 6.62675 10.6888 6.62675H15.4418C15.9872 6.62675 16.5326 6.66583 17.0001 6.74399C17.4286 6.82214 18.2078 7.01753 18.5974 7.252C18.8312 5.72796 18.5974 4.71192 17.7793 3.77405C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L9.94864 7.252V7.252Z" fill="#003087" />
+                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00072L7.72801 21.242C7.68905 21.5155 7.88384 21.75 8.19551 21.75H11.3511C11.7407 21.75 12.0524 21.4765 12.0913 21.1247L12.7536 16.9825C12.7926 16.6308 13.1432 16.3572 13.4939 16.3572H13.9614C17.0001 16.3572 19.4155 15.1067 20.1168 11.5115C20.3895 10.0266 20.2726 8.73697 19.4934 7.87725C19.2597 7.60371 18.987 7.40832 18.6364 7.21293" fill="currentColor" />
+                              <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L8.89676 13.8171C8.97468 13.3873 9.3253 13.0746 9.75384 13.0746H11.5459C15.0522 13.0746 17.7793 11.6678 18.5584 7.52555C18.5974 7.44739 18.5974 7.33016 18.6364 7.21293Z" fill="currentColor" />
+                              <path d="M9.94864 7.252C9.98759 6.97846 10.3382 6.62675 10.6888 6.62675H15.4418C15.9872 6.62675 16.5326 6.66583 17.0001 6.74399C17.4286 6.82214 18.2078 7.01753 18.5974 7.252C18.8312 5.72796 18.5974 4.71192 17.7793 3.77405C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L9.94864 7.252V7.252Z" fill="currentColor" />
                             </svg>
                           </div>
                           <div className="checkout-payment-tile-label">PayPal</div>
@@ -901,21 +969,45 @@ export default function Checkout() {
 
                     <button
                       type="button"
-                      className={`checkout-payment-tile ${paymentMethod === "bank" ? "checkout-payment-tile--active checkout-payment-tile--active-orange" : ""}`}
+                      className={`checkout-payment-tile ${paymentMethod === "bank" ? "checkout-payment-tile--active" : ""}`}
                       onClick={() => setPaymentMethod("bank")}
                     >
                       <div className="checkout-payment-tile-icon" aria-hidden="true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M4 10.25H20" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M6 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M10 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M14 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M18 18.25V10.25" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M3.5 18.25H20.5" stroke="#222222" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M4.5 9.75L12 5.75L19.5 9.75" stroke="#222222" strokeWidth="1.5" strokeLinejoin="round" />
+                          <path d="M4 10.25H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M6 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M10 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M14 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M18 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M3.5 18.25H20.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          <path d="M4.5 9.75L12 5.75L19.5 9.75" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                         </svg>
                       </div>
                       <div className="checkout-payment-tile-label">Bank transfer</div>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`checkout-payment-tile ${paymentMethod === "crypto" ? "checkout-payment-tile--active" : ""}`}
+                      onClick={() => setPaymentMethod("crypto")}
+                    >
+                      <div className="checkout-payment-tile-icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M8.84615 5.25V6.75H6.75C6.33579 6.75 6 7.08579 6 7.5C6 7.91421 6.33579 8.25 6.75 8.25H7.5V13.75H6.75C6.33579 13.75 6 14.0858 6 14.5C6 14.9142 6.33579 15.25 6.75 15.25H9V16.75C9 17.1642 9.33579 17.5 9.75 17.5C10.1642 17.5 10.5 17.1642 10.5 16.75V15.25H12.1538V16.75C12.1538 17.1642 12.4896 17.5 12.9038 17.5C13.3181 17.5 13.6538 17.1642 13.6538 16.75V15.25H13.5C14.8807 15.25 16 14.1307 16 12.75C16 12.0686 15.7274 11.4509 15.2854 11C15.7274 10.5491 16 9.93136 16 9.25C16 7.86929 14.8807 6.75 13.5 6.75V5.25C13.5 4.83579 13.1642 4.5 12.75 4.5C12.3358 4.5 12 4.83579 12 5.25V6.75H10.3462V5.25C10.3462 4.83579 10.0104 4.5 9.59615 4.5C9.18194 4.5 8.84615 4.83579 8.84615 5.25ZM13.5 10.25H9V8.25H13.5C14.0523 8.25 14.5 8.69772 14.5 9.25C14.5 9.80228 14.0523 10.25 13.5 10.25ZM9 13.75V11.75H13.5C14.0523 11.75 14.5 12.1977 14.5 12.75C14.5 13.3023 14.0523 13.75 13.5 13.75H9Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M22 11C22 17.0751 17.0751 22 11 22C4.92487 22 0 17.0751 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11ZM20.5 11C20.5 16.2467 16.2467 20.5 11 20.5C5.75329 20.5 1.5 16.2467 1.5 11C1.5 5.75329 5.75329 1.5 11 1.5C16.2467 1.5 20.5 5.75329 20.5 11Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </div>
+                      <div className="checkout-payment-tile-label">Crypto</div>
                     </button>
 
                     <button
@@ -925,13 +1017,27 @@ export default function Checkout() {
                     >
                       <div className="checkout-payment-tile-icon" aria-hidden="true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M1.46967 1.46967C1.76256 1.17678 2.23744 1.17678 2.53033 1.46967L22.5303 21.4697C22.8232 21.7626 22.8232 22.2374 22.5303 22.5303C22.2374 22.8232 21.7626 22.8232 21.4697 22.5303L18.6893 19.75H4C2.48122 19.75 1.25 18.5188 1.25 17V7C1.25 5.72904 2.11219 4.65946 3.28359 4.34425L1.46967 2.53033C1.17678 2.23744 1.17678 1.76256 1.46967 1.46967ZM4.68934 5.75H4C3.30964 5.75 2.75 6.30964 2.75 7V9.25H8.18934L4.68934 5.75ZM9.68934 10.75H2.75V17C2.75 17.6904 3.30964 18.25 4 18.25H17.1893L9.68934 10.75Z" fill="#222222" />
-                          <path d="M22.75 7V17.5C22.75 17.9142 22.4142 18.25 22 18.25C21.5858 18.25 21.25 17.9142 21.25 17.5V10.75H14.5C14.0858 10.75 13.75 10.4142 13.75 10C13.75 9.58579 14.0858 9.25 14.5 9.25H21.25V7C21.25 6.30964 20.6904 5.75 20 5.75H9.5C9.08579 5.75 8.75 5.41421 8.75 5C8.75 4.58579 9.08579 4.25 9.5 4.25H20C21.5188 4.25 22.75 5.48122 22.75 7Z" fill="#222222" />
+                          <path fillRule="evenodd" clipRule="evenodd" d="M1.46967 1.46967C1.76256 1.17678 2.23744 1.17678 2.53033 1.46967L22.5303 21.4697C22.8232 21.7626 22.8232 22.2374 22.5303 22.5303C22.2374 22.8232 21.7626 22.8232 21.4697 22.5303L18.6893 19.75H4C2.48122 19.75 1.25 18.5188 1.25 17V7C1.25 5.72904 2.11219 4.65946 3.28359 4.34425L1.46967 2.53033C1.17678 2.23744 1.17678 1.76256 1.46967 1.46967ZM4.68934 5.75H4C3.30964 5.75 2.75 6.30964 2.75 7V9.25H8.18934L4.68934 5.75ZM9.68934 10.75H2.75V17C2.75 17.6904 3.30964 18.25 4 18.25H17.1893L9.68934 10.75Z" fill="currentColor" />
+                          <path d="M22.75 7V17.5C22.75 17.9142 22.4142 18.25 22 18.25C21.5858 18.25 21.25 17.9142 21.25 17.5V10.75H14.5C14.0858 10.75 13.75 10.4142 13.75 10C13.75 9.58579 14.0858 9.25 14.5 9.25H21.25V7C21.25 6.30964 20.6904 5.75 20 5.75H9.5C9.08579 5.75 8.75 5.41421 8.75 5C8.75 4.58579 9.08579 4.25 9.5 4.25H20C21.5188 4.25 22.75 5.48122 22.75 7Z" fill="currentColor" />
                         </svg>
                       </div>
                       <div className="checkout-payment-tile-label">No payment</div>
                     </button>
                   </div>
+
+                  {paymentMethod === "card" ? (
+                    <div className="checkout-payment-hint">
+                      Payment via MasterCard, Visa, American Express, UnionPay, JCB, Apple Pay and Google Pay.
+                      <br />
+                      You&nbsp;will be redirected to the payment provider
+                    </div>
+                  ) : paymentMethod === "paypal" ? (
+                    <div className="checkout-payment-hint">Payment via PayPal wallet</div>
+                  ) : paymentMethod === "crypto" ? (
+                    <div className="checkout-payment-hint">
+                      You will be redirected to the payment provider. You can pay via USDT, BTC or ETH
+                    </div>
+                  ) : null}
 
                   {hasPreorder ? (
                     <div className="checkout-preorder-note">
@@ -944,13 +1050,35 @@ export default function Checkout() {
                     </div>
                   ) : null}
 
-                  <textarea
-                    name="comment"
-                    placeholder="Comment"
-                    value={contacts.comment}
-                    onChange={handleContactsChange}
-                    className="checkout-input checkout-textarea checkout-comment-textarea"
-                  />
+                  {paymentMethod === "no_payment" ? (
+                    <>
+                      <div className="checkout-no-payment-note">
+                        Placing an order without payment. Please describe the reason
+                      </div>
+                      <input
+                        name="reason"
+                        placeholder="Reason"
+                        value={contacts.reason || ""}
+                        onChange={handleContactsChange}
+                        className="checkout-input checkout-reason-input"
+                      />
+                      <textarea
+                        name="comment"
+                        placeholder="Comment"
+                        value={contacts.comment}
+                        onChange={handleContactsChange}
+                        className="checkout-input checkout-textarea checkout-comment-textarea"
+                      />
+                    </>
+                  ) : (
+                    <textarea
+                      name="comment"
+                      placeholder="Comment"
+                      value={contacts.comment}
+                      onChange={handleContactsChange}
+                      className="checkout-input checkout-textarea checkout-comment-textarea"
+                    />
+                  )}
                   <div className="checkout-field-hint">Optional</div>
 
                   <div className="terms-checkbox">
@@ -963,54 +1091,6 @@ export default function Checkout() {
                     </label>
                   </div>
 
-                  {paymentMethod === "paypal" && !hasPreorder ? (
-                    <div className="checkout-paypal-wrap">
-                      <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
-                        <PayPalButtons
-                          style={{ layout: "horizontal", color: "gold", shape: "rect", label: "paypal", height: 44, tagline: false }}
-                          createOrder={async (_data, actions) => {
-                            const snap = cartSnapshotRef.current;
-                            const order = await createOrder({ itemsOverride: snap.items, totalOverride: snap.totalPrice });
-                            currentOrderId.current = order.id;
-                            try {
-                              await sendOrderToCrm(order);
-                            } catch (e) {
-                              console.error("RetailCRM send error:", e);
-                            }
-                            return actions.order.create({
-                              intent: "CAPTURE",
-                              purchase_units: [
-                                {
-                                  description: `Order ${String(order.id).slice(0, 12)}`,
-                                  amount: { currency_code: "USD", value: Number(order.total_amount).toFixed(2) },
-                                },
-                              ],
-                            });
-                          }}
-                          onApprove={handlePayPalApprove}
-                          onError={(err: any) => {
-                            console.error("PayPal error:", err);
-                            setError(`PayPal payment failed: ${err.message || JSON.stringify(err)}`);
-                          }}
-                        />
-                      </PayPalScriptProvider>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      className="checkout-pay-btn"
-                      disabled={loading || !items.length || totalPrice <= 0 || (hasPreorder && paymentMethod !== "bank" && paymentMethod !== "no_payment")}
-                      onClick={() => {
-                        if (paymentMethod === "card") {
-                          void handleCardCheckout();
-                          return;
-                        }
-                        void handleOfflineCheckout();
-                      }}
-                    >
-                      {loading ? "Processing..." : "Pay"}
-                    </button>
-                  )}
                 </div>
               </div>
             </div>
@@ -1085,11 +1165,160 @@ export default function Checkout() {
                 </div>
               </div>
 
+              {step === 3 ? (
+                <div className="checkout-summary-action">
+                  {paymentMethod === "paypal" && !hasPreorder ? (
+                    <div className="checkout-paypal-wrap">
+                      <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
+                        <PayPalButtons
+                          style={{ layout: "horizontal", color: "gold", shape: "rect", label: "paypal", height: 44, tagline: false }}
+                          createOrder={async (_data, actions) => {
+                            const snap = cartSnapshotRef.current;
+                            const order = await createOrder({ itemsOverride: snap.items, totalOverride: snap.totalPrice });
+                            currentOrderId.current = order.id;
+                            try {
+                              await sendOrderToCrm(order);
+                            } catch (e) {
+                              console.error("RetailCRM send error:", e);
+                            }
+                            return actions.order.create({
+                              intent: "CAPTURE",
+                              purchase_units: [
+                                {
+                                  description: `Order ${String(order.id).slice(0, 12)}`,
+                                  amount: { currency_code: "USD", value: Number(order.total_amount).toFixed(2) },
+                                },
+                              ],
+                            });
+                          }}
+                          onApprove={handlePayPalApprove}
+                          onError={(err: any) => {
+                            console.error("PayPal error:", err);
+                            setError(`PayPal payment failed: ${err.message || JSON.stringify(err)}`);
+                          }}
+                        />
+                      </PayPalScriptProvider>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="checkout-pay-btn"
+                      disabled={
+                        loading ||
+                        !items.length ||
+                        totalPrice <= 0 ||
+                        !contacts.termsAccepted ||
+                        (hasPreorder && paymentMethod !== "bank" && paymentMethod !== "no_payment")
+                      }
+                      onClick={() => {
+                        if (paymentMethod === "card") {
+                          void handleCardCheckout();
+                          return;
+                        }
+                        if (paymentMethod === "no_payment") {
+                          if (phoneVerified) {
+                            void handleOfflineCheckout();
+                            return;
+                          }
+                          setPhoneVerifyOpen(true);
+                          void startPhoneVerification();
+                          return;
+                        }
+                        void handleOfflineCheckout();
+                      }}
+                    >
+                      {loading ? "Processing..." : "Pay"}
+                    </button>
+                  )}
+                </div>
+              ) : null}
+
             </div>
           </aside>
           </div>
         </div>
       </div>
+      {phoneVerifyOpen ? (
+        <div className="checkout-modal-overlay" role="dialog" aria-modal="true">
+          <div className="checkout-modal">
+            <div className="checkout-modal-head">
+              <div className="checkout-modal-title">Confirm your phone</div>
+              <button
+                type="button"
+                className="checkout-modal-close"
+                onClick={() => {
+                  setPhoneVerifyOpen(false);
+                  setPhoneVerifyError(null);
+                  setPhoneVerifyDigits(["", "", "", ""]);
+                }}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className="checkout-modal-desc">
+              Enter the code from the SMS sent to the number{" "}
+              <span className="checkout-modal-phone">{recipient.phone || ""}</span>{" "}
+              <button
+                type="button"
+                className="checkout-modal-change"
+                onClick={() => {
+                  setPhoneVerifyOpen(false);
+                  setPhoneVerifyError(null);
+                  setPhoneVerifyDigits(["", "", "", ""]);
+                  setStep(1);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Change
+              </button>
+            </div>
+            <div className="checkout-otp">
+              {phoneVerifyDigits.map((d, idx) => (
+                <input
+                  key={idx}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={1}
+                  className="checkout-otp-input"
+                  value={d}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^\d]/g, "").slice(0, 1);
+                    setPhoneVerifyDigits((prev) => {
+                      const next = [...prev];
+                      next[idx] = v;
+                      return next;
+                    });
+                    if (v && idx < phoneVerifyDigits.length - 1) {
+                      phoneVerifyInputRefs.current[idx + 1]?.focus?.();
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Backspace" && !phoneVerifyDigits[idx] && idx > 0) {
+                      phoneVerifyInputRefs.current[idx - 1]?.focus?.();
+                    }
+                    if (e.key === "Enter") {
+                      void confirmPhoneVerification();
+                    }
+                  }}
+                  ref={(el) => {
+                    phoneVerifyInputRefs.current[idx] = el;
+                  }}
+                />
+              ))}
+            </div>
+            {phoneVerifyError ? <div className="checkout-modal-error">{phoneVerifyError}</div> : null}
+            <div className="checkout-modal-actions">
+              <button type="button" className="checkout-modal-resend" onClick={() => void startPhoneVerification()} disabled={phoneVerifyLoading}>
+                Submit new code
+              </button>
+              <button type="button" className="checkout-modal-submit" onClick={() => void confirmPhoneVerification()} disabled={phoneVerifyLoading}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

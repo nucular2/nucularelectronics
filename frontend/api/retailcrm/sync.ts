@@ -112,11 +112,13 @@ function pickPaymentTypeCode(contacts: any) {
   const stripe = process.env.RETAILCRM_PAYMENT_TYPE_STRIPE || process.env.RETAILCRM_PAYMENT_TYPE || "stripe-payment";
   const paypal = process.env.RETAILCRM_PAYMENT_TYPE_PAYPAL || "paypal";
   const bank = process.env.RETAILCRM_PAYMENT_TYPE_BANK || "bank-transfer";
+  const crypto = process.env.RETAILCRM_PAYMENT_TYPE_CRYPTO || "bank-transfer";
   const noPayment = process.env.RETAILCRM_PAYMENT_TYPE_NO_PAYMENT || "no-payment";
   if (byProvider === "paypal") return paypal;
   if (byProvider === "stripe") return stripe;
   if (byMethod === "paypal") return paypal;
   if (byMethod === "bank") return bank;
+  if (byMethod === "crypto") return crypto;
   if (byMethod === "no_payment") return noPayment;
   return stripe;
 }

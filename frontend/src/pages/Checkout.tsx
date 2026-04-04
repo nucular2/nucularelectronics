@@ -81,6 +81,8 @@ export default function Checkout() {
   const [phoneVerifyError, setPhoneVerifyError] = useState<string | null>(null);
   const [phoneVerified, setPhoneVerified] = useState(false);
   const phoneVerifyInputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
+  const [paymentPickerOpen, setPaymentPickerOpen] = useState(false);
 
   const hasPreorder = useMemo(() => items.some((it: any) => Boolean(it?.isPreorder)), [items]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(hasPreorder ? "bank" : "card");
@@ -650,6 +652,97 @@ export default function Checkout() {
     return Number.isFinite(n) ? n : null;
   };
 
+  const paymentOptions = useMemo(() => {
+    const opts: Array<{ key: PaymentMethod; label: string; icon: React.ReactNode }> = [];
+    if (!hasPreorder) {
+      opts.push({
+        key: "card",
+        label: "Credit card",
+        icon: (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+        ),
+      });
+      opts.push({
+        key: "paypal",
+        label: "PayPal",
+        icon: (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00072L7.72801 21.242C7.68905 21.5155 7.88384 21.75 8.19551 21.75H11.3511C11.7407 21.75 12.0524 21.4765 12.0913 21.1247L12.7536 16.9825C12.7926 16.6308 13.1432 16.3572 13.4939 16.3572H13.9614C17.0001 16.3572 19.4155 15.1067 20.1168 11.5115C20.3895 10.0266 20.2726 8.73697 19.4934 7.87725C19.2597 7.60371 18.987 7.40832 18.6364 7.21293" fill="currentColor" />
+            <path d="M18.6364 7.21293C18.8701 5.68888 18.6364 4.67285 17.8182 3.73497C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L8.89676 13.8171C8.97468 13.3873 9.3253 13.0746 9.75384 13.0746H11.5459C15.0522 13.0746 17.7793 11.6678 18.5584 7.52555C18.5974 7.44739 18.5974 7.33016 18.6364 7.21293Z" fill="currentColor" />
+            <path d="M9.94864 7.252C9.98759 6.97846 10.3382 6.62675 10.6888 6.62675H15.4418C15.9872 6.62675 16.5326 6.66583 17.0001 6.74399C17.4286 6.82214 18.2078 7.01753 18.5974 7.252C18.8312 5.72796 18.5974 4.71192 17.7793 3.77405C16.9222 2.67986 15.2859 2.25 13.1822 2.25H7.14363C6.71509 2.25 6.36446 2.56263 6.28654 2.99248L3.75425 19.0145C3.71529 19.3272 3.94904 19.6007 4.26071 19.6007H8.00071L9.94864 7.252V7.252Z" fill="currentColor" />
+          </svg>
+        ),
+      });
+    }
+
+    opts.push({
+      key: "bank",
+      label: "Bank transfer",
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 10.25H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M6 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M10 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M14 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M18 18.25V10.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M3.5 18.25H20.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M4.5 9.75L12 5.75L19.5 9.75" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        </svg>
+      ),
+    });
+
+    if (!hasPreorder) {
+      opts.push({
+        key: "crypto",
+        label: "Crypto",
+        icon: (
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.84615 5.25V6.75H6.75C6.33579 6.75 6 7.08579 6 7.5C6 7.91421 6.33579 8.25 6.75 8.25H7.5V13.75H6.75C6.33579 13.75 6 14.0858 6 14.5C6 14.9142 6.33579 15.25 6.75 15.25H9V16.75C9 17.1642 9.33579 17.5 9.75 17.5C10.1642 17.5 10.5 17.1642 10.5 16.75V15.25H12.1538V16.75C12.1538 17.1642 12.4896 17.5 12.9038 17.5C13.3181 17.5 13.6538 17.1642 13.6538 16.75V15.25H13.5C14.8807 15.25 16 14.1307 16 12.75C16 12.0686 15.7274 11.4509 15.2854 11C15.7274 10.5491 16 9.93136 16 9.25C16 7.86929 14.8807 6.75 13.5 6.75V5.25C13.5 4.83579 13.1642 4.5 12.75 4.5C12.3358 4.5 12 4.83579 12 5.25V6.75H10.3462V5.25C10.3462 4.83579 10.0104 4.5 9.59615 4.5C9.18194 4.5 8.84615 4.83579 8.84615 5.25ZM13.5 10.25H9V8.25H13.5C14.0523 8.25 14.5 8.69772 14.5 9.25C14.5 9.80228 14.0523 10.25 13.5 10.25ZM9 13.75V11.75H13.5C14.0523 11.75 14.5 12.1977 14.5 12.75C14.5 13.3023 14.0523 13.75 13.5 13.75H9Z"
+              fill="currentColor"
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M22 11C22 17.0751 17.0751 22 11 22C4.92487 22 0 17.0751 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11ZM20.5 11C20.5 16.2467 16.2467 20.5 11 20.5C5.75329 20.5 1.5 16.2467 1.5 11C1.5 5.75329 5.75329 1.5 11 1.5C16.2467 1.5 20.5 5.75329 20.5 11Z"
+              fill="currentColor"
+            />
+          </svg>
+        ),
+      });
+    }
+
+    opts.push({
+      key: "no_payment",
+      label: "No payment",
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M1.46967 1.46967C1.76256 1.17678 2.23744 1.17678 2.53033 1.46967L22.5303 21.4697C22.8232 21.7626 22.8232 22.2374 22.5303 22.5303C22.2374 22.8232 21.7626 22.8232 21.4697 22.5303L18.6893 19.75H4C2.48122 19.75 1.25 18.5188 1.25 17V7C1.25 5.72904 2.11219 4.65946 3.28359 4.34425L1.46967 2.53033C1.17678 2.23744 1.17678 1.76256 1.46967 1.46967ZM4.68934 5.75H4C3.30964 5.75 2.75 6.30964 2.75 7V9.25H8.18934L4.68934 5.75ZM9.68934 10.75H2.75V17C2.75 17.6904 3.30964 18.25 4 18.25H17.1893L9.68934 10.75Z"
+            fill="currentColor"
+          />
+          <path
+            d="M22.75 7V17.5C22.75 17.9142 22.4142 18.25 22 18.25C21.5858 18.25 21.25 17.9142 21.25 17.5V10.75H14.5C14.0858 10.75 13.75 10.4142 13.75 10C13.75 9.58579 14.0858 9.25 14.5 9.25H21.25V7C21.25 6.30964 20.6904 5.75 20 5.75H9.5C9.08579 5.75 8.75 5.41421 8.75 5C8.75 4.58579 9.08579 4.25 9.5 4.25H20C21.5188 4.25 22.75 5.48122 22.75 7Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    });
+
+    return opts;
+  }, [hasPreorder]);
+
+  const selectedPaymentOption = useMemo(() => {
+    return paymentOptions.find((o) => o.key === paymentMethod) || paymentOptions[0];
+  }, [paymentMethod, paymentOptions]);
+
   return (
     <>
       <Header variant="white" />
@@ -670,9 +763,9 @@ export default function Checkout() {
             <Link to="/cart" className="back-link">
               <span style={{ marginRight: '8px' }}>‹</span> Back to cart
             </Link>
-            <div className="mobile-order-summary">
+            <button type="button" className="mobile-order-summary" onClick={() => setOrderSummaryOpen(true)}>
               ${totalPrice.toFixed(2)} ({items.length})
-            </div>
+            </button>
           </div>
           
           {/* Mobile Title */}
@@ -932,6 +1025,26 @@ export default function Checkout() {
               
               <div className="checkout-step-content">
                 <div className="checkout-form-grid">
+                  <div className="checkout-payment-select">
+                    <button type="button" className="checkout-payment-select-trigger" onClick={() => setPaymentPickerOpen(true)}>
+                      <span className="checkout-payment-select-left">
+                        <span className="checkout-payment-select-icon" aria-hidden="true">
+                          {selectedPaymentOption?.icon}
+                        </span>
+                        <span className="checkout-payment-select-label">{selectedPaymentOption?.label}</span>
+                      </span>
+                      <span className="checkout-payment-select-caret" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M5.22781 9.23431C5.53155 8.9219 6.02401 8.9219 6.32775 9.23431L12 15.0686L17.6723 9.23431C17.976 8.9219 18.4685 8.9219 18.7722 9.23431C19.0759 9.54673 19.0759 10.0533 18.7722 10.3657L12.55 16.7657C12.2462 17.0781 11.7538 17.0781 11.45 16.7657L5.22781 10.3657C4.92406 10.0533 4.92406 9.54673 5.22781 9.23431Z"
+                            fill="#222222"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                   <div className="checkout-payment-options">
                     {!hasPreorder ? (
                       <>
@@ -1107,12 +1220,14 @@ export default function Checkout() {
                       </div>
                       <div className="checkout-summary-item-main">
                         <div className="checkout-summary-item-title">{it.title}</div>
-                        <div className="checkout-summary-item-meta">
-                          {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                        <div className="checkout-summary-item-bottom">
+                          <div className="checkout-summary-item-meta">
+                            {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                          </div>
+                          <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
                         </div>
                         {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
                       </div>
-                      <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
                     </div>
                   );
                 })}
@@ -1314,6 +1429,106 @@ export default function Checkout() {
               <button type="button" className="checkout-modal-submit" onClick={() => void confirmPhoneVerification()} disabled={phoneVerifyLoading}>
                 Confirm
               </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+      {orderSummaryOpen ? (
+        <div className="checkout-modal-overlay" role="dialog" aria-modal="true">
+          <div className="checkout-summary-modal">
+            <div className="checkout-summary-modal-head">
+              <div className="checkout-summary-modal-title">Order summary</div>
+              <button type="button" className="checkout-summary-modal-close" onClick={() => setOrderSummaryOpen(false)} aria-label="Close">
+                ×
+              </button>
+            </div>
+            <div className="checkout-summary-items">
+              {items.map((it: any) => {
+                const unit = parseMoney(it?.price);
+                const qty = typeof it?.quantity === 'number' && it.quantity > 0 ? it.quantity : 1;
+                const lineTotal = unit != null ? unit * qty : null;
+                return (
+                  <div key={it.id} className="checkout-summary-item">
+                    <div className="checkout-summary-item-img">
+                      {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
+                    </div>
+                    <div className="checkout-summary-item-main">
+                      <div className="checkout-summary-item-title">{it.title}</div>
+                      <div className="checkout-summary-item-bottom">
+                        <div className="checkout-summary-item-meta">
+                          {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                        </div>
+                        <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
+                      </div>
+                      {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="checkout-summary-sep" />
+            <div className="checkout-summary-promo">
+              <input
+                className="checkout-summary-input"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+                placeholder="Promo code"
+              />
+              <button type="button" className="checkout-summary-activate">
+                Activate
+              </button>
+            </div>
+            <div className="checkout-summary-rows">
+              <div className="checkout-summary-row">
+                <div className="checkout-summary-label">Quantity</div>
+                <div className="checkout-summary-value">{totalQty}</div>
+              </div>
+              <div className="checkout-summary-row">
+                <div className="checkout-summary-label">Subtotal</div>
+                <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
+              </div>
+              <div className="checkout-summary-row">
+                <div className="checkout-summary-label">Tax</div>
+                <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
+              </div>
+              <div className="checkout-summary-row">
+                <div className="checkout-summary-label">Shipping</div>
+                <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
+              </div>
+              <div className="checkout-summary-row checkout-summary-row-total">
+                <div className="checkout-summary-label">Total</div>
+                <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+      {paymentPickerOpen ? (
+        <div className="checkout-modal-overlay" role="dialog" aria-modal="true">
+          <div className="checkout-payment-picker-modal">
+            <div className="checkout-summary-modal-head">
+              <div className="checkout-summary-modal-title">Select type of payment</div>
+              <button type="button" className="checkout-summary-modal-close" onClick={() => setPaymentPickerOpen(false)} aria-label="Close">
+                ×
+              </button>
+            </div>
+            <div className="checkout-payment-picker-list">
+              {paymentOptions.map((opt) => (
+                <button
+                  key={opt.key}
+                  type="button"
+                  className={`checkout-payment-picker-item ${opt.key === paymentMethod ? "checkout-payment-picker-item--active" : ""}`}
+                  onClick={() => {
+                    setPaymentMethod(opt.key);
+                    setPaymentPickerOpen(false);
+                  }}
+                >
+                  <span className="checkout-payment-picker-item-icon" aria-hidden="true">
+                    {opt.icon}
+                  </span>
+                  <span className="checkout-payment-picker-item-label">{opt.label}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>

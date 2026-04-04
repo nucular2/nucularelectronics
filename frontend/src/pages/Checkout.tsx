@@ -76,7 +76,7 @@ export default function Checkout() {
 
   const cartSnapshotRef = useRef<{ items: any[]; totalPrice: number }>({ items: [], totalPrice: 0 });
   const [phoneVerifyOpen, setPhoneVerifyOpen] = useState(false);
-  const [phoneVerifyDigits, setPhoneVerifyDigits] = useState<string[]>(["", "", "", ""]);
+  const [phoneVerifyDigits, setPhoneVerifyDigits] = useState<string[]>(["", "", "", "", "", ""]);
   const [phoneVerifyLoading, setPhoneVerifyLoading] = useState(false);
   const [phoneVerifyError, setPhoneVerifyError] = useState<string | null>(null);
   const [phoneVerified, setPhoneVerified] = useState(false);
@@ -275,7 +275,7 @@ export default function Checkout() {
         const text = await r.text();
         throw new Error(text || "Failed to start phone verification");
       }
-      setPhoneVerifyDigits(["", "", "", ""]);
+      setPhoneVerifyDigits(["", "", "", "", "", ""]);
       window.setTimeout(() => phoneVerifyInputRefs.current[0]?.focus?.(), 0);
     } catch (e: any) {
       setPhoneVerifyError(e?.message || "Failed to start phone verification");
@@ -290,7 +290,7 @@ export default function Checkout() {
     try {
       const session = await ensureSupabaseSession();
       const code = phoneVerifyDigits.join("").trim();
-      if (code.length !== 4) throw new Error("Enter the 4-digit code");
+      if (code.length !== 6) throw new Error("Enter the 6-digit code");
       const country = countries.find((c) => c.code === recipient.countryCode);
       const dialCode = country ? country.dial_code : "";
       const rawPhone = String(recipient.phone || "").trim();
@@ -308,7 +308,7 @@ export default function Checkout() {
       if (!payload?.ok) throw new Error(payload?.message || "Invalid code");
       setPhoneVerified(true);
       setPhoneVerifyOpen(false);
-      setPhoneVerifyDigits(["", "", "", ""]);
+      setPhoneVerifyDigits(["", "", "", "", "", ""]);
       await handleOfflineCheckout();
     } catch (e: any) {
       setPhoneVerifyError(e?.message || "Invalid code");
@@ -1081,16 +1081,6 @@ export default function Checkout() {
                   )}
                   <div className="checkout-field-hint">Optional</div>
 
-                  <div className="terms-checkbox">
-                    <label className="checkbox-container">
-                      <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
-                      <span className="checkmark"></span>
-                      <span style={{ fontSize: "14px", color: "#222" }}>
-                        By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
-                      </span>
-                    </label>
-                  </div>
-
                 </div>
               </div>
             </div>
@@ -1167,6 +1157,15 @@ export default function Checkout() {
 
               {step === 3 ? (
                 <div className="checkout-summary-action">
+                  <div className="terms-checkbox">
+                    <label className="checkbox-container">
+                      <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
+                      <span className="checkmark"></span>
+                      <span style={{ fontSize: "14px", color: "#222" }}>
+                        By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
+                      </span>
+                    </label>
+                  </div>
                   {paymentMethod === "paypal" && !hasPreorder ? (
                     <div className="checkout-paypal-wrap">
                       <PayPalScriptProvider options={{ clientId: "AR6kjBY5YEabbcJwBNE6cdoyichfDV8GFZCBV6b8K10d8HiH1X6ZuE_ttf-oj-FAZvrLVFw-LDGkVv_P", currency: "USD" }}>
@@ -1249,7 +1248,7 @@ export default function Checkout() {
                 onClick={() => {
                   setPhoneVerifyOpen(false);
                   setPhoneVerifyError(null);
-                  setPhoneVerifyDigits(["", "", "", ""]);
+                  setPhoneVerifyDigits(["", "", "", "", "", ""]);
                 }}
                 aria-label="Close"
               >
@@ -1265,7 +1264,7 @@ export default function Checkout() {
                 onClick={() => {
                   setPhoneVerifyOpen(false);
                   setPhoneVerifyError(null);
-                  setPhoneVerifyDigits(["", "", "", ""]);
+                  setPhoneVerifyDigits(["", "", "", "", "", ""]);
                   setStep(1);
                   window.scrollTo(0, 0);
                 }}

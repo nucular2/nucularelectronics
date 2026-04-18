@@ -71,7 +71,7 @@ export default function Controller() {
               />
             ) : (
               <img
-                src="/главная%202.png"
+                src="/new-screen.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />

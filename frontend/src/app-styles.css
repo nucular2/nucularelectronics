@@ -784,30 +784,45 @@
 .contact-socials {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 48px;
+  margin-top: -8px;
+}
+
+.contact-socials-old {
+  display: none;
 }
 
 .contact-socials .social-icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111;
-  border-radius: 50%;
-  color: #fff;
-  transition: opacity 0.2s;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  opacity: 1;
   text-decoration: none;
 }
 
 .contact-socials .social-icon:hover {
-  opacity: 0.8;
+  background: transparent;
+  opacity: 1;
 }
 
 .contact-socials .social-icon svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+.contact-socials .social-icon svg path {
+  transition: fill 0.2s;
+  fill: #222222;
+}
+
+.contact-socials .social-icon:hover svg path {
+  fill: #F36F25;
 }
 
 .contact-form {
@@ -945,6 +960,11 @@
   .contact-address {
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .contact-socials {
+    gap: 16px;
+    margin-top: -4px;
   }
 
   .contact-form {

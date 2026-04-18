@@ -64,7 +64,6 @@ export default function AdminOrderDetail() {
   const syncFromCrm = async () => {
     if (!id) return;
     setSyncing(true);
-    setError(null);
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData?.session?.access_token;
@@ -82,8 +81,8 @@ export default function AdminOrderDetail() {
         return;
       }
       if (!r.ok) {
-        const text = await r.text();
-        setError(text || 'Ошибка синхронизации CRM');
+        const text = await r.text().catch(() => '');
+        console.error('CRM sync failed:', text);
         return;
       }
       const payload = await r.json().catch(() => null);
@@ -92,7 +91,7 @@ export default function AdminOrderDetail() {
         setOrder((prev) => (prev ? { ...prev, status: upd.status || prev.status, contacts: upd.contacts || prev.contacts } : prev));
       }
     } catch (e: any) {
-      setError(e?.message || 'Ошибка синхронизации CRM');
+      console.error('CRM sync failed:', e);
     } finally {
       setSyncing(false);
     }

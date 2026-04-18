@@ -77,7 +77,6 @@ const Orders: React.FC = () => {
   const syncFromCrm = async (orderIds: string[]) => {
     if (!orderIds.length) return;
     setSyncing(true);
-    setError(null);
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData?.session?.access_token;
@@ -95,8 +94,8 @@ const Orders: React.FC = () => {
         return;
       }
       if (!r.ok) {
-        const text = await r.text();
-        setError(text || 'Ошибка синхронизации CRM');
+        const text = await r.text().catch(() => '');
+        console.error('CRM sync failed:', text);
         return;
       }
       const payload = await r.json().catch(() => null);
@@ -109,7 +108,7 @@ const Orders: React.FC = () => {
         })
       );
     } catch (e: any) {
-      setError(e?.message || 'Ошибка синхронизации CRM');
+      console.error('CRM sync failed:', e);
     } finally {
       setSyncing(false);
     }

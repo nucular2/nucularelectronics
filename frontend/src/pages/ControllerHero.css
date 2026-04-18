@@ -73,6 +73,12 @@
   }
 }
 
+@media (min-width: 901px) {
+  .controller-hero-text-box {
+    left: calc((100vw - var(--content-w)) / 2 + 120px);
+  }
+}
+
 .controller-hero-desc-line {
   display: block;
 }

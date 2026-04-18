@@ -31,7 +31,7 @@
   display: grid;
   grid-template-columns: 580px 280px;
   align-items: start;
-  gap: 60px;
+  gap: 120px;
   margin: 0;
 }
 
@@ -454,7 +454,7 @@
   white-space: nowrap;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .cart-page {
     padding-top: calc(var(--header-h) + 12px);
     padding-bottom: 40px;
@@ -469,7 +469,7 @@
 
   .cart-container {
     padding: 0 20px;
-    max-width: 374px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -478,9 +478,11 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    align-items: stretch;
   }
   
   .cart-main {
+    width: 100%;
     max-width: 100%;
   }
   
@@ -499,6 +501,10 @@
     border-radius: 8px;
     padding: 12px 20px;
     margin-top: 16px;
+  }
+
+  .checkout-btn {
+    width: 100%;
   }
   .preorder-badge span {
     font-family: var(--font-family);
@@ -597,9 +603,12 @@
   }
 
   .cart-price-remove {
-    width: 58px;
-    min-width: 58px;
-    justify-self: end;
+    width: 100%;
+    min-width: 0;
+    justify-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .cart-item-price {

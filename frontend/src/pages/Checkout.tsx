@@ -532,6 +532,51 @@ export default function Checkout() {
     }
   };
 
+  const handleCryptoCheckout = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const session = await ensureSupabaseSession();
+      const order = await createOrder({ initialStatus: "Awaiting payment" });
+
+      try {
+        await sendOrderToCrm(order);
+      } catch (crmErr) {
+        console.error("RetailCRM send error:", crmErr);
+      }
+
+      const r = await fetch("/api/nowpayments/invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ orderId: order.id }),
+      });
+      if (!r.ok) {
+        const text = await r.text().catch(() => "");
+        setError(text || "Не удалось инициировать оплату криптой");
+        navigate(`/orders/${order.id}`);
+        return;
+      }
+      const payload = await r.json().catch(() => null);
+      const invoiceUrl = String(payload?.invoiceUrl || "").trim();
+      if (!invoiceUrl) {
+        setError("Платёжная страница недоступна (url пустой)");
+        navigate(`/orders/${order.id}`);
+        return;
+      }
+
+      clearCart();
+      localStorage.removeItem("checkout_recipient");
+      localStorage.removeItem("checkout_shipping");
+      localStorage.removeItem("checkout_contacts");
+      window.location.href = invoiceUrl;
+    } catch (e: any) {
+      console.error("Crypto checkout error:", e);
+      setError(e?.message || "Failed to initiate crypto payment");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePayPalApprove = async (data: any, actions: any) => {
     try {
       const session = await ensureSupabaseSession();
@@ -1327,6 +1372,10 @@ export default function Checkout() {
                       onClick={() => {
                         if (paymentMethod === "card") {
                           void handleCardCheckout();
+                          return;
+                        }
+                        if (paymentMethod === "crypto") {
+                          void handleCryptoCheckout();
                           return;
                         }
                         if (paymentMethod === "no_payment") {

@@ -474,7 +474,7 @@ body,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 80% center;
+  object-position: right center;
   display: block;
 }
 
@@ -1920,11 +1920,12 @@ body.is-mobile .cart-count {
 
 .advantages-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, 580px);
   gap: 20px;
+  justify-content: center;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1240px) {
   .advantages-grid {
     grid-template-columns: minmax(0, 1fr);
   }

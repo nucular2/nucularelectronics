@@ -732,6 +732,15 @@
   box-sizing: border-box;
 }
 
+.checkout-payment-picker-inline {
+  width: 100%;
+  max-width: 374px;
+}
+
+.checkout-summary-inline {
+  margin: 0 0 24px;
+}
+
 .checkout-payment-picker-list {
   display: flex;
   flex-direction: column;
@@ -858,9 +867,14 @@
 
 .checkout-summary-total {
   font-family: var(--font-family);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   color: #222;
+}
+
+.checkout-consent-text {
+  font-size: 14px;
+  color: #b0b0b0;
 }
 
 .checkout-step {
@@ -1175,10 +1189,24 @@
 
   .checkout-right-panel .checkout-summary-head,
   .checkout-right-panel .checkout-summary-items,
-  .checkout-right-panel .checkout-summary-sep,
-  .checkout-right-panel .checkout-summary-promo,
-  .checkout-right-panel .checkout-summary-rows {
+  .checkout-right-panel .checkout-summary-head,
+  .checkout-right-panel .checkout-summary-items {
     display: none;
+  }
+
+  .checkout-right-panel .checkout-summary-sep {
+    display: block;
+    margin: 16px 0;
+  }
+
+  .checkout-right-panel .checkout-summary-promo {
+    display: grid;
+    margin-bottom: 16px;
+  }
+
+  .checkout-right-panel .checkout-summary-rows {
+    display: block;
+    margin-bottom: 16px;
   }
 
   /* Adjust Steps for Mobile */

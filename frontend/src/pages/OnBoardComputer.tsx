@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import CardBase from "../components/cards/CardBase";
 import "./OnBoardComputer.css";
@@ -9,7 +9,9 @@ import AnimatedSection from "../components/AnimatedSection";
 export default function OnBoardComputer() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
   const { addToCart } = useCart();
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 900px)");
@@ -30,6 +32,23 @@ export default function OnBoardComputer() {
     };
   }, []);
 
+  useEffect(() => {
+    if (activeTab !== "overview") {
+      setShowStickyBar(false);
+      return;
+    }
+    const element = topSentinelRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [activeTab]);
+
   const handleBuy = () => {
     addToCart({
       id: 2,
@@ -42,6 +61,18 @@ export default function OnBoardComputer() {
 
   return (
     <div className="onboard-page">
+      <div ref={topSentinelRef} />
+      {activeTab === "overview" && showStickyBar && (
+        <div className="controller-sticky-bar">
+          <div className="controller-sticky-title">On-board computer</div>
+          <div className="controller-sticky-right">
+            <div className="controller-sticky-price">$110.00</div>
+            <button className="controller-sticky-cta" onClick={handleBuy}>
+              Buy
+            </button>
+          </div>
+        </div>
+      )}
       <Header variant="transparent" />
       
       {/* Mobile Version */}
@@ -94,11 +125,11 @@ export default function OnBoardComputer() {
         <AnimatedSection className="onboard-section" delay={0.1}>
           <img src="/content-box15.png" alt="On-board computer details" className="onboard-image" />
         </AnimatedSection>
-        <section className="onboard-section">
-          <div className="onboard-panel">
-            <div className="onboard-panel-title">On-board computer</div>
-            <div className="onboard-panel-price">$110.00</div>
-            <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
+        <section className="onboard-section onboard-panel-section">
+          <div className="onboard-panel buy-plate">
+            <div className="onboard-panel-title buy-title">On-board computer</div>
+            <div className="onboard-panel-price buy-price">$110.00</div>
+            <button className="onboard-panel-button buy-button" onClick={handleBuy}>Buy</button>
           </div>
         </section>
       </div>

@@ -102,29 +102,31 @@
 
 .main-footer .social-icons {
   display: flex;
-  gap: 48px;
-}
-
-.main-footer .social-icon {
-  width: 36px;
-  height: 36px;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  gap: 16px;
 }
 
-.main-footer .social-icon svg {
+.main-footer .social-icons svg {
   width: 36px;
   height: 36px;
   display: block;
+  border-radius: 12px;
+  padding: 6px;
+  box-sizing: content-box;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
-.main-footer .social-icon svg path {
+.main-footer .social-icons svg path {
   transition: fill 0.2s;
 }
 
-.main-footer .social-icon:hover svg path {
+.main-footer .social-icons svg:hover {
+  background: rgba(243, 111, 37, 0.12);
+  transform: translateY(-1px);
+}
+
+.main-footer .social-icons svg:hover path {
   fill: #F36F25;
 }
 
@@ -195,23 +197,20 @@
   }
   /* Middle Row: Trustpilot & Socials */
   .footer-middle-row {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
-    gap: 32px;
+    gap: 16px;
     margin-top: 0;
     margin-bottom: 40px;
   }
   .trustpilot-widget {
     order: -1; /* Ensure it's first if needed, though DOM order is first */
+    width: 100%;
   }
   .main-footer .social-icons {
     width: 100%;
     justify-content: flex-start;
-    gap: 16px;
-  }
-  .main-footer .social-icon {
-    width: 36px;
-    height: 36px;
   }
   .footer-bottom {
     flex-direction: column;

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from "../components/Header";
-import CardBase from "../components/cards/CardBase";
 import { useCart } from "../context/CartContext";
 import AnimatedSection from "../components/AnimatedSection";
 import './ULightController.css';
@@ -43,6 +42,48 @@ const LedStripIcon = () => (
 export default function ULightController() {
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
   const { addToCart } = useCart();
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 900px)").matches;
+  });
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const apply = () => {
+      setIsMobile(mq.matches);
+      if (mq.matches) {
+        document.body.classList.add("is-mobile");
+      } else {
+        document.body.classList.remove("is-mobile");
+      }
+    };
+    apply();
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+    else mq.addListener(apply);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", apply);
+      else mq.removeListener(apply);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (activeTab !== "overview") {
+      setShowStickyBar(false);
+      return;
+    }
+    const element = topSentinelRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [activeTab]);
 
   const handleBuy = () => {
     addToCart({
@@ -56,6 +97,18 @@ export default function ULightController() {
 
   return (
     <div className="ulight-page">
+      <div ref={topSentinelRef} />
+      {activeTab === "overview" && showStickyBar && (
+        <div className="controller-sticky-bar">
+          <div className="controller-sticky-title">uLight controller</div>
+          <div className="controller-sticky-right">
+            <div className="controller-sticky-price">$55.00</div>
+            <button className="controller-sticky-cta" onClick={handleBuy}>
+              Buy
+            </button>
+          </div>
+        </div>
+      )}
       <Header variant="transparent" />
       
       {/* Mobile hero */}
@@ -118,63 +171,175 @@ export default function ULightController() {
           </AnimatedSection>
 
           <AnimatedSection className="ulight-reviews-container" delay={0.3}>
-             <div className="ulight-buy-plate">
-                <div className="ulight-buy-info">
-                  <h3 className="ulight-buy-title">uLight controller</h3>
-                  <p className="ulight-buy-price">$55.00</p>
-                </div>
-                <button className="ulight-buy-button" onClick={handleBuy}>Buy</button>
+            <div className="ulight-buy-plate buy-plate">
+              <div className="ulight-buy-info buy-info">
+                <h3 className="ulight-buy-title buy-title">uLight controller</h3>
+                <p className="ulight-buy-price buy-price">$55.00</p>
               </div>
+              <button className="ulight-buy-button buy-button" onClick={handleBuy}>Buy</button>
+            </div>
 
-              <div className="ulight-reviews-section reviews-bleed">
-                <div className="ulight-reviews-header">
-                  <h2 className="ulight-reviews-title">Reviews</h2>
-                  <a href="#" className="reviews-link">
-                    All reviews
-                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </a>
-                </div>
-                <div className="product-reviews-list">
-                  <CardBase className="product-review-card" height={218}>
-                    <div className="product-review-text">
-                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
-                    </div>
-                    <div className="product-review-meta">
-                      <img className="product-review-flag" src="/flag.png" width={24} height={24} alt="USA" />
-                      <span>USA, Alex Smith</span>
-                    </div>
-                  </CardBase>
-                  <CardBase className="product-review-card" height={218}>
-                    <div className="product-review-text">
-                      Lighting control controller: turn signals, brake light, headlight or LED strip. Easy connection to the controller and the display. If necessary, you can connect to the uLight all the peripherals of...
-                    </div>
-                    <div className="product-review-meta">
-                      <img className="product-review-flag" src="/flag2.png" width={24} height={24} alt="Germany" />
-                      <span>Germany, Max Stoun</span>
-                    </div>
-                  </CardBase>
-                  <CardBase className="product-review-card" height={218}>
-                    <div className="product-review-text">
-                      A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set parameters, power strokes of the gas throttle, ...
-                    </div>
-                    <div className="product-review-meta">
-                      <img className="product-review-flag" src="/flag3.png" width={24} height={24} alt="Norway" />
-                      <span>Norway, Anna Orlova</span>
-                    </div>
-                  </CardBase>
-                  <CardBase className="product-review-card" height={218}>
-                    <div className="product-review-text">
-                      The on-board computer is equipped with the large sunlight resistant screen to display main parameters, driving modes settings, software updates for all system components, battery control, and the ...
-                    </div>
-                    <div className="product-review-meta">
-                      <img className="product-review-flag" src="/flag4.png" width={24} height={24} alt="France" />
-                      <span>France, Robert Jonson</span>
-                    </div>
-                  </CardBase>
-                </div>
+            <section
+              className="reviews-section reviews-bleed"
+              style={
+                isMobile
+                  ? { padding: "0 0 40px", background: "#fff" }
+                  : undefined
+              }
+            >
+              <div className="section-header">
+                <h2 className="section-title">Reviews</h2>
+                <a href="/reviews" className="section-link">
+                  All reviews
+                  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 9L5 5L1 1" stroke="#F36F25" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
               </div>
+              <div
+                className="reviews-grid"
+                style={
+                  isMobile
+                    ? {
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "nowrap",
+                        overflowX: "auto",
+                        overflowY: "hidden",
+                        gap: "16px",
+                        padding: "0 20px 12px",
+                        scrollSnapType: "x mandatory",
+                        WebkitOverflowScrolling: "touch",
+                      }
+                    : undefined
+                }
+              >
+                <article
+                  className="review-card"
+                  style={
+                    isMobile
+                      ? {
+                          flex: "0 0 280px",
+                          width: "280px",
+                          minWidth: "280px",
+                          maxWidth: "280px",
+                          minHeight: "213px",
+                          height: "213px",
+                          padding: "20px",
+                          borderRadius: "20px",
+                          background: "#F9F9F9",
+                          scrollSnapAlign: "start",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                        }
+                      : undefined
+                  }
+                >
+                  <h3 className="review-title">Nucular controller P24F</h3>
+                  <p className="review-text">
+                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+                  </p>
+                  <div className="review-author">
+                    <img src="/flag.png" alt="USA" className="review-flag" />
+                    <span className="author-name">USA, Alex Smith</span>
+                  </div>
+                </article>
+                <article
+                  className="review-card"
+                  style={
+                    isMobile
+                      ? {
+                          flex: "0 0 280px",
+                          width: "280px",
+                          minWidth: "280px",
+                          maxWidth: "280px",
+                          minHeight: "213px",
+                          height: "213px",
+                          padding: "20px",
+                          borderRadius: "20px",
+                          background: "#F9F9F9",
+                          scrollSnapAlign: "start",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                        }
+                      : undefined
+                  }
+                >
+                  <h3 className="review-title">uLight controller</h3>
+                  <p className="review-text">
+                    Lighting control signals, brake light and LED strip. Easy connection and necessary ...
+                  </p>
+                  <div className="review-author">
+                    <img src="/flag2.png" alt="Germany" className="review-flag" />
+                    <span className="author-name">Germany, Max Stoun</span>
+                  </div>
+                </article>
+                <article
+                  className="review-card"
+                  style={
+                    isMobile
+                      ? {
+                          flex: "0 0 280px",
+                          width: "280px",
+                          minWidth: "280px",
+                          maxWidth: "280px",
+                          minHeight: "213px",
+                          height: "213px",
+                          padding: "20px",
+                          borderRadius: "20px",
+                          background: "#F9F9F9",
+                          scrollSnapAlign: "start",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                        }
+                      : undefined
+                  }
+                >
+                  <h3 className="review-title">Nucular controller P24F</h3>
+                  <p className="review-text">
+                    A powerful ARM microprocessor provides precise and smooth control of the BLDC motor. The controller settings are widely configured — you can set ...
+                  </p>
+                  <div className="review-author">
+                    <img src="/flag3.png" alt="Norway" className="review-flag" />
+                    <span className="author-name">Norway, Anna Orlova</span>
+                  </div>
+                </article>
+                <article
+                  className="review-card"
+                  style={
+                    isMobile
+                      ? {
+                          flex: "0 0 280px",
+                          width: "280px",
+                          minWidth: "280px",
+                          maxWidth: "280px",
+                          minHeight: "213px",
+                          height: "213px",
+                          padding: "20px",
+                          borderRadius: "20px",
+                          background: "#F9F9F9",
+                          scrollSnapAlign: "start",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                        }
+                      : undefined
+                  }
+                >
+                  <h3 className="review-title">The on-board computer</h3>
+                  <p className="review-text">
+                    The on-board computer is equipped with a large sunlight resistant screen. It displays main parameters, driving modes, ...
+                  </p>
+                  <div className="review-author">
+                    <img src="/flag4.png" alt="France" className="review-flag" />
+                    <span className="author-name">France, Robert Jonson</span>
+                  </div>
+                </article>
+              </div>
+            </section>
           </AnimatedSection>
         </>
       )}

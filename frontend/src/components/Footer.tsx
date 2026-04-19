@@ -69,15 +69,8 @@ export default function Footer() {
            <div className="trustpilot-widget">
                <strong>Excellent</strong> 4.5 out of 5 <span style={{ color: '#00b67a', fontSize: '20px' }}>★</span> <strong>Trustpilot</strong>
            </div>
-           <div className="social-icons">
-            <a
-              href="https://www.facebook.com/nuculartech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-              aria-label="Facebook"
-            >
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="social-icons">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Facebook">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -85,15 +78,7 @@ export default function Footer() {
                   fill="#222222"
                 />
               </svg>
-            </a>
-            <a
-              href="https://www.instagram.com/nuculartech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-              aria-label="Instagram"
-            >
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Instagram">
                 <path d="M15 18C15 19.6568 16.3432 21 18 21C19.6568 21 21 19.6568 21 18C21 16.3432 19.6568 15 18 15C16.3432 15 15 16.3432 15 18Z" fill="#222222" />
                 <path
                   fillRule="evenodd"
@@ -108,15 +93,7 @@ export default function Footer() {
                   fill="#222222"
                 />
               </svg>
-            </a>
-            <a
-              href="https://www.youtube.com/@NucularElectronics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-              aria-label="YouTube"
-            >
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YouTube">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -124,15 +101,7 @@ export default function Footer() {
                   fill="#222222"
                 />
               </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com/company/nucular"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-              aria-label="LinkedIn"
-            >
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LinkedIn">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -140,15 +109,7 @@ export default function Footer() {
                   fill="#222222"
                 />
               </svg>
-            </a>
-            <a
-              href="https://www.tiktok.com/@nuculartech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon"
-              aria-label="TikTok"
-            >
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TikTok">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -156,8 +117,7 @@ export default function Footer() {
                   fill="#222222"
                 />
               </svg>
-            </a>
-        </div>
+            </div>
         </div>
 
         <div className="footer-divider">

@@ -11,19 +11,23 @@
   align-items: center;
   justify-content: center;
   padding-top: 60px; /* Reduced for mobile */
-  padding-bottom: 60px;
+  padding-bottom: 0;
   text-align: center;
   position: relative;
 }
 
 /* Default Mobile Styles */
-.mobile-only {
+.surron-mobile-only {
   display: block;
 }
-.desktop-only {
+.surron-desktop-only {
   display: none;
 }
 .surron-desktop-actions {
+  display: none;
+}
+
+.surron-hero .surron-desktop-actions {
   display: none;
 }
 .surron-full-width-container {
@@ -32,45 +36,49 @@
   display: flex;
   justify-content: center;
 }
+
+.surron-full-width-container.surron-desktop-only {
+  display: none;
+}
+
+.surron-full-width-container.surron-mobile-only {
+  display: flex;
+}
+
+.surron-full-width-container.surron-mobile-only .surron-full-width-image {
+  background-color: #fff;
+}
+
 .surron-full-width-image {
   width: 100%;
   height: auto;
   display: block;
 }
-.surron-buy-plate {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  height: auto;
-  padding: 40px 20px;
-  background-color: #101010;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  box-sizing: border-box;
-}
+
 .surron-buy-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 .surron-buy-title {
   margin: 0;
   font-size: 24px;
+  font-weight: 700;
   color: white;
   text-align: center;
+  font-family: var(--font-family);
 }
 .surron-buy-price {
   margin: 0;
-  font-size: 20px;
+  font-size: 14px;
+  font-weight: 400;
   color: white;
+  font-family: var(--font-family);
 }
 .surron-buy-button {
   width: 100%;
-  max-width: 280px;
+  max-width: none;
   height: 48px;
   background-color: #F36F25;
   border: none;
@@ -79,15 +87,108 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  font-family: var(--font-family);
+}
+
+.surron-kit-section {
+  width: 100%;
+  width: 100%;
+  background: #fff;
+  padding: 48px 20px 56px;
+  box-sizing: border-box;
+}
+
+.surron-kit-title {
+  margin: 0 0 28px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 120%;
+  text-align: center;
+  color: #222;
+}
+
+.surron-kit-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.surron-kit-card {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 248px;
+  background: #f9f9f9;
+  border-radius: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.surron-kit-card-image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  display: block;
+  mix-blend-mode: multiply;
+}
+
+.surron-kit-card-title {
+  width: 100%;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 120%;
+  color: #222;
+  text-align: left;
+}
+
+.surron-install-guide {
+  margin-top: 28px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #F36F25;
+}
+
+.surron-install-guide svg {
+  display: block;
+}
+
+.surron-install-guide span {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.surron-install-guide:hover span {
+  border-bottom-color: #F36F25;
 }
 
 /* Desktop styles */
 @media (min-width: 900px) {
-  .mobile-only {
+  .surron-mobile-only {
     display: none;
   }
-  .desktop-only {
+  .surron-desktop-only {
     display: flex; /* flex for container */
+  }
+  .surron-full-width-container.surron-desktop-only {
+    display: flex;
+  }
+  .surron-full-width-container.surron-mobile-only {
+    display: none;
   }
   .surron-hero {
     flex-direction: column;
@@ -104,7 +205,7 @@
   .surron-desktop-actions {
     position: absolute;
     top: 100px; /* Adjust based on header height */
-    right: 240px; /* Align with other pages */
+    right: calc((100vw - var(--content-w)) / 2);
     display: flex;
     gap: 24px;
     align-items: center;
@@ -118,15 +219,19 @@
     justify-content: center;
   }
 
+  .surron-full-width-container.surron-desktop-only .surron-full-width-image {
+    background-color: #fff;
+  }
+
   .surron-full-width-image {
     width: 100%;
     height: auto;
     display: block;
-    -webkit-clip-path: inset(12px 0 0 0);
-    clip-path: inset(12px 0 0 0);
+    -webkit-clip-path: inset(32px 0 0 0);
+    clip-path: inset(32px 0 0 0);
   }
 
-  .surron-buy-plate {
+  .surron-buy-plate.surron-desktop-only {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
@@ -149,19 +254,19 @@
     gap: 16px;
   }
 
-  .surron-buy-title {
+  .surron-buy-plate.surron-desktop-only .surron-buy-title {
     margin: 0;
     font-size: 32px;
     color: white;
   }
 
-  .surron-buy-price {
+  .surron-buy-plate.surron-desktop-only .surron-buy-price {
     margin: 0;
     font-size: 24px;
     color: white;
   }
 
-  .surron-buy-button {
+  .surron-buy-plate.surron-desktop-only .surron-buy-button {
     width: 280px;
     height: 56px;
     background-color: #F36F25;

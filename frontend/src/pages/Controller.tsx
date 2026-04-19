@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
 import AnimatedSpecsBlock from "../components/AnimatedSpecsBlock";
@@ -10,10 +10,12 @@ export default function Controller() {
   const [activeFeature, setActiveFeature] = useState<'water' | 'cooling'>('water');
   const [activeTab, setActiveTab] = useState<'overview' | 'specifications'>('overview');
   const { addToCart } = useCart();
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(max-width: 900px)").matches;
   });
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 900px)");
@@ -34,6 +36,23 @@ export default function Controller() {
     };
   }, []);
 
+  useEffect(() => {
+    if (activeTab !== "overview") {
+      setShowStickyBar(false);
+      return;
+    }
+    const element = topSentinelRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [activeTab]);
+
   const handleBuy = () => {
     addToCart({
       id: 1,
@@ -46,7 +65,8 @@ export default function Controller() {
 
   return (
     <div className="onboard-page controller-page">
-      {isMobile && (
+      <div ref={topSentinelRef} />
+      {activeTab === "overview" && showStickyBar && (
         <div className="controller-sticky-bar">
           <div className="controller-sticky-title">Nucular controller P24F</div>
           <div className="controller-sticky-right">
@@ -65,13 +85,13 @@ export default function Controller() {
           <div className="hero-image-container">
             {isMobile ? (
               <img
-                src="/controller-hero-clean.png"
+                src="/контролерP24Fм.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />
             ) : (
               <img
-                src="/new-screen.png"
+                src="/новыйэкран.png"
                 alt="Nucular controller P24F"
                 className="hero-main-image"
               />
@@ -245,11 +265,11 @@ export default function Controller() {
           <img src="/content-box34.png" alt="Controller details" className="onboard-image" />
         </section>
 
-        <section className="onboard-section">
-          <div className="onboard-panel">
-            <div className="onboard-panel-title">Nucular controller P24F</div>
-            <div className="onboard-panel-price">$610.00</div>
-            <button className="onboard-panel-button" onClick={handleBuy}>Buy</button>
+        <section className="onboard-section onboard-panel-section">
+          <div className="onboard-panel buy-plate">
+            <div className="onboard-panel-title buy-title">Nucular controller P24F</div>
+            <div className="onboard-panel-price buy-price">$610.00</div>
+            <button className="onboard-panel-button buy-button" onClick={handleBuy}>Buy</button>
           </div>
         </section>
       </div>
@@ -409,7 +429,6 @@ export default function Controller() {
                     padding: "20px",
                     borderRadius: "20px",
                     background: "#F9F9F9",
-                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
                     scrollSnapAlign: "start",
                     display: "flex",
                     flexDirection: "column",
@@ -441,7 +460,6 @@ export default function Controller() {
                     padding: "20px",
                     borderRadius: "20px",
                     background: "#F9F9F9",
-                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
                     scrollSnapAlign: "start",
                     display: "flex",
                     flexDirection: "column",
@@ -473,7 +491,6 @@ export default function Controller() {
                     padding: "20px",
                     borderRadius: "20px",
                     background: "#F9F9F9",
-                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
                     scrollSnapAlign: "start",
                     display: "flex",
                     flexDirection: "column",
@@ -505,7 +522,6 @@ export default function Controller() {
                     padding: "20px",
                     borderRadius: "20px",
                     background: "#F9F9F9",
-                    boxShadow: "0 0 20px 0 rgba(0,0,0,0.1)",
                     scrollSnapAlign: "start",
                     display: "flex",
                     flexDirection: "column",

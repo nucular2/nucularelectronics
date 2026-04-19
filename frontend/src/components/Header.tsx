@@ -359,7 +359,16 @@ export default function Header({ variant = 'transparent' }: { variant?: 'transpa
                   <a href="#" className="mobile-product-link">Bluetooth module with App</a>
                   <a href="#" className="mobile-product-link soon">BMS (soon)</a>
                   <div className="mobile-products-section-title">Complete solutions</div>
-                  <a href="#" className="mobile-product-link">For Sur-Ron Light Bee</a>
+                  <a
+                    href="/sur-ron-light-bee"
+                    className="mobile-product-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMobileNavClick('/sur-ron-light-bee');
+                    }}
+                  >
+                    For Sur-Ron Light Bee
+                  </a>
                   <a href="#" className="mobile-product-link">For Talaria Sting MX3 | MX4</a>
                   <a href="#" className="mobile-product-link">For Talaria XXX</a>
                   <a href="#" className="mobile-product-link">For Arctic Leopard EXT 650</a>

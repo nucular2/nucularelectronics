@@ -34,6 +34,7 @@ interface ContactsInfo {
   reason?: string;
   comment?: string;
   termsAccepted: boolean;
+  newsletterOptIn: boolean;
 }
 
 type PaymentMethod = "card" | "paypal" | "bank" | "crypto" | "no_payment";
@@ -72,6 +73,7 @@ export default function Checkout() {
     reason: "",
     comment: "",
     termsAccepted: false,
+    newsletterOptIn: false,
   });
 
   const cartSnapshotRef = useRef<{ items: any[]; totalPrice: number }>({ items: [], totalPrice: 0 });
@@ -87,6 +89,13 @@ export default function Checkout() {
   const hasPreorder = useMemo(() => items.some((it: any) => Boolean(it?.isPreorder)), [items]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(hasPreorder ? "bank" : "card");
   const [promoCode, setPromoCode] = useState('');
+
+  useEffect(() => {
+    if (step !== 3) {
+      setOrderSummaryOpen(false);
+      setPaymentPickerOpen(false);
+    }
+  }, [step]);
 
   // Load saved data from localStorage
   useEffect(() => {
@@ -205,6 +214,10 @@ export default function Checkout() {
     setContacts(prev => ({ ...prev, termsAccepted: e.target.checked }));
   };
 
+  const handleNewsletterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContacts(prev => ({ ...prev, newsletterOptIn: e.target.checked }));
+  };
+
   // Temporary function for quick testing
   const fillTestValues = () => {
     setRecipient({
@@ -227,6 +240,7 @@ export default function Checkout() {
       whatsapp: "+1234567890",
       comment: "Test comment",
       termsAccepted: true,
+      newsletterOptIn: false,
     });
     // setStep(3);
   };
@@ -808,10 +822,85 @@ export default function Checkout() {
             <Link to="/cart" className="back-link">
               <span style={{ marginRight: '8px' }}>‹</span> Back to cart
             </Link>
-            <button type="button" className="mobile-order-summary" onClick={() => setOrderSummaryOpen(true)}>
-              ${totalPrice.toFixed(2)} ({items.length})
-            </button>
+            {step === 3 ? (
+              <button type="button" className="mobile-order-summary" onClick={() => setOrderSummaryOpen((prev) => !prev)}>
+                ${totalPrice.toFixed(2)} ({items.length})
+              </button>
+            ) : null}
           </div>
+
+          {step === 3 && orderSummaryOpen ? (
+            <div className="checkout-summary checkout-summary-inline">
+              <div className="checkout-summary-head">
+                <div className="checkout-summary-title">Order summary</div>
+                <button type="button" className="checkout-summary-edit" onClick={() => setOrderSummaryOpen(false)}>
+                  Close
+                </button>
+              </div>
+
+              <div className="checkout-summary-items">
+                {items.map((it: any) => {
+                  const unit = parseMoney(it?.price);
+                  const qty = typeof it?.quantity === "number" && it.quantity > 0 ? it.quantity : 1;
+                  const lineTotal = unit != null ? unit * qty : null;
+                  return (
+                    <div key={it.id} className="checkout-summary-item">
+                      <div className="checkout-summary-item-img">
+                        {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
+                      </div>
+                      <div className="checkout-summary-item-main">
+                        <div className="checkout-summary-item-title">{it.title}</div>
+                        <div className="checkout-summary-item-bottom">
+                          <div className="checkout-summary-item-meta">
+                            {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                          </div>
+                          <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
+                        </div>
+                        {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="checkout-summary-sep" />
+
+              <div className="checkout-summary-promo">
+                <input
+                  className="checkout-summary-input"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  placeholder="Promo code"
+                />
+                <button type="button" className="checkout-summary-activate">
+                  Activate
+                </button>
+              </div>
+
+              <div className="checkout-summary-rows">
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Quantity</div>
+                  <div className="checkout-summary-value">{totalQty}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Subtotal</div>
+                  <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Tax</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
+                </div>
+                <div className="checkout-summary-row">
+                  <div className="checkout-summary-label">Shipping</div>
+                  <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
+                </div>
+                <div className="checkout-summary-row checkout-summary-row-total">
+                  <div className="checkout-summary-label">Total</div>
+                  <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
+                </div>
+              </div>
+            </div>
+          ) : null}
           
           {/* Mobile Title */}
           <h1 className="checkout-title-mobile">Checkout</h1>
@@ -1071,7 +1160,12 @@ export default function Checkout() {
               <div className="checkout-step-content">
                 <div className="checkout-form-grid">
                   <div className="checkout-payment-select">
-                    <button type="button" className="checkout-payment-select-trigger" onClick={() => setPaymentPickerOpen(true)}>
+                    <button
+                      type="button"
+                      className="checkout-payment-select-trigger"
+                      aria-expanded={paymentPickerOpen}
+                      onClick={() => setPaymentPickerOpen((prev) => !prev)}
+                    >
                       <span className="checkout-payment-select-left">
                         <span className="checkout-payment-select-icon" aria-hidden="true">
                           {selectedPaymentOption?.icon}
@@ -1089,6 +1183,28 @@ export default function Checkout() {
                         </svg>
                       </span>
                     </button>
+                    {paymentPickerOpen ? (
+                      <div className="checkout-payment-picker-inline">
+                        <div className="checkout-payment-picker-list">
+                          {paymentOptions.map((opt) => (
+                            <button
+                              key={opt.key}
+                              type="button"
+                              className={`checkout-payment-picker-item ${opt.key === paymentMethod ? "checkout-payment-picker-item--active" : ""}`}
+                              onClick={() => {
+                                setPaymentMethod(opt.key);
+                                setPaymentPickerOpen(false);
+                              }}
+                            >
+                              <span className="checkout-payment-picker-item-icon" aria-hidden="true">
+                                {opt.icon}
+                              </span>
+                              <span className="checkout-payment-picker-item-label">{opt.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                   <div className="checkout-payment-options">
                     {!hasPreorder ? (
@@ -1244,85 +1360,94 @@ export default function Checkout() {
             </div>
           </div>
           </div>
-          <aside className="checkout-right-panel">
-            <div className="checkout-summary">
-              <div className="checkout-summary-head">
-                <div className="checkout-summary-title">Order summary</div>
-                <button type="button" className="checkout-summary-edit" onClick={() => navigate('/cart')}>
-                  Edit
-                </button>
-              </div>
+          {step === 3 ? (
+            <aside className="checkout-right-panel">
+              <div className="checkout-summary">
+                <div className="checkout-summary-head">
+                  <div className="checkout-summary-title">Order summary</div>
+                  <button type="button" className="checkout-summary-edit" onClick={() => navigate('/cart')}>
+                    Edit
+                  </button>
+                </div>
 
-              <div className="checkout-summary-items">
-                {items.map((it: any) => {
-                  const unit = parseMoney(it?.price);
-                  const qty = typeof it?.quantity === 'number' && it.quantity > 0 ? it.quantity : 1;
-                  const lineTotal = unit != null ? unit * qty : null;
-                  return (
-                    <div key={it.id} className="checkout-summary-item">
-                      <div className="checkout-summary-item-img">
-                        {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
-                      </div>
-                      <div className="checkout-summary-item-main">
-                        <div className="checkout-summary-item-title">{it.title}</div>
-                        <div className="checkout-summary-item-bottom">
-                          <div className="checkout-summary-item-meta">
-                            {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
-                          </div>
-                          <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
+                <div className="checkout-summary-items">
+                  {items.map((it: any) => {
+                    const unit = parseMoney(it?.price);
+                    const qty = typeof it?.quantity === 'number' && it.quantity > 0 ? it.quantity : 1;
+                    const lineTotal = unit != null ? unit * qty : null;
+                    return (
+                      <div key={it.id} className="checkout-summary-item">
+                        <div className="checkout-summary-item-img">
+                          {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
                         </div>
-                        {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
+                        <div className="checkout-summary-item-main">
+                          <div className="checkout-summary-item-title">{it.title}</div>
+                          <div className="checkout-summary-item-bottom">
+                            <div className="checkout-summary-item-meta">
+                              {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
+                            </div>
+                            <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
+                          </div>
+                          {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
 
-              <div className="checkout-summary-sep" />
+                <div className="checkout-summary-sep" />
 
-              <div className="checkout-summary-promo">
-                <input
-                  className="checkout-summary-input"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Promo code"
-                />
-                <button type="button" className="checkout-summary-activate">
-                  Activate
-                </button>
-              </div>
+                <div className="checkout-summary-promo">
+                  <input
+                    className="checkout-summary-input"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                    placeholder="Promo code"
+                  />
+                  <button type="button" className="checkout-summary-activate">
+                    Activate
+                  </button>
+                </div>
 
-              <div className="checkout-summary-rows">
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Quantity</div>
-                  <div className="checkout-summary-value">{totalQty}</div>
+                <div className="checkout-summary-rows">
+                  <div className="checkout-summary-row">
+                    <div className="checkout-summary-label">Quantity</div>
+                    <div className="checkout-summary-value">{totalQty}</div>
+                  </div>
+                  <div className="checkout-summary-row">
+                    <div className="checkout-summary-label">Subtotal</div>
+                    <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
+                  </div>
+                  <div className="checkout-summary-row">
+                    <div className="checkout-summary-label">Tax</div>
+                    <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
+                  </div>
+                  <div className="checkout-summary-row">
+                    <div className="checkout-summary-label">Shipping</div>
+                    <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
+                  </div>
+                  <div className="checkout-summary-row checkout-summary-row-total">
+                    <div className="checkout-summary-label">Total</div>
+                    <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
+                  </div>
                 </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Subtotal</div>
-                  <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
-                </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Tax</div>
-                  <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
-                </div>
-                <div className="checkout-summary-row">
-                  <div className="checkout-summary-label">Shipping</div>
-                  <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
-                </div>
-                <div className="checkout-summary-row checkout-summary-row-total">
-                  <div className="checkout-summary-label">Total</div>
-                  <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
-                </div>
-              </div>
 
-              {step === 3 ? (
                 <div className="checkout-summary-action">
                   <div className="terms-checkbox">
                     <label className="checkbox-container">
                       <input type="checkbox" checked={contacts.termsAccepted} onChange={handleTermsChange} id="terms" />
                       <span className="checkmark"></span>
-                      <span style={{ fontSize: "14px", color: "#222" }}>
+                      <span className="checkout-consent-text">
                         By placing an order you agree to the <Link to="/terms" className="terms-link">Terms and Conditions</Link>
+                      </span>
+                    </label>
+                  </div>
+                  <div className="terms-checkbox">
+                    <label className="checkbox-container">
+                      <input type="checkbox" checked={contacts.newsletterOptIn} onChange={handleNewsletterChange} id="newsletter" />
+                      <span className="checkmark"></span>
+                      <span className="checkout-consent-text">
+                        Sign up for our newsletter and stay updated on&nbsp;the news, offers, and firmware updates
                       </span>
                     </label>
                   </div>
@@ -1394,10 +1519,10 @@ export default function Checkout() {
                     </button>
                   )}
                 </div>
-              ) : null}
 
-            </div>
-          </aside>
+              </div>
+            </aside>
+          ) : null}
           </div>
         </div>
       </div>
@@ -1478,106 +1603,6 @@ export default function Checkout() {
               <button type="button" className="checkout-modal-submit" onClick={() => void confirmPhoneVerification()} disabled={phoneVerifyLoading}>
                 Confirm
               </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-      {orderSummaryOpen ? (
-        <div className="checkout-modal-overlay" role="dialog" aria-modal="true">
-          <div className="checkout-summary-modal">
-            <div className="checkout-summary-modal-head">
-              <div className="checkout-summary-modal-title">Order summary</div>
-              <button type="button" className="checkout-summary-modal-close" onClick={() => setOrderSummaryOpen(false)} aria-label="Close">
-                ×
-              </button>
-            </div>
-            <div className="checkout-summary-items">
-              {items.map((it: any) => {
-                const unit = parseMoney(it?.price);
-                const qty = typeof it?.quantity === 'number' && it.quantity > 0 ? it.quantity : 1;
-                const lineTotal = unit != null ? unit * qty : null;
-                return (
-                  <div key={it.id} className="checkout-summary-item">
-                    <div className="checkout-summary-item-img">
-                      {it.image ? <img src={it.image} alt={it.title} /> : <div className="checkout-summary-item-img-placeholder" />}
-                    </div>
-                    <div className="checkout-summary-item-main">
-                      <div className="checkout-summary-item-title">{it.title}</div>
-                      <div className="checkout-summary-item-bottom">
-                        <div className="checkout-summary-item-meta">
-                          {unit != null ? `$${unit.toFixed(2)} x ${qty}` : it.price}
-                        </div>
-                        <div className="checkout-summary-item-price">{lineTotal != null ? `$${lineTotal.toFixed(2)}` : null}</div>
-                      </div>
-                      {it.isPreorder ? <div className="checkout-summary-item-note">Pre-order. Waiting time ~ 7 months</div> : null}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="checkout-summary-sep" />
-            <div className="checkout-summary-promo">
-              <input
-                className="checkout-summary-input"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
-                placeholder="Promo code"
-              />
-              <button type="button" className="checkout-summary-activate">
-                Activate
-              </button>
-            </div>
-            <div className="checkout-summary-rows">
-              <div className="checkout-summary-row">
-                <div className="checkout-summary-label">Quantity</div>
-                <div className="checkout-summary-value">{totalQty}</div>
-              </div>
-              <div className="checkout-summary-row">
-                <div className="checkout-summary-label">Subtotal</div>
-                <div className="checkout-summary-value">${totalPrice.toFixed(2)}</div>
-              </div>
-              <div className="checkout-summary-row">
-                <div className="checkout-summary-label">Tax</div>
-                <div className="checkout-summary-value checkout-summary-value-muted">Enter country</div>
-              </div>
-              <div className="checkout-summary-row">
-                <div className="checkout-summary-label">Shipping</div>
-                <div className="checkout-summary-value checkout-summary-value-muted">Enter shipping address</div>
-              </div>
-              <div className="checkout-summary-row checkout-summary-row-total">
-                <div className="checkout-summary-label">Total</div>
-                <div className="checkout-summary-total">${totalPrice.toFixed(2)}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-      {paymentPickerOpen ? (
-        <div className="checkout-modal-overlay" role="dialog" aria-modal="true">
-          <div className="checkout-payment-picker-modal">
-            <div className="checkout-summary-modal-head">
-              <div className="checkout-summary-modal-title">Select type of payment</div>
-              <button type="button" className="checkout-summary-modal-close" onClick={() => setPaymentPickerOpen(false)} aria-label="Close">
-                ×
-              </button>
-            </div>
-            <div className="checkout-payment-picker-list">
-              {paymentOptions.map((opt) => (
-                <button
-                  key={opt.key}
-                  type="button"
-                  className={`checkout-payment-picker-item ${opt.key === paymentMethod ? "checkout-payment-picker-item--active" : ""}`}
-                  onClick={() => {
-                    setPaymentMethod(opt.key);
-                    setPaymentPickerOpen(false);
-                  }}
-                >
-                  <span className="checkout-payment-picker-item-icon" aria-hidden="true">
-                    {opt.icon}
-                  </span>
-                  <span className="checkout-payment-picker-item-label">{opt.label}</span>
-                </button>
-              ))}
             </div>
           </div>
         </div>

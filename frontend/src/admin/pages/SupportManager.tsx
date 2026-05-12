@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { getSupabaseAccessTokenOrThrow } from "../../lib/supabase";
 import type { NewsBlock } from "../../context/NewsContext";
 import DocsBlocks from "../../components/docs/DocsBlocks";
 import "../../pages/SettingsDocPage.css";
@@ -203,10 +203,7 @@ function ensurePage(raw: Partial<DocsPage> & { slug: string }): DocsPage {
 }
 
 async function getAdminToken() {
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) throw new Error("No session token");
-  return token;
+  return await getSupabaseAccessTokenOrThrow();
 }
 
 async function uploadImage(file: File) {

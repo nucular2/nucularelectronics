@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, Plus, Search, Trash2, X } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import type { NewsBlock, NewsItem } from '../../context/NewsContext';
 import NewsBlocks from '../../components/news/NewsBlocks';
 
@@ -210,9 +210,7 @@ export default function NewsManager() {
           }
         }
 
-        const { data } = await supabase.auth.getSession();
-        const token = data?.session?.access_token;
-        if (!token) throw new Error('Not authenticated');
+        const token = await getSupabaseAccessTokenOrThrow();
 
         const r = await fetch('/api/admin/news', {
           method: 'POST',
@@ -240,9 +238,7 @@ export default function NewsManager() {
       setSaving(true);
       try {
         const next = news.filter((n) => n.id !== id);
-        const { data } = await supabase.auth.getSession();
-        const token = data?.session?.access_token;
-        if (!token) throw new Error('Not authenticated');
+        const token = await getSupabaseAccessTokenOrThrow();
 
         const r = await fetch('/api/admin/news', {
           method: 'POST',
@@ -268,9 +264,7 @@ export default function NewsManager() {
     try {
       const buf = await file.arrayBuffer();
       const base64 = arrayBufferToBase64(buf);
-      const { data } = await supabase.auth.getSession();
-      const token = data?.session?.access_token;
-      if (!token) throw new Error('Not authenticated');
+      const token = await getSupabaseAccessTokenOrThrow();
 
       const r = await fetch('/api/admin/upload', {
         method: 'POST',
@@ -294,9 +288,7 @@ export default function NewsManager() {
     try {
       const buf = await file.arrayBuffer();
       const base64 = arrayBufferToBase64(buf);
-      const { data } = await supabase.auth.getSession();
-      const token = data?.session?.access_token;
-      if (!token) throw new Error('Not authenticated');
+      const token = await getSupabaseAccessTokenOrThrow();
 
       const r = await fetch('/api/admin/upload', {
         method: 'POST',
@@ -325,9 +317,7 @@ export default function NewsManager() {
     try {
       const buf = await file.arrayBuffer();
       const base64 = arrayBufferToBase64(buf);
-      const { data } = await supabase.auth.getSession();
-      const token = data?.session?.access_token;
-      if (!token) throw new Error('Not authenticated');
+      const token = await getSupabaseAccessTokenOrThrow();
 
       const r = await fetch('/api/admin/upload', {
         method: 'POST',

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import HomeCmsSections from '../../components/home/HomeCmsSections';
 import { defaultHomeCmsConfig, type HomeCmsConfig } from '../../cms/homeConfig';
 
@@ -14,10 +14,7 @@ function arrayBufferToBase64(buf: ArrayBuffer) {
 }
 
 async function getAdminToken() {
-  const { data } = await supabase.auth.getSession();
-  const token = data?.session?.access_token;
-  if (!token) throw new Error('Not authenticated');
-  return token;
+  return await getSupabaseAccessTokenOrThrow();
 }
 
 export default function HomeManager() {
@@ -276,4 +273,3 @@ export default function HomeManager() {
     </div>
   );
 }
-

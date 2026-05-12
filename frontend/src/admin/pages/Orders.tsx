@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { Search, Calendar, Download, Eye, Edit2, Trash, RefreshCw } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -78,9 +78,10 @@ const Orders: React.FC = () => {
     if (!orderIds.length) return;
     setSyncing(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData?.session?.access_token;
-      if (!token) {
+      let token = '';
+      try {
+        token = await getSupabaseAccessTokenOrThrow();
+      } catch {
         await logout();
         return;
       }
@@ -152,9 +153,10 @@ const Orders: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData?.session?.access_token;
-      if (!token) {
+      let token = '';
+      try {
+        token = await getSupabaseAccessTokenOrThrow();
+      } catch {
         await logout();
         return;
       }

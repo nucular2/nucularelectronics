@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { getSupabaseConfigErrorMessage, supabase } from '../lib/supabase';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,6 +26,8 @@ export default function UpdatePassword() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
+  const [isRecoveryFlow, setIsRecoveryFlow] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -36,11 +38,61 @@ export default function UpdatePassword() {
   }, []);
 
   useEffect(() => {
-    if (authLoading) return;
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    const search = typeof window !== 'undefined' ? window.location.search : '';
+    const searchParams = new URLSearchParams(search);
+    const hashParams = new URLSearchParams(hash.startsWith('#') ? hash.slice(1) : hash);
+    const type = (searchParams.get('type') || hashParams.get('type') || '').toLowerCase();
+    const hasCode = Boolean(searchParams.get('code'));
+    setIsRecoveryFlow(type === 'recovery' || hasCode);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const cfgError = getSupabaseConfigErrorMessage();
+        if (cfgError) {
+          if (!cancelled) setError(cfgError);
+          return;
+        }
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const code = searchParams.get('code');
+        if (code) {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) throw error;
+          if (data?.session) {
+            try {
+              window.history.replaceState({}, document.title, window.location.pathname);
+            } catch {}
+          }
+        } else {
+          await supabase.auth.getSession();
+        }
+      } catch (e: any) {
+        if (!cancelled) setError(e?.message || String(e));
+      } finally {
+        if (!cancelled) setSessionReady(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (authLoading || !sessionReady) return;
     if (!session?.user) {
+      if (isRecoveryFlow) {
+        setError((prev) => prev || 'Recovery link is invalid or expired. Please request a new one.');
+        return;
+      }
       navigate('/login?redirect=/update-password');
     }
-  }, [authLoading, session?.user, navigate]);
+  }, [authLoading, isRecoveryFlow, navigate, session?.user, sessionReady]);
 
   useEffect(() => {
     if (user?.updated_at) {
@@ -98,7 +150,7 @@ export default function UpdatePassword() {
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!oldPassword || !newPassword || !confirmPassword) {
+    if ((!isRecoveryFlow && !oldPassword) || !newPassword || !confirmPassword) {
       setError('Please fill out this field.');
       return;
     }
@@ -110,6 +162,11 @@ export default function UpdatePassword() {
       setError('Password must be at least 7 characters long.');
       return;
     }
+    const cfgError = getSupabaseConfigErrorMessage();
+    if (cfgError) {
+      setError(cfgError);
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -117,7 +174,7 @@ export default function UpdatePassword() {
 
     try {
       // 1. Verify old password (optional but requested by UI)
-      if (user?.email) {
+      if (!isRecoveryFlow && user?.email) {
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email: user.email,
           password: oldPassword,
@@ -219,18 +276,20 @@ export default function UpdatePassword() {
                     {success && <div className="auth-success" style={{color: 'green', marginBottom: '16px'}}>Password updated successfully.</div>}
 
                     <form noValidate onSubmit={handleUpdatePassword} className="password-form">
-                      <div className="password-input-wrapper">
-                        <input
-                          type={showOldPassword ? "text" : "password"}
-                          placeholder="Old password"
-                          value={oldPassword}
-                          onChange={(e) => setOldPassword(e.target.value)}
-                          className="user-info-input"
-                        />
-                        <button type="button" className="password-toggle-btn" onClick={() => setShowOldPassword(!showOldPassword)}>
-                          {showOldPassword ? toggleIconOff : toggleIcon}
-                        </button>
-                      </div>
+                      {!isRecoveryFlow ? (
+                        <div className="password-input-wrapper">
+                          <input
+                            type={showOldPassword ? "text" : "password"}
+                            placeholder="Old password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            className="user-info-input"
+                          />
+                          <button type="button" className="password-toggle-btn" onClick={() => setShowOldPassword(!showOldPassword)}>
+                            {showOldPassword ? toggleIconOff : toggleIcon}
+                          </button>
+                        </div>
+                      ) : null}
 
                       <div className="password-input-wrapper">
                         <input

@@ -27,11 +27,15 @@ const Login: React.FC = () => {
       setError('Заполните поле');
       return;
     }
-    const result = await login(email, password);
-    if (result.ok) {
-      navigate('/admin');
-    } else {
-      setError(result.message || 'Неверный логин или пароль');
+    try {
+      const result = await login(email, password);
+      if (result.ok) {
+        navigate('/admin');
+      } else {
+        setError(result.message || 'Неверный логин или пароль');
+      }
+    } catch (e: any) {
+      setError(e?.message || 'Неверный логин или пароль');
     }
   };
 

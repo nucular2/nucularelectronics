@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { RefreshCw } from 'lucide-react';
 
@@ -65,9 +65,10 @@ export default function AdminOrderDetail() {
     if (!id) return;
     setSyncing(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData?.session?.access_token;
-      if (!token) {
+      let token = '';
+      try {
+        token = await getSupabaseAccessTokenOrThrow();
+      } catch {
         await logout();
         return;
       }
@@ -104,9 +105,10 @@ export default function AdminOrderDetail() {
       setLoading(true);
       setError(null);
       try {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const token = sessionData?.session?.access_token;
-        if (!token) {
+        let token = '';
+        try {
+          token = await getSupabaseAccessTokenOrThrow();
+        } catch {
           await logout();
           return;
         }

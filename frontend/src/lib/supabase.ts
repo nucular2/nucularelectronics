@@ -8,6 +8,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Supabase URL or Anon Key is missing. Authentication features will not work.');
 }
 
+export function getSupabasePublicConfig() {
+  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+  const configured = Boolean(url && anonKey);
+  return { url, anonKey, configured };
+}
+
+export function getSupabaseConfigErrorMessage() {
+  const cfg = getSupabasePublicConfig();
+  if (cfg.configured) return null;
+  return 'Supabase не настроен: проверь VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY';
+}
+
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
   supabaseAnonKey || 'placeholder-key',
@@ -31,4 +44,13 @@ export async function refreshSupabaseSessionIfNeeded() {
   const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
   if (refreshError) throw refreshError;
   return refreshed.session || null;
+}
+
+export async function getSupabaseAccessTokenOrThrow() {
+  const cfgError = getSupabaseConfigErrorMessage();
+  if (cfgError) throw new Error(cfgError);
+  const session = await refreshSupabaseSessionIfNeeded();
+  const token = session?.access_token || null;
+  if (!token) throw new Error('No session token');
+  return token;
 }

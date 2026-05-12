@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ShoppingCart, Users, Package, CreditCard } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 type OrderStatus =
@@ -56,9 +56,10 @@ const Dashboard: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const token = sessionData?.session?.access_token;
-        if (!token) {
+        let token = '';
+        try {
+          token = await getSupabaseAccessTokenOrThrow();
+        } catch {
           await logout();
           return;
         }

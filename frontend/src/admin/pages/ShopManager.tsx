@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import { defaultShopCmsConfig, type ShopCmsConfig } from '../../cms/shopConfig';
 
 function arrayBufferToBase64(buf: ArrayBuffer) {
@@ -13,10 +13,7 @@ function arrayBufferToBase64(buf: ArrayBuffer) {
 }
 
 async function getAdminToken() {
-  const { data } = await supabase.auth.getSession();
-  const token = data?.session?.access_token;
-  if (!token) throw new Error('Not authenticated');
-  return token;
+  return await getSupabaseAccessTokenOrThrow();
 }
 
 export default function ShopManager() {
@@ -240,4 +237,3 @@ export default function ShopManager() {
     </div>
   );
 }
-

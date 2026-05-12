@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { getSupabaseConfigErrorMessage, supabase } from '../lib/supabase';
 import Header from '../components/Header';
 
 export default function Login() {
@@ -22,21 +22,31 @@ export default function Login() {
       setError('Please fill out this field.');
       return;
     }
+    const cfgError = getSupabaseConfigErrorMessage();
+    if (cfgError) {
+      setError(cfgError);
+      return;
+    }
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-    } else {
+      if (error) {
+        setError(error.message || 'Sign in failed.');
+        setLoading(false);
+        return;
+      }
       const params = new URLSearchParams(location.search);
       const redirectTo = params.get('redirect') || '/orders';
       navigate(redirectTo);
+    } catch (e: any) {
+      setError(e?.message || 'Sign in failed.');
+      setLoading(false);
     }
   };
 

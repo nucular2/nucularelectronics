@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { getSupabaseConfigErrorMessage, supabase } from '../lib/supabase';
 import Header from '../components/Header';
 
 export default function ForgotPassword() {
@@ -15,6 +15,11 @@ export default function ForgotPassword() {
       setError('Please fill out this field.');
       return;
     }
+    const cfgError = getSupabaseConfigErrorMessage();
+    if (cfgError) {
+      setError(cfgError);
+      return;
+    }
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -24,7 +29,7 @@ export default function ForgotPassword() {
     });
 
     if (error) {
-      setError(error.message);
+      setError(error.message || 'Failed to send recovery email.');
     } else {
       setSuccess(true);
     }

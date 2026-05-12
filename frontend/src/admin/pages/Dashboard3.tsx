@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { supabase } from '../../lib/supabase';
+import { getSupabaseAccessTokenOrThrow } from '../../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 type Period = '6m' | '30d';
@@ -81,9 +81,10 @@ export default function Dashboard3() {
       setLoading(true);
       setError(null);
       try {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const token = sessionData?.session?.access_token;
-        if (!token) {
+        let token = '';
+        try {
+          token = await getSupabaseAccessTokenOrThrow();
+        } catch {
           await logout();
           return;
         }
